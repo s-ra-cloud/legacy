@@ -23,7 +23,7 @@ export default (config: UserConfig) => {
       ...config,
       server: {
         ...config.server,
-        allowedHosts: ["bk.test", "localhost", "legacy-um6p.1337.ma",],
+        allowedHosts: true,
       },
     },
     {

@@ -1,4 +1,4 @@
-modules = ["python-3.11"]
+modules = ["python-3.11", "nodejs-20", "postgresql-16"]
 [nix]
 channel = "stable-25_05"
 
@@ -24,6 +24,22 @@ args = "MinIO"
 [[workflows.workflow.tasks]]
 task = "workflow.run"
 args = "Start application"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "API"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Admin"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Client"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Strapi"
 
 [[workflows.workflow]]
 name = "Redis"
@@ -59,6 +75,74 @@ waitForPort = 5000
 [workflows.workflow.metadata]
 outputType = "webview"
 
+[[workflows.workflow]]
+name = "API"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd app && pnpm --filter '@repo/api' dev"
+waitForPort = 3000
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "Admin"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd app && pnpm --filter admin dev"
+waitForPort = 3001
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "Client"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd app && pnpm --filter '@repo/client' dev"
+waitForPort = 5173
+
+[[workflows.workflow]]
+name = "Strapi"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd app/apps/strapi && npm run develop"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[ports]]
+localPort = 1337
+externalPort = 3003
+
+[[ports]]
+localPort = 3000
+externalPort = 3000
+
+[[ports]]
+localPort = 3001
+externalPort = 3001
+exposeLocalhost = true
+
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 5173
+externalPort = 5173
+
+[[ports]]
+localPort = 5174
+externalPort = 3002

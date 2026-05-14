@@ -46,8 +46,8 @@ export default defineConfig(({ mode }) => {
     ],
     server: {
       host: "0.0.0.0",
-      allowedHosts: ["bk.test", "localhost", "legacy-um6p.1337.ma"],
-      port: 5001,
+      allowedHosts: true,
+      port: 5173,
       strictPort: true,
       proxy: {
         "/api": {
