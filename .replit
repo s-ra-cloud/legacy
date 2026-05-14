@@ -3,3 +3,61 @@ channel = "stable-25_05"
 
 [agent]
 expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Redis"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "MinIO"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Redis"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "redis-server --port 6379 --bind 127.0.0.1 --save \"\" --appendonly no --daemonize no"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "MinIO"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "mkdir -p .data/minio && minio server .data/minio --address 127.0.0.1:9000 --console-address 127.0.0.1:9001"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "mkdir -p .data/nginx/logs .data/nginx/tmp && cp -n \"$(dirname \"$(dirname \"$(readlink -f \"$(which nginx)\")\")\")/conf/mime.types\" .data/nginx/mime.types 2>/dev/null || true; exec nginx -c $PWD/nginx.replit.conf -p $PWD -e $PWD/.data/nginx/logs/error.log"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80

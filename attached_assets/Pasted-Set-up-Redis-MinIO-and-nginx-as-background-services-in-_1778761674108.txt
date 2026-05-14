@@ -1,0 +1,27 @@
+Set up Redis, MinIO, and nginx as background services in this Replit project, with nginx as the single public entry point on port 5000. Follow this exact pattern:
+
+    Add Nix packages for redis, minio, and nginx to the project (alongside whatever language runtime I'm using).
+
+    Create a .data/ folder in the project root for all mutable state (.data/minio for MinIO data, .data/nginx/logs and .data/nginx/tmp for nginx). Add .data/ to .gitignore.
+
+    Create four workflows in .replit, each running a single foreground process (no daemonizing, no &):
+        Redis — redis-server --port 6379 --bind 127.0.0.1 --save "" --appendonly no --daemonize no
+        MinIO — MINIO_ROOT_USER=<generate> MINIO_ROOT_PASSWORD=<generate> minio server .data/minio --address 127.0.0.1:9000 --console-address 127.0.0.1:9001 (store the credentials in Replit Secrets, not inline)
+        Start application (nginx) — nginx -c $PWD/nginx.replit.conf -p $PWD -e $PWD/.data/nginx/logs/error.log with waitForPort = 5000 and outputType = "webview"
+        A Project parallel workflow that launches all of the above together, plus any of my own app workflows.
+
+    Create nginx.replit.conf that:
+        Listens on 0.0.0.0:5000 (the only port Replit exposes publicly).
+        Uses .data/nginx/ for client_body_temp_path, proxy_temp_path, fastcgi_temp_path, uwsgi_temp_path, scgi_temp_path, and the pid/log files (so it doesn't try to write to /var or /etc).
+        Includes mime.types from the nginx Nix package (or copy it into .data/nginx/ at startup if /etc/nginx/mime.types doesn't exist).
+        Reverse-proxies:
+            / → my app's dev server
+            /storage/ → MinIO API at 127.0.0.1:9000 (with WebSocket upgrade headers and large client_max_body_size for uploads)
+            Add stubs for /api/ and /ws style routes I can fill in later.
+        Sets the standard proxy headers (Host, X-Real-IP, X-Forwarded-For, X-Forwarded-Proto, Upgrade, Connection).
+
+    All internal services must bind to 127.0.0.1 — only nginx on port 5000 is public.
+
+    Verify by starting the Project workflow and confirming the preview pane loads through nginx, and that curl http://127.0.0.1:9001 (MinIO console) and redis-cli ping both work from the shell.
+
+Don't add any application code yet — just the infrastructure plumbing.

@@ -46,6 +46,9 @@ tsconfig.tsbuildinfo
 access.log
 error.log
 
+# Local mutable state for redis/minio/nginx
+.data/
+
 # resources
 resources/*.json
 
