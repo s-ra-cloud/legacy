@@ -1,0 +1,289 @@
+[
+  {
+  "name": "flare",
+  "children": [
+    {
+    "name": "analytics",
+    "children": [
+      {
+      "name": "graph",
+      "children": [
+        {"name": "BetweennessCentrality", "value": 3534},
+        {"name": "LinkDistance", "value": 5731},
+        {"name": "SpanningTree", "value": 3416}
+      ]
+      },
+      {
+      "name": "optimization",
+      "children": [
+        {"name": "AspectRatioBanker", "value": 7074}
+      ]
+      }
+    ]
+    },
+    {
+    "name": "data",
+    "children": [
+      {
+      "name": "converters",
+      "children": [
+        {"name": "IDataConverter", "value": 1314},
+        {"name": "JSONConverter", "value": 2220}
+      ]
+      },
+      {"name": "DataTable", "value": 772},
+      {"name": "DataUtil", "value": 3322}
+    ]
+    },
+    {
+    "name": "display",
+    "children": [
+      {"name": "DirtySprite", "value": 8833},
+      {"name": "RectSprite", "value": 3623},
+      {"name": "TextSprite", "value": 10066}
+    ]
+    },
+    {
+    "name": "flex",
+    "children": [
+      {"name": "FlareVis", "value": 4116}
+    ]
+    },
+    {
+    "name": "query",
+    "children": [
+      {"name": "Range", "value": 1594},
+      {"name": "Variable", "value": 1124}
+    ]
+    },
+    {
+    "name": "util",
+    "children": [
+      {"name": "Arrays", "value": 8258},
+      {"name": "Filter", "value": 2324},
+      {"name": "Geometry", "value": 10993},
+      {
+      "name": "heap",
+      "children": [
+        {"name": "FibonacciHeap", "value": 9354},
+        {"name": "HeapNode", "value": 1233}
+      ]
+      },
+      {"name": "Maths", "value": 17705},
+      {"name": "Stats", "value": 6557},
+      {"name": "Strings", "value": 22026}
+    ]
+    },
+    {
+    "name": "vis",
+    "children": [
+      {
+      "name": "controls",
+      "children": [
+        {"name": "AnchorControl", "value": 2138},
+        {"name": "SelectionControl", "value": 7862},
+        {"name": "TooltipControl", "value": 8435}
+      ]
+      },
+      {
+      "name": "legend",
+      "children": [
+        {"name": "Legend", "value": 20859},
+        {"name": "LegendItem", "value": 4614},
+        {"name": "LegendRange", "value": 10530}
+      ]
+      },
+      {
+      "name": "operator",
+      "children": [
+        {
+        "name": "distortion",
+        "children": [
+          {"name": "BifocalDistortion", "value": 4461},
+          {"name": "Distortion", "value": 6314},
+          {"name": "FisheyeDistortion", "value": 3444}
+        ]
+        },
+        {
+        "name": "encoder",
+        "children": [
+          {"name": "ColorEncoder", "value": 3179},
+          {"name": "Encoder", "value": 4060},
+          {"name": "SizeEncoder", "value": 1830}
+        ]
+        }
+      ]
+      },
+      {"name": "Visualization", "value": 16540}
+    ]
+    }
+  ]
+  },
+  {
+  "name": "flare",
+  "children": [
+    {
+    "name": "analytics",
+    "children": [
+      {
+      "name": "cluster",
+      "children": [
+        {"name": "AgglomerativeCluster", "value": 3938},
+        {"name": "CommunityStructure", "value": 3812},
+        {"name": "HierarchicalCluster", "value": 6714},
+        {"name": "MergeEdge", "value": 743}
+      ]
+      },
+      {
+      "name": "graph",
+      "children": [
+        {"name": "BetweennessCentrality", "value": 3534},
+        {"name": "LinkDistance", "value": 5731},
+        {"name": "ShortestPaths", "value": 5914},
+        {"name": "SpanningTree", "value": 3416}
+      ]
+      },
+      {
+      "name": "optimization",
+      "children": [
+        {"name": "AspectRatioBanker", "value": 7074}
+      ]
+      }
+    ]
+    },
+    {
+    "name": "animate",
+    "children": [
+      {"name": "Easing", "value": 17010},
+      {"name": "FunctionSequence", "value": 5842},
+      {"name": "Tween", "value": 6006}
+    ]
+    },
+    {
+    "name": "display",
+    "children": [
+      {"name": "DirtySprite", "value": 8833},
+      {"name": "LineSprite", "value": 1732},
+      {"name": "RectSprite", "value": 3623},
+      {"name": "TextSprite", "value": 10066}
+    ]
+    },
+    {
+    "name": "flex",
+    "children": [
+      {"name": "FlareVis", "value": 4116}
+    ]
+    },
+    {
+    "name": "physics",
+    "children": [
+      {"name": "DragForce", "value": 1082},
+      {"name": "GravityForce", "value": 1336},
+      {"name": "Spring", "value": 2213},
+      {"name": "SpringForce", "value": 1681}
+    ]
+    },
+    {
+    "name": "query",
+    "children": [
+      {"name": "AggregateExpression", "value": 1616},
+      {"name": "Variable", "value": 1124}
+    ]
+    },
+    {
+    "name": "vis",
+    "children": [
+      {
+      "name": "axis",
+      "children": [
+        {"name": "Axes", "value": 1302},
+        {"name": "Axis", "value": 24593}
+      ]
+      },
+      {
+      "name": "legend",
+      "children": [
+        {"name": "Legend", "value": 20859},
+        {"name": "LegendItem", "value": 4614},
+        {"name": "LegendRange", "value": 10530}
+      ]
+      },
+      {"name": "Visualization", "value": 16540}
+    ]
+    }
+  ]
+  },
+  {
+    "name": "flare2",
+    "children": [
+      {
+      "name": "analytics",
+      "children": [
+        {
+        "name": "graph",
+        "children": [
+          {"name": "BetweennessCentrality", "value": 3534},
+          {"name": "LinkDistance", "value": 5731},
+          {"name": "SpanningTree", "value": 3416}
+        ]
+        },
+        {
+        "name": "optimization",
+        "children": [
+          {"name": "AspectRatioBanker", "value": 7074}
+        ]
+        }
+      ]
+      },
+      {
+      "name": "physics",
+      "children": [
+        {"name": "IForce", "value": 319},
+        {"name": "Spring", "value": 2213},
+        {"name": "SpringForce", "value": 1681}
+      ]
+      }
+    ]
+  },
+  {
+    "name": "flare2",
+    "children": [
+      {
+      "name": "analytics",
+      "children": [
+        {
+        "name": "graph",
+        "children": [
+          {"name": "BetweennessCentrality", "value": 3534},
+          {"name": "LinkDistance", "value": 5731},
+          {"name": "ShortestPaths", "value": 5914},
+          {"name": "SpanningTree", "value": 3416}
+        ]
+        },
+        {
+        "name": "optimization",
+        "children": [
+          {"name": "AspectRatioBanker", "value": 7074}
+        ]
+        }
+      ]
+      },
+      {
+      "name": "physics",
+      "children": [
+        {"name": "DragForce", "value": 1082},
+        {"name": "GravityForce", "value": 1336},
+        {"name": "SpringForce", "value": 1681}
+      ]
+      },
+      {
+      "name": "query",
+      "children": [
+        {"name": "AggregateExpression", "value": 1616},
+        {"name": "Match", "value": 3748},
+        {"name": "Variable", "value": 1124}
+      ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,35 @@
+import { userService } from "@repo/server";
+import { userManyInputSchema } from "@repo/server/client";
+import { HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { createLoader } from "nuqs";
+import DashboardIndex from "~/components/pages/accueil/home";
+import { $api } from "@repo/ui";
+import { getUserCtxOrRedirect } from "~/utils/auth";
+import { buildLoaderResponse, params } from "~/utils/loader";
+import { excludeNullParams } from "~/utils/nuqs/clean-params";
+import { zodToFilters } from "~/utils/nuqs/zod-to-filters";
+import { zodToNuqs } from "~/utils/nuqs/zod-to-nuqs";
+import type { Route } from "./+types";
+
+export const userManyInputNuqs = zodToNuqs(userManyInputSchema);
+export const userManyInputFilters = zodToFilters(userManyInputSchema);
+const loadSearchParams = createLoader(userManyInputNuqs);
+
+export async function loader({ request }: Route.LoaderArgs) {
+	const qc = new QueryClient();
+	const ctx = await getUserCtxOrRedirect(request);
+	const query = excludeNullParams(loadSearchParams(request));
+	await qc.prefetchQuery({
+		queryKey: $api.queryOptions("get", "/users", params(query)).queryKey,
+		queryFn: () => userService.getAll(ctx, query),
+	});
+	return buildLoaderResponse(qc, ctx);
+}
+
+export default function AdminUsersIndex({ loaderData }: Route.ComponentProps) {
+	return (
+		<HydrationBoundary state={loaderData.dehydratedState}>
+			<DashboardIndex />
+		</HydrationBoundary>
+	);
+}

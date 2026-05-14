@@ -1,0 +1,41 @@
+{
+  "name": "@repo/root",
+  "private": true,
+  "packageManager": "pnpm@10.11.0",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production turbo run build",
+    "dev": "NODE_ENV=development turbo run dev",
+    "api:typegen": "turbo run api:typegen",
+    "lang": "NODE_ENV=development turbo run lang",
+    "db:migrate": "turbo run db:migrate",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "clean": "turbo run clean",
+    "machine-translate": "inlang machine translate --project project.inlang",
+    "serve": "nginx -c $(pwd)/nginx.dev.conf -g 'daemon off;'",
+    "res:generate": "./scripts/compile-generate-resources.sh",
+    "biome:check": "biome check .",
+    "biome:fix": "biome check . --write"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^4.12.0",
+    "@biomejs/biome": "1.9.4",
+    "@inlang/cli": "^3.0.0",
+    "@inlang/paraglide-js": "2.0.12",
+    "@total-typescript/tsconfig": "^1.0.4",
+    "eslint": "^9.24.0",
+    "lint-staged": "^15.5.1",
+    "turbo": "^2.5.0",
+    "typescript": "5.8.2"
+  },
+  "dependencies": {
+    "db": "^6.0.3",
+    "dotenv-cli": "^8.0.0",
+    "kysely": "^0.28.0",
+    "kysely-postgres-js": "^2.0.0",
+    "postgres": "^3.4.5"
+  }
+}

@@ -1,0 +1,208 @@
+generator kysely {
+  provider = "prisma-kysely"
+
+  output               = "../src/generated"
+  fileName             = "kysely.ts"
+  camelCase            = true
+  dateTimeTypeOverride = "(string | Date)"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  ENABLED
+  DISABLED
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  CLIENT
+  ACCESS_MANAGER
+}
+
+model User {
+  id        String @id @default(cuid())
+  firstName String @map("first_name")
+  lastName  String @map("last_name")
+  institution String? @map("institution")
+  email     String @unique
+
+  imageId String? @unique @map("image_id")
+  image   Media?  @relation(name: "image", fields: [imageId], references: [id], onDelete: SetNull)
+
+  role   Role       @default(CLIENT)
+  status UserStatus @default(DISABLED)
+
+  emailVerified Boolean @default(false) @map("email_verified")
+  name          String
+
+  receiveEmails Boolean @default(false) @map("receive_emails")
+
+  // ban
+  banned     Boolean?
+  banReason  String?  @map("ban_reason")
+  banExpires Int?     @map("ban_expires")
+
+  phoneNumber   String?       @map("phone_number")
+  phoneVerified Boolean       @default(false) @map("phone_verified")
+
+  createdAt        DateTime             @default(now()) @map("created_at")
+  updatedAt        DateTime             @default(now()) @updatedAt @map("updated_at")
+  Notification     Notification[]
+  UserNotification UserNotification[]
+  Session          Session[]
+  Account          Account[]
+  userActivity     UserActivity[]
+  media            Media[]            @relation("media")
+
+  @@map("users")
+}
+
+model Account {
+  id                    String    @id @default(uuid())
+  userId                String
+  accountId             String
+  providerId            String
+  accessToken           String?
+  refreshToken          String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  idToken               String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([accountId, providerId])
+  @@map("accounts")
+}
+
+model Verification {
+  id         String   @id @default(uuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, value])
+  @@index([expiresAt])
+  @@map("verifications")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+// Notificaitons
+
+enum NotificationType {
+  NEUTRAL
+  POSITIVE
+  NEGATIVE
+}
+
+enum NotificationTags {
+  ACCOUNT
+}
+
+model Notification {
+  id String @id @default(cuid())
+
+  title   String
+  message String
+  type    NotificationType @default(NEUTRAL)
+  tags    String[]
+  route   String?
+
+  createdBy User   @relation(fields: [creatorId], references: [id])
+  creatorId String @map("creator_id")
+
+  /// @kyselyType({ roles: Role[] })
+  target Json?
+
+  createdAt        DateTime           @default(now()) @map("created_at")
+  updatedAt        DateTime           @default(now()) @map("updated_at")
+  UserNotification UserNotification[]
+
+  @@map("notifications")
+}
+
+model UserNotification {
+  id String @id @default(cuid())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
+
+  notification   Notification @relation(fields: [notificationId], references: [id])
+  notificationId String       @map("notification_id")
+
+  seen     Boolean @default(false)
+  archived Boolean @default(false)
+  clicked  Boolean @default(false)
+
+  @@map("user_notifications")
+}
+
+model UserActivity {
+  id String @id @default(cuid())
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
+
+  action    String
+  requestId String?  @map("request_id")
+  values    String[]
+
+  parentId String?        @map("parent_id")
+  parent   UserActivity?  @relation("user_activities", fields: [parentId], references: [id])
+  children UserActivity[] @relation("user_activities")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("user_activities")
+}
+
+enum StatusType {
+  TEMPORARY
+  PERMANENT
+}
+
+model Media {
+  id        String     @id @default(cuid())
+  fileName  String     @map("file_name")
+  objectKey String     @map("object_key")
+  type      String
+  size      Int
+  status    StatusType @default(TEMPORARY)
+
+  userImage User? @relation("image")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  userId String @map("user_id")
+  user   User   @relation(name: "media", fields: [userId], references: [id])
+
+
+  @@map("media")
+}

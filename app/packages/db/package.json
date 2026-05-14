@@ -1,0 +1,50 @@
+{
+  "name": "@repo/db",
+  "type": "module",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "clean": "git clean -xdf node_modules dist .cache .turbo",
+    "db:generate": "dotenv -e ../../.env -- prisma generate",
+    "db:migrate": "dotenv -e ../../.env -- prisma migrate dev",
+    "db:studio": "dotenv -e ../../.env -- prisma studio",
+    "db:push": "dotenv -e ../../.env -- prisma db push",
+    "db:reset": "dotenv -e ../../.env -- prisma migrate reset --skip-seed",
+    "db:seed": "dotenv -e ../../.env -- prisma db seed",
+    "db:migrate:prod": "dotenv -e ../../.env -- prisma migrate deploy"
+  },
+  "dependencies": {
+    "@repo/shared": "workspace:*",
+    "date-fns": "^4.1.0",
+    "kysely": "^0.28.2",
+    "kysely-postgres-js": "^2.0.0",
+    "pg": "^8.15.1",
+    "postgres": "^3.4.5",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@repo/tsconfig": "workspace:*",
+    "@types/pg": "^8.11.13",
+    "prisma": "^6.6.0",
+    "prisma-kysely": "^1.8.0"
+  }
+}

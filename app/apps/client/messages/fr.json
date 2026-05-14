@@ -1,0 +1,221 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "example_message": "Bonjour {username}",
+  "profile": {
+    "notificationSettings": {
+      "title": "Paramètres de Notification",
+      "description": "Gérez la façon dont vous recevez les notifications.",
+      "emailNotifications": {
+        "title": "Notifications par Email",
+        "description": "Recevez des mises à jour et des nouvelles importantes par email."
+      },
+      "pushNotifications": {
+        "title": "Notifications Push",
+        "description": "Recevez des alertes en temps réel sur votre appareil (si pris en charge)."
+      },
+      "pushDisabled": "Les notifications push sont actuellement désactivées dans cette démo.",
+      "saveChanges": "Enregistrer les modifications"
+    },
+    "linkedAccounts": {
+      "title": "Comptes Liés",
+      "description": "Gérez vos comptes sociaux connectés.",
+      "noAccounts": "Aucun compte lié pour le moment.",
+      "addNewAccount": "Ajouter un nouveau compte :",
+      "connect": "Connecter",
+      "remove": "Supprimer",
+      "allConnected": "Tous les fournisseurs disponibles sont connectés."
+    },
+    "passwordChange": {
+      "title": "Changer le mot de passe",
+      "description": "Assurez-vous de choisir un mot de passe fort.",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le nouveau mot de passe",
+      "cancel": "Annuler",
+      "saveChanges": "Enregistrer les modifications",
+      "validation": {
+        "currentRequired": "Le mot de passe actuel est requis.",
+        "newMinLength": "Le nouveau mot de passe doit contenir au moins 8 caractères.",
+        "confirmMinLength": "La confirmation du mot de passe doit contenir au moins 8 caractères.",
+        "passwordsDontMatch": "Les mots de passe ne correspondent pas"
+      }
+    },
+    "profileForm": {
+      "name": "Nom",
+      "email": "Email",
+      "namePlaceholder": "Votre nom",
+      "emailPlaceholder": "votre.email@exemple.com",
+      "updateProfile": "Mettre à jour le profil",
+      "validation": {
+        "nameMinLength": "Le nom doit contenir au moins 2 caractères.",
+        "emailInvalid": "Veuillez entrer une adresse email valide."
+      },
+      "phoneNumber": "Numéro de téléphone"
+    },
+    "avatar": {
+      "changePhoto": "Changer la photo",
+      "removePhoto": "Supprimer la photo"
+    },
+    "title": "Profil",
+    "description": "Gérez vos paramètres et préférences de compte.",
+    "tabs": {
+      "profile": "Profil",
+      "security": "Sécurité",
+      "connections": "Connexions",
+      "notifications": "Notifications"
+    },
+    "publicProfile": {
+      "title": "Profil Public",
+      "description": "Ces informations seront affichées publiquement."
+    },
+    "security": {
+      "title": "Sécurité",
+      "description": "Gérez les paramètres de sécurité de votre compte.",
+      "password": {
+        "title": "Mot de passe",
+        "description": "Changez votre mot de passe pour sécuriser votre compte."
+      }
+    },
+    "edit": {
+      "title": "Modifier le profil",
+      "description": "Modifier vos informations de profil"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "title": "Bon retour",
+      "description": "Entrez votre email pour vous connecter à votre compte",
+      "noAccount": "Vous n'avez pas de compte ? Inscrivez-vous",
+      "form": {
+        "email": "Email",
+        "emailPlaceholder": "nom@exemple.com",
+        "password": "Mot de passe",
+        "passwordPlaceholder": "********",
+        "submit": "Se connecter",
+        "error": {
+          "title": "Une erreur est survenue.",
+          "description": "Votre demande de connexion a échoué. Veuillez réessayer."
+        },
+        "validation": {
+          "email": "Veuillez entrer une adresse email valide.",
+          "password": "Le mot de passe doit contenir au moins 8 caractères."
+        }
+      }
+    },
+    "signUp": {
+      "title": "Créer un compte",
+      "description": "Entrez vos informations pour créer un compte",
+      "hasAccount": "Vous avez déjà un compte ? Connectez-vous",
+      "form": {
+        "name": "Nom",
+        "namePlaceholder": "Votre nom",
+        "email": "Email",
+        "emailPlaceholder": "nom@exemple.com",
+        "password": "Mot de passe",
+        "passwordPlaceholder": "********",
+        "repeatPassword": "Répéter le mot de passe",
+        "repeatPasswordPlaceholder": "********",
+        "submit": "S'inscrire",
+        "error": {
+          "title": "Une erreur est survenue.",
+          "description": "Votre demande d'inscription a échoué. Veuillez réessayer."
+        },
+        "validation": {
+          "name": "Le nom doit contenir au moins 3 caractères.",
+          "email": "Veuillez entrer une adresse email valide.",
+          "password": "Le mot de passe doit contenir au moins 8 caractères."
+        }
+      }
+    },
+    "social": {
+      "continueWith": "Ou continuer avec",
+      "providers": {
+        "apple": "Apple",
+        "google": "Google",
+        "facebook": "Facebook"
+      }
+    },
+    "errors": {
+      "USER_NOT_FOUND": "Utilisateur non trouvé",
+      "FAILED_TO_CREATE_USER": "Échec de la création de l'utilisateur",
+      "FAILED_TO_CREATE_SESSION": "Échec de la création de la session",
+      "FAILED_TO_UPDATE_USER": "Échec de la mise à jour de l'utilisateur",
+      "FAILED_TO_GET_SESSION": "Échec de la récupération de la session",
+      "INVALID_PASSWORD": "Mot de passe invalide",
+      "INVALID_EMAIL": "E-mail invalide",
+      "INVALID_EMAIL_OR_PASSWORD": "E-mail ou mot de passe invalide",
+      "SOCIAL_ACCOUNT_ALREADY_LINKED": "Compte social déjà lié",
+      "PROVIDER_NOT_FOUND": "Fournisseur non trouvé",
+      "INVALID_TOKEN": "Jeton invalide",
+      "ID_TOKEN_NOT_SUPPORTED": "id_token non pris en charge",
+      "FAILED_TO_GET_USER_INFO": "Échec de la récupération des informations de l'utilisateur",
+      "USER_EMAIL_NOT_FOUND": "E-mail de l'utilisateur non trouvé",
+      "EMAIL_NOT_VERIFIED": "E-mail non vérifié",
+      "PASSWORD_TOO_SHORT": "Mot de passe trop court",
+      "PASSWORD_TOO_LONG": "Mot de passe trop long",
+      "USER_ALREADY_EXISTS": "L'utilisateur existe déjà",
+      "EMAIL_CAN_NOT_BE_UPDATED": "L'e-mail ne peut pas être mis à jour",
+      "CREDENTIAL_ACCOUNT_NOT_FOUND": "Compte d'identification non trouvé",
+      "SESSION_EXPIRED": "Session expirée. Réauthentifiez-vous pour effectuer cette action.",
+      "FAILED_TO_UNLINK_LAST_ACCOUNT": "Vous ne pouvez pas dissocier votre dernier compte",
+      "ACCOUNT_NOT_FOUND": "Compte non trouvé",
+      "UNKNOWN_ERROR": "Erreur inconnue"
+    },
+    "forgotPassword": {
+      "title": "Mot de passe oublié",
+      "description": "Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe",
+      "form": {
+        "email": "E-mail",
+        "emailPlaceholder": "nom@exemple.com",
+        "submit": "Envoyer le lien de réinitialisation",
+        "success": {
+          "title": "Lien de réinitialisation envoyé",
+          "description": "Vérifiez votre e-mail pour obtenir un lien de réinitialisation de mot de passe"
+        },
+        "error": {
+          "title": "Une erreur est survenue",
+          "description": "Échec de l'envoi du lien de réinitialisation. Veuillez réessayer."
+        }
+      }
+    },
+    "resetPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "description": "Entrez votre nouveau mot de passe ci-dessous",
+      "form": {
+        "password": "Nouveau mot de passe",
+        "passwordPlaceholder": "********",
+        "confirmPassword": "Confirmer le mot de passe",
+        "confirmPasswordPlaceholder": "********",
+        "submit": "Réinitialiser le mot de passe",
+        "success": {
+          "title": "Réinitialisation du mot de passe réussie",
+          "description": "Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe."
+        },
+        "error": {
+          "title": "Une erreur est survenue",
+          "description": "Échec de la réinitialisation du mot de passe. Veuillez réessayer."
+        },
+        "validation": {
+          "password": "Le mot de passe doit contenir au moins 8 caractères.",
+          "passwordsDontMatch": "Les mots de passe ne correspondent pas"
+        }
+      },
+      "invalidLink": {
+        "title": "Lien de réinitialisation invalide",
+        "description": "Ce lien de réinitialisation de mot de passe est invalide ou a expiré. Veuillez en demander un nouveau.",
+        "requestNew": "Demander un nouveau lien de réinitialisation"
+      }
+    }
+  },
+  "common": {
+    "submit": "Soumettre",
+    "create": "Créer",
+    "update": "Mettre à jour",
+    "delete": "Supprimer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "close": "Fermer",
+    "reset": "Réinitialiser",
+    "download": "Télécharger"
+  }
+}

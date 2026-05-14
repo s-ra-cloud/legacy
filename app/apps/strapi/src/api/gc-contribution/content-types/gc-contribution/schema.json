@@ -1,0 +1,121 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gc_contributions",
+  "info": {
+    "singularName": "gc-contribution",
+    "pluralName": "gc-contributions",
+    "displayName": "GC Contribution"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "rest": {
+      "expose": true
+    }
+  },
+  "attributes": {
+    "connectionType": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "explicit",
+        "implicit"
+      ]
+    },
+    "connectionNature": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "agreement",
+        "neutral / unsure",
+        "opposition"
+      ]
+    },
+    "isSimilarityIdeas": {
+      "type": "boolean",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "connectionType"
+            },
+            "implicit"
+          ]
+        }
+      },
+      "default": false
+    },
+    "isBiographical": {
+      "type": "boolean",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "connectionType"
+            },
+            "implicit"
+          ]
+        }
+      },
+      "default": false
+    },
+    "isOther": {
+      "type": "boolean",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "connectionType"
+            },
+            "implicit"
+          ]
+        }
+      },
+      "default": false
+    },
+    "explainConnection": {
+      "type": "text"
+    },
+    "contributorEmail": {
+      "type": "string",
+      "required": false
+    },
+    "bookA_id": {
+      "type": "string",
+      "required": true
+    },
+    "bookB_id": {
+      "type": "string",
+      "required": true
+    },
+    "bookA_textExcerpt": {
+      "type": "text",
+      "required": true
+    },
+    "bookB_textExcerpt": {
+      "type": "text",
+      "required": true
+    },
+    "bookA_title": {
+      "type": "string",
+      "required": true
+    },
+    "bookB_title": {
+      "type": "string",
+      "required": true
+    },
+    "books": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::book.book",
+      "mappedBy": "gc_contributions"
+    },
+    "gc_comments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::gc-comment.gc-comment",
+      "mappedBy": "gc_contribution"
+    }
+  }
+}

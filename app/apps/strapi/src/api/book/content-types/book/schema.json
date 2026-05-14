@@ -1,0 +1,70 @@
+{
+  "kind": "collectionType",
+  "collectionName": "books",
+  "info": {
+    "singularName": "book",
+    "pluralName": "books",
+    "displayName": "book"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "rest": {
+      "expose": true
+    }
+  },
+  "attributes": {
+    "BookTitle": {
+      "type": "string",
+      "required": true
+    },
+    "BookSubtitle": {
+      "type": "string"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author",
+      "pluginOptions": {
+        "rest": {
+          "expose": true
+        }
+      },
+      "inversedBy": "books"
+    },
+    "OriginalPublicationDate": {
+      "type": "string",
+      "required": true
+    },
+    "TranslatorName": {
+      "type": "string"
+    },
+    "TranslatingDate": {
+      "type": "string"
+    },
+    "SpecialThanks": {
+      "type": "string"
+    },
+    "contributerName": {
+      "type": "string",
+      "private": true,
+      "unique": false
+    },
+    "contributerEmail": {
+      "type": "string"
+    },
+    "submittedFiles": {
+      "type": "component",
+      "component": "shared.file-with-cover",
+      "repeatable": false,
+      "required": true
+    },
+    "gc_contributions": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::gc-contribution.gc-contribution",
+      "inversedBy": "books"
+    }
+  }
+}

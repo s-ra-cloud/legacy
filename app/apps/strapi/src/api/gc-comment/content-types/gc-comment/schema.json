@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gc_comments",
+  "info": {
+    "singularName": "gc-comment",
+    "pluralName": "gc-comments",
+    "displayName": "GC Comments"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "comment": {
+      "type": "text",
+      "required": true
+    },
+    "contributorEmail": {
+      "type": "string"
+    },
+    "contributorName": {
+      "type": "string"
+    },
+    "gc_contribution": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::gc-contribution.gc-contribution",
+      "inversedBy": "gc_comments"
+    }
+  }
+}

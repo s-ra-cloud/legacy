@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Legacy">
+  <!-- Background -->
+  <rect width="120" height="120" rx="14" fill="#060606"/>
+
+  <!-- Subtle inner border -->
+  <rect x="6" y="6" width="108" height="108" rx="10" fill="none" stroke="#c5a059" stroke-width="0.6" stroke-opacity="0.35"/>
+
+  <!-- Corner ticks - top-left -->
+  <line x1="10" y1="10" x2="20" y2="10" stroke="#c5a059" stroke-width="1.2" stroke-opacity="0.7"/>
+  <line x1="10" y1="10" x2="10" y2="20" stroke="#c5a059" stroke-width="1.2" stroke-opacity="0.7"/>
+
+  <!-- Corner ticks - top-right -->
+  <line x1="110" y1="10" x2="100" y2="10" stroke="#c5a059" stroke-width="1.2" stroke-opacity="0.7"/>
+  <line x1="110" y1="10" x2="110" y2="20" stroke="#c5a059" stroke-width="1.2" stroke-opacity="0.7"/>
+
+  <!-- Corner ticks - bottom-left -->
+  <line x1="10" y1="110" x2="20" y2="110" stroke="#c5a059" stroke-width="1.2" stroke-opacity="0.7"/>
+  <line x1="10" y1="110" x2="10" y2="100" stroke="#c5a059" stroke-width="1.2" stroke-opacity="0.7"/>
+
+  <!-- Corner ticks - bottom-right -->
+  <line x1="110" y1="110" x2="100" y2="110" stroke="#c5a059" stroke-width="1.2" stroke-opacity="0.7"/>
+  <line x1="110" y1="110" x2="110" y2="100" stroke="#c5a059" stroke-width="1.2" stroke-opacity="0.7"/>
+
+  <!-- Thin horizontal rule above text -->
+  <line x1="28" y1="48" x2="92" y2="48" stroke="#c5a059" stroke-width="0.5" stroke-opacity="0.4"/>
+
+  <!-- Wordmark -->
+  <text
+    x="60"
+    y="64"
+    dominant-baseline="middle"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="20"
+    font-weight="700"
+    letter-spacing="0.08em"
+    fill="#eae8e4"
+  >LEGA<tspan fill="#c5a059">CY</tspan></text>
+
+  <!-- Thin horizontal rule below text -->
+  <line x1="28" y1="79" x2="92" y2="79" stroke="#c5a059" stroke-width="0.5" stroke-opacity="0.4"/>
+</svg>

@@ -1,0 +1,36 @@
+{
+  "name": "@repo/api",
+  "type": "module",
+  "private": "true",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "dotenv -e ../../.env -- vite",
+    "start": "dotenv -e ../../.env -- vite",
+    "build": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "clean": "git clean -xdf node_modules dist .cache .turbo"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.1",
+    "@hono/zod-validator": "^0.4.3",
+    "@repo/server": "workspace:*",
+    "@repo/shared": "workspace:*",
+    "@scalar/hono-api-reference": "^0.8.3",
+    "hono": "^4.7.6",
+    "hono-openapi": "^0.4.6",
+    "zod": "catalog:",
+    "zod-openapi": "^4.2.4"
+  },
+  "devDependencies": {
+    "@hono/vite-dev-server": "^0.19.1",
+    "@repo/tsconfig": "workspace:*",
+    "@types/node": "^20.11.17",
+    "tsx": "^4.19.3",
+    "vite": "^5.4.18"
+  }
+}
