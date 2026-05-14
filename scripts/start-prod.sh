@@ -51,8 +51,10 @@ echo "==> Starting Client on 127.0.0.1:5173"
 # Start nginx immediately so the deployment health probe on $PORT succeeds.
 # Upstreams will fill in over the next few seconds; nginx returns 502 until then,
 # which is fine — the platform only needs port $PORT bound to pass the probe.
-sed "s/listen 0\.0\.0\.0:5000/listen 0.0.0.0:${PUBLIC_PORT}/" \
-  "$ROOT/nginx.replit.conf" > "$ROOT/.data/nginx/nginx.prod.conf"
+sed -e "s/listen 0\.0\.0\.0:5000/listen 0.0.0.0:${PUBLIC_PORT}/" \
+    -e "s|include       \.data/nginx/mime.types;|include       ${ROOT}/.data/nginx/mime.types;|" \
+    -e "s|include \.data/nginx/mime.types;|include ${ROOT}/.data/nginx/mime.types;|" \
+    "$ROOT/nginx.replit.conf" > "$ROOT/.data/nginx/nginx.prod.conf"
 
 echo "==> Starting nginx on 0.0.0.0:${PUBLIC_PORT}"
 exec nginx -c "$ROOT/.data/nginx/nginx.prod.conf" -p "$ROOT" \

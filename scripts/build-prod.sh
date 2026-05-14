@@ -23,16 +23,8 @@ pnpm --filter "@repo/db" exec prisma db push --skip-generate --accept-data-loss 
 
 echo "==> Ensuring strapi schema exists"
 if [ -n "${DATABASE_URL:-}" ]; then
-  node -e "
-    const { Client } = require('pg');
-    (async () => {
-      const c = new Client({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
-      await c.connect();
-      await c.query('CREATE SCHEMA IF NOT EXISTS strapi');
-      await c.end();
-      console.log('strapi schema OK');
-    })().catch(e => { console.error(e); process.exit(1); });
-  " || true
+  echo 'CREATE SCHEMA IF NOT EXISTS strapi;' | \
+    pnpm --filter "@repo/db" exec prisma db execute --stdin --url "$DATABASE_URL" || true
 fi
 
 echo "==> Building admin"
