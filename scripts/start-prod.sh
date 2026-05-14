@@ -33,20 +33,23 @@ echo "==> Starting MinIO on 127.0.0.1:9000"
 minio server .data/minio --address 127.0.0.1:9000 --console-address 127.0.0.1:9001 \
   > .data/minio.log 2>&1 &
 
+# Tag each child's output so we can tell them apart in the deployment log.
+prefix() { sed -u "s|^|[$1] |"; }
+
 echo "==> Starting Strapi on 127.0.0.1:1337"
 ( cd "$ROOT/app/apps/strapi" && NODE_ENV=production HOST=127.0.0.1 PORT=1337 \
-    npm run start ) > .data/strapi.log 2>&1 &
+    npm run start 2>&1 | prefix strapi ) &
 
 echo "==> Starting API on 127.0.0.1:3000"
-( cd "$ROOT/app" && pnpm --filter '@repo/api' start ) > .data/api.log 2>&1 &
+( cd "$ROOT/app" && pnpm --filter '@repo/api' start 2>&1 | prefix api ) &
 
 echo "==> Starting Admin on 127.0.0.1:3001"
 ( cd "$ROOT/app/apps/admin" && PORT=3001 HOST=127.0.0.1 NODE_ENV=production \
-    pnpm exec react-router-serve ./build/server/index.js ) > .data/admin.log 2>&1 &
+    pnpm exec react-router-serve ./build/server/index.js 2>&1 | prefix admin ) &
 
 echo "==> Starting Client on 127.0.0.1:5173"
 ( cd "$ROOT/app/apps/client" && PORT=5173 HOST=127.0.0.1 NODE_ENV=production \
-    pnpm exec react-router-serve ./build/server/index.js ) > .data/client.log 2>&1 &
+    pnpm exec react-router-serve ./build/server/index.js 2>&1 | prefix client ) &
 
 # Start nginx immediately so the deployment health probe on $PORT succeeds.
 # Upstreams will fill in over the next few seconds; nginx returns 502 until then,
