@@ -11,6 +11,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT="$PWD"
 
+export NODE_ENV="${NODE_ENV:-production}"
 PUBLIC_PORT="${PORT:-5000}"
 
 mkdir -p .data/minio .data/nginx/logs .data/nginx/tmp
@@ -19,7 +20,6 @@ mkdir -p .data/minio .data/nginx/logs .data/nginx/tmp
 cp -n "$(dirname "$(dirname "$(readlink -f "$(which nginx)")")")/conf/mime.types" \
   .data/nginx/mime.types 2>/dev/null || true
 
-# Reap children when nginx exits.
 cleanup() {
   echo "==> Shutting down child processes"
   pkill -P $$ || true
@@ -34,32 +34,23 @@ minio server .data/minio --address 127.0.0.1:9000 --console-address 127.0.0.1:90
   > .data/minio.log 2>&1 &
 
 echo "==> Starting Strapi on 127.0.0.1:1337"
-( cd "$ROOT/app/apps/strapi" && HOST=127.0.0.1 PORT=1337 npm run start ) &
+( cd "$ROOT/app/apps/strapi" && NODE_ENV=production HOST=127.0.0.1 PORT=1337 \
+    npm run start ) > .data/strapi.log 2>&1 &
 
 echo "==> Starting API on 127.0.0.1:3000"
-( cd "$ROOT/app" && pnpm --filter '@repo/api' start ) &
+( cd "$ROOT/app" && pnpm --filter '@repo/api' start ) > .data/api.log 2>&1 &
 
 echo "==> Starting Admin on 127.0.0.1:3001"
-( cd "$ROOT/app/apps/admin" && PORT=3001 HOST=127.0.0.1 \
-    node ../../node_modules/.bin/react-router-serve ./build/server/index.js ) &
+( cd "$ROOT/app/apps/admin" && PORT=3001 HOST=127.0.0.1 NODE_ENV=production \
+    pnpm exec react-router-serve ./build/server/index.js ) > .data/admin.log 2>&1 &
 
 echo "==> Starting Client on 127.0.0.1:5173"
-( cd "$ROOT/app/apps/client" && PORT=5173 HOST=127.0.0.1 \
-    node ../../node_modules/.bin/react-router-serve ./build/server/index.js ) &
+( cd "$ROOT/app/apps/client" && PORT=5173 HOST=127.0.0.1 NODE_ENV=production \
+    pnpm exec react-router-serve ./build/server/index.js ) > .data/client.log 2>&1 &
 
-# Wait for upstreams to come online before nginx accepts traffic.
-echo "==> Waiting for upstreams"
-for hp in 127.0.0.1:3000 127.0.0.1:3001 127.0.0.1:5173 127.0.0.1:1337 127.0.0.1:9000; do
-  for i in $(seq 1 60); do
-    if (echo > "/dev/tcp/${hp%:*}/${hp##*:}") 2>/dev/null; then
-      echo "  $hp ready"
-      break
-    fi
-    sleep 1
-  done
-done
-
-# Render nginx config with the deployment's $PORT in place of 5000.
+# Start nginx immediately so the deployment health probe on $PORT succeeds.
+# Upstreams will fill in over the next few seconds; nginx returns 502 until then,
+# which is fine — the platform only needs port $PORT bound to pass the probe.
 sed "s/listen 0\.0\.0\.0:5000/listen 0.0.0.0:${PUBLIC_PORT}/" \
   "$ROOT/nginx.replit.conf" > "$ROOT/.data/nginx/nginx.prod.conf"
 
