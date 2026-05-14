@@ -14,6 +14,32 @@ ROOT="$PWD"
 export NODE_ENV="${NODE_ENV:-production}"
 PUBLIC_PORT="${PORT:-5000}"
 
+# Load app-level .env so all child services see MINIO_*, REDIS_*, etc.
+# Existing env vars (Replit Secrets, deployment-injected) take precedence.
+if [ -f "$ROOT/app/.env" ]; then
+  set -a
+  while IFS='=' read -r key val; do
+    case "$key" in ''|\#*) continue ;; esac
+    if [ -z "${!key:-}" ]; then
+      # Strip surrounding quotes if present.
+      val="${val%\"}"; val="${val#\"}"
+      val="${val%\'}"; val="${val#\'}"
+      export "$key=$val"
+    fi
+  done < "$ROOT/app/.env"
+  set +a
+fi
+
+# Point MinIO-aware services at the in-container MinIO unless explicitly overridden.
+export MINIO_HOST="${MINIO_HOST:-127.0.0.1}"
+export MINIO_PORT="${MINIO_PORT:-9000}"
+export MINIO_USE_SSL="${MINIO_USE_SSL:-false}"
+export MINIO_BUCKET_NAME="${MINIO_BUCKET_NAME:-uploads}"
+export MINIO_ACCESS_KEY="${MINIO_ACCESS_KEY:-${MINIO_ROOT_USER:-}}"
+export MINIO_SECRET_KEY="${MINIO_SECRET_KEY:-${MINIO_ROOT_PASSWORD:-}}"
+export REDIS_HOST="${REDIS_HOST:-127.0.0.1}"
+export REDIS_PORT="${REDIS_PORT:-6379}"
+
 mkdir -p .data/minio .data/nginx/logs .data/nginx/tmp
 
 # Copy nginx mime.types into a writable location (nix store is read-only).
