@@ -40,7 +40,20 @@ export default ({ env }) => {
         },
         schema: env('DATABASE_SCHEMA', 'public'),
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+      pool: {
+        // min:0 ensures no idle connections are held open.
+        // Neon (serverless Postgres) suspends compute after ~5 min of inactivity
+        // and terminates existing connections. Keeping min>0 causes Knex to hold
+        // connections that Neon will kill, crashing Strapi on the next query.
+        min: env.int('DATABASE_POOL_MIN', 0),
+        max: env.int('DATABASE_POOL_MAX', 10),
+        // Release a connection after 30 s idle — well before Neon's ~5 min timeout.
+        idleTimeoutMillis: env.int('DATABASE_POOL_IDLE_TIMEOUT', 30000),
+        // How often tarn checks for idle connections to reap.
+        reapIntervalMillis: env.int('DATABASE_POOL_REAP_INTERVAL', 1000),
+        // Don't propagate a single failed acquire to all pending requests.
+        propagateCreateError: false,
+      },
     },
     sqlite: {
       connection: {
