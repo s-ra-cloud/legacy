@@ -4,7 +4,7 @@
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
-ROOT="$PWD"
+export ROOT="$PWD"
 
 export NODE_ENV="${NODE_ENV:-production}"
 PUBLIC_PORT="${PORT:-5000}"
