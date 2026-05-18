@@ -3,6 +3,42 @@ import qs from "qs";
 
 // this fetcher work on both client and server side
 
+// Retry a fetch when Strapi is unavailable (booting or mid-restart).
+// ECONNREFUSED = Strapi not yet up; 502 = nginx upstream not ready.
+const RETRY_ATTEMPTS = 4;
+const RETRY_DELAY_MS = 8000; // 8 s between attempts → up to 32 s total wait
+
+function isRetryable(err: unknown): boolean {
+    const code = (err as any)?.cause?.code ?? (err as any)?.code;
+    return code === "ECONNREFUSED" || code === "ECONNRESET" || code === "ETIMEDOUT";
+}
+
+async function fetchWithRetry(url: URL, init?: RequestInit): Promise<Response> {
+    let lastErr: unknown;
+    for (let attempt = 0; attempt < RETRY_ATTEMPTS; attempt++) {
+        if (attempt > 0) {
+            console.warn(`[strapi-fetcher] Strapi unavailable, retrying in ${RETRY_DELAY_MS / 1000}s (attempt ${attempt + 1}/${RETRY_ATTEMPTS})...`);
+            await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
+        }
+        try {
+            const resp = await fetch(url, init);
+            // 502 means nginx upstream is down (Strapi still booting) — retry
+            if (resp.status === 502 && attempt < RETRY_ATTEMPTS - 1) {
+                console.warn(`[strapi-fetcher] Got 502, Strapi not ready yet...`);
+                continue;
+            }
+            return resp;
+        } catch (err) {
+            if (isRetryable(err) && attempt < RETRY_ATTEMPTS - 1) {
+                lastErr = err;
+                continue;
+            }
+            throw err;
+        }
+    }
+    throw lastErr;
+}
+
 export async function fetcher<T>(
     endpoint: string,
     extra?: {
@@ -16,10 +52,10 @@ export async function fetcher<T>(
 ) {
     const populate = extra?.populate ?? {};
     const filters = extra?.filters ?? {};
-    const locale = extra?.locale ?? "en"; // TODO: make this as a constant
+    const locale = extra?.locale ?? "en";
     const offset = extra?.offset ?? 0;
-    const limit = extra?.limit ?? 50; // TODO: make this as a constant
-    const sort = extra?.sort ?? "id:asc"; // TODO: make this as a constant
+    const limit = extra?.limit ?? 50;
+    const sort = extra?.sort ?? "id:asc";
 
     const params = {
         populate,
@@ -42,12 +78,9 @@ export async function fetcher<T>(
     const url = new URL(pathname, baseUrl.origin);
     url.search = qs.stringify(params);
 
-    // TODO: generate etag
-
-    const resp = await fetch(url);
     console.log(`----------Fetching ${url.toString()}`);
+    const resp = await fetchWithRetry(url);
 
-    // TODO: figure out how to handle errors
     if (!resp.ok) {
         console.error(`Failed to fetch ${url.toString()}: ${resp.statusText}`);
         console.error(await resp.text());
@@ -55,7 +88,6 @@ export async function fetcher<T>(
     }
 
     const data = (await resp.json()) as T;
-
     return data;
 }
 
@@ -87,18 +119,16 @@ export async function postFetcher<T>(
         "Content-Type": "application/json",
     };
 
-    // Add Authorization header if token is available
     if (envClient.VITE_STRAPI_CONTRIBUTE_TOKEN) {
         headers["Authorization"] = `Bearer ${envClient.VITE_STRAPI_CONTRIBUTE_TOKEN}`;
     }
 
-    const resp = await fetch(url, {
+    console.log(`----------POSTing to ${url.toString()}`);
+    const resp = await fetchWithRetry(url, {
         method: "POST",
         headers,
         body: JSON.stringify({ data }),
     });
-
-    console.log(`----------POSTing to ${url.toString()}`);
 
     if (!resp.ok) {
         console.error(`Failed to POST to ${url.toString()}: ${resp.statusText}`);
