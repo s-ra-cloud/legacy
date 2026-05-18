@@ -81,8 +81,9 @@ sed -e "s/listen 0\.0\.0\.0:5000/listen 0.0.0.0:${PUBLIC_PORT}/" \
     "$ROOT/nginx.replit.conf" > "$ROOT/.data/nginx/nginx.prod.conf"
 
 echo "==> Starting nginx on 0.0.0.0:${PUBLIC_PORT}"
+# daemon off is set in nginx.replit.conf so nginx does not self-daemonize; run it with &.
 nginx -c "$ROOT/.data/nginx/nginx.prod.conf" -p "$ROOT" \
-  -e "$ROOT/.data/nginx/logs/error.log"
+  -e "$ROOT/.data/nginx/logs/error.log" &
 
 # Seed the DB if it's empty — runs synchronously so Strapi starts with data already there.
 # Checks five content tables so a single empty table doesn't trigger a spurious re-import.
