@@ -1,0 +1,34 @@
+1. Did Future Science use Cloudflare R2?
+
+No. It uses Replit's own built-in Object Storage (backed by Google Cloud Storage internally, not Cloudflare). There is zero R2 or Cloudflare code anywhere in the project.
+
+2. Was there a Cloudflare account or R2 bucket?
+
+No trace of one. No Cloudflare account, no R2 bucket, no Cloudflare API token anywhere in the code or secrets.
+
+3. What Strapi upload plugin was used?
+
+Not a published npm plugin at all — a custom local provider at apps/strapi/providers/object-storage-provider.js, configured in config/plugins.ts like this:
+
+provider: path.join(process.cwd(), 'providers', 'object-storage-provider.js'),
+providerOptions: {
+  bucket: env('DEFAULT_OBJECT_STORAGE_BUCKET_ID', ''),
+  prefix: 'strapi-uploads',
+},
+
+It talks directly to the Replit Object Storage bucket via @google-cloud/storage. The same GCS client is also used by the API (pdf-cache.ts) and the shared server package (minio.ts — misleading name, it's actually GCS).
+
+4. Were R2 credentials stored as Replit Secrets?
+
+No R2 credentials of any kind. The only relevant secret is:
+
+DEFAULT_OBJECT_STORAGE_BUCKET_ID — a Replit-managed secret that holds the bucket identifier for Replit's built-in Object Storage. No access key, no secret key, no endpoint URL needed — authentication is handled automatically by the Replit integration.
+5. Were existing local upload files migrated, or re-uploaded manually?
+
+There's a migration script — apps/strapi/scripts/migrate-uploads-to-object-storage — which is referenced in start.sh's cleanup section (it gets killed on restart to avoid conflicts). So the uploads were migrated programmatically via that script, not re-uploaded by hand through the Strapi admin.
+
+6. Reuse the same bucket or create a new one?
+
+This question may not apply as you expected — there's no R2 bucket to reuse or recreate. Everything is on Replit's Object Storage, which is already set up and working (the DEFAULT_OBJECT_STORAGE_BUCKET_ID secret is present and active). If you're asking because you want to move to a different project or a different storage provider, just say the word and we can walk through what that would involve.
+
+
