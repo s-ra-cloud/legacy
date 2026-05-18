@@ -85,29 +85,6 @@ echo "==> Starting nginx on 0.0.0.0:${PUBLIC_PORT}"
 nginx -c "$ROOT/.data/nginx/nginx.prod.conf" -p "$ROOT" \
   -e "$ROOT/.data/nginx/logs/error.log" &
 
-# Seed the DB if it's empty — runs synchronously so Strapi starts with data already there.
-# Checks five content tables so a single empty table doesn't trigger a spurious re-import.
-echo "==> Checking if Strapi data needs seeding..."
-CONTENT_COUNT=$(psql "$DATABASE_URL" -t -c "
-  SELECT (SELECT count(*) FROM strapi.authors)
-       + (SELECT count(*) FROM strapi.books)
-       + (SELECT count(*) FROM strapi.teams)
-       + (SELECT count(*) FROM strapi.partners)
-       + (SELECT count(*) FROM strapi.files)
-" 2>/dev/null | tr -d ' \n' || echo "0")
-if [ "${CONTENT_COUNT:-0}" = "0" ] 2>/dev/null; then
-  echo "==> Production DB is empty — running Strapi import..."
-  SEED_SQL="$ROOT/scripts/strapi-seed.sql"
-  if [ -f "$SEED_SQL" ]; then
-    psql "$DATABASE_URL" -f "$SEED_SQL" 2>&1 | prefix "strapi-seed"
-    echo "==> Seeding complete."
-  else
-    echo "==> Seed SQL not found at $SEED_SQL — skipping seed."
-  fi
-else
-  echo "==> Strapi data already present (${CONTENT_COUNT} records) — skipping seed."
-fi
-
 echo "==> Starting Strapi on 127.0.0.1:1337 (watchdog)"
 # Strapi crashes when the DB drops a connection. Watchdog restarts it automatically.
 # The fetcher layer retries for up to ~32 s so API calls survive brief Strapi downtime.
