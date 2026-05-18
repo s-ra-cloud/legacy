@@ -74,8 +74,14 @@ minio server .data/minio --address 127.0.0.1:9000 --console-address 127.0.0.1:90
   > .data/minio.log 2>&1 &
 
 echo "==> Checking if Strapi data needs seeding..."
-AUTHOR_COUNT=$(psql "$DATABASE_URL" -t -c "SELECT count(*) FROM strapi.authors" 2>/dev/null | tr -d ' \n' || echo "0")
-if [ "${AUTHOR_COUNT:-0}" = "0" ] 2>/dev/null; then
+CONTENT_COUNT=$(psql "$DATABASE_URL" -t -c "
+  SELECT (SELECT count(*) FROM strapi.authors)
+       + (SELECT count(*) FROM strapi.books)
+       + (SELECT count(*) FROM strapi.teams)
+       + (SELECT count(*) FROM strapi.partners)
+       + (SELECT count(*) FROM strapi.files)
+" 2>/dev/null | tr -d ' \n' || echo "0")
+if [ "${CONTENT_COUNT:-0}" = "0" ] 2>/dev/null; then
   echo "==> Production DB is empty — running Strapi import..."
   EXPORT_FILE="$ROOT/app/apps/strapi/export_20260518143539.tar.gz.enc"
   if [ -f "$EXPORT_FILE" ]; then
