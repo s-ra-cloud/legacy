@@ -63,8 +63,17 @@ minio server .data/minio --address 127.0.0.1:9000 --console-address 127.0.0.1:90
 prefix() { sed -u "s|^|[$1] |"; }
 
 echo "==> Starting Strapi on 127.0.0.1:1337"
-( cd "$ROOT/app/apps/strapi" && NODE_ENV=production HOST=127.0.0.1 PORT=1337 \
-    npm run start 2>&1 | prefix strapi ) &
+# Wrap in a restart loop: Neon (serverless Postgres) can kill idle connections,
+# causing Strapi to crash on the next query. Auto-restart recovers in ~15 s.
+(
+  while true; do
+    cd "$ROOT/app/apps/strapi"
+    NODE_ENV=production HOST=127.0.0.1 PORT=1337 \
+      npm run start 2>&1 | prefix strapi
+    echo "[strapi] process exited — restarting in 10 s..."
+    sleep 10
+  done
+) &
 
 echo "==> Starting API on 127.0.0.1:3000"
 ( cd "$ROOT/app" && pnpm --filter '@repo/api' start 2>&1 | prefix api ) &
