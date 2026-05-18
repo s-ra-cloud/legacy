@@ -73,6 +73,19 @@ echo "==> Starting MinIO on 127.0.0.1:9000"
 minio server .data/minio --address 127.0.0.1:9000 --console-address 127.0.0.1:9001 \
   > .data/minio.log 2>&1 &
 
+# Start nginx RIGHT NOW so the deployment health probe on $PORT passes immediately.
+# Services (Strapi, API, etc.) aren't up yet so nginx will 502 briefly — that's fine.
+sed -e "s/listen 0\.0\.0\.0:5000/listen 0.0.0.0:${PUBLIC_PORT}/" \
+    -e "s|include       \.data/nginx/mime.types;|include       ${ROOT}/.data/nginx/mime.types;|" \
+    -e "s|include \.data/nginx/mime.types;|include ${ROOT}/.data/nginx/mime.types;|" \
+    "$ROOT/nginx.replit.conf" > "$ROOT/.data/nginx/nginx.prod.conf"
+
+echo "==> Starting nginx on 0.0.0.0:${PUBLIC_PORT}"
+nginx -c "$ROOT/.data/nginx/nginx.prod.conf" -p "$ROOT" \
+  -e "$ROOT/.data/nginx/logs/error.log"
+
+# Seed the DB if it's empty — runs synchronously so Strapi starts with data already there.
+# Checks five content tables so a single empty table doesn't trigger a spurious re-import.
 echo "==> Checking if Strapi data needs seeding..."
 CONTENT_COUNT=$(psql "$DATABASE_URL" -t -c "
   SELECT (SELECT count(*) FROM strapi.authors)
@@ -103,7 +116,7 @@ if [ "${CONTENT_COUNT:-0}" = "0" ] 2>/dev/null; then
     echo "==> Export file not found at $EXPORT_FILE — skipping seed."
   fi
 else
-  echo "==> Strapi data already present (${AUTHOR_COUNT} authors) — skipping seed."
+  echo "==> Strapi data already present (${CONTENT_COUNT} records) — skipping seed."
 fi
 
 echo "==> Starting Strapi on 127.0.0.1:1337 (watchdog)"
@@ -123,12 +136,5 @@ echo "==> Starting Admin on 127.0.0.1:3001 (watchdog)"
 echo "==> Starting Client on 127.0.0.1:5173 (watchdog)"
 ( watchdog client 5 bash -c 'cd "$ROOT/app/apps/client" && PORT=5173 HOST=127.0.0.1 NODE_ENV=production pnpm exec react-router-serve ./build/server/index.js' ) &
 
-# Start nginx immediately so the deployment health probe on $PORT succeeds.
-sed -e "s/listen 0\.0\.0\.0:5000/listen 0.0.0.0:${PUBLIC_PORT}/" \
-    -e "s|include       \.data/nginx/mime.types;|include       ${ROOT}/.data/nginx/mime.types;|" \
-    -e "s|include \.data/nginx/mime.types;|include ${ROOT}/.data/nginx/mime.types;|" \
-    "$ROOT/nginx.replit.conf" > "$ROOT/.data/nginx/nginx.prod.conf"
-
-echo "==> Starting nginx on 0.0.0.0:${PUBLIC_PORT}"
-exec nginx -c "$ROOT/.data/nginx/nginx.prod.conf" -p "$ROOT" \
-  -e "$ROOT/.data/nginx/logs/error.log"
+# Keep the script alive so all background watchdogs keep running.
+wait
