@@ -8,7 +8,8 @@ import { strapiUploadMediaResponseSchema, type StrapiUploadMediaResponse } from 
 // -----------------------------------------------------------------------------
 
 function buildUploadUrl() {
-  const baseUrl = new URL(envClient.VITE_STRAPI_URL);
+  // Use internal address for server-side uploads — avoids circular public routing.
+  const baseUrl = new URL(envClient.VITE_STRAPI_FETCH_URL);
   const pathname = baseUrl.pathname.endsWith("/") ? `${baseUrl.pathname}api/upload` : `${baseUrl.pathname}/api/upload`;
   return new URL(pathname, baseUrl.origin);
 }

@@ -41,17 +41,22 @@ export default ({ env }) => {
         schema: env('DATABASE_SCHEMA', 'public'),
       },
       pool: {
-        // min:0 ensures no idle connections are held open.
-        // Neon (serverless Postgres) suspends compute after ~5 min of inactivity
-        // and terminates existing connections. Keeping min>0 causes Knex to hold
-        // connections that Neon will kill, crashing Strapi on the next query.
+        // min:0 — no idle connections held open. Neon (serverless Postgres)
+        // suspends compute after ~5 min of inactivity and kills all connections.
+        // min>0 causes Knex to hold connections Neon will destroy.
         min: env.int('DATABASE_POOL_MIN', 0),
-        max: env.int('DATABASE_POOL_MAX', 10),
-        // Release a connection after 30 s idle — well before Neon's ~5 min timeout.
-        idleTimeoutMillis: env.int('DATABASE_POOL_IDLE_TIMEOUT', 30000),
-        // How often tarn checks for idle connections to reap.
+        // Keep pool small so Neon wake-up doesn't spawn many simultaneous
+        // connection attempts that all time out and fill the pool.
+        max: env.int('DATABASE_POOL_MAX', 3),
+        // Release idle connections quickly — well before Neon's ~5 min window.
+        idleTimeoutMillis: env.int('DATABASE_POOL_IDLE_TIMEOUT', 20000),
+        // How often tarn reaps idle connections.
         reapIntervalMillis: env.int('DATABASE_POOL_REAP_INTERVAL', 1000),
-        // Don't propagate a single failed acquire to all pending requests.
+        // Allow 90 s for a new connection — Neon cold-start can take 10-30 s;
+        // the default 30 s tarn timeout fires before Neon finishes waking up,
+        // leaving all pool slots stuck in "creating" → pool appears full → crash.
+        createTimeoutMillis: env.int('DATABASE_POOL_CREATE_TIMEOUT', 90000),
+        // Don't cascade a single failed create to all pending acquires.
         propagateCreateError: false,
       },
     },

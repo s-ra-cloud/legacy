@@ -33,7 +33,9 @@ export async function fetcher<T>(
         },
     };
 
-    const baseUrl = new URL(envClient.VITE_STRAPI_URL);
+    // Use VITE_STRAPI_FETCH_URL for server-side fetches (direct internal address).
+    // VITE_STRAPI_URL is for browser-facing media URLs only.
+    const baseUrl = new URL(envClient.VITE_STRAPI_FETCH_URL);
     const pathname = baseUrl.pathname.endsWith('/')
         ? `${baseUrl.pathname}api/${endpoint}`
         : `${baseUrl.pathname}/api/${endpoint}`;
@@ -74,7 +76,7 @@ export async function postFetcher<T>(
         locale,
     };
 
-    const baseUrl = new URL(envClient.VITE_STRAPI_URL);
+    const baseUrl = new URL(envClient.VITE_STRAPI_FETCH_URL);
     const pathname = baseUrl.pathname.endsWith('/')
         ? `${baseUrl.pathname}api/${endpoint}`
         : `${baseUrl.pathname}/api/${endpoint}`;
