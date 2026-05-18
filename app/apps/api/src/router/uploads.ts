@@ -1,25 +1,29 @@
 import { Hono } from "hono";
-import { Storage } from "@google-cloud/storage";
+import { Storage, type FileMetadata } from "@google-cloud/storage";
+import { ExternalAccountClient } from "google-auth-library";
 
 const SIDECAR_ENDPOINT = "http://127.0.0.1:1106";
-const BUCKET_NAME = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID || "";
+const BUCKET_NAME = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID ?? "";
 const GCS_FOLDER = "public/strapi-uploads";
 
-function createStorage() {
-  return new Storage({
-    credentials: {
-      audience: "replit",
-      subject_token_type: "access_token",
-      token_url: `${SIDECAR_ENDPOINT}/token`,
-      type: "external_account",
-      credential_source: {
-        url: `${SIDECAR_ENDPOINT}/credential`,
-        format: { type: "json", subject_token_field_name: "access_token" },
-      },
-      universe_domain: "googleapis.com",
+function createStorage(): Storage {
+  const authClient = ExternalAccountClient.fromJSON({
+    type: "external_account",
+    audience: "replit",
+    subject_token_type: "access_token",
+    token_url: `${SIDECAR_ENDPOINT}/token`,
+    credential_source: {
+      url: `${SIDECAR_ENDPOINT}/credential`,
+      format: { type: "json", subject_token_field_name: "access_token" },
     },
-    projectId: "",
-  } as any);
+    universe_domain: "googleapis.com",
+  });
+
+  if (!authClient) {
+    throw new Error("Failed to create ExternalAccountClient from sidecar credentials");
+  }
+
+  return new Storage({ authClient, projectId: "" });
 }
 
 const storage = createStorage();
@@ -38,9 +42,8 @@ uploadsRouter.get("/:filename{.+}", async (c) => {
       return c.text("Not Found", 404);
     }
 
-    const [metadata] = await gcsFile.getMetadata();
-    const contentType =
-      (metadata as any).contentType || "application/octet-stream";
+    const [metadata]: [FileMetadata, unknown] = await gcsFile.getMetadata();
+    const contentType = metadata.contentType ?? "application/octet-stream";
 
     const readStream = gcsFile.createReadStream();
 
