@@ -41,22 +41,21 @@ export default ({ env }) => {
         schema: env('DATABASE_SCHEMA', 'public'),
       },
       pool: {
-        // min:0 — no idle connections held open. Neon (serverless Postgres)
-        // suspends compute after ~5 min of inactivity and kills all connections.
-        // min>0 causes Knex to hold connections Neon will destroy.
         min: env.int('DATABASE_POOL_MIN', 0),
-        // Keep pool small so Neon wake-up doesn't spawn many simultaneous
-        // connection attempts that all time out and fill the pool.
-        max: env.int('DATABASE_POOL_MAX', 3),
-        // Release idle connections quickly — well before Neon's ~5 min window.
-        idleTimeoutMillis: env.int('DATABASE_POOL_IDLE_TIMEOUT', 20000),
-        // How often tarn reaps idle connections.
+        max: env.int('DATABASE_POOL_MAX', 5),
+        idleTimeoutMillis: env.int('DATABASE_POOL_IDLE_TIMEOUT', 30000),
         reapIntervalMillis: env.int('DATABASE_POOL_REAP_INTERVAL', 1000),
-        // Allow 90 s for a new connection — Neon cold-start can take 10-30 s;
-        // the default 30 s tarn timeout fires before Neon finishes waking up,
-        // leaving all pool slots stuck in "creating" → pool appears full → crash.
-        createTimeoutMillis: env.int('DATABASE_POOL_CREATE_TIMEOUT', 90000),
-        // Don't cascade a single failed create to all pending acquires.
+        createTimeoutMillis: env.int('DATABASE_POOL_CREATE_TIMEOUT', 60000),
+        // KEY FIX (same as Future Science): listen for socket errors on every
+        // new connection and mark it _invalid immediately. Knex/tarn then
+        // destroys the broken socket instead of handing it out to the next
+        // query — preventing the "pool full of zombies → timeout" crash.
+        afterCreate: (conn: any, done: (err: Error | null, conn: any) => void) => {
+          conn.on('error', () => {
+            conn._invalid = true;
+          });
+          done(null, conn);
+        },
         propagateCreateError: false,
       },
     },
