@@ -37,4 +37,23 @@ echo "==> Building Strapi"
 cd "$ROOT/app/apps/strapi"
 npm run build
 
+echo "==> Ensuring Strapi Public role has all API permissions"
+# The SQL seed can create duplicate roles. This ensures the lowest-id Public role
+# (which Strapi actually uses for unauthenticated requests) has all API permissions.
+psql "$DATABASE_URL" -c "
+  DO \$\$
+  DECLARE pub_role_id INT;
+  BEGIN
+    SELECT id INTO pub_role_id FROM strapi.up_roles WHERE type = 'public' ORDER BY id LIMIT 1;
+    INSERT INTO strapi.up_permissions_role_lnk (permission_id, role_id, permission_ord)
+    SELECT p.id, pub_role_id, 1
+    FROM strapi.up_permissions p
+    WHERE p.action LIKE 'api::%'
+    AND NOT EXISTS (
+      SELECT 1 FROM strapi.up_permissions_role_lnk l
+      WHERE l.permission_id = p.id AND l.role_id = pub_role_id
+    );
+  END \$\$;
+" || true
+
 echo "==> Build complete"
