@@ -73,6 +73,33 @@ echo "==> Starting MinIO on 127.0.0.1:9000"
 minio server .data/minio --address 127.0.0.1:9000 --console-address 127.0.0.1:9001 \
   > .data/minio.log 2>&1 &
 
+echo "==> Checking if Strapi data needs seeding..."
+AUTHOR_COUNT=$(psql "$DATABASE_URL" -t -c "SELECT count(*) FROM strapi.authors" 2>/dev/null | tr -d ' \n' || echo "0")
+if [ "${AUTHOR_COUNT:-0}" = "0" ] 2>/dev/null; then
+  echo "==> Production DB is empty — running Strapi import..."
+  EXPORT_FILE="$ROOT/app/apps/strapi/export_20260518143539.tar.gz.enc"
+  if [ -f "$EXPORT_FILE" ]; then
+    (cd "$ROOT/app/apps/strapi" && yes | npm run strapi import -- -f "$EXPORT_FILE" --key oo --force --only content,config 2>&1) | prefix "strapi-seed"
+    echo "==> Fixing locale on imported records..."
+    psql "$DATABASE_URL" -c "
+      UPDATE strapi.authors SET locale='en' WHERE locale IS NULL OR locale='';
+      UPDATE strapi.books SET locale='en' WHERE locale IS NULL OR locale='';
+      UPDATE strapi.teams SET locale='en' WHERE locale IS NULL OR locale='';
+      UPDATE strapi.partners SET locale='en' WHERE locale IS NULL OR locale='';
+      UPDATE strapi.partnerships SET locale='en' WHERE locale IS NULL OR locale='';
+      UPDATE strapi.gc_contributions SET locale='en' WHERE locale IS NULL OR locale='';
+      UPDATE strapi.contributors SET locale='en' WHERE locale IS NULL OR locale='';
+      UPDATE strapi.files SET locale='en' WHERE locale IS NULL OR locale='';
+      UPDATE strapi.upload_folders SET locale='en' WHERE locale IS NULL OR locale='';
+    " 2>&1 | prefix "strapi-seed"
+    echo "==> Seeding complete."
+  else
+    echo "==> Export file not found at $EXPORT_FILE — skipping seed."
+  fi
+else
+  echo "==> Strapi data already present (${AUTHOR_COUNT} authors) — skipping seed."
+fi
+
 echo "==> Starting Strapi on 127.0.0.1:1337 (watchdog)"
 # Strapi crashes when the DB drops a connection. Watchdog restarts it automatically.
 # The fetcher layer retries for up to ~32 s so API calls survive brief Strapi downtime.
