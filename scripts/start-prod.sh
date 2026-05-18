@@ -85,11 +85,14 @@ echo "==> Starting nginx on 0.0.0.0:${PUBLIC_PORT}"
 nginx -c "$ROOT/.data/nginx/nginx.prod.conf" -p "$ROOT" \
   -e "$ROOT/.data/nginx/logs/error.log" &
 
-echo "==> Syncing Strapi uploads with Object Storage"
-# Downloads any GCS-stored uploads to local disk (restores files from prior deploys)
-# and seeds any committed local files to GCS. Idempotent — safe on every deploy.
-node "$ROOT/scripts/sync-uploads-from-gcs.js" 2>&1 | prefix "sync" || \
-  echo "[sync] GCS sync failed (non-fatal) — continuing with local files only"
+echo "==> Seeding Strapi uploads to Object Storage (one-time, guarded by sentinel)"
+# Seeds committed local files to GCS on first deploy only.
+# Subsequent deployments detect the sentinel and skip.
+# Files are served from GCS via the Hono API — no local disk needed.
+if ! node "$ROOT/scripts/sync-uploads-from-gcs.js" 2>&1 | prefix "seed"; then
+  echo "[FATAL] Upload seeding to Object Storage failed — aborting startup."
+  exit 1
+fi
 
 echo "==> Starting Strapi on 127.0.0.1:1337 (watchdog)"
 # Strapi crashes when the DB drops a connection. Watchdog restarts it automatically.

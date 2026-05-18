@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /**
- * Sync Strapi uploads FROM GCS TO local disk.
+ * One-time seeding: uploads committed local files to GCS.
  *
- * Run at every deployment startup (before Strapi starts) to restore upload
- * files that were created on previous deployments or by other pods.
- *
- * Also uploads any LOCAL files not yet in GCS (initial seeding).
+ * Guarded by a sentinel object (_seeded_v1) in GCS so it runs only on the
+ * FIRST deployment. Subsequent deployments skip it entirely since files are
+ * now served directly from GCS via the Hono API uploads proxy.
  *
  * Run: node scripts/sync-uploads-from-gcs.js
+ * Exit code: non-zero on failure (startup should abort on failure).
  */
 
 'use strict';
@@ -20,11 +20,12 @@ const SIDECAR_ENDPOINT = 'http://127.0.0.1:1106';
 const ROOT = path.resolve(__dirname, '..');
 const LOCAL_UPLOADS_DIR = path.join(ROOT, 'app/apps/strapi/public/uploads');
 const GCS_PREFIX = 'public/strapi-uploads';
+const SENTINEL_OBJECT = `${GCS_PREFIX}/_seeded_v1`;
 
 const BUCKET_NAME = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID;
 
 if (!BUCKET_NAME) {
-  console.error('ERROR: DEFAULT_OBJECT_STORAGE_BUCKET_ID is not set.');
+  console.error('FATAL: DEFAULT_OBJECT_STORAGE_BUCKET_ID is not set.');
   process.exit(1);
 }
 
@@ -59,68 +60,71 @@ async function main() {
   const storage = createStorage();
   const bucket = storage.bucket(BUCKET_NAME);
 
-  fs.mkdirSync(LOCAL_UPLOADS_DIR, { recursive: true });
+  // Check if the one-time migration has already run.
+  const [alreadySeeded] = await bucket.file(SENTINEL_OBJECT).exists();
+  if (alreadySeeded) {
+    console.log('=== Seeding already completed (sentinel present) — skipping ===');
+    return;
+  }
 
-  // Step 1: Download from GCS → local (restore missing files)
-  console.log('=== Downloading from GCS → local disk ===');
-  const [gcsFiles] = await bucket.getFiles({ prefix: GCS_PREFIX + '/' });
-  
-  let downloaded = 0;
-  let alreadyLocal = 0;
+  console.log('=== First-run seeding: uploading committed files → GCS ===');
 
-  for (const gcsFile of gcsFiles) {
-    const filename = path.basename(gcsFile.name);
-    if (!filename || filename === '') continue;
+  if (!fs.existsSync(LOCAL_UPLOADS_DIR)) {
+    console.log('No local uploads directory found — nothing to seed.');
+  } else {
+    const localFiles = fs.readdirSync(LOCAL_UPLOADS_DIR).filter(f => {
+      const stat = fs.statSync(path.join(LOCAL_UPLOADS_DIR, f));
+      return stat.isFile();
+    });
 
-    const localPath = path.join(LOCAL_UPLOADS_DIR, filename);
-    if (fs.existsSync(localPath)) {
-      alreadyLocal++;
-      continue;
+    let seeded = 0;
+    let skipped = 0;
+    const errors = [];
+
+    for (const filename of localFiles) {
+      const objectName = `${GCS_PREFIX}/${filename}`;
+      const [exists] = await bucket.file(objectName).exists();
+      if (exists) {
+        skipped++;
+        continue;
+      }
+
+      const localPath = path.join(LOCAL_UPLOADS_DIR, filename);
+      const ext = path.extname(filename);
+      const mime = mimeFromExt(ext);
+
+      try {
+        await bucket.upload(localPath, {
+          destination: objectName,
+          contentType: mime,
+          resumable: false,
+        });
+        console.log(`  Seeded: ${filename}`);
+        seeded++;
+      } catch (err) {
+        console.error(`  FAILED to seed ${filename}:`, err.message);
+        errors.push(filename);
+      }
     }
 
-    try {
-      await gcsFile.download({ destination: localPath });
-      console.log(`  Downloaded: ${filename}`);
-      downloaded++;
-    } catch (err) {
-      console.error(`  Error downloading ${filename}:`, err.message);
+    console.log(`  Seeded: ${seeded}, Already in GCS: ${skipped}, Failed: ${errors.length}`);
+
+    if (errors.length > 0) {
+      console.error('FATAL: Some files failed to seed:', errors);
+      process.exit(1);
     }
   }
 
-  console.log(`  Downloaded: ${downloaded}, Already local: ${alreadyLocal}`);
+  // Write the sentinel so this script is skipped on future deployments.
+  await bucket.file(SENTINEL_OBJECT).save('seeded', {
+    contentType: 'text/plain',
+    resumable: false,
+  });
 
-  // Step 2: Upload from local → GCS (seed any committed files not yet uploaded)
-  console.log('\n=== Uploading local → GCS (seeding missing objects) ===');
-  const localFiles = fs.readdirSync(LOCAL_UPLOADS_DIR);
-  let seeded = 0;
-  let alreadyGCS = 0;
-
-  for (const filename of localFiles) {
-    const objectName = `${GCS_PREFIX}/${filename}`;
-    const [exists] = await bucket.file(objectName).exists();
-    if (exists) {
-      alreadyGCS++;
-      continue;
-    }
-
-    const localPath = path.join(LOCAL_UPLOADS_DIR, filename);
-    const ext = path.extname(filename);
-    const mime = mimeFromExt(ext);
-
-    try {
-      await bucket.upload(localPath, { destination: objectName, contentType: mime, resumable: false });
-      console.log(`  Seeded: ${filename}`);
-      seeded++;
-    } catch (err) {
-      console.error(`  Error seeding ${filename}:`, err.message);
-    }
-  }
-
-  console.log(`  Seeded: ${seeded}, Already in GCS: ${alreadyGCS}`);
-  console.log('\n=== Sync complete ===');
+  console.log('=== Seeding complete — sentinel written ===');
 }
 
 main().catch((err) => {
-  console.error('Sync failed:', err);
+  console.error('FATAL: Seeding failed:', err);
   process.exit(1);
 });

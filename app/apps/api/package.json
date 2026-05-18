@@ -24,7 +24,8 @@
     "hono": "^4.7.6",
     "hono-openapi": "^0.4.6",
     "zod": "catalog:",
-    "zod-openapi": "^4.2.4"
+    "zod-openapi": "^4.2.4",
+    "@google-cloud/storage": "^7.19.0"
   },
   "devDependencies": {
     "@hono/vite-dev-server": "^0.19.1",
