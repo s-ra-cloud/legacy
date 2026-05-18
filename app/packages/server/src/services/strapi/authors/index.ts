@@ -33,7 +33,7 @@ type StrapiAuthorData = Author;
 
 // Transform Strapi data to our schema
 function transformStrapiAuthor(data: StrapiAuthorData): Author {
-  data.picture.url = `${envClient.VITE_STRAPI_URL}${data.picture.url}`;
+  data.picture.url = getStrapiMediaUrl(data.picture.url) ?? data.picture.url;
   data.fullName = `${data.firstName} ${data.lastName}`;
   data.books?.forEach((book) => {
     if (book.submittedFiles) {
@@ -44,7 +44,7 @@ function transformStrapiAuthor(data: StrapiAuthorData): Author {
   data.books?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   if (data.expert) {
     if (data.expert.picture) {
-      data.expert.picture.url = `${envClient.VITE_STRAPI_URL}${data.expert.picture.url}`;
+      data.expert.picture.url = getStrapiMediaUrl(data.expert.picture.url) ?? data.expert.picture.url;
     }
     data.expert.name = `${data.expert.firstName} ${data.expert.lastName}`;
   }

@@ -14,7 +14,7 @@ import {
   partnershipResponseSchema,
   strapiMediaSchema
 } from "./schema/output.js";
-import { envClient } from "@repo/shared/env-client";
+import { getStrapiMediaUrl } from "@repo/shared/env-client";
 
 // Strapi response types
 interface StrapiResponse<T> {
@@ -33,7 +33,7 @@ type StrapiPartnershipData = Partnership;
 
 // Transform Strapi data to our schema
 function transformStrapiPartnership(data: StrapiPartnershipData): Partnership {
-  data.logo.url = `${envClient.VITE_STRAPI_URL}${data.logo.url}`;
+  data.logo.url = getStrapiMediaUrl(data.logo.url) ?? data.logo.url;
   return partnershipSchema.parse(data);
 }
 

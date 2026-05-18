@@ -85,6 +85,12 @@ echo "==> Starting nginx on 0.0.0.0:${PUBLIC_PORT}"
 nginx -c "$ROOT/.data/nginx/nginx.prod.conf" -p "$ROOT" \
   -e "$ROOT/.data/nginx/logs/error.log" &
 
+echo "==> Syncing Strapi uploads with Object Storage"
+# Downloads any GCS-stored uploads to local disk (restores files from prior deploys)
+# and seeds any committed local files to GCS. Idempotent — safe on every deploy.
+node "$ROOT/scripts/sync-uploads-from-gcs.js" 2>&1 | prefix "sync" || \
+  echo "[sync] GCS sync failed (non-fatal) — continuing with local files only"
+
 echo "==> Starting Strapi on 127.0.0.1:1337 (watchdog)"
 # Strapi crashes when the DB drops a connection. Watchdog restarts it automatically.
 # The fetcher layer retries for up to ~32 s so API calls survive brief Strapi downtime.

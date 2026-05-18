@@ -14,7 +14,7 @@ import {
   teamResponseSchema,
   strapiMediaSchema
 } from "./schema/output.js";
-import { envClient } from "@repo/shared/env-client";
+import { getStrapiMediaUrl } from "@repo/shared/env-client";
 
 // Strapi response types
 interface StrapiResponse<T> {
@@ -33,7 +33,7 @@ type StrapiTeamData = Team;
 
 // Transform Strapi data to our schema
 function transformStrapiTeam(data: StrapiTeamData): Team {
-  data.picture.url = `${envClient.VITE_STRAPI_URL}${data.picture.url}`;
+  data.picture.url = getStrapiMediaUrl(data.picture.url) ?? data.picture.url;
   return teamSchema.parse(data);
 }
 

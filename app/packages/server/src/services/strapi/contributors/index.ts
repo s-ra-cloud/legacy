@@ -14,7 +14,7 @@ import {
   contributorResponseSchema,
   strapiMediaSchema
 } from "./schema/output.js";
-import { envClient } from "@repo/shared/env-client";
+import { getStrapiMediaUrl } from "@repo/shared/env-client";
 
 // Strapi response types
 interface StrapiResponse<T> {
@@ -33,7 +33,7 @@ type StrapiContributorData = Contributor;
 
 // Transform Strapi data to our schema
 function transformStrapiContributor(data: StrapiContributorData): Contributor {
-  data.picture.url = `${envClient.VITE_STRAPI_URL}${data.picture.url}`;
+  data.picture.url = getStrapiMediaUrl(data.picture.url) ?? data.picture.url;
   data.name = `${data.firstName} ${data.lastName}`;
   return contributorSchema.parse(data);
 }
