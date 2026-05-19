@@ -1,7 +1,17 @@
+import type { MetaFunction } from "react-router";
 import Partners from "~/components/pages/manifesto/partners";
 import Roadmap from "~/components/pages/manifesto/roadmap";
 import Video from "~/components/pages/manifesto/video";
 import Vision from "~/components/pages/manifesto/vision";
+
+export const meta: MetaFunction = () => [
+  { title: "Manifesto – Legacy" },
+  {
+    name: "description",
+    content:
+      "Read the Legacy manifesto — our vision for preserving the great conversation of ideas across history and building a lasting intellectual heritage.",
+  },
+];
 
 export default function ManifestoIndexPage() {
   return (

@@ -1,3 +1,4 @@
+import type { MetaFunction } from "react-router";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 import FAQ from "~/components/pages/new-home/FAQ";
@@ -8,6 +9,15 @@ import OpeningBook from "~/components/pages/new-home/OpeningBook";
 import Partnerships from "~/components/pages/new-home/Partnerships";
 import Team from "~/components/pages/new-home/Team";
 import WritingCursor from "~/components/pages/new-home/WritingCursor";
+
+export const meta: MetaFunction = () => [
+  { title: "Home – Legacy" },
+  {
+    name: "description",
+    content:
+      "Legacy is an intellectual platform where great ideas are preserved and shared. Explore our Library, the Great Conversation, and the Knowledge Tree.",
+  },
+];
 
 export default function NewHomePage() {
   const { scrollYProgress } = useScroll();

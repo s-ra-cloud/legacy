@@ -32,7 +32,14 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-export const meta: MetaFunction = () => [{ title: "Legacy" }];
+export const meta: MetaFunction = () => [
+  { title: "Legacy" },
+  {
+    name: "description",
+    content:
+      "Legacy is an intellectual platform dedicated to preserving great ideas — explore the Library, the Great Conversation, and the Knowledge Tree.",
+  },
+];
 
 export function loader({ request }: Route.LoaderArgs) {
   // Root has no `:locale` route param — optional prefix e.g. `/de/home` if first segment is a locale.

@@ -1,6 +1,16 @@
+import type { MetaFunction } from "react-router";
 import Network from "~/components/pages/about/network";
 import Partone from "~/components/pages/about/partone";
 import Team from "~/components/pages/about/team";
+
+export const meta: MetaFunction = () => [
+  { title: "Team – Legacy" },
+  {
+    name: "description",
+    content:
+      "Meet the team behind Legacy — the people dedicated to building a platform that connects thinkers, scholars, and readers across time.",
+  },
+];
 
 export default function TeamIndexPage() {
   return (
