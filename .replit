@@ -161,3 +161,8 @@ build = ["bash", "scripts/build-prod.sh"]
 [postMerge]
 path = "scripts/post-merge.sh"
 timeoutMs = 180000
+
+[userenv]
+
+[userenv.production]
+STRAPI_IMPORT_ON_START = "1"

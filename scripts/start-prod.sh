@@ -94,6 +94,45 @@ if ! node "$ROOT/scripts/sync-uploads-from-gcs.js" 2>&1 | prefix "seed"; then
   exit 1
 fi
 
+# ---------------------------------------------------------------------------
+# One-time Strapi content import (triggered by STRAPI_IMPORT_ON_START=1)
+# ---------------------------------------------------------------------------
+# Set STRAPI_IMPORT_ON_START=1 as a production env var to run the import on
+# the next deployment. A sentinel file (.data/strapi-import-done) is written
+# after a successful import so a container restart within the same deployment
+# never re-runs it. Clear the env var after the deploy completes.
+if [ "${STRAPI_IMPORT_ON_START:-}" = "1" ]; then
+  SENTINEL="$ROOT/.data/strapi-import-done"
+  if [ -f "$SENTINEL" ]; then
+    echo "==> [import] Sentinel present — skipping Strapi import"
+  else
+    EXPORT_FILE="$ROOT/app/apps/strapi/export_20260518143539.tar.gz.enc"
+    if [ ! -f "$EXPORT_FILE" ]; then
+      echo "[FATAL] Import file not found: $EXPORT_FILE"
+      exit 1
+    fi
+    echo "==> [import] Running Strapi content import (this may take a few minutes)…"
+    # stdin is closed (< /dev/null) so Inquirer detects a non-TTY and skips the
+    # interactive confirmation prompt. --force also suppresses CLI prompts.
+    if cd "$ROOT/app/apps/strapi" && \
+       NODE_ENV=production \
+       node_modules/.bin/strapi import \
+         --key oo \
+         --force \
+         -f "$EXPORT_FILE" \
+         < /dev/null 2>&1 | prefix "import"; then
+      touch "$SENTINEL"
+      echo "==> [import] Import succeeded — sentinel written"
+    else
+      echo "[FATAL] Strapi import failed — aborting startup."
+      exit 1
+    fi
+    cd "$ROOT"
+  fi
+  # Unset so Strapi's watchdog-restarted process never sees it.
+  unset STRAPI_IMPORT_ON_START
+fi
+
 echo "==> Starting Strapi on 127.0.0.1:1337 (watchdog)"
 # Strapi crashes when the DB drops a connection. Watchdog restarts it automatically.
 # The fetcher layer retries for up to ~32 s so API calls survive brief Strapi downtime.
