@@ -46,17 +46,25 @@ async function transformStrapiBook(ctx: ServiceContext, data: StrapiBookData): P
     await Promise.all(
       data.gc_contributions.map(async (contribution) => {
         if (contribution.contributorEmail) {
-          const user = await userService.getByEmail(ctx, { email: contribution.contributorEmail }, {});
-          contribution.contributorName = user.name || user.firstName + " " + user.lastName || "";
-          contribution.contributorInstitution = user.institution || "";
+          try {
+            const user = await userService.getByEmail(ctx, { email: contribution.contributorEmail }, {});
+            contribution.contributorName = user.name || user.firstName + " " + user.lastName || "";
+            contribution.contributorInstitution = user.institution || "";
+          } catch {
+            // Contributor email not found in local user table — leave name/institution as-is
+          }
         }
         if (contribution.gc_comments) {
           await Promise.all(
             contribution.gc_comments.map(async (comment) => {
               if (comment.contributorEmail) {
-                const user = await userService.getByEmail(ctx, { email: comment.contributorEmail }, {});
-                comment.contributorName = user.name || user.firstName + " " + user.lastName || "";
-                comment.contributorInstitution = user.institution || "";
+                try {
+                  const user = await userService.getByEmail(ctx, { email: comment.contributorEmail }, {});
+                  comment.contributorName = user.name || user.firstName + " " + user.lastName || "";
+                  comment.contributorInstitution = user.institution || "";
+                } catch {
+                  // Commenter email not found in local user table — leave name/institution as-is
+                }
               }
             })
           );
