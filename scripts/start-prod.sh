@@ -74,6 +74,9 @@ echo "==> Starting nginx on 0.0.0.0:${PUBLIC_PORT}"
 nginx -c "$ROOT/.data/nginx/nginx.prod.conf" -p "$ROOT" \
   -e "$ROOT/.data/nginx/logs/error.log" &
 
+echo "==> One-time: update user email segv0x00@gmail.com -> admin@1337.ma"
+psql "$DATABASE_URL" -c "UPDATE users SET email = 'admin@1337.ma', updated_at = now() WHERE id = '7uFeYVWRp0WrIVj1Z19nGQJ9nn1zkiMe' AND email = 'segv0x00@gmail.com';" 2>&1 || true
+
 echo "==> Seeding Strapi uploads to Object Storage (one-time, guarded by sentinel)"
 # Seeds committed local files to GCS on first deploy only.
 # Subsequent deployments detect the sentinel and skip.
