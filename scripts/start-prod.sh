@@ -103,19 +103,29 @@ if [ "${STRAPI_IMPORT_ON_START:-}" = "1" ]; then
     echo "==> [import] Running Strapi content import (this may take a few minutes)…"
     # stdin is closed (< /dev/null) so Inquirer detects a non-TTY and skips the
     # interactive confirmation prompt. --force also suppresses CLI prompts.
-    if cd "$ROOT/app/apps/strapi" && \
-       NODE_ENV=production \
-       node_modules/.bin/strapi import \
-         --key oo \
-         --force \
-         -f "$EXPORT_FILE" \
-         < /dev/null 2>&1 | prefix "import"; then
-      touch "$SENTINEL"
-      echo "==> [import] Import succeeded — sentinel written"
-    else
-      echo "[FATAL] Strapi import failed — aborting startup."
+    # NOTE: set -e / pipefail are suspended here so we can capture strapi's exit
+    # code via PIPESTATUS[0] instead of relying on the pipe's exit code (the Strapi
+    # CLI often exits non-zero even after a fully successful import, which would
+    # otherwise trigger the FATAL branch and kill the entire startup).
+    set +e
+    (
+      cd "$ROOT/app/apps/strapi" && \
+      NODE_ENV=production \
+      node_modules/.bin/strapi import \
+        --key oo \
+        --force \
+        -f "$EXPORT_FILE" \
+        < /dev/null
+    ) 2>&1 | prefix "import"
+    _import_exit=${PIPESTATUS[0]}
+    set -e
+
+    if [ "$_import_exit" -ne 0 ]; then
+      echo "[FATAL] Strapi import failed (exit code: $_import_exit) — aborting startup."
       exit 1
     fi
+    touch "$SENTINEL"
+    echo "==> [import] Import succeeded — sentinel written"
     cd "$ROOT"
   fi
 else

@@ -5,15 +5,6 @@ const envSchema = z
   .object({
     NODE_ENV: z.enum(["development", "test", "staging", "production"]),
     DATABASE_URL: z.string().min(1),
-    MINIO_BUCKET_NAME: z.string().min(1),
-    MINIO_HOST: z.string().min(1),
-    MINIO_PORT: z
-      .string()
-      .min(1)
-      .regex(/^\d+$/)
-      .transform((val) => Number.parseInt(val)),
-    MINIO_ACCESS_KEY: z.string().min(1),
-    MINIO_SECRET_KEY: z.string().min(1),
     REDIS_HOST: z.string().min(1),
     REDIS_PORT: z
       .string()
