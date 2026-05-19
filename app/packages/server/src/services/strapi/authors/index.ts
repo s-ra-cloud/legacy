@@ -14,7 +14,7 @@ import {
   authorResponseSchema,
   strapiMediaSchema
 } from "./schema/output.js";
-import { envClient, getStrapiMediaUrl } from "@repo/shared/env-client";
+import { getStrapiMediaUrl } from "@repo/shared/env-client";
 
 // Strapi response types
 interface StrapiResponse<T> {
