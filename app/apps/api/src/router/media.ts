@@ -14,7 +14,6 @@ import { paramIdSchema } from "@repo/shared";
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
 import { validator } from "hono-openapi/zod";
-import { stream } from "hono/streaming";
 import { z } from "zod";
 import "zod-openapi";
 import { protectedRoute } from "~/middlewares/hono.js";
@@ -153,18 +152,14 @@ mediaRouter.get(
     const { download } = c.req.valid("query");
     const ctx = createServiceContext("en", c.var.user);
     const mediaInfo = await mediaService.get(ctx, id);
-    const streamBuff = await ctx.minio.getFileStream(mediaInfo.objectKey);
     const contentType = mediaInfo.type;
-
     c.res.headers.append("Content-Type", contentType);
-
     if (download) {
       c.res.headers.append(
         "Content-Disposition",
         `attachment; filename=${mediaInfo.fileName}`,
       );
     }
-
-    return stream(c, (stream) => stream.pipe(streamBuff));
+    return c.json(mediaInfo);
   },
 );

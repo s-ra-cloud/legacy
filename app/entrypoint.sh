@@ -11,11 +11,6 @@ until pnpm --filter @repo/db exec prisma generate; do
   sleep 2;
 done;
 
-until curl -I http://minio:9000/minio/health/live; do
-  echo "Waiting for MinIO to be ready ..."
-  sleep 2
-done
-
 echo "Running database migrations ..."
 pnpm --filter @repo/db exec prisma db push --skip-generate
 

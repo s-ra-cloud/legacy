@@ -34,50 +34,6 @@ services:
       retries: 10
       start_period: 10s
 
-  minio:
-    container_name: legacy_minio
-    image: "minio/minio:latest"
-    restart: always
-    command: server /data --console-address ":9001"
-    volumes:
-      - "minio:/data"
-    env_file: .env
-    networks:
-      - network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 15s
-
-  minio-init:
-    container_name: legacy_minio_init
-    image: "minio/mc:latest"
-    depends_on:
-      minio:
-        condition: service_healthy
-    env_file: .env
-    entrypoint: >
-      sh -c "
-      until mc alias set minio http://minio:9000 $$MINIO_ROOT_USER $$MINIO_ROOT_PASSWORD; do
-        echo 'Waiting for MinIO to be ready...'; sleep 2;
-      done;
-      if ! mc admin accesskey list minio $$MINIO_ROOT_USER | grep $$MINIO_ACCESS_KEY; then
-        echo 'Creating new access key...';
-        mc admin accesskey create minio $$MINIO_ROOT_USER --access-key $$MINIO_ACCESS_KEY --secret-key $$MINIO_SECRET_KEY;
-      else
-        echo 'Access key already exists.';
-      fi;
-      if ! mc ls minio/$$MINIO_BUCKET_NAME > /dev/null 2>&1; then
-        echo 'Creating bucket...';
-        mc mb minio/$$MINIO_BUCKET_NAME;
-      fi;
-      "
-    restart: "no"
-    networks:
-      - network
-
   app:
     build:
       context: .
@@ -99,10 +55,6 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-      minio:
-        condition: service_healthy
-      minio-init:
-        condition: service_completed_successfully
 
   server:
     image: nginx:alpine
@@ -120,7 +72,6 @@ services:
 volumes:
   data:
   redis:
-  minio:
 
 networks:
   network:
