@@ -1,19 +1,24 @@
 #!/usr/bin/env node
 /**
- * One-time migration: seeds Strapi uploads into GCS on the first deployment.
+ * Startup sync for Strapi uploads ↔ GCS (Replit Object Storage).
  *
- * Guard logic:
- *   1. If sentinel (_seeded_v1) already exists in GCS → skip (already done).
- *   2. Upload any local files in public/uploads/ that are missing from GCS.
- *   3. After uploading, LIST GCS objects in the uploads prefix.
- *      If the list is empty, the migration is considered failed → exit(1).
- *   4. Only write the sentinel once GCS is confirmed non-empty.
+ * Two-phase logic, run on every pod start:
  *
- * This prevents the sentinel from being written when seeding produces 0 objects,
- * which would permanently lock out future migration attempts.
+ * PHASE 1 — one-time initial seeding (skipped once sentinel exists):
+ *   1a. If _seeded_v1 sentinel exists in GCS → skip straight to Phase 2.
+ *   1b. Upload any local files missing from GCS.
+ *   1c. Verify GCS prefix is non-empty (refuse to lock in empty sentinel).
+ *   1d. Write sentinel.
+ *
+ * PHASE 2 — restore GCS → local disk (runs on every cold start):
+ *   2a. List all objects under GCS_PREFIX (excluding sentinel).
+ *   2b. Download any that are missing locally.
+ *   This ensures files uploaded through Strapi after the initial seeding
+ *   survive a pod restart and are available on local disk.
+ *
+ * Exit code: non-zero on any failure (startup must abort on failure).
  *
  * Run: node scripts/sync-uploads-from-gcs.js
- * Exit code: non-zero on any failure (startup must abort on failure).
  */
 
 'use strict';
@@ -62,39 +67,37 @@ function mimeFromExt(ext) {
   return map[ext.toLowerCase()] || 'application/octet-stream';
 }
 
-async function countGCSObjects(bucket) {
-  const [files] = await bucket.getFiles({ prefix: GCS_PREFIX + '/', maxResults: 1000 });
-  // Exclude the sentinel itself from the count.
-  return files.filter(f => f.name !== SENTINEL_OBJECT).length;
+/** List all real upload objects in GCS (excludes sentinel). */
+async function listGCSUploads(bucket) {
+  const [files] = await bucket.getFiles({ prefix: GCS_PREFIX + '/' });
+  return files.filter(f => f.name !== SENTINEL_OBJECT);
 }
 
-async function main() {
-  const storage = createStorage();
-  const bucket = storage.bucket(BUCKET_NAME);
-
-  // Step 1: check if migration has already been verified and completed.
+// ---------------------------------------------------------------------------
+// PHASE 1: one-time seeding of committed local files → GCS
+// ---------------------------------------------------------------------------
+async function seedLocalToGCS(bucket) {
   const [alreadySeeded] = await bucket.file(SENTINEL_OBJECT).exists();
   if (alreadySeeded) {
-    console.log('=== Seeding already completed (sentinel present) — skipping ===');
+    console.log('[seed] Sentinel present — initial seeding already done, skipping Phase 1.');
     return;
   }
 
-  console.log('=== First-run seeding: uploading committed files → GCS ===');
+  console.log('[seed] First-run seeding: uploading committed local files → GCS');
 
-  // Step 2: upload any local files missing from GCS.
   let seeded = 0;
   let skipped = 0;
   const errors = [];
 
   if (!fs.existsSync(LOCAL_UPLOADS_DIR)) {
-    console.log('No local uploads directory found — will verify GCS is pre-populated.');
+    console.log('[seed] No local uploads directory found — will verify GCS is pre-populated.');
   } else {
     const localFiles = fs.readdirSync(LOCAL_UPLOADS_DIR).filter(f => {
       const stat = fs.statSync(path.join(LOCAL_UPLOADS_DIR, f));
       return stat.isFile();
     });
 
-    console.log(`  Found ${localFiles.length} local file(s) to evaluate.`);
+    console.log(`[seed]   Found ${localFiles.length} local file(s) to evaluate.`);
 
     for (const filename of localFiles) {
       const objectName = `${GCS_PREFIX}/${filename}`;
@@ -114,47 +117,109 @@ async function main() {
           contentType: mime,
           resumable: false,
         });
-        console.log(`  Seeded: ${filename}`);
+        console.log(`[seed]   Seeded: ${filename}`);
         seeded++;
       } catch (err) {
-        console.error(`  FAILED to seed ${filename}:`, err.message);
+        console.error(`[seed]   FAILED to seed ${filename}:`, err.message);
         errors.push(filename);
       }
     }
 
-    console.log(`  Seeded: ${seeded}, Already in GCS: ${skipped}, Failed: ${errors.length}`);
+    console.log(`[seed]   Seeded: ${seeded}, Already in GCS: ${skipped}, Failed: ${errors.length}`);
 
     if (errors.length > 0) {
-      console.error('FATAL: Some files failed to seed:', errors);
+      console.error('[seed] FATAL: Some files failed to seed:', errors);
       process.exit(1);
     }
   }
 
-  // Step 3: verify GCS actually contains objects — refuse to write the sentinel
-  // if the bucket prefix is empty. This prevents a zero-file sentinel lock-in.
-  console.log('=== Verifying GCS object count before writing sentinel ===');
-  const gcsCount = await countGCSObjects(bucket);
-  console.log(`  GCS objects in ${GCS_PREFIX}/: ${gcsCount}`);
+  // Verify GCS is non-empty before writing the sentinel to prevent lock-in on
+  // an empty bucket.
+  console.log('[seed] Verifying GCS object count before writing sentinel…');
+  const gcsFiles = await listGCSUploads(bucket);
+  const gcsCount = gcsFiles.length;
+  console.log(`[seed]   GCS objects in ${GCS_PREFIX}/: ${gcsCount}`);
 
   if (gcsCount === 0) {
     console.error(
-      'FATAL: GCS prefix is empty after seeding. ' +
+      '[seed] FATAL: GCS prefix is empty after seeding. ' +
       'No local files were available to upload and GCS has no pre-existing objects. ' +
       'Refusing to write sentinel — fix the upload source and redeploy.'
     );
     process.exit(1);
   }
 
-  // Step 4: write sentinel only after GCS is confirmed non-empty.
   await bucket.file(SENTINEL_OBJECT).save(
     `seeded at ${new Date().toISOString()} — ${gcsCount} object(s) verified in GCS`,
     { contentType: 'text/plain', resumable: false }
   );
 
-  console.log(`=== Seeding complete — sentinel written (${gcsCount} GCS objects verified) ===`);
+  console.log(`[seed] Seeding complete — sentinel written (${gcsCount} GCS objects verified).`);
+}
+
+// ---------------------------------------------------------------------------
+// PHASE 2: restore GCS → local disk on every cold start
+// ---------------------------------------------------------------------------
+async function restoreGCSToLocal(bucket) {
+  console.log('[restore] Syncing GCS → local uploads dir…');
+
+  const gcsFiles = await listGCSUploads(bucket);
+
+  if (gcsFiles.length === 0) {
+    console.log('[restore] GCS prefix is empty — nothing to restore.');
+    return;
+  }
+
+  fs.mkdirSync(LOCAL_UPLOADS_DIR, { recursive: true });
+
+  let downloaded = 0;
+  let skipped = 0;
+  const errors = [];
+
+  for (const gcsFile of gcsFiles) {
+    const filename = path.basename(gcsFile.name);
+    if (!filename) continue;
+
+    const localPath = path.join(LOCAL_UPLOADS_DIR, filename);
+    if (fs.existsSync(localPath)) {
+      skipped++;
+      continue;
+    }
+
+    try {
+      await gcsFile.download({ destination: localPath });
+      console.log(`[restore]   Downloaded: ${filename}`);
+      downloaded++;
+    } catch (err) {
+      console.error(`[restore]   FAILED to download ${filename}:`, err.message);
+      errors.push(filename);
+    }
+  }
+
+  console.log(
+    `[restore] Done — Downloaded: ${downloaded}, Already local: ${skipped}, Failed: ${errors.length}`
+  );
+
+  if (errors.length > 0) {
+    console.error('[restore] FATAL: Some files could not be restored from GCS:', errors);
+    process.exit(1);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Entry point
+// ---------------------------------------------------------------------------
+async function main() {
+  const storage = createStorage();
+  const bucket = storage.bucket(BUCKET_NAME);
+
+  await seedLocalToGCS(bucket);
+  await restoreGCSToLocal(bucket);
+
+  console.log('[sync] Startup sync complete.');
 }
 
 main().catch((err) => {
-  console.error('FATAL: Seeding failed:', err);
+  console.error('FATAL: Startup sync failed:', err);
   process.exit(1);
 });
