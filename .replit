@@ -157,3 +157,7 @@ externalPort = 9000
 deploymentTarget = "autoscale"
 run = ["bash", "scripts/start-prod.sh"]
 build = ["bash", "scripts/build-prod.sh"]
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 180000
