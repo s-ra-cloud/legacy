@@ -38,7 +38,6 @@
     "date-fns": "^4.1.0",
     "exceljs": "^4.4.0",
     "ioredis": "^5.6.1",
-    "minio": "^8.0.5",
     "nodemailer": "^7.0.2",
     "option-t": "^53.0.0",
     "pino": "^9.6.0",

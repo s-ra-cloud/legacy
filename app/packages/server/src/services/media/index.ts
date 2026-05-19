@@ -25,9 +25,7 @@ async function get(ctx: ServiceContext, id: string) {
 }
 
 async function create(ctx: ServiceContext, file: File) {
-  const objectKey = await ctx.minio.uploadToMinio(file);
-
-  invariantNotFound(objectKey);
+  const objectKey = `${crypto.randomUUID()}_${file.name}`;
 
   const info = await mediaActions.create(ctx, {
     name: file.name,

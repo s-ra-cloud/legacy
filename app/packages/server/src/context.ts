@@ -2,8 +2,6 @@ import type { KyselyDB } from "@repo/db";
 import { db } from "@repo/db";
 import type { Redis } from "ioredis";
 import type { AuthUser } from "./lib/auth/index.js";
-import type { MinioClient } from "./lib/minio.js";
-import { minioClient } from "./lib/minio.js";
 import { redis } from "./lib/redis.js";
 import { DBLogger } from "./utils/logger/index.js";
 
@@ -11,7 +9,6 @@ interface ServiceContext {
   db: KyselyDB;
   user: AuthUser;
   kv: Redis;
-  minio: MinioClient;
   locale: string;
   logger: DBLogger;
 }
@@ -44,7 +41,6 @@ function createServiceContext<T extends AuthUser>(
       db,
       user,
       kv: redis,
-      minio: minioClient,
       locale,
       logger: new DBLogger(db, user),
     };
@@ -53,7 +49,6 @@ function createServiceContext<T extends AuthUser>(
   return {
     db,
     kv: redis,
-    minio: minioClient,
     locale,
   };
 }
