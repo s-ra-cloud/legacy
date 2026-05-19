@@ -43,7 +43,13 @@ uploadsRouter.get("/:filename{.+}", async (c) => {
     }
 
     const [metadata]: [FileMetadata, unknown] = await gcsFile.getMetadata();
-    const contentType = metadata.contentType ?? "application/octet-stream";
+    let contentType = metadata.contentType ?? "application/octet-stream";
+    // Serve HTML files as plain text so Vite's dev-server middleware does not
+    // inject its HMR client script into book content that is fetched as raw
+    // text by the client-side book viewer.
+    if (contentType === "text/html" || filename.toLowerCase().endsWith(".html")) {
+      contentType = "text/plain; charset=utf-8";
+    }
 
     const readStream = gcsFile.createReadStream();
 
