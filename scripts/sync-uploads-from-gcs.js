@@ -16,7 +16,8 @@
  *   This ensures files uploaded through Strapi after the initial seeding
  *   survive a pod restart and are available on local disk.
  *
- * Exit code: non-zero on any failure (startup must abort on failure).
+ * Exit code: non-zero on Phase 1 failures (startup aborts). Phase 2 restore
+ * failures are non-fatal: a warning is emitted and startup continues.
  *
  * Run: node scripts/sync-uploads-from-gcs.js
  */
@@ -157,6 +158,30 @@ async function seedLocalToGCS(bucket) {
   console.log(`[seed] Seeding complete — sentinel written (${gcsCount} GCS objects verified).`);
 }
 
+const RESTORE_CONCURRENCY = 10;
+
+/**
+ * Run async tasks with a bounded concurrency pool.
+ * @param {Array} items - items to process
+ * @param {number} limit - max concurrent tasks
+ * @param {Function} fn - async function receiving each item
+ */
+async function withConcurrencyLimit(items, limit, fn) {
+  const results = [];
+  let index = 0;
+
+  async function worker() {
+    while (index < items.length) {
+      const i = index++;
+      results[i] = await fn(items[i]);
+    }
+  }
+
+  const workers = Array.from({ length: Math.min(limit, items.length) }, worker);
+  await Promise.all(workers);
+  return results;
+}
+
 // ---------------------------------------------------------------------------
 // PHASE 2: restore GCS → local disk on every cold start
 // ---------------------------------------------------------------------------
@@ -176,14 +201,14 @@ async function restoreGCSToLocal(bucket) {
   let skipped = 0;
   const errors = [];
 
-  for (const gcsFile of gcsFiles) {
+  await withConcurrencyLimit(gcsFiles, RESTORE_CONCURRENCY, async (gcsFile) => {
     const filename = path.basename(gcsFile.name);
-    if (!filename) continue;
+    if (!filename) return;
 
     const localPath = path.join(LOCAL_UPLOADS_DIR, filename);
     if (fs.existsSync(localPath)) {
       skipped++;
-      continue;
+      return;
     }
 
     try {
@@ -191,18 +216,20 @@ async function restoreGCSToLocal(bucket) {
       console.log(`[restore]   Downloaded: ${filename}`);
       downloaded++;
     } catch (err) {
-      console.error(`[restore]   FAILED to download ${filename}:`, err.message);
+      console.warn(`[restore]   WARNING: Failed to download ${filename}: ${err.message}`);
       errors.push(filename);
     }
-  }
+  });
 
   console.log(
-    `[restore] Done — Downloaded: ${downloaded}, Already local: ${skipped}, Failed: ${errors.length}`
+    `[restore] Summary — Downloaded: ${downloaded}, Already local: ${skipped}, Failed: ${errors.length}`
   );
 
   if (errors.length > 0) {
-    console.error('[restore] FATAL: Some files could not be restored from GCS:', errors);
-    process.exit(1);
+    console.warn(
+      `[restore] WARNING: ${errors.length} file(s) could not be restored from GCS and will be missing on disk. ` +
+      `Startup will continue. Failed objects: ${errors.join(', ')}`
+    );
   }
 }
 
