@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Production runner for autoscale deployment.
-# Starts Redis, MinIO, Strapi, API, Admin, Client behind nginx on $PORT (default 5000).
+# Starts Redis, Strapi, API, Admin, Client behind nginx on $PORT (default 5000).
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -24,24 +24,17 @@ if [ -f "$ROOT/app/.env" ]; then
   set +a
 fi
 
-# Point MinIO-aware services at the in-container MinIO unless explicitly overridden.
-export MINIO_HOST="${MINIO_HOST:-127.0.0.1}"
-export MINIO_PORT="${MINIO_PORT:-9000}"
-export MINIO_USE_SSL="${MINIO_USE_SSL:-false}"
-export MINIO_BUCKET_NAME="${MINIO_BUCKET_NAME:-uploads}"
-export MINIO_ACCESS_KEY="${MINIO_ACCESS_KEY:-${MINIO_ROOT_USER:-}}"
-export MINIO_SECRET_KEY="${MINIO_SECRET_KEY:-${MINIO_ROOT_PASSWORD:-}}"
 export REDIS_HOST="${REDIS_HOST:-127.0.0.1}"
 export REDIS_PORT="${REDIS_PORT:-6379}"
 
-mkdir -p .data/minio .data/nginx/logs .data/nginx/tmp
+mkdir -p .data/nginx/logs .data/nginx/tmp
 
 # Copy nginx mime.types into a writable location (nix store is read-only).
 cp -n "$(dirname "$(dirname "$(readlink -f "$(which nginx)")")")/conf/mime.types" \
   .data/nginx/mime.types 2>/dev/null || true
 
 # Free any ports left over from a previous container run.
-for port in 3000 3001 5173 1337 9000; do
+for port in 3000 3001 5173 1337; do
   fuser -k "${port}/tcp" 2>/dev/null || true
 done
 
@@ -68,10 +61,6 @@ watchdog() {
 
 echo "==> Starting Redis on 127.0.0.1:6379"
 redis-server --port 6379 --bind 127.0.0.1 --save "" --appendonly no --daemonize yes
-
-echo "==> Starting MinIO on 127.0.0.1:9000"
-minio server .data/minio --address 127.0.0.1:9000 --console-address 127.0.0.1:9001 \
-  > .data/minio.log 2>&1 &
 
 # Start nginx RIGHT NOW so the deployment health probe on $PORT passes immediately.
 # Services (Strapi, API, etc.) aren't up yet so nginx will 502 briefly — that's fine.
