@@ -250,8 +250,19 @@ export function BookContentViewer({ book, user }: { book: Book; user: AuthUser |
         useEffect(() => {
                 if (!rawContent) return;
 
+                // Strip any Vite dev-server artefacts that may be baked into browser-cached
+                // responses (the old uploads route served HTML as text/html, which caused
+                // Vite to inject its HMR client into the response body).
+                const strippedRaw = rawContent
+                        // Remove all <script> … </script> blocks (covers Vite HMR injection)
+                        .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
+                        // Remove any unclosed <script> tags left behind
+                        .replace(/<script\b[^>]*>/gi, "")
+                        // Remove any stray bare import("/@vite/client") text nodes
+                        .replace(/import\(["']\/[@]vite\/client["']\)/g, "");
+
                 // Extract style tags from original HTML before sanitization
-                const $original = load(rawContent);
+                const $original = load(strippedRaw);
                 const originalStyles: string[] = [];
                 $original("style").each((_, el) => {
                         const styleContent = $original(el).html() || "";
@@ -261,9 +272,14 @@ export function BookContentViewer({ book, user }: { book: Book; user: AuthUser |
                 });
 
                 const DOMPurify = createDOMPurify(window);
-                const cleanHtml = DOMPurify.sanitize(rawContent) || "";
+                const cleanHtml = DOMPurify.sanitize(strippedRaw) || "";
 
                 const $ = load(cleanHtml);
+
+                // Remove any head-only elements that may have drifted into the body
+                // after sanitisation (Word-exported HTML often has <meta>, <link> tags
+                // in the head that DOMPurify keeps as orphan nodes).
+                $("script, meta, link[rel], head").remove();
 
                 // Rewrite legacy-domain URLs embedded in the HTML file content.
                 // Uploaded books may contain absolute image/link URLs pointing to the

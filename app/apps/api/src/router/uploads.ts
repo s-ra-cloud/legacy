@@ -44,10 +44,11 @@ uploadsRouter.get("/:filename{.+}", async (c) => {
 
     const [metadata]: [FileMetadata, unknown] = await gcsFile.getMetadata();
     let contentType = metadata.contentType ?? "application/octet-stream";
+    const isHtml = contentType === "text/html" || filename.toLowerCase().endsWith(".html");
     // Serve HTML files as plain text so Vite's dev-server middleware does not
     // inject its HMR client script into book content that is fetched as raw
     // text by the client-side book viewer.
-    if (contentType === "text/html" || filename.toLowerCase().endsWith(".html")) {
+    if (isHtml) {
       contentType = "text/plain; charset=utf-8";
     }
 
@@ -64,10 +65,17 @@ uploadsRouter.get("/:filename{.+}", async (c) => {
       },
     });
 
+    // HTML book files must NOT be cached as immutable — the content-type was
+    // corrected after initial deployment and browsers with old cached responses
+    // (served as text/html with Vite HMR injection) must be able to re-fetch.
+    const cacheControl = isHtml
+      ? "public, max-age=0, must-revalidate"
+      : "public, max-age=2592000, immutable";
+
     return new Response(webStream, {
       headers: {
         "Content-Type": contentType,
-        "Cache-Control": "public, max-age=2592000, immutable",
+        "Cache-Control": cacheControl,
       },
     });
   } catch (err) {
