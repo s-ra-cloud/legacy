@@ -141,14 +141,14 @@ export default function FAQ() {
                         style={{ transformOrigin: "left" }}
                         className="h-px w-12 bg-gold/40 mb-6"
                       />
-                      <motion.p
+                      <motion.div
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.15 }}
                         className="text-charcoal/70 leading-relaxed text-xl italic font-serif"
                       >
                         {faq.a}
-                      </motion.p>
+                      </motion.div>
                     </div>
                   </motion.div>
                 )}
