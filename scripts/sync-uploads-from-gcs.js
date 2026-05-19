@@ -100,12 +100,15 @@ async function seedLocalToGCS(bucket) {
 
     console.log(`[seed]   Found ${localFiles.length} local file(s) to evaluate.`);
 
-    for (const filename of localFiles) {
+    // Run existence checks and uploads concurrently to avoid serialising
+    // hundreds of GCS API round-trips (each ~100–200 ms) which would push
+    // container startup time past Cloud Run's health-check timeout.
+    await withConcurrencyLimit(localFiles, 20, async (filename) => {
       const objectName = `${GCS_PREFIX}/${filename}`;
       const [exists] = await bucket.file(objectName).exists();
       if (exists) {
         skipped++;
-        continue;
+        return;
       }
 
       const localPath = path.join(LOCAL_UPLOADS_DIR, filename);
@@ -124,7 +127,7 @@ async function seedLocalToGCS(bucket) {
         console.error(`[seed]   FAILED to seed ${filename}:`, err.message);
         errors.push(filename);
       }
-    }
+    });
 
     console.log(`[seed]   Seeded: ${seeded}, Already in GCS: ${skipped}, Failed: ${errors.length}`);
 
