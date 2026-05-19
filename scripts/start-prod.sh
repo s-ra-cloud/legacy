@@ -131,6 +131,8 @@ if [ "${STRAPI_IMPORT_ON_START:-}" = "1" ]; then
   fi
   # Unset so Strapi's watchdog-restarted process never sees it.
   unset STRAPI_IMPORT_ON_START
+else
+  echo "==> [import] STRAPI_IMPORT_ON_START not set — skipping Strapi content import"
 fi
 
 echo "==> Starting Strapi on 127.0.0.1:1337 (watchdog)"

@@ -165,4 +165,3 @@ timeoutMs = 180000
 [userenv]
 
 [userenv.production]
-STRAPI_IMPORT_ON_START = "1"
