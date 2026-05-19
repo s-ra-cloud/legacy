@@ -50,6 +50,13 @@ export const getStrapiFetchUrl = () => {
 export const getStrapiMediaUrl = (url?: string) => {
   if (!url) return undefined;
 
+  // Strip legacy domain so old imported content renders correctly.
+  // e.g. https://legacy-um6p.1337.ma/strapi/uploads/foo.png → /strapi/uploads/foo.png
+  const LEGACY_ORIGIN = "https://legacy-um6p.1337.ma";
+  if (url.startsWith(LEGACY_ORIGIN)) {
+    url = url.slice(LEGACY_ORIGIN.length);
+  }
+
   // If URL is already absolute, return as-is
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return url;
