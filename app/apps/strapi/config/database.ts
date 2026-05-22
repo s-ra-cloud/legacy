@@ -39,17 +39,24 @@ export default ({ env }) => {
           rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
         },
         schema: env('DATABASE_SCHEMA', 'public'),
+        // TCP keepalive — prevents the managed-DB server from silently
+        // dropping idle connections after its own idle-timeout threshold.
+        // Without this Strapi crashes with "Connection terminated unexpectedly"
+        // every hour or two of low traffic.
+        keepAlive: true,
+        keepAliveInitialDelayMillis: 10000,
       },
       pool: {
         min: env.int('DATABASE_POOL_MIN', 0),
         max: env.int('DATABASE_POOL_MAX', 5),
-        idleTimeoutMillis: env.int('DATABASE_POOL_IDLE_TIMEOUT', 30000),
+        // Release idle connections after 10 s — well inside any managed-DB
+        // idle-connection timeout — so the pool never hands out stale sockets.
+        idleTimeoutMillis: env.int('DATABASE_POOL_IDLE_TIMEOUT', 10000),
         reapIntervalMillis: env.int('DATABASE_POOL_REAP_INTERVAL', 1000),
         createTimeoutMillis: env.int('DATABASE_POOL_CREATE_TIMEOUT', 60000),
-        // KEY FIX (same as Future Science): listen for socket errors on every
-        // new connection and mark it _invalid immediately. Knex/tarn then
-        // destroys the broken socket instead of handing it out to the next
-        // query — preventing the "pool full of zombies → timeout" crash.
+        // Mark a connection as invalid the moment its socket emits an error.
+        // Knex/tarn then destroys the broken socket before handing it out,
+        // preventing the "pool full of zombies → timeout" crash.
         afterCreate: (conn: any, done: (err: Error | null, conn: any) => void) => {
           conn.on('error', () => {
             conn._invalid = true;
