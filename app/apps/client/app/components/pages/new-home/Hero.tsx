@@ -7,6 +7,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
+import { $api } from "@repo/ui";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type Philosopher = {
@@ -15,31 +16,43 @@ type Philosopher = {
   quote: string;
   image?: string;
   era: string;
+  index: number;
+  showOnMobile: boolean;
 };
 
-const philosophers: readonly [
-  Philosopher,
-  Philosopher,
-  Philosopher,
-  Philosopher,
-  Philosopher,
-  Philosopher,
-  Philosopher,
-  Philosopher,
-  Philosopher,
-  Philosopher,
-] = [
-  { name: "Socrates", dates: "c. 470–399 BC", era: "Classical Greek", quote: "The unexamined life is not worth living.", image: "/assets/Hero-philosopher/socrates.png" },
-  { name: "Plato", dates: "c. 428–348 BC", era: "Classical Greek", quote: "Thinking: the talking of the soul with itself.", image: "/assets/Hero-philosopher/plato.png" },
-  { name: "Aristotle", dates: "384–322 BC", era: "Classical Greek", quote: "Knowing yourself is the beginning of all wisdom.", image: "/assets/Hero-philosopher/aristotle.png" },
-  { name: "Confucius", dates: "551–479 BC", era: "Chinese Antiquity", quote: "Our greatest glory is not in never falling, but in rising every time we fall." },
-  { name: "Buddha", dates: "c. 563–483 BC", era: "Indian Antiquity", quote: "All that we are is the result of what we have thought." },
-  { name: "Avicenna", dates: "980–1037", era: "Islamic Golden Age", quote: "Knowledge is the conformity of the object and the intellect." },
-  { name: "Averroes", dates: "1126–1198", era: "Islamic Golden Age", quote: "Truth does not contradict truth." },
-  { name: "Descartes", dates: "1596–1650", era: "Early Modern Philosophy", quote: "I think, therefore I am." },
-  { name: "Kant", dates: "1724–1804", era: "Enlightenment", quote: "Act so that the maxim of your will could be a universal law." },
-  { name: "Nietzsche", dates: "1844–1900", era: "Modern Philosophy", quote: "He who has a why to live can bear almost any how." },
+const HERO_PHILOSOPHERS_FALLBACK: readonly Philosopher[] = [
+  { name: "Socrates", dates: "c. 470–399 BC", era: "Classical Greek", quote: "The unexamined life is not worth living.", image: "/assets/Hero-philosopher/socrates.png", index: 1, showOnMobile: true },
+  { name: "Plato", dates: "c. 428–348 BC", era: "Classical Greek", quote: "Thinking: the talking of the soul with itself.", image: "/assets/Hero-philosopher/plato.png", index: 2, showOnMobile: true },
+  { name: "Aristotle", dates: "384–322 BC", era: "Classical Greek", quote: "Knowing yourself is the beginning of all wisdom.", image: "/assets/Hero-philosopher/aristotle.png", index: 3, showOnMobile: false },
+  { name: "Confucius", dates: "551–479 BC", era: "Chinese Antiquity", quote: "Our greatest glory is not in never falling, but in rising every time we fall.", index: 4, showOnMobile: true },
+  { name: "Buddha", dates: "c. 563–483 BC", era: "Indian Antiquity", quote: "All that we are is the result of what we have thought.", index: 5, showOnMobile: false },
+  { name: "Avicenna", dates: "980–1037", era: "Islamic Golden Age", quote: "Knowledge is the conformity of the object and the intellect.", index: 6, showOnMobile: false },
+  { name: "Averroes", dates: "1126–1198", era: "Islamic Golden Age", quote: "Truth does not contradict truth.", index: 7, showOnMobile: false },
+  { name: "Descartes", dates: "1596–1650", era: "Early Modern Philosophy", quote: "I think, therefore I am.", index: 8, showOnMobile: true },
+  { name: "Kant", dates: "1724–1804", era: "Enlightenment", quote: "Act so that the maxim of your will could be a universal law.", index: 9, showOnMobile: false },
+  { name: "Nietzsche", dates: "1844–1900", era: "Modern Philosophy", quote: "He who has a why to live can bear almost any how.", index: 10, showOnMobile: false },
 ];
+
+const SLOT_GRID_CLASSES: Record<number, string> = {
+  1: "max-md:col-start-1 max-md:row-start-1 max-md:min-h-[120px] md:col-start-1 md:row-start-1 md:row-span-2",
+  2: "max-md:col-start-2 max-md:row-start-1 max-md:min-h-[120px] md:col-start-2 md:row-start-1 md:min-h-0",
+  3: "col-start-3 row-start-1 md:col-start-3 md:row-start-1",
+  4: "max-md:col-start-2 max-md:row-start-3 max-md:min-h-[120px] md:col-start-4 md:row-start-1 md:min-h-0",
+  5: "col-start-5 row-start-1 row-span-2 md:col-start-5 md:row-start-1 md:row-span-2",
+  6: "col-start-1 row-start-3 row-span-2 md:col-start-1 md:row-start-3 md:row-span-2",
+  7: "col-start-2 row-start-4 md:col-start-2 md:row-start-4",
+  8: "max-md:col-start-1 max-md:row-start-3 max-md:min-h-[120px] md:col-start-3 md:row-start-4 md:min-h-0",
+  9: "md:col-start-4 md:row-start-4 md:min-h-0",
+  10: "col-start-5 row-start-3 row-span-2 md:col-start-5 md:row-start-3 md:row-span-2",
+};
+
+const SLOT_RENDER_ORDER = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
+const CENTER_AFTER_SLOT = 5;
+
+function slotClassName(philosopher: Philosopher): string {
+  const base = SLOT_GRID_CLASSES[philosopher.index] ?? "";
+  return philosopher.showOnMobile ? base : `${base} max-md:hidden`.trim();
+}
 
 const SCRIPTS: readonly [
   { lang: string; text: string },
@@ -286,10 +299,48 @@ function PortraitTile({
   );
 }
 
+function mapApiPhilosopher(item: {
+  name: string;
+  dates: string;
+  era: string;
+  quote: string;
+  index: number;
+  showOnMobile: boolean;
+  image?: { url: string } | null;
+}): Philosopher {
+  return {
+    name: item.name,
+    dates: item.dates,
+    era: item.era,
+    quote: item.quote,
+    index: item.index,
+    showOnMobile: item.showOnMobile,
+    image: item.image?.url,
+  };
+}
+
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const [hovered, setHovered] = useState<Philosopher | null>(null);
   const [hoverInteractionsEnabled, setHoverInteractionsEnabled] = useState(true);
+  const { data } = $api.useQuery("get", "/hero-philosophers", {
+    params: { query: { limit: 10, sort: "index:asc" } },
+  });
+
+  const philosophers = useMemo(() => {
+    const apiItems = data?.data;
+    if (apiItems?.length) {
+      return [...apiItems]
+        .sort((a, b) => a.index - b.index)
+        .map(mapApiPhilosopher);
+    }
+    return [...HERO_PHILOSOPHERS_FALLBACK];
+  }, [data]);
+
+  const philosophersByIndex = useMemo(
+    () => new Map(philosophers.map((p) => [p.index, p])),
+    [philosophers],
+  );
 
   useEffect(() => {
     const mq = window.matchMedia("(hover: hover)");
@@ -324,8 +375,6 @@ export default function Hero() {
     mouseY.set(clientY - top);
   }
 
-  const [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10] = philosophers;
-
   return (
     <section
       ref={sectionRef}
@@ -347,107 +396,49 @@ export default function Hero() {
             md:grid-cols-[1fr_1fr_1.2fr_1fr_1fr]
             md:grid-rows-[repeat(4,minmax(0,1fr))]"
         >
-          <PortraitTile
-            philosopher={p1}
-            index={0}
-            hoverEnabled={hoverInteractionsEnabled}
-            isActive={!hoverInteractionsEnabled || hovered === p1}
-            onHover={setHovered}
-            className="max-md:col-start-1 max-md:row-start-1 max-md:min-h-[120px] md:col-start-1 md:row-start-1 md:row-span-2"
-          />
-          <PortraitTile
-            philosopher={p2}
-            index={1}
-            hoverEnabled={hoverInteractionsEnabled}
-            isActive={!hoverInteractionsEnabled || hovered === p2}
-            onHover={setHovered}
-            className="max-md:col-start-2 max-md:row-start-1 max-md:min-h-[120px] md:col-start-2 md:row-start-1 md:min-h-0"
-          />
-          <PortraitTile
-            philosopher={p3}
-            index={2}
-            hoverEnabled={hoverInteractionsEnabled}
-            isActive={!hoverInteractionsEnabled || hovered === p3}
-            onHover={setHovered}
-            className="col-start-3 row-start-1 max-md:hidden md:col-start-3 md:row-start-1"
-          />
-          <PortraitTile
-            philosopher={p4}
-            index={3}
-            hoverEnabled={hoverInteractionsEnabled}
-            isActive={!hoverInteractionsEnabled || hovered === p4}
-            onHover={setHovered}
-            className="max-md:col-start-2 max-md:row-start-3 max-md:min-h-[120px] md:col-start-4 md:row-start-1 md:min-h-0"
-          />
-          <PortraitTile
-            philosopher={p5}
-            index={4}
-            hoverEnabled={hoverInteractionsEnabled}
-            isActive={!hoverInteractionsEnabled || hovered === p5}
-            onHover={setHovered}
-            className="col-start-5 row-start-1 row-span-2 max-md:hidden md:col-start-5 md:row-start-1 md:row-span-2"
-          />
+          {SLOT_RENDER_ORDER.flatMap((slotIndex) => {
+            const philosopher = philosophersByIndex.get(slotIndex);
+            if (!philosopher) return [];
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="max-md:col-span-2 max-md:row-start-2 max-md:row-span-1 max-md:min-h-0
-              col-start-2 col-span-3 row-start-2 row-span-2
-              relative border border-gold/20 bg-gradient-to-br from-charcoal/80 to-charcoal backdrop-blur-sm overflow-hidden"
-          >
-            <div
-              className="absolute inset-0 opacity-[0.05]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to right, #EAE8E4 1px, transparent 1px), linear-gradient(to bottom, #EAE8E4 1px, transparent 1px)",
-                backgroundSize: "32px 32px",
-              }}
-            />
-            <CornerTicks />
-            <MatrixTitle active={hoverInteractionsEnabled ? hovered : null} />
-          </motion.div>
+            const tiles = [
+              <PortraitTile
+                key={`philo-${slotIndex}`}
+                philosopher={philosopher}
+                index={slotIndex - 1}
+                hoverEnabled={hoverInteractionsEnabled}
+                isActive={!hoverInteractionsEnabled || hovered === philosopher}
+                onHover={setHovered}
+                className={slotClassName(philosopher)}
+              />,
+            ];
 
-          <PortraitTile
-            philosopher={p6}
-            index={5}
-            hoverEnabled={hoverInteractionsEnabled}
-            isActive={!hoverInteractionsEnabled || hovered === p6}
-            onHover={setHovered}
-            className="col-start-1 row-start-3 row-span-2 max-md:hidden md:col-start-1 md:row-start-3 md:row-span-2"
-          />
-          <PortraitTile
-            philosopher={p7}
-            index={6}
-            hoverEnabled={hoverInteractionsEnabled}
-            isActive={!hoverInteractionsEnabled || hovered === p7}
-            onHover={setHovered}
-            className="col-start-2 row-start-4 max-md:hidden md:col-start-2 md:row-start-4"
-          />
-          <PortraitTile
-            philosopher={p8}
-            index={7}
-            hoverEnabled={hoverInteractionsEnabled}
-            isActive={!hoverInteractionsEnabled || hovered === p8}
-            onHover={setHovered}
-            className="max-md:col-start-1 max-md:row-start-3 max-md:min-h-[120px] md:col-start-3 md:row-start-4 md:min-h-0"
-          />
-          <PortraitTile
-            philosopher={p9}
-            index={8}
-            hoverEnabled={hoverInteractionsEnabled}
-            isActive={!hoverInteractionsEnabled || hovered === p9}
-            onHover={setHovered}
-            className="max-md:hidden md:col-start-4 md:row-start-4 md:min-h-0"
-          />
-          <PortraitTile
-            philosopher={p10}
-            index={9}
-            hoverEnabled={hoverInteractionsEnabled}
-            isActive={!hoverInteractionsEnabled || hovered === p10}
-            onHover={setHovered}
-            className="col-start-5 row-start-3 row-span-2 max-md:hidden md:col-start-5 md:row-start-3 md:row-span-2"
-          />
+            if (slotIndex === CENTER_AFTER_SLOT) {
+              tiles.push(
+                <motion.div
+                  key="matrix-title"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="max-md:col-span-2 max-md:row-start-2 max-md:row-span-1 max-md:min-h-0
+                    col-start-2 col-span-3 row-start-2 row-span-2
+                    relative border border-gold/20 bg-gradient-to-br from-charcoal/80 to-charcoal backdrop-blur-sm overflow-hidden"
+                >
+                  <div
+                    className="absolute inset-0 opacity-[0.05]"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(to right, #EAE8E4 1px, transparent 1px), linear-gradient(to bottom, #EAE8E4 1px, transparent 1px)",
+                      backgroundSize: "32px 32px",
+                    }}
+                  />
+                  <CornerTicks />
+                  <MatrixTitle active={hoverInteractionsEnabled ? hovered : null} />
+                </motion.div>,
+              );
+            }
+
+            return tiles;
+          })}
         </div>
       </motion.div>
 

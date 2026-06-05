@@ -597,6 +597,52 @@ export interface ApiGcContributionGcContribution
   };
 }
 
+export interface ApiHeroPhilosopherHeroPhilosopher
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'hero_philosophers';
+  info: {
+    displayName: 'Hero Philosopher';
+    pluralName: 'hero-philosophers';
+    singularName: 'hero-philosopher';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    dates: Schema.Attribute.String & Schema.Attribute.Required;
+    era: Schema.Attribute.String & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images'>;
+    index: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hero-philosopher.hero-philosopher'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    quote: Schema.Attribute.Text & Schema.Attribute.Required;
+    showOnMobile: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPartnerInstitutionsPartnerInstitutions
   extends Struct.CollectionTypeSchema {
   collectionName: 'partners';
@@ -1254,6 +1300,7 @@ declare module '@strapi/strapi' {
       'api::contributing-scholars.contributing-scholars': ApiContributingScholarsContributingScholars;
       'api::gc-comment.gc-comment': ApiGcCommentGcComment;
       'api::gc-contribution.gc-contribution': ApiGcContributionGcContribution;
+      'api::hero-philosopher.hero-philosopher': ApiHeroPhilosopherHeroPhilosopher;
       'api::partner-institutions.partner-institutions': ApiPartnerInstitutionsPartnerInstitutions;
       'api::partnership.partnership': ApiPartnershipPartnership;
       'api::requested-book.requested-book': ApiRequestedBookRequestedBook;

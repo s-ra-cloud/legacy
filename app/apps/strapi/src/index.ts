@@ -1,9 +1,12 @@
 import type { Core } from '@strapi/strapi';
 
+import { bootstrap as runSeed } from './bootstrap';
+
 export default {
   register(/* { strapi }: { strapi: Core.Strapi } */) {},
 
   bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    void runSeed(strapi);
     // Keep Neon (serverless Postgres) awake by pinging the DB every 4 minutes.
     // Neon suspends its compute after ~5 min of inactivity and terminates all
     // open connections, which crashes Strapi. This prevents that suspension.

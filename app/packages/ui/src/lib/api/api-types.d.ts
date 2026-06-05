@@ -380,6 +380,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/hero-philosophers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get all hero philosophers
+         * @description Get a paginated list of home hero philosophers sorted by grid index
+         */
+        get: operations["getHeroPhilosophers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/contributors": {
         parameters: {
             query?: never;
@@ -2913,6 +2933,82 @@ export interface operations {
                         root: [
                             "NOT_FOUND"
                         ];
+                    };
+                };
+            };
+        };
+    };
+    getHeroPhilosophers: {
+        parameters: {
+            query?: {
+                cursor?: number;
+                limit?: number;
+                sort?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Hero philosophers retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: number;
+                            documentId: string;
+                            name: string;
+                            slug: string;
+                            dates: string;
+                            era: string;
+                            quote: string;
+                            index: number;
+                            showOnMobile: boolean;
+                            image?: {
+                                id: number;
+                                documentId: string;
+                                name: string;
+                                alternativeText: string | null;
+                                caption: string | null;
+                                width: number | null;
+                                height: number | null;
+                                ext: string;
+                                mime: string;
+                                url: string;
+                            } | null;
+                            /** Format: date-time */
+                            publishedAt: string;
+                            /** Format: date-time */
+                            updatedAt: string;
+                            /** Format: date-time */
+                            createdAt: string;
+                        }[];
+                        meta: {
+                            pagination?: {
+                                page: number;
+                                pageSize: number;
+                                pageCount: number;
+                                total: number;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description Not Found Response */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: 404;
+                        code: string;
+                        requestId?: string;
+                        root: ["NOT_FOUND"];
                     };
                 };
             };

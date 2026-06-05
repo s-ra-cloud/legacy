@@ -14,6 +14,7 @@ export * from "./services/notifications/index.js";
 export * from "./services/profiles/index.js";
 export * from "./services/strapi/partnership/index.js";
 export * from "./services/strapi/team/index.js";
+export * from "./services/strapi/hero-philosophers/index.js";
 export * from "./services/users/index.js";
 export * from "./utils/pagination.js";
 export type { UserRole } from "@repo/db";

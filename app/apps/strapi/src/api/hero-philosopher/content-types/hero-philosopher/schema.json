@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "hero_philosophers",
+  "info": {
+    "singularName": "hero-philosopher",
+    "pluralName": "hero-philosophers",
+    "displayName": "Hero Philosopher"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "dates": {
+      "type": "string",
+      "required": true
+    },
+    "era": {
+      "type": "string",
+      "required": true
+    },
+    "quote": {
+      "type": "text",
+      "required": true
+    },
+    "index": {
+      "type": "integer",
+      "required": true,
+      "unique": true,
+      "min": 1
+    },
+    "showOnMobile": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}
