@@ -290,7 +290,7 @@ export default function GreatConversation() {
       case "Medieval":
         return "#A78BFA"; // violet (fallback era)
       default:
-        return "#C5A059";
+        return "#94A3B8"; // slate — unknown / custom eras
     }
   };
 
