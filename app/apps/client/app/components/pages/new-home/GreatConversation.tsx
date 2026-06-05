@@ -1,6 +1,7 @@
 import { AnimatePresence, animate, motion, useMotionValue } from "framer-motion";
 import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { $api } from "@repo/ui";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type Philosopher = {
   name: string;
@@ -15,7 +16,7 @@ type Philosopher = {
   image?: string;
 };
 
-const philosophers: Philosopher[] = [
+const EARTH_PHILOSOPHERS_FALLBACK: Philosopher[] = [
   { name: "Socrates", dates: "470 - 399 BC", city: "Athens", country: "Greece", lat: 37.98, lon: 23.73, era: "Classical Antiquity", school: "Classical Greek", quote: "The unexamined life is not worth living.", image: "/assets/Hero-philosopher/socrates.png" },
   { name: "Plato", dates: "428 - 348 BC", city: "Athens", country: "Greece", lat: 37.98, lon: 23.73, era: "Classical Antiquity", school: "Platonism", quote: "Wise men speak because they have something to say.", image: "/assets/Hero-philosopher/plato.png" },
   { name: "Aristotle", dates: "384 - 322 BC", city: "Stagira", country: "Macedonia", lat: 40.6, lon: 23.7, era: "Classical Antiquity", school: "Peripatetic", quote: "We are what we repeatedly do. Excellence is a habit.", image: "/assets/Hero-philosopher/aristotle.png" },
@@ -32,6 +33,44 @@ const philosophers: Philosopher[] = [
   { name: "Friedrich Nietzsche", dates: "1844 - 1900", city: "Rocken", country: "Prussia", lat: 51.27, lon: 12.18, era: "Modern", school: "Existentialism", quote: "He who has a why to live can bear almost any how." },
   { name: "Ludwig Wittgenstein", dates: "1889 - 1951", city: "Vienna", country: "Austria", lat: 48.21, lon: 16.37, era: "Modern", school: "Analytic", quote: "Whereof one cannot speak, thereof one must be silent." },
 ];
+
+function mapApiEarthPhilosopher(item: {
+  name: string;
+  dates: string;
+  era: string;
+  showOnEarth: boolean;
+  earthQuote?: string | null;
+  city?: string | null;
+  country?: string | null;
+  lat?: number | null;
+  lon?: number | null;
+  school?: string | null;
+  earthOrder?: number | null;
+  image?: { url: string } | null;
+}): Philosopher | null {
+  if (
+    !item.showOnEarth ||
+    item.city == null ||
+    item.country == null ||
+    item.lat == null ||
+    item.lon == null ||
+    item.school == null
+  ) {
+    return null;
+  }
+  return {
+    name: item.name,
+    dates: item.dates,
+    era: item.era,
+    quote: item.earthQuote ?? "",
+    city: item.city,
+    country: item.country,
+    lat: item.lat,
+    lon: item.lon,
+    school: item.school,
+    image: item.image?.url,
+  };
+}
 
 const RADIUS = 230;
 
@@ -108,6 +147,21 @@ function rotate(p: { x: number; y: number; z: number }, rotY: number, rotX: numb
 }
 
 export default function GreatConversation() {
+  const { data } = $api.useQuery("get", "/home-philosophers", {
+    params: { query: { showOnEarth: true, limit: 20, sort: "earthOrder:asc" } },
+  });
+
+  const philosophers = useMemo(() => {
+    const apiItems = data?.data;
+    if (apiItems?.length) {
+      const mapped = apiItems
+        .map(mapApiEarthPhilosopher)
+        .filter((p): p is Philosopher => p !== null);
+      if (mapped.length) return mapped;
+    }
+    return EARTH_PHILOSOPHERS_FALLBACK;
+  }, [data]);
+
   const rotY = useMotionValue(-0.4);
   const rotX = useMotionValue(-0.15);
   const [tick, setTick] = useState(0);
@@ -162,7 +216,7 @@ export default function GreatConversation() {
       animate(rotY, wrapped, { duration: 1.2, ease: [0.22, 1, 0.36, 1] });
       animate(rotX, clampedX, { duration: 1.2, ease: [0.22, 1, 0.36, 1] });
     },
-    [rotY, rotX],
+    [rotY, rotX, philosophers],
   );
 
   /** Auto-advance highlighted thinker every 9s (pause while dragging the globe). */
@@ -173,7 +227,7 @@ export default function GreatConversation() {
       focusOn(next);
     }, 9000);
     return () => window.clearInterval(id);
-  }, [focusOn]);
+  }, [focusOn, philosophers.length]);
 
   function onPointerDown(e: React.PointerEvent) {
     (e.target as Element).setPointerCapture(e.pointerId);

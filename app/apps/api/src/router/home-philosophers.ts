@@ -6,45 +6,55 @@ import {
   notFoundResponse,
   okResponse,
 } from "~/utils/describe/index.js";
-import { HeroPhilosophersCMS } from "~/cms/hero-philosophers.js";
+import { HomePhilosophersCMS } from "~/cms/home-philosophers.js";
 import {
-  heroPhilosophersPaginatedSchema,
+  homePhilosophersPaginatedSchema,
 } from "@repo/server";
 
-const TAG = "HeroPhilosophers";
-export const heroPhilosophersRouter = new Hono();
+const TAG = "HomePhilosophers";
+export const homePhilosophersRouter = new Hono();
 
-const heroPhilosophersQuerySchema = z.object({
+const homePhilosophersQuerySchema = z.object({
   cursor: z.coerce.number().gt(0).default(1),
   limit: z.coerce.number().gt(0).max(100).default(10),
   sort: z.string().optional(),
+  showInHero: z
+    .union([z.boolean(), z.enum(["true", "false"])])
+    .optional()
+    .transform((v) => (v === undefined ? undefined : v === true || v === "true")),
+  showOnEarth: z
+    .union([z.boolean(), z.enum(["true", "false"])])
+    .optional()
+    .transform((v) => (v === undefined ? undefined : v === true || v === "true")),
 });
 
-heroPhilosophersRouter.get(
+homePhilosophersRouter.get(
   "/",
-  zValidator("query", heroPhilosophersQuerySchema),
+  zValidator("query", homePhilosophersQuerySchema),
   describeRoute({
-    summary: "Get all hero philosophers",
-    description: "Get a paginated list of home hero philosophers sorted by grid index",
+    summary: "Get all home philosophers",
+    description: "Get a paginated list of home philosophers with optional hero/earth filters",
     tags: [TAG],
     responses: {
-      200: okResponse(heroPhilosophersPaginatedSchema, "Hero philosophers retrieved successfully"),
+      200: okResponse(homePhilosophersPaginatedSchema, "Home philosophers retrieved successfully"),
       404: notFoundResponse(),
     },
   }),
   async (c) => {
     try {
       const query = c.req.valid("query");
-      const cms = new HeroPhilosophersCMS();
+      const cms = new HomePhilosophersCMS();
 
       const result = await cms.getAll({
         cursor: query.cursor,
         limit: query.limit,
         sort: query.sort,
+        showInHero: query.showInHero,
+        showOnEarth: query.showOnEarth,
       });
 
       if (!result || !result.items.length) {
-        return c.json({ error: "No hero philosophers found" }, 404);
+        return c.json({ error: "No home philosophers found" }, 404);
       }
 
       return c.json({
@@ -59,11 +69,11 @@ heroPhilosophersRouter.get(
         },
       });
     } catch (error) {
-      console.error("Error fetching hero philosophers:", error);
+      console.error("Error fetching home philosophers:", error);
       return c.json(
         {
           success: false,
-          error: "Failed to fetch hero philosophers",
+          error: "Failed to fetch home philosophers",
         },
         500,
       );

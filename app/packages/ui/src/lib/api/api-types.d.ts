@@ -380,7 +380,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/hero-philosophers": {
+    "/home-philosophers": {
         parameters: {
             query?: never;
             header?: never;
@@ -388,10 +388,10 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get all hero philosophers
-         * @description Get a paginated list of home hero philosophers sorted by grid index
+         * Get all home philosophers
+         * @description Get a paginated list of home philosophers with optional hero/earth filters
          */
-        get: operations["getHeroPhilosophers"];
+        get: operations["getHomePhilosophers"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2938,12 +2938,14 @@ export interface operations {
             };
         };
     };
-    getHeroPhilosophers: {
+    getHomePhilosophers: {
         parameters: {
             query?: {
                 cursor?: number;
                 limit?: number;
                 sort?: string;
+                showInHero?: boolean;
+                showOnEarth?: boolean;
             };
             header?: never;
             path?: never;
@@ -2951,7 +2953,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Hero philosophers retrieved successfully */
+            /** @description Home philosophers retrieved successfully */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2965,9 +2967,18 @@ export interface operations {
                             slug: string;
                             dates: string;
                             era: string;
-                            quote: string;
-                            index: number;
-                            showOnMobile: boolean;
+                            showInHero: boolean;
+                            showOnEarth: boolean;
+                            heroIndex?: number | null;
+                            showOnMobile?: boolean | null;
+                            heroQuote?: string | null;
+                            city?: string | null;
+                            country?: string | null;
+                            lat?: number | null;
+                            lon?: number | null;
+                            school?: string | null;
+                            earthQuote?: string | null;
+                            earthOrder?: number | null;
                             image?: {
                                 id: number;
                                 documentId: string;

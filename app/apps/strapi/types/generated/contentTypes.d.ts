@@ -597,26 +597,34 @@ export interface ApiGcContributionGcContribution
   };
 }
 
-export interface ApiHeroPhilosopherHeroPhilosopher
+export interface ApiHomePhilosopherHomePhilosopher
   extends Struct.CollectionTypeSchema {
-  collectionName: 'hero_philosophers';
+  collectionName: 'home_philosophers';
   info: {
-    displayName: 'Hero Philosopher';
-    pluralName: 'hero-philosophers';
-    singularName: 'hero-philosopher';
+    displayName: 'Home Philosopher';
+    pluralName: 'home-philosophers';
+    singularName: 'home-philosopher';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
+    city: Schema.Attribute.String;
+    country: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     dates: Schema.Attribute.String & Schema.Attribute.Required;
+    earthOrder: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    earthQuote: Schema.Attribute.Text;
     era: Schema.Attribute.String & Schema.Attribute.Required;
-    image: Schema.Attribute.Media<'images'>;
-    index: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
+    heroIndex: Schema.Attribute.Integer &
       Schema.Attribute.Unique &
       Schema.Attribute.SetMinMax<
         {
@@ -624,18 +632,26 @@ export interface ApiHeroPhilosopherHeroPhilosopher
         },
         number
       >;
+    heroQuote: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images'>;
+    lat: Schema.Attribute.Float;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::hero-philosopher.hero-philosopher'
+      'api::home-philosopher.home-philosopher'
     > &
       Schema.Attribute.Private;
+    lon: Schema.Attribute.Float;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    quote: Schema.Attribute.Text & Schema.Attribute.Required;
-    showOnMobile: Schema.Attribute.Boolean &
+    school: Schema.Attribute.String;
+    showInHero: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
+    showOnEarth: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    showOnMobile: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1300,7 +1316,7 @@ declare module '@strapi/strapi' {
       'api::contributing-scholars.contributing-scholars': ApiContributingScholarsContributingScholars;
       'api::gc-comment.gc-comment': ApiGcCommentGcComment;
       'api::gc-contribution.gc-contribution': ApiGcContributionGcContribution;
-      'api::hero-philosopher.hero-philosopher': ApiHeroPhilosopherHeroPhilosopher;
+      'api::home-philosopher.home-philosopher': ApiHomePhilosopherHomePhilosopher;
       'api::partner-institutions.partner-institutions': ApiPartnerInstitutionsPartnerInstitutions;
       'api::partnership.partnership': ApiPartnershipPartnership;
       'api::requested-book.requested-book': ApiRequestedBookRequestedBook;

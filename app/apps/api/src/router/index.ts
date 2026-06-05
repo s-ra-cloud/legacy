@@ -15,7 +15,7 @@ import { uploadMediaRouter } from "./upload-media.js";
 import { gcContributionsRouter } from "./gc-contributions.js";
 import { gcCommentsRouter } from "./gc-comments.js";
 import { requestedBooksRouter } from "./requested-books.js";
-import { heroPhilosophersRouter } from "./hero-philosophers.js";
+import { homePhilosophersRouter } from "./home-philosophers.js";
 
 
 const routes = new Hono();
@@ -34,6 +34,6 @@ routes.route("/upload-media", uploadMediaRouter);
 routes.route("/gc-contributions", gcContributionsRouter);
 routes.route("/comments", gcCommentsRouter);
 routes.route("/requested-books", requestedBooksRouter);
-routes.route("/hero-philosophers", heroPhilosophersRouter);
+routes.route("/home-philosophers", homePhilosophersRouter);
 
 export { routes };

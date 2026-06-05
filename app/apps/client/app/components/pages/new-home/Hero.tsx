@@ -21,16 +21,16 @@ type Philosopher = {
 };
 
 const HERO_PHILOSOPHERS_FALLBACK: readonly Philosopher[] = [
-  { name: "Socrates", dates: "c. 470–399 BC", era: "Classical Greek", quote: "The unexamined life is not worth living.", image: "/assets/Hero-philosopher/socrates.png", index: 1, showOnMobile: true },
-  { name: "Plato", dates: "c. 428–348 BC", era: "Classical Greek", quote: "Thinking: the talking of the soul with itself.", image: "/assets/Hero-philosopher/plato.png", index: 2, showOnMobile: true },
-  { name: "Aristotle", dates: "384–322 BC", era: "Classical Greek", quote: "Knowing yourself is the beginning of all wisdom.", image: "/assets/Hero-philosopher/aristotle.png", index: 3, showOnMobile: false },
-  { name: "Confucius", dates: "551–479 BC", era: "Chinese Antiquity", quote: "Our greatest glory is not in never falling, but in rising every time we fall.", index: 4, showOnMobile: true },
-  { name: "Buddha", dates: "c. 563–483 BC", era: "Indian Antiquity", quote: "All that we are is the result of what we have thought.", index: 5, showOnMobile: false },
-  { name: "Avicenna", dates: "980–1037", era: "Islamic Golden Age", quote: "Knowledge is the conformity of the object and the intellect.", index: 6, showOnMobile: false },
-  { name: "Averroes", dates: "1126–1198", era: "Islamic Golden Age", quote: "Truth does not contradict truth.", index: 7, showOnMobile: false },
-  { name: "Descartes", dates: "1596–1650", era: "Early Modern Philosophy", quote: "I think, therefore I am.", index: 8, showOnMobile: true },
-  { name: "Kant", dates: "1724–1804", era: "Enlightenment", quote: "Act so that the maxim of your will could be a universal law.", index: 9, showOnMobile: false },
-  { name: "Nietzsche", dates: "1844–1900", era: "Modern Philosophy", quote: "He who has a why to live can bear almost any how.", index: 10, showOnMobile: false },
+  { name: "Socrates", dates: "470 - 399 BC", era: "Classical Antiquity", quote: "The unexamined life is not worth living.", image: "/assets/Hero-philosopher/socrates.png", index: 1, showOnMobile: true },
+  { name: "Plato", dates: "428 - 348 BC", era: "Classical Antiquity", quote: "Thinking: the talking of the soul with itself.", image: "/assets/Hero-philosopher/plato.png", index: 2, showOnMobile: true },
+  { name: "Aristotle", dates: "384 - 322 BC", era: "Classical Antiquity", quote: "Knowing yourself is the beginning of all wisdom.", image: "/assets/Hero-philosopher/aristotle.png", index: 3, showOnMobile: false },
+  { name: "Confucius", dates: "551 - 479 BC", era: "Eastern Antiquity", quote: "Our greatest glory is not in never falling, but in rising every time we fall.", index: 4, showOnMobile: true },
+  { name: "Gautama Buddha", dates: "563 - 483 BC", era: "Eastern Antiquity", quote: "All that we are is the result of what we have thought.", index: 5, showOnMobile: false },
+  { name: "Avicenna", dates: "980 - 1037", era: "Islamic Golden Age", quote: "Knowledge is the conformity of the object and the intellect.", index: 6, showOnMobile: false },
+  { name: "Averroes", dates: "1126 - 1198", era: "Islamic Golden Age", quote: "Truth does not contradict truth.", index: 7, showOnMobile: false },
+  { name: "Rene Descartes", dates: "1596 - 1650", era: "Enlightenment", quote: "I think, therefore I am.", index: 8, showOnMobile: true },
+  { name: "Immanuel Kant", dates: "1724 - 1804", era: "Enlightenment", quote: "Act so that the maxim of your will could be a universal law.", index: 9, showOnMobile: false },
+  { name: "Friedrich Nietzsche", dates: "1844 - 1900", era: "Modern", quote: "He who has a why to live can bear almost any how.", index: 10, showOnMobile: false },
 ];
 
 const SLOT_GRID_CLASSES: Record<number, string> = {
@@ -303,18 +303,20 @@ function mapApiPhilosopher(item: {
   name: string;
   dates: string;
   era: string;
-  quote: string;
-  index: number;
-  showOnMobile: boolean;
+  showInHero: boolean;
+  heroIndex?: number | null;
+  showOnMobile?: boolean | null;
+  heroQuote?: string | null;
   image?: { url: string } | null;
-}): Philosopher {
+}): Philosopher | null {
+  if (!item.showInHero || item.heroIndex == null) return null;
   return {
     name: item.name,
     dates: item.dates,
     era: item.era,
-    quote: item.quote,
-    index: item.index,
-    showOnMobile: item.showOnMobile,
+    quote: item.heroQuote ?? "",
+    index: item.heroIndex,
+    showOnMobile: item.showOnMobile ?? false,
     image: item.image?.url,
   };
 }
@@ -323,16 +325,18 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const [hovered, setHovered] = useState<Philosopher | null>(null);
   const [hoverInteractionsEnabled, setHoverInteractionsEnabled] = useState(true);
-  const { data } = $api.useQuery("get", "/hero-philosophers", {
-    params: { query: { limit: 10, sort: "index:asc" } },
+  const { data } = $api.useQuery("get", "/home-philosophers", {
+    params: { query: { showInHero: true, limit: 10, sort: "heroIndex:asc" } },
   });
 
   const philosophers = useMemo(() => {
     const apiItems = data?.data;
     if (apiItems?.length) {
-      return [...apiItems]
-        .sort((a, b) => a.index - b.index)
-        .map(mapApiPhilosopher);
+      const mapped = apiItems
+        .map(mapApiPhilosopher)
+        .filter((p): p is Philosopher => p !== null)
+        .sort((a, b) => a.index - b.index);
+      if (mapped.length) return mapped;
     }
     return [...HERO_PHILOSOPHERS_FALLBACK];
   }, [data]);

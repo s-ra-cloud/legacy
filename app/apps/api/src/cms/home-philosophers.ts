@@ -1,9 +1,9 @@
 import {
-  heroPhilosophersService,
+  homePhilosophersService,
   createServiceContext,
 } from "@repo/server";
 
-export class HeroPhilosophersCMS {
+export class HomePhilosophersCMS {
   private locale: string;
 
   constructor(locale: string = "en") {
@@ -23,9 +23,11 @@ export class HeroPhilosophersCMS {
     cursor?: number;
     limit?: number;
     sort?: string;
+    showInHero?: boolean;
+    showOnEarth?: boolean;
     filters?: Record<string, unknown>;
   }) {
     const ctx = this.getContext();
-    return await heroPhilosophersService.getAll(ctx, input);
+    return await homePhilosophersService.getAll(ctx, input);
   }
 }
