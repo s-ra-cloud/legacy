@@ -100,7 +100,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Classical Greek',
     earthQuote: 'The unexamined life is not worth living.',
     earthOrder: 1,
-    imageFile: 'socrates.png',
+    imageFile: 'socrates.jpg',
   },
   {
     name: 'Plato',
@@ -157,6 +157,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Confucianism',
     earthQuote: 'It does not matter how slowly you go as long as you do not stop.',
     earthOrder: 4,
+    imageFile: 'confucius.png',
   },
   {
     name: 'Laozi',
@@ -172,6 +173,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Taoism',
     earthQuote: 'A journey of a thousand miles begins with a single step.',
     earthOrder: 5,
+    imageFile: 'laozi.png',
   },
   {
     name: 'Gautama Buddha',
@@ -190,6 +192,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Buddhism',
     earthQuote: 'The mind is everything. What you think you become.',
     earthOrder: 6,
+    imageFile: 'gautama-buddha.png',
   },
   {
     name: 'Avicenna',
@@ -208,6 +211,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Peripatetic',
     earthQuote: 'The world is divided into men of wit without religion and of religion without wit.',
     earthOrder: 7,
+    imageFile: 'avicenna.png',
   },
   {
     name: 'Averroes',
@@ -226,6 +230,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Averroism',
     earthQuote: 'Ignorance leads to fear, fear leads to hate, hate leads to violence.',
     earthOrder: 8,
+    imageFile: 'averroes.png',
   },
   {
     name: 'Al-Ghazali',
@@ -274,6 +279,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Rationalism',
     earthQuote: 'I think, therefore I am.',
     earthOrder: 11,
+    imageFile: 'descartes.png',
   },
   {
     name: 'Baruch Spinoza',
@@ -289,6 +295,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Rationalism',
     earthQuote: 'Peace is not an absence of war; it is a virtue, a state of mind.',
     earthOrder: 12,
+    imageFile: 'spinoza.png',
   },
   {
     name: 'Immanuel Kant',
@@ -307,6 +314,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Critical Idealism',
     earthQuote: 'Act only according to that maxim by which you can will it to become a universal law.',
     earthOrder: 13,
+    imageFile: 'kant.png',
   },
   {
     name: 'Friedrich Nietzsche',
@@ -325,6 +333,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Existentialism',
     earthQuote: 'He who has a why to live can bear almost any how.',
     earthOrder: 14,
+    imageFile: 'nietzsche.png',
   },
   {
     name: 'Ludwig Wittgenstein',
