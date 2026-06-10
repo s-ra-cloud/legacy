@@ -173,6 +173,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Taoism',
     earthQuote: 'A journey of a thousand miles begins with a single step.',
     earthOrder: 5,
+    imageFile: 'laozi.png',
   },
   {
     name: 'Gautama Buddha',
@@ -292,6 +293,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Rationalism',
     earthQuote: 'Peace is not an absence of war; it is a virtue, a state of mind.',
     earthOrder: 12,
+    imageFile: 'spinoza.png',
   },
   {
     name: 'Immanuel Kant',
@@ -329,6 +331,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Existentialism',
     earthQuote: 'He who has a why to live can bear almost any how.',
     earthOrder: 14,
+    imageFile: 'nietzsche.png',
   },
   {
     name: 'Ludwig Wittgenstein',
