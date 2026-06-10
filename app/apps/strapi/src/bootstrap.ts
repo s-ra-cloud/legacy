@@ -191,6 +191,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Buddhism',
     earthQuote: 'The mind is everything. What you think you become.',
     earthOrder: 6,
+    imageFile: 'gautama-buddha.png',
   },
   {
     name: 'Avicenna',
@@ -209,6 +210,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Peripatetic',
     earthQuote: 'The world is divided into men of wit without religion and of religion without wit.',
     earthOrder: 7,
+    imageFile: 'avicenna.png',
   },
   {
     name: 'Averroes',
