@@ -310,6 +310,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Critical Idealism',
     earthQuote: 'Act only according to that maxim by which you can will it to become a universal law.',
     earthOrder: 13,
+    imageFile: 'kant.png',
   },
   {
     name: 'Friedrich Nietzsche',
