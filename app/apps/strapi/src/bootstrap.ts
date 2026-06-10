@@ -230,6 +230,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Averroism',
     earthQuote: 'Ignorance leads to fear, fear leads to hate, hate leads to violence.',
     earthOrder: 8,
+    imageFile: 'averroes.png',
   },
   {
     name: 'Al-Ghazali',
@@ -278,6 +279,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Rationalism',
     earthQuote: 'I think, therefore I am.',
     earthOrder: 11,
+    imageFile: 'descartes.png',
   },
   {
     name: 'Baruch Spinoza',
