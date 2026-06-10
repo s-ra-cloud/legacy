@@ -100,7 +100,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Classical Greek',
     earthQuote: 'The unexamined life is not worth living.',
     earthOrder: 1,
-    imageFile: 'socrates.png',
+    imageFile: 'socrates.jpg',
   },
   {
     name: 'Plato',
