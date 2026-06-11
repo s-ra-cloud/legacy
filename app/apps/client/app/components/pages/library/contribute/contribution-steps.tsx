@@ -58,7 +58,7 @@ const steps = [
 
 export function ContributionSteps() {
 	return (
-		<section className="relative px-4 pt-28 pb-12 sm:px-8">
+		<section className="relative px-4 pt-28 pb-16 sm:px-8">
 			<div className="relative mx-auto max-w-4xl">
 				<Link
 					to={SAFE_ROUTES.PROJECTS_LIBRARY}
@@ -143,14 +143,6 @@ export function ContributionSteps() {
 					))}
 				</div>
 			</div>
-
-			<div
-				className="mx-auto mt-16 h-px max-w-4xl"
-				style={{
-					background:
-						"linear-gradient(to right, transparent, rgba(197,160,89,0.25), transparent)",
-				}}
-			/>
 		</section>
 	);
 }

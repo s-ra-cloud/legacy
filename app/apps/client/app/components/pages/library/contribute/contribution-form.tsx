@@ -27,18 +27,20 @@ interface ContributionFormProps {
 }
 
 const labelClass =
-	"mb-2 block text-[10px] font-bold uppercase tracking-[0.25em] text-ivory/50";
+	"mb-2 block text-[10px] font-bold uppercase tracking-[0.25em] text-charcoal/50";
 const inputClass =
-	"w-full max-w-md border border-white/15 bg-white/[0.06] px-4 py-3 text-ivory placeholder:text-ivory/30 focus-visible:border-gold/50 focus-visible:ring-1 focus-visible:ring-gold/30";
+	"w-full max-w-md border border-charcoal/15 bg-white px-4 py-3 text-charcoal placeholder:text-charcoal/35 focus-visible:border-gold focus-visible:ring-1 focus-visible:ring-gold/30";
 const inputClassNarrow =
-	"w-[150px] border border-white/15 bg-white/[0.06] px-4 py-3 text-ivory placeholder:text-ivory/30 focus-visible:border-gold/50 focus-visible:ring-1 focus-visible:ring-gold/30";
+	"w-[150px] border border-charcoal/15 bg-white px-4 py-3 text-charcoal placeholder:text-charcoal/35 focus-visible:border-gold focus-visible:ring-1 focus-visible:ring-gold/30";
 const inputClassHalf =
-	"w-full max-w-[250px] border border-white/15 bg-white/[0.06] px-4 py-3 text-ivory placeholder:text-ivory/30 focus-visible:border-gold/50 focus-visible:ring-1 focus-visible:ring-gold/30";
+	"w-full max-w-[250px] border border-charcoal/15 bg-white px-4 py-3 text-charcoal placeholder:text-charcoal/35 focus-visible:border-gold focus-visible:ring-1 focus-visible:ring-gold/30";
 const selectTriggerClass =
-	"w-full max-w-md border border-white/15 bg-white/[0.06] px-4 py-3 text-ivory focus:ring-1 focus:ring-gold/30";
-const errorClass = "mt-1 px-1 text-xs text-red-400";
+	"w-full max-w-md border border-charcoal/15 bg-white px-4 py-3 text-charcoal focus:ring-1 focus:ring-gold/30";
+const errorClass = "mt-1 px-1 text-xs text-red-600";
 const uploadClass =
-	"flex h-40 w-40 cursor-pointer flex-col items-center justify-center border border-white/15 bg-white/[0.03] text-ivory/60 transition-colors hover:border-gold/40 hover:bg-white/[0.06] sm:h-52 sm:w-52 xl:h-64 xl:w-64";
+	"flex h-40 w-40 cursor-pointer flex-col items-center justify-center border border-charcoal/15 bg-white text-charcoal/50 transition-colors hover:border-gold hover:bg-paper sm:h-52 sm:w-52 xl:h-64 xl:w-64";
+const helperTextClass = "mt-2 text-center text-sm text-charcoal/45";
+const uploadFilenameClass = "max-w-[9rem] truncate text-sm font-medium text-charcoal/60";
 
 // Contribution form schema based on book input schema
 export const contributionFormSchema = z.object({
@@ -1079,23 +1081,38 @@ export function ContributionForm({ user }: ContributionFormProps) {
 	};
 
 	return (
-		<section className="relative w-full px-4 pb-24 sm:px-8">
-			<div className="relative mx-auto max-w-3xl border border-white/10 bg-white/[0.02] px-6 py-10 sm:px-10 sm:py-14">
-				<div className="pointer-events-none absolute top-3 left-3 h-px w-3 bg-gold/30" />
-				<div className="pointer-events-none absolute top-3 left-3 h-3 w-px bg-gold/30" />
-				<div className="pointer-events-none absolute top-3 right-3 h-px w-3 bg-gold/30" />
-				<div className="pointer-events-none absolute top-3 right-3 h-3 w-px bg-gold/30" />
-				<div className="pointer-events-none absolute bottom-3 left-3 h-px w-3 bg-gold/30" />
-				<div className="pointer-events-none absolute bottom-3 left-3 h-3 w-px bg-gold/30" />
-				<div className="pointer-events-none absolute bottom-3 right-3 h-px w-3 bg-gold/30" />
-				<div className="pointer-events-none absolute bottom-3 right-3 h-3 w-px bg-gold/30" />
+		<section className="relative overflow-hidden bg-paper text-charcoal">
+			<div
+				aria-hidden
+				className="pointer-events-none absolute inset-0 opacity-[0.04]"
+				style={{
+					backgroundImage:
+						"linear-gradient(to right, #0F1113 1px, transparent 1px), linear-gradient(to bottom, #0F1113 1px, transparent 1px)",
+					backgroundSize: "72px 72px",
+				}}
+			/>
+			<div
+				aria-hidden
+				className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-charcoal to-transparent"
+			/>
 
-				<div className="mb-10 text-center">
-					<span className="marquee-label mb-3 block">Submission Form</span>
-					<h2 className="font-serif text-3xl text-ivory sm:text-4xl">
-						Document <span className="italic text-gold">Metadata</span>
-					</h2>
-				</div>
+			<div className="relative z-10 mx-auto max-w-3xl px-4 py-20 sm:px-8 sm:py-24">
+				<div className="relative border border-charcoal/10 bg-paper px-6 py-10 sm:px-10 sm:py-14">
+					<div className="pointer-events-none absolute top-3 left-3 h-px w-3 bg-charcoal/25" />
+					<div className="pointer-events-none absolute top-3 left-3 h-3 w-px bg-charcoal/25" />
+					<div className="pointer-events-none absolute top-3 right-3 h-px w-3 bg-charcoal/25" />
+					<div className="pointer-events-none absolute top-3 right-3 h-3 w-px bg-charcoal/25" />
+					<div className="pointer-events-none absolute bottom-3 left-3 h-px w-3 bg-charcoal/25" />
+					<div className="pointer-events-none absolute bottom-3 left-3 h-3 w-px bg-charcoal/25" />
+					<div className="pointer-events-none absolute bottom-3 right-3 h-px w-3 bg-charcoal/25" />
+					<div className="pointer-events-none absolute bottom-3 right-3 h-3 w-px bg-charcoal/25" />
+
+					<div className="mb-10 text-center">
+						<span className="marquee-label mb-3 block">Submission Form</span>
+						<h2 className="font-serif text-3xl text-charcoal sm:text-4xl">
+							Document <span className="italic text-gold">Metadata</span>
+						</h2>
+					</div>
 
 					<form onSubmit={handleSubmit(onSubmit, console.error)}>
 						<div className="grid gap-2">
@@ -1324,7 +1341,7 @@ export function ContributionForm({ user }: ContributionFormProps) {
 										className={uploadClass}
 									>
 										<UploadCloud className="w-12 h-12 mb-3" />
-										<span className="max-w-[9rem] truncate text-sm font-medium text-ivory/60">
+										<span className={uploadFilenameClass}>
 											{fileValue instanceof File
 												? fileValue.name
 												: isFileList(fileValue) && fileValue.length > 0
@@ -1332,7 +1349,7 @@ export function ContributionForm({ user }: ContributionFormProps) {
 													: "Upload a file"}
 										</span>
 									</label>
-									<p className="mt-2 text-center text-sm text-ivory/40">Upload HTML file or ZIP archive (with HTML and images)</p>
+									<p className={helperTextClass}>Upload HTML file or ZIP archive (with HTML and images)</p>
 									{errors?.htmlFile && (
 										<p className={errorClass}>{String(errors.htmlFile.message)}</p>
 									)}
@@ -1357,7 +1374,7 @@ export function ContributionForm({ user }: ContributionFormProps) {
 										) : (
 											<UploadCloud className="w-12 h-12 mb-3" />
 										)}
-										<span className="max-w-[9rem] truncate text-sm font-medium text-ivory/60">
+										<span className={uploadFilenameClass}>
 											{coverValue instanceof File
 												? coverValue.name
 												: isFileList(coverValue) && coverValue.length > 0
@@ -1365,7 +1382,7 @@ export function ContributionForm({ user }: ContributionFormProps) {
 													: "Upload an image"}
 										</span>
 									</label>
-									<p className="mt-2 text-center text-sm text-ivory/40">Upload a cover image (JPEG/PNG)</p>
+									<p className={helperTextClass}>Upload a cover image (JPEG/PNG)</p>
 									{errors?.coverImage && (
 										<p className={errorClass}>{String(errors.coverImage.message)}</p>
 									)}
@@ -1383,7 +1400,7 @@ export function ContributionForm({ user }: ContributionFormProps) {
 									<div className="mt-8 mb-8">
 										<Label className={labelClass}>
 											Images found in HTML file{" "}
-											<span className="normal-case tracking-normal text-ivory/30">
+											<span className="normal-case tracking-normal text-charcoal/35">
 												(select images to include)
 											</span>
 										</Label>
@@ -1398,7 +1415,7 @@ export function ContributionForm({ user }: ContributionFormProps) {
 														key={originalIndex}
 														className={`relative cursor-pointer overflow-hidden rounded-lg border-2 transition-all ${isSelected
 															? "border-gold ring-2 ring-gold/40"
-															: "border-white/15 hover:border-white/30"
+															: "border-charcoal/15 hover:border-charcoal/30"
 															}`}
 														onClick={() => toggleImageSelection(originalIndex)}
 													>
@@ -1446,7 +1463,7 @@ export function ContributionForm({ user }: ContributionFormProps) {
 												);
 											})}
 										</div>
-										<p className="mt-2 text-sm text-ivory/50">
+										<p className="mt-2 text-sm text-charcoal/50">
 											{displayableImages.filter(({ originalIndex }) => selectedImageIndices.has(originalIndex)).length} of {displayableImages.length} images selected
 										</p>
 									</div>
@@ -1458,7 +1475,7 @@ export function ContributionForm({ user }: ContributionFormProps) {
 								<button
 									type="submit"
 									disabled={contributionMutation.isPending}
-									className="inline-flex items-center gap-2 bg-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-charcoal transition-all hover:bg-gold disabled:cursor-not-allowed disabled:opacity-50"
+									className="inline-flex items-center gap-2 bg-charcoal px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-ivory transition-all hover:bg-gold hover:text-charcoal disabled:cursor-not-allowed disabled:opacity-50"
 								>
 									{contributionMutation.isPending && (
 										<Loader2 className="h-4 w-4 animate-spin" />
@@ -1468,6 +1485,7 @@ export function ContributionForm({ user }: ContributionFormProps) {
 							</div>
 						</div>
 					</form>
+				</div>
 			</div>
 		</section>
 	);
