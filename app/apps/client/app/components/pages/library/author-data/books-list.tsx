@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { ArrowLeft } from "lucide-react";
+import { AuthorBooksLoading } from "./author-books-loading";
 import { BookCard } from "./book-card";
 import type { Author, Book } from "@repo/server";
 import { SAFE_ROUTES } from "~/safe-routes";
@@ -139,10 +140,7 @@ export function Books({
 	id: string;
 	isConversation?: boolean;
 }) {
-	if (isLoading)
-		return (
-			<div className="p-8 text-center text-ivory/80">Loading books...</div>
-		);
+	if (isLoading) return <AuthorBooksLoading />;
 
 	return (
 		<section>
