@@ -28,7 +28,7 @@ export default function BookContentPage() {
         const id = location.pathname.split("/").pop() || "";
         const bookId = id.split("-")[0] || "";
 
-        const { data: res, isLoading } = $api.useQuery("get", `/books/{id}`, {
+        const { data: res, isLoading, error } = $api.useQuery("get", `/books/{id}`, {
                 params: {
                         path: {
                                 id: bookId,
@@ -39,7 +39,7 @@ export default function BookContentPage() {
         return (
                 <main className="flex flex-col min-h-screen bg-charcoal">
                         <div className="mt-30">
-                                <BookData res={res} isLoading={isLoading} user={user} />
+                                <BookData res={res} isLoading={isLoading} error={error} user={user} />
                         </div>
                 </main>
         )

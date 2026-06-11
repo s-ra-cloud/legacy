@@ -49,7 +49,8 @@ export default function NewHeader({ user }: NewHeaderProps) {
     setMenuOpen(false);
   }, [pathname]);
 
-  const hideUntilScroll = isLargeViewport === true && !scrolled;
+  const isHomePage = pathname === SAFE_ROUTES.HOME;
+  const hideUntilScroll = isLargeViewport === true && !scrolled && isHomePage;
 
   return (
     <motion.nav

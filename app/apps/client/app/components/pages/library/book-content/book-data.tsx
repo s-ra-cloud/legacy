@@ -1,21 +1,26 @@
 import type { Book, AuthUser } from "@repo/server";
 import { motion } from "framer-motion";
 import { BookContentViewer } from "./book-content-viewer";
+import { BookError } from "./book-error";
 import { BookLoading } from "./book-loading";
 
 export function BookData({
 	res,
 	isLoading,
+	error,
 	user,
 }: {
 	res: Book | undefined;
 	isLoading: boolean;
+	error?: { code?: string; message?: string } | null;
 	user: AuthUser | null;
 }) {
 	if (isLoading)
 		return <BookLoading label="Finding the Volume" />;
 
-	if (!res?.BookTitle)
+	if (error || !res) return <BookError error={error} />;
+
+	if (!res.BookTitle)
 		return (
 			<section className="flex w-full items-center justify-center text-ivory">
 				<motion.h1

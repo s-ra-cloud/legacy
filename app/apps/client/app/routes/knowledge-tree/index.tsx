@@ -12,10 +12,10 @@ export const meta: MetaFunction = () => [
 ];
 
 export default function KnowledgeTreeIndexPage() {
-        return (
-                <main className="flex flex-col min-h-[90vh] bg-legacy-navy bg-[#E2DCDC]">
+  return (
+    <main className="flex flex-col min-h-[90vh] bg-legacy-navy bg-[#E2DCDC]">
       {/* <KnowledgeHome /> */}
-                        <UnderConstractionPage />
+      <UnderConstractionPage />
     </main>
-        )
+  )
 }

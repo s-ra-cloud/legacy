@@ -18,7 +18,7 @@ export default function AuthorLibraryPage() {
         const id = location.pathname.split("/").pop() || "";
         const authorId = id.split("-")[0] || "";
 
-        const { data: res, isLoading } = $api.useQuery("get", `/authors/{id}`, {
+        const { data: res, isLoading, error } = $api.useQuery("get", `/authors/{id}`, {
                 params: {
                         path: { id: authorId },
                 },
@@ -44,7 +44,7 @@ export default function AuthorLibraryPage() {
                                         }}
                                 />
                                 <div className="relative z-10 px-4 sm:px-8 lg:px-12">
-                                        <Books res={res} isLoading={isLoading} id={id} />
+                                        <Books res={res} isLoading={isLoading} error={error} id={id} />
                                 </div>
                         </section>
 
