@@ -8,7 +8,10 @@ import type { AuthUser, Book, GCContributionData } from "@repo/server";
 import { RequestBookModal } from "./request-book-modal";
 import useSelectedText from "../../../../hooks/useSelectedText";
 import type { ReactNode, RefObject } from "react";
-import { X } from "lucide-react";
+import { Highlighter, X } from "lucide-react";
+import { BookError } from "~/components/pages/library/book-content/book-error";
+import { BookLoading } from "~/components/pages/library/book-content/book-loading";
+import { SAFE_ROUTES } from "~/safe-routes";
 import {
         Select,
         SelectContent,
@@ -19,8 +22,6 @@ import {
 import { toast } from "sonner";
 import { z } from "zod";
 import { Input } from "~/components/ui/input";
-import { SAFE_ROUTES } from "~/safe-routes";
-
 const gcContributionDataSchema = z.object({
         bookA_id: z.string(),
         bookB_id: z.string().min(5, "Referenced work is required"),
@@ -880,51 +881,85 @@ export function BookContentViewer({ book, user }: { book: Book; user: AuthUser }
         };
 
         if (isLoadingContent) {
-                return (
-                        <section className="bg-[#E2DCDC] w-full flex pb-20 relative">
-                                <div className="hidden sm:block w-1/5 p-4 border-r border-[#0E0D14]" />
-                                <div className="w-full sm:w-3/5 p-4 flex items-center justify-center">
-                                        <div className="text-lg">Loading file content...</div>
-                                </div>
-                                <div className="hidden sm:block w-1/5 p-4 border-l border-[#0E0D14]" />
-                        </section>
-                );
+                return <BookLoading label="Loading the Manuscript" />;
         }
 
         if (error) {
                 return (
-                        <section className="bg-[#E2DCDC] w-full flex pb-20 relative">
-                                <div className="hidden sm:block w-1/5 p-4 border-r border-[#0E0D14]" />
-                                <div className="w-full sm:w-3/5 p-4 flex items-center justify-center">
-                                        <div className="text-lg text-red-600">Error: {error.message}</div>
-                                </div>
-                                <div className="hidden sm:block w-1/5 p-4 border-l border-[#0E0D14]" />
-                        </section>
+                        <BookError
+                                title={
+                                        <>
+                                                Unable to <span className="text-gold">Open</span> the Text
+                                        </>
+                                }
+                                message={error.message || "The manuscript could not be retrieved from the archive."}
+                                backTo={SAFE_ROUTES.PROJECTS_CONVERSATION_CONTRIBUTE}
+                                backLabel="Return to Contribute"
+                        />
                 );
         }
 
         return (
-                <section className="bg-[#E2DCDC] w-full flex pb-20 relative">
-                        <div className="hidden sm:block w-1/5 p-4 border-r border-[#0E0D14]" />
+                <section className="relative flex w-full flex-col bg-paper pb-20 text-charcoal sm:flex-row">
+                        <div
+                                aria-hidden
+                                className="pointer-events-none absolute inset-0 opacity-[0.04]"
+                                style={{
+                                        backgroundImage:
+                                                "linear-gradient(to right, #0F1113 1px, transparent 1px), linear-gradient(to bottom, #0F1113 1px, transparent 1px)",
+                                        backgroundSize: "72px 72px",
+                                }}
+                        />
+                        <div
+                                aria-hidden
+                                className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-charcoal to-transparent"
+                        />
 
-                        <div className="w-full sm:w-3/5 p-4" style={{ overflowX: "auto", maxWidth: "100%" }}>
+                        <div className="hidden w-1/5 border-r border-charcoal/10 p-6 sm:block" />
+
+                        <div className="relative w-full px-4 py-8 sm:w-3/5 sm:px-6 sm:py-10" style={{ overflowX: "auto", maxWidth: "100%" }}>
+                                <div className="mb-6 flex items-center gap-3 border-b border-charcoal/10 pb-4 sm:hidden">
+                                        <Highlighter size={16} strokeWidth={1.5} className="text-gold" />
+                                        <p className="font-serif text-sm italic text-charcoal/55">
+                                                Highlight a passage to map a connection
+                                        </p>
+                                </div>
                                 <div
                                         ref={contentRef}
-                                        className="scoped-html-content rich-contentv1 footnoteColor break-words overflow-wrap-anywhere"
+                                        className="scoped-html-content rich-contentv1 footnoteColor break-words overflow-wrap-anywhere font-serif leading-relaxed text-charcoal/85"
                                         style={{ wordBreak: "break-word", overflowWrap: "anywhere", maxWidth: "100%" }}
                                         dangerouslySetInnerHTML={{ __html: bodyContent }}
                                 />
                         </div>
 
-                        <div className="hidden sm:block w-1/5 p-4 border-l border-[#0E0D14] text-[15px]">
-                                <div className="flex justify-start">
-                                        <img
-                                                src="/assets/Highlighter.png"
-                                                alt="Highlighter"
-                                                className="w-10 h-10 object-contain"
-                                        />
+                        <aside className="relative hidden w-1/5 border-l border-charcoal/10 p-6 sm:block">
+                                <div className="sticky top-28">
+                                        <div className="mb-4 flex items-center gap-2">
+                                                <Highlighter size={18} strokeWidth={1.5} className="text-gold" />
+                                                <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-gold/80">
+                                                        Highlight
+                                                </span>
+                                        </div>
+                                        <p className="font-serif text-sm leading-relaxed text-charcoal/55">
+                                                Select any passage in the text. A connection form will open to map
+                                                the reference.
+                                        </p>
+                                        <div className="mt-6 space-y-2">
+                                                {[
+                                                        { color: "bg-emerald-500", label: "Agreement" },
+                                                        { color: "bg-slate-400", label: "Neutral" },
+                                                        { color: "bg-orange-500", label: "Opposition" },
+                                                ].map((item) => (
+                                                        <div key={item.label} className="flex items-center gap-2">
+                                                                <div className={`h-1.5 w-4 rounded-full ${item.color}`} />
+                                                                <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-charcoal/40">
+                                                                        {item.label}
+                                                                </span>
+                                                        </div>
+                                                ))}
+                                        </div>
                                 </div>
-                        </div>
+                        </aside>
 
                         {/* Floating Footnote Popups */}
                         {Object.entries(expandedFootnotes).map(([indexStr, isVisible]) => {

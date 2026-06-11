@@ -8,9 +8,17 @@ type BookErrorProps = {
 	error?: { code?: string; message?: string } | null;
 	title?: ReactNode;
 	message?: string;
+	backTo?: string;
+	backLabel?: string;
 };
 
-export function BookError({ error, title, message }: BookErrorProps) {
+export function BookError({
+	error,
+	title,
+	message,
+	backTo = SAFE_ROUTES.PROJECTS_LIBRARY,
+	backLabel = "Return to Library",
+}: BookErrorProps) {
 	const resolvedMessage =
 		message ??
 		(error?.code === "NOT_FOUND" || error?.code === "404"
@@ -60,11 +68,11 @@ export function BookError({ error, title, message }: BookErrorProps) {
 				</p>
 
 				<Link
-					to={SAFE_ROUTES.PROJECTS_LIBRARY}
+					to={backTo}
 					className="inline-flex items-center gap-2 border border-gold/30 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-gold/80 transition-colors hover:border-gold hover:text-gold"
 				>
 					<ArrowLeft size={11} strokeWidth={2.5} />
-					Return to Library
+					{backLabel}
 				</Link>
 			</motion.div>
 		</section>

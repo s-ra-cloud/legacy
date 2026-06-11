@@ -1,82 +1,61 @@
-import type { Book } from "@repo/server";
+import type { AuthUser, Book } from "@repo/server";
 import { BookContentViewer } from "./book-content-viewer";
-import type { AuthUser } from "@repo/server";
+import { GCBookHeader } from "./gc-book-header";
+import { BookError } from "~/components/pages/library/book-content/book-error";
+import { BookLoading } from "~/components/pages/library/book-content/book-loading";
+import { SAFE_ROUTES } from "~/safe-routes";
 
-export function BookData({ res, isLoading, user }: { res: Book | undefined, isLoading: boolean, user: AuthUser }) {
+export function BookData({
+	res,
+	isLoading,
+	error,
+	user,
+}: {
+	res: Book | undefined;
+	isLoading: boolean;
+	error?: { code?: string; message?: string } | null;
+	user: AuthUser;
+}) {
+	if (isLoading) return <BookLoading label="Opening the Text" />;
 
-	if (isLoading)
-		return <div className="text-center p-8">Loading book data...</div>;
-
-	if (!res?.BookTitle)
+	if (error || !res)
 		return (
-			<section className="w-full flex justify-center items-center text-[#0E0D14]">
-				<h1
-					className="text-[30px] sm:text-[40px] text-center text-5xl font-serif mb-7 uppercase tracking-wide"
-					style={{
-						fontFamily: 'Didot, serif',
-						fontWeight: 700,
-					}}
-				>
-					🚧 Book under construction - will be available soon 🚧
-				</h1>
+			<BookError
+				error={error}
+				title={
+					<>
+						Text <span className="text-gold">Not Found</span>
+					</>
+				}
+				backTo={SAFE_ROUTES.PROJECTS_CONVERSATION_CONTRIBUTE}
+				backLabel="Return to Contribute"
+			/>
+		);
+
+	if (!res.BookTitle)
+		return (
+			<section className="flex min-h-[50vh] w-full items-center justify-center px-4 pt-28 text-ivory sm:px-8">
+				<div className="relative max-w-2xl border border-white/10 bg-white/[0.02] px-8 py-14 text-center sm:px-12">
+					<div className="pointer-events-none absolute top-3 left-3 h-px w-3 bg-gold/30" />
+					<div className="pointer-events-none absolute top-3 left-3 h-3 w-px bg-gold/30" />
+					<div className="pointer-events-none absolute top-3 right-3 h-px w-3 bg-gold/30" />
+					<div className="pointer-events-none absolute top-3 right-3 h-3 w-px bg-gold/30" />
+					<span className="marquee-label mb-4 block">Archive</span>
+					<h1 className="font-serif text-2xl font-bold uppercase tracking-wide sm:text-3xl">
+						Volume <span className="text-gold">Under Construction</span>
+					</h1>
+					<p className="mx-auto mt-4 max-w-md font-serif text-lg italic text-ivory/50">
+						This text will be available in the archive soon.
+					</p>
+				</div>
 			</section>
 		);
 
 	return (
-		<section className="w-full text-[#0E0D14]">
-			<h2
-				className="text-[35px] sm:text-[50px] text-center text-5xl font-serif font-bold mb-7 uppercase tracking-wide"
-				style={{
-					fontFamily: 'Didot, serif',
-					fontWeight: 700,
-				}}
-			>
-				{res?.BookTitle}
-			</h2>
-			{res?.BookSubtitle && (
-				<h2
-					className="text-[30px] sm:text-[40px] text-center text-5xl mb-7 uppercase tracking-wide"
-					style={{
-						fontFamily: 'Didot, serif',
-						fontWeight: 400,
-						fontStyle: 'italic',
-					}}
-				>
-					{res?.BookSubtitle}
-				</h2>
-			)}
-			<h3
-				className="text-[22px] sm:text-[32px] text-center text-5xl font-serif mb-7 uppercase tracking-wide"
-				style={{
-					fontFamily: 'Didot, serif',
-					fontWeight: 400,
-				}}
-			>
-				{res?.OriginalPublicationDate}
-			</h3>
-			<h3
-				className="text-[22px] sm:text-[32px] text-center text-5xl font-serif mb-25 tracking-wide"
-				style={{
-					fontFamily: 'Didot, serif',
-					fontWeight: 400,
-				}}
-			>
-				{res?.author?.fullName?.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
-			</h3>
-			{(res?.TranslatorName || res?.SpecialThanks) && (
-				<div className="text-[20px] sm:text-[28px] max-w-7xl mx-auto px-4" style={{
-					fontWeight: 300,
-				}}>
-					{res?.TranslatorName && (<p> Translated by {res?.TranslatorName} {res?.TranslatingDate}</p>)}
-					{res?.SpecialThanks && (<p> {res?.SpecialThanks} </p>)}
-				</div>
-			)}
-			<div
-				className="h-[2px] max-w-7xl mx-auto my-15"
-				style={{
-					background:"linear-gradient(to right, #A9B0C200, #17161F, #A9B0C200)",
-				}}
-			></div>
+		<section className="w-full">
+			<div className="px-4 pt-28 sm:px-8">
+				<GCBookHeader book={res} />
+			</div>
 			<BookContentViewer book={res} user={user} />
 		</section>
 	);
