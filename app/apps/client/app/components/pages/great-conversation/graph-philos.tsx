@@ -46,7 +46,7 @@ export default function GraphPhilos({ vnodes, vlinks }: { vnodes: Node[], vlinks
           return "#f97316"; // orange
         case "neutral":
         default:
-          return "#C5A059"; // gold/neutral
+          return "#94A3B8"; // slate/neutral
       }
     };
 
@@ -148,8 +148,8 @@ export default function GraphPhilos({ vnodes, vlinks }: { vnodes: Node[], vlinks
       node
         .append("circle")
         .attr("r", 6)
-        .attr("fill", "#C5A059")
-        .attr("stroke", "#C5A059")
+        .attr("fill", "#EAE8E4")
+        .attr("stroke", "#EAE8E4")
         .attr("stroke-width", 2)
         .style("cursor", "pointer")
         .on("mouseover", function (event, d) {

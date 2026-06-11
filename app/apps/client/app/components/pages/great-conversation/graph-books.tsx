@@ -98,7 +98,7 @@ export default function GraphBooks({ vnodes, vlinks }: { vnodes: Node[], vlinks:
           return "#f97316"; // orange
         case "neutral":
         default:
-          return "#C5A059"; // gold/neutral
+          return "#94A3B8"; // slate/neutral
       }
     };
 
@@ -241,8 +241,8 @@ export default function GraphBooks({ vnodes, vlinks }: { vnodes: Node[], vlinks:
     const circle = node
       .append("circle")
       .attr("r", 55)
-      .attr("fill", "#2a2518")
-      .attr("stroke", "#C5A059")
+      .attr("fill", "#1a1918")
+      .attr("stroke", "#94A3B8")
       .attr("stroke-width", 2);
 
     // Function to wrap text into multiple lines

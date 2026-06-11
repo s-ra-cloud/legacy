@@ -166,7 +166,7 @@ export function GCPillars() {
 					{[
 						{ color: "bg-emerald-500", label: "Agreement" },
 						{ color: "bg-orange-500", label: "Opposition" },
-						{ color: "bg-gold", label: "Neutral" },
+						{ color: "bg-slate-400", label: "Neutral" },
 					].map((item) => (
 						<div key={item.label} className="flex items-center gap-2">
 							<div className={`h-2 w-6 rounded-full ${item.color}`} />
