@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useMemo } from "react";
+import { memo, useEffect, useState, useRef, useMemo } from "react";
 import { createPortal } from "react-dom";
 import createDOMPurify from "dompurify";
 import { load } from "cheerio";
@@ -29,6 +29,71 @@ const gcContributionDataSchema = z.object({
         connectionNature: z.enum(["agreement", "neutral / unsure", "opposition"]),
         bookA_textExcerpt: z.string().min(2).max(65535),
         bookB_textExcerpt: z.string().min(2).max(65535),
+});
+
+const FootnotePopup = memo(function FootnotePopup({
+        index,
+        content,
+        onClose,
+}: {
+        index: number;
+        content: string;
+        onClose: (index: number) => void;
+}) {
+        return (
+                <div
+                        role="dialog"
+                        aria-modal="false"
+                        aria-label={`Footnote ${index + 1}`}
+                        className="footnoteColor fixed inset-x-4 bottom-4 z-50 max-h-[72vh] overflow-hidden border border-charcoal/15 bg-paper text-charcoal shadow-[0_24px_80px_rgba(15,17,19,0.28)] sm:inset-x-auto sm:right-4 sm:top-1/2 sm:bottom-auto sm:w-[min(24rem,calc(100vw-2rem))] sm:-translate-y-1/2"
+                >
+                        <div
+                                aria-hidden
+                                className="pointer-events-none absolute inset-0 opacity-[0.04]"
+                                style={{
+                                        backgroundImage:
+                                                "linear-gradient(to right, #0F1113 1px, transparent 1px), linear-gradient(to bottom, #0F1113 1px, transparent 1px)",
+                                        backgroundSize: "48px 48px",
+                                }}
+                        />
+                        <div className="pointer-events-none absolute top-3 left-3 h-px w-4 bg-charcoal/25" />
+                        <div className="pointer-events-none absolute top-3 left-3 h-4 w-px bg-charcoal/25" />
+                        <div className="pointer-events-none absolute top-3 right-3 h-px w-4 bg-charcoal/25" />
+                        <div className="pointer-events-none absolute top-3 right-3 h-4 w-px bg-charcoal/25" />
+                        <div className="pointer-events-none absolute bottom-3 left-3 h-px w-4 bg-charcoal/25" />
+                        <div className="pointer-events-none absolute bottom-3 left-3 h-4 w-px bg-charcoal/25" />
+                        <div className="pointer-events-none absolute bottom-3 right-3 h-px w-4 bg-charcoal/25" />
+                        <div className="pointer-events-none absolute bottom-3 right-3 h-4 w-px bg-charcoal/25" />
+
+                        <div className="relative border-b border-charcoal/10 px-5 py-4">
+                                <div className="flex items-center justify-between gap-4">
+                                        <div className="flex items-center gap-3">
+                                                <div className="h-px w-8 bg-gold/70" />
+                                                <span className="text-[9px] font-bold uppercase tracking-[0.35em] text-gold">
+                                                        Footnote {index + 1}
+                                                </span>
+                                        </div>
+                                        <button
+                                                type="button"
+                                                className="flex size-8 shrink-0 items-center justify-center border border-charcoal/10 text-charcoal/50 transition-colors hover:border-gold hover:bg-gold hover:text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                                                onClick={() => onClose(index)}
+                                                aria-label="Close footnote"
+                                        >
+                                                <span aria-hidden className="text-lg leading-none">
+                                                        ×
+                                                </span>
+                                        </button>
+                                </div>
+                        </div>
+
+                        <div className="relative max-h-[calc(72vh-4.25rem)] overflow-y-auto px-5 py-5">
+                                <div
+                                        className="footnote-popup-content text-charcoal"
+                                        dangerouslySetInnerHTML={{ __html: content }}
+                                />
+                        </div>
+                </div>
+        );
 });
 
 export function BookContentViewer({ book, user }: { book: Book; user: AuthUser }) {
@@ -967,18 +1032,12 @@ export function BookContentViewer({ book, user }: { book: Book; user: AuthUser }
                                 if (!isVisible) return null;
 
                                 return (
-                                        <div
+                                        <FootnotePopup
                                                 key={index}
-                                                className="footnoteColor fixed top-1/2 right-2 transform -translate-y-1/2 bg-[#f5eded] border border-gray-300 shadow-lg p-2 max-h-[80vh] overflow-y-auto z-50 rounded-lg max-w-4/5 sm:max-w-1/5 min-w-3/5 sm:min-w-1/5"
-                                        >
-                                                <div dangerouslySetInnerHTML={{ __html: footnotes[index] || "" }} />
-                                                <button
-                                                        className="mt-4 text-sm text-red-600 sticky bottom-0 bg-[#f5eded] py-1"
-                                                        onClick={() => closeFootnote(index)}
-                                                >
-                                                        Close
-                                                </button>
-                                        </div>
+                                                index={index}
+                                                content={footnotes[index] || ""}
+                                                onClose={closeFootnote}
+                                        />
                                 );
                         })}
 
@@ -1029,10 +1088,9 @@ export function BookContentViewer({ book, user }: { book: Book; user: AuthUser }
 function ContributionPopup({
         contribution,
         book,
-        index,
         onClose,
         navigate,
-        user
+        user,
 }: {
         contribution: any;
         book: Book;
@@ -1043,170 +1101,208 @@ function ContributionPopup({
 }) {
         const isBookA = book.documentId === contribution?.bookA_id;
 
-        // Find the linked book (the other book in the contribution)
         const linkedBookId = isBookA ? contribution?.bookB_id : contribution?.bookA_id;
         const linkedBook = contribution?.books?.find((b: any) => b?.documentId === linkedBookId);
 
-        // Construct the URL for the linked book
         const getLinkedBookUrl = () => {
                 if (!linkedBook || !linkedBook.author) return null;
-                const authorSlug = `${linkedBook.author.documentId}-${linkedBook.author.fullName?.replace(/\s+/g, '-').toLowerCase()}`;
-                const bookSlug = linkedBook.documentId.replace(/\s+/g, '-').toLowerCase();
-                return `${SAFE_ROUTES.PROJECTS_CONVERSATION}/contribute/${authorSlug}/${bookSlug}`;
+                const authorSlug = `${linkedBook.author.documentId}-${linkedBook.author.fullName?.replace(/\s+/g, "-").toLowerCase()}`;
+                const bookSlug = linkedBook.documentId.replace(/\s+/g, "-").toLowerCase();
+                return `${SAFE_ROUTES.PROJECTS_CONVERSATION_CONTRIBUTE}/${authorSlug}/${bookSlug}`;
         };
 
         const linkedBookUrl = getLinkedBookUrl();
-
-        // Get comments from contribution data, filter out comments without contributorEmail
         const comments = (contribution?.gc_comments || []).filter((comment: any) => comment.contributorEmail);
-
-        // Query client for invalidating queries
         const queryClient = useQueryClient();
 
         return (
                 <div
-                        className="footnoteColor fixed top-1/2 right-2 transform -translate-y-1/2 bg-[#f5eded] border border-gray-300 shadow-lg p-4 max-h-[80vh] overflow-y-auto z-50 rounded-lg max-w-4/5 sm:max-w-1/3 min-w-3/5 sm:min-w-1/4"
+                        role="dialog"
+                        aria-modal="false"
+                        aria-label="Great Conversation connection"
+                        className="footnoteColor fixed inset-x-4 bottom-4 z-50 max-h-[82vh] overflow-hidden border border-charcoal/15 bg-paper text-charcoal shadow-[0_24px_80px_rgba(15,17,19,0.28)] sm:inset-x-auto sm:right-4 sm:top-1/2 sm:bottom-auto sm:w-[min(30rem,calc(100vw-2rem))] sm:-translate-y-1/2"
                 >
-                        <div className="text-sm text-[#17161F] space-y-2">
-                                {/* Main message based on whether this book is bookA or bookB */}
-                                {isBookA ? (
-                                        <>
-                                                <p>
-                                                        This passage has been noted as an{" "}
-                                                        <span className="font-semibold capitalize">{contribution?.connectionType}</span>{" "}
-                                                        <span className="font-semibold capitalize">{contribution?.connectionNature}</span> to{" "}
-                                                        <span className="font-semibold italic">{contribution?.bookB_title}</span>
-                                                        {linkedBook?.author?.fullName && (
-                                                                <> by <span className="font-semibold">{linkedBook.author.fullName}</span></>
-                                                        )}.
-                                                </p>
+                        <div
+                                aria-hidden
+                                className="pointer-events-none absolute inset-0 opacity-[0.04]"
+                                style={{
+                                        backgroundImage:
+                                                "linear-gradient(to right, #0F1113 1px, transparent 1px), linear-gradient(to bottom, #0F1113 1px, transparent 1px)",
+                                        backgroundSize: "48px 48px",
+                                }}
+                        />
+                        <div className="pointer-events-none absolute top-3 left-3 h-px w-4 bg-charcoal/25" />
+                        <div className="pointer-events-none absolute top-3 left-3 h-4 w-px bg-charcoal/25" />
+                        <div className="pointer-events-none absolute top-3 right-3 h-px w-4 bg-charcoal/25" />
+                        <div className="pointer-events-none absolute top-3 right-3 h-4 w-px bg-charcoal/25" />
+                        <div className="pointer-events-none absolute bottom-3 left-3 h-px w-4 bg-charcoal/25" />
+                        <div className="pointer-events-none absolute bottom-3 left-3 h-4 w-px bg-charcoal/25" />
+                        <div className="pointer-events-none absolute bottom-3 right-3 h-px w-4 bg-charcoal/25" />
+                        <div className="pointer-events-none absolute bottom-3 right-3 h-4 w-px bg-charcoal/25" />
 
-                                                {/* Add criteria if any are true */}
-                                                {(contribution?.isSimilarityIdeas || contribution?.isBiographical || contribution?.isOther) && (
-                                                        <p>
-                                                                The contributor noted{" "}
-                                                                {[
-                                                                        contribution?.isSimilarityIdeas && "the similarity of ideas",
-                                                                        contribution?.isBiographical && "biographical elements",
-                                                                        contribution?.isOther && "other elements",
-                                                                ]
-                                                                        .filter(Boolean)
-                                                                        .map((item, index, array) => {
-                                                                                if (index === 0) return item;
-                                                                                if (index === array.length - 1) return ` and ${item}`;
-                                                                                return `, ${item}`;
-                                                                        })
-                                                                        .join("")}
-                                                                .
-                                                        </p>
-                                                )}
-
-                                                {/* Add comments if explainConnection exists */}
-                                                {contribution?.explainConnection && (
-                                                        <p>
-                                                                <span className="font-semibold">Comments:</span> {contribution.explainConnection}
-                                                        </p>
-                                                )}
-                                        </>
-                                ) : (
-                                        <>
-                                                <p>
-                                                        This passage will be referred to in{" "}
-                                                        <span className="font-semibold italic">{contribution?.bookA_title}</span>
-                                                        {contribution?.books?.find((b: any) => b?.documentId === contribution?.bookA_id)?.author?.fullName && (
-                                                                <> by <span className="font-semibold">{contribution.books.find((b: any) => b?.documentId === contribution?.bookA_id)?.author?.fullName}</span></>
-                                                        )}. The connexion has been noted as an{" "}
-                                                        <span className="font-semibold capitalize">{contribution?.connectionType}</span>{" "}
-                                                        <span className="font-semibold capitalize">{contribution?.connectionNature}</span>.
-                                                </p>
-
-                                                {/* Add criteria if any are true */}
-                                                {(contribution?.isSimilarityIdeas || contribution?.isBiographical || contribution?.isOther) && (
-                                                        <p>
-                                                                The contributor noted{" "}
-                                                                {[
-                                                                        contribution?.isSimilarityIdeas && "the similarity of ideas",
-                                                                        contribution?.isBiographical && "biographical elements",
-                                                                        contribution?.isOther && "other elements",
-                                                                ]
-                                                                        .filter(Boolean)
-                                                                        .map((item, index, array) => {
-                                                                                if (index === 0) return item;
-                                                                                if (index === array.length - 1) return ` and ${item}`;
-                                                                                return `, ${item}`;
-                                                                        })
-                                                                        .join("")}
-                                                                .
-                                                        </p>
-                                                )}
-
-                                                {/* Add comments if explainConnection exists */}
-                                                {contribution?.explainConnection && (
-                                                        <p>
-                                                                <span className="font-semibold">Comments:</span> {contribution.explainConnection}
-                                                        </p>
-                                                )}
-                                        </>
-                                )}
-
-                                {/* Contributor information */}
-                                {(contribution?.contributorName) && (
-                                        <div className="border-t pt-3 mt-3">
-                                                <p>
-                                                        <span className="font-semibold">Contributor:</span>{" "}
-                                                        {[
-                                                                contribution.contributorName,
-                                                                contribution?.contributorInstitution,
-                                                        ]
-                                                                .filter(Boolean)
-                                                                .join(", ")}
-                                                </p>
+                        <div className="relative border-b border-charcoal/10 px-5 py-4">
+                                <div className="flex items-center justify-between gap-4">
+                                        <div>
+                                                <div className="mb-2 flex items-center gap-3">
+                                                        <div className="h-px w-8 bg-gold/70" />
+                                                        <span className="text-[9px] font-bold uppercase tracking-[0.35em] text-gold">
+                                                                Connection
+                                                        </span>
+                                                </div>
+                                                <div className="flex flex-wrap gap-2">
+                                                        {contribution?.connectionType && (
+                                                                <span className="border border-gold/25 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-gold">
+                                                                        {contribution.connectionType}
+                                                                </span>
+                                                        )}
+                                                        {contribution?.connectionNature && (
+                                                                <span className="border border-charcoal/10 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-charcoal/55">
+                                                                        {contribution.connectionNature}
+                                                                </span>
+                                                        )}
+                                                </div>
                                         </div>
-                                )}
-
-                                {/* See linked passage button */}
-                                <div className="mt-4">
                                         <button
                                                 type="button"
-                                                className="font-bold text-[#17161F] text-sm cursor-pointer hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
-                                                onClick={() => {
-                                                        if (linkedBookUrl) {
-                                                                // Close the popup before navigating
-                                                                onClose();
-                                                                // Add contribution ID to URL so we can scroll to the corresponding marker
-                                                                const contributionId = contribution?.documentId;
-                                                                const urlWithParam = contributionId
-                                                                        ? `${linkedBookUrl}?contributionId=${contributionId}`
-                                                                        : linkedBookUrl;
-                                                                navigate(urlWithParam);
-                                                        }
-                                                }}
-                                                disabled={!linkedBookUrl}
+                                                className="flex size-8 shrink-0 items-center justify-center border border-charcoal/10 text-charcoal/50 transition-colors hover:border-gold hover:bg-gold hover:text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                                                onClick={onClose}
+                                                aria-label="Close connection popup"
                                         >
-                                                See the linked passage.
+                                                <span aria-hidden className="text-lg leading-none">
+                                                        ×
+                                                </span>
                                         </button>
                                 </div>
-
-                                {/* Comment components */}
-                                <CommentInput
-                                        contributionId={contribution?.documentId}
-                                        user={user}
-                                        onCommentAdded={() => {
-                                                // Invalidate book query to refresh comments
-                                                queryClient.invalidateQueries({
-                                                        queryKey: ["get", `/books/${book.documentId}`],
-                                                });
-                                        }}
-                                />
-                                <CommentsList comments={comments} />
                         </div>
 
-                        <button
-                                className="mt-4 text-sm text-red-600 sticky bottom-0 bg-[#f5eded] py-1 w-full"
-                                onClick={onClose}
-                        >
-                                Close
-                        </button>
+                        <div className="relative max-h-[calc(82vh-5.75rem)] overflow-y-auto px-5 py-5">
+                                <div className="space-y-4 text-sm leading-7 text-charcoal/75">
+                                        {isBookA ? (
+                                                <>
+                                                        <p className="font-serif text-base leading-7 text-charcoal">
+                                                                This passage has been noted as an{" "}
+                                                                <span className="font-semibold capitalize text-gold">{contribution?.connectionType}</span>{" "}
+                                                                <span className="font-semibold capitalize text-gold">{contribution?.connectionNature}</span> to{" "}
+                                                                <span className="font-semibold italic text-charcoal">{contribution?.bookB_title}</span>
+                                                                {linkedBook?.author?.fullName && (
+                                                                        <> by <span className="font-semibold">{linkedBook.author.fullName}</span></>
+                                                                )}.
+                                                        </p>
+
+                                                        {(contribution?.isSimilarityIdeas || contribution?.isBiographical || contribution?.isOther) && (
+                                                                <div className="flex flex-wrap gap-2">
+                                                                        {contribution?.isSimilarityIdeas && (
+                                                                                <span className="border border-charcoal/10 bg-white/30 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-charcoal/55">
+                                                                                        Similarity of ideas
+                                                                                </span>
+                                                                        )}
+                                                                        {contribution?.isBiographical && (
+                                                                                <span className="border border-charcoal/10 bg-white/30 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-charcoal/55">
+                                                                                        Biographical
+                                                                                </span>
+                                                                        )}
+                                                                        {contribution?.isOther && (
+                                                                                <span className="border border-charcoal/10 bg-white/30 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-charcoal/55">
+                                                                                        Other
+                                                                                </span>
+                                                                        )}
+                                                                </div>
+                                                        )}
+
+                                                        {contribution?.explainConnection && (
+                                                                <p className="border-l-2 border-gold/40 pl-4 font-serif italic text-charcoal/70">
+                                                                        {contribution.explainConnection}
+                                                                </p>
+                                                        )}
+                                                </>
+                                        ) : (
+                                                <>
+                                                        <p className="font-serif text-base leading-7 text-charcoal">
+                                                                This passage will be referred to in{" "}
+                                                                <span className="font-semibold italic text-charcoal">{contribution?.bookA_title}</span>
+                                                                {contribution?.books?.find((b: any) => b?.documentId === contribution?.bookA_id)?.author?.fullName && (
+                                                                        <> by <span className="font-semibold">{contribution.books.find((b: any) => b?.documentId === contribution?.bookA_id)?.author?.fullName}</span></>
+                                                                )}. The connexion has been noted as an{" "}
+                                                                <span className="font-semibold capitalize text-gold">{contribution?.connectionType}</span>{" "}
+                                                                <span className="font-semibold capitalize text-gold">{contribution?.connectionNature}</span>.
+                                                        </p>
+
+                                                        {(contribution?.isSimilarityIdeas || contribution?.isBiographical || contribution?.isOther) && (
+                                                                <div className="flex flex-wrap gap-2">
+                                                                        {contribution?.isSimilarityIdeas && (
+                                                                                <span className="border border-charcoal/10 bg-white/30 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-charcoal/55">
+                                                                                        Similarity of ideas
+                                                                                </span>
+                                                                        )}
+                                                                        {contribution?.isBiographical && (
+                                                                                <span className="border border-charcoal/10 bg-white/30 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-charcoal/55">
+                                                                                        Biographical
+                                                                                </span>
+                                                                        )}
+                                                                        {contribution?.isOther && (
+                                                                                <span className="border border-charcoal/10 bg-white/30 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-charcoal/55">
+                                                                                        Other
+                                                                                </span>
+                                                                        )}
+                                                                </div>
+                                                        )}
+
+                                                        {contribution?.explainConnection && (
+                                                                <p className="border-l-2 border-gold/40 pl-4 font-serif italic text-charcoal/70">
+                                                                        {contribution.explainConnection}
+                                                                </p>
+                                                        )}
+                                                </>
+                                        )}
+
+                                        {contribution?.contributorName && (
+                                                <div className="border-t border-charcoal/10 pt-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-gold/80">
+                                                                Contributor
+                                                        </p>
+                                                        <p className="mt-1 font-serif text-sm text-charcoal/65">
+                                                                {[
+                                                                        contribution.contributorName,
+                                                                        contribution?.contributorInstitution,
+                                                                ]
+                                                                        .filter(Boolean)
+                                                                        .join(", ")}
+                                                        </p>
+                                                </div>
+                                        )}
+
+                                        <div className="mt-4">
+                                                <button
+                                                        type="button"
+                                                        className="inline-flex items-center justify-center border border-charcoal/15 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-charcoal transition-colors hover:border-gold hover:bg-gold hover:text-charcoal disabled:cursor-not-allowed disabled:opacity-40"
+                                                        onClick={() => {
+                                                                if (linkedBookUrl) {
+                                                                        onClose();
+                                                                        const contributionId = contribution?.documentId;
+                                                                        const urlWithParam = contributionId
+                                                                                ? `${linkedBookUrl}?contributionId=${contributionId}`
+                                                                                : linkedBookUrl;
+                                                                        navigate(urlWithParam);
+                                                                }
+                                                        }}
+                                                        disabled={!linkedBookUrl}
+                                                >
+                                                        See linked passage
+                                                </button>
+                                        </div>
+
+                                        <CommentInput
+                                                contributionId={contribution?.documentId}
+                                                user={user}
+                                                onCommentAdded={() => {
+                                                        queryClient.invalidateQueries({
+                                                                queryKey: ["get", `/books/${book.documentId}`],
+                                                        });
+                                                }}
+                                        />
+                                        <CommentsList comments={comments} />
+                                </div>
+                        </div>
                 </div>
         );
 }
@@ -1784,30 +1880,30 @@ function formatDateTime(dateString: string | null | undefined): string {
 // Individual comment item component
 function CommentItem({ comment }: { comment: any }) {
         return (
-                <div className="bg-[#faf9f9] p-3 rounded-lg border-l-4 border-[#E37B5B] shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-2 pb-2 border-b border-gray-200">
+                <div className="border-l-2 border-gold/50 bg-white/35 px-3 py-3 transition-colors hover:bg-white/50">
+                        <div className="mb-2 flex flex-col gap-2 border-b border-charcoal/10 pb-2 md:flex-row md:items-start md:justify-between">
                                 <div className="flex-1">
-                                        <p className="text-xs font-medium text-[#17161F] capitalize">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-charcoal/70">
                                                 {comment.contributorName}
                                         </p>
                                         {comment.contributorInstitution && (
-                                                <p className="text-xs text-gray-500 italic">
+                                                <p className="mt-1 font-serif text-xs italic text-charcoal/45">
                                                         {comment.contributorInstitution}
                                                 </p>
                                         )}
                                         {comment.publishedAt && (
-                                                <p className="text-xs text-gray-400 mt-1 md:hidden">
+                                                <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-charcoal/30 md:hidden">
                                                         {formatDateTime(comment.publishedAt)}
                                                 </p>
                                         )}
                                 </div>
                                 {comment.publishedAt && (
-                                        <p className="text-xs text-gray-400 hidden md:block whitespace-nowrap">
+                                        <p className="hidden whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.18em] text-charcoal/30 md:block">
                                                 {formatDateTime(comment.publishedAt)}
                                         </p>
                                 )}
                         </div>
-                        <p className="text-sm text-[#17161F] leading-relaxed whitespace-pre-wrap">
+                        <p className="whitespace-pre-wrap text-sm leading-7 text-charcoal/70">
                                 {comment.comment}
                         </p>
                 </div>
@@ -1818,18 +1914,20 @@ function CommentItem({ comment }: { comment: any }) {
 function CommentsList({ comments }: { comments: any[] }) {
         if (comments.length === 0) {
                 return (
-                        <div className="mt-4 border-t border-gray-300 pt-4">
-                                <div className="text-center py-4">
-                                        <p className="text-sm text-gray-500 italic">No comments yet.</p>
+                        <div className="mt-5 border-t border-charcoal/10 pt-4">
+                                <div className="py-3 text-center">
+                                        <p className="font-serif text-sm italic text-charcoal/40">No comments yet.</p>
                                 </div>
                         </div>
                 );
         }
 
         return (
-                <div className="mt-4 border-t border-gray-300 pt-4">
+                <div className="mt-5 border-t border-charcoal/10 pt-4">
                         <div className="space-y-4">
-                                <h3 className="font-semibold text-base text-[#17161F] mb-3">Comments ({comments.length})</h3>
+                                <h3 className="mb-3 text-[10px] font-bold uppercase tracking-[0.25em] text-gold/80">
+                                        Comments ({comments.length})
+                                </h3>
                                 {comments.map((comment: any) => (
                                         <CommentItem key={comment.documentId || comment.id} comment={comment} />
                                 ))}
@@ -1842,7 +1940,7 @@ function CommentsList({ comments }: { comments: any[] }) {
 function CommentInput({
         contributionId,
         user,
-        onCommentAdded
+        onCommentAdded,
 }: {
         contributionId?: string;
         user: AuthUser;
@@ -1853,10 +1951,10 @@ function CommentInput({
 
         const commentMutation = useMutation({
                 mutationFn: async (data: { comment: string; contributionId: string }) => {
-                        const res = await fetch('/api/v1/comments', {
-                                method: 'POST',
+                        const res = await fetch("/api/v1/comments", {
+                                method: "POST",
                                 headers: {
-                                        'Content-Type': 'application/json',
+                                        "Content-Type": "application/json",
                                 },
                                 body: JSON.stringify({
                                         data: {
@@ -1871,33 +1969,32 @@ function CommentInput({
                         });
                         if (!res.ok) {
                                 const error = await res.json();
-                                throw new Error(error.error || 'Failed to submit comment');
+                                throw new Error(error.error || "Failed to submit comment");
                         }
                         return res.json();
                 },
                 onSuccess: () => {
-                        toast.success('Comment submitted successfully');
+                        toast.success("Comment submitted successfully");
                         setShowCommentInput(false);
                         setCommentText("");
-                        // Call the callback to refresh comments
                         if (onCommentAdded) {
                                 onCommentAdded();
                         }
                 },
                 onError: (error) => {
-                        toast.error('Failed to submit comment', {
-                                description: error.message || 'Please try again later.',
+                        toast.error("Failed to submit comment", {
+                                description: error.message || "Please try again later.",
                         });
                 },
         });
 
         const handleSubmit = () => {
                 if (!commentText.trim()) {
-                        toast.error('Please enter a comment');
+                        toast.error("Please enter a comment");
                         return;
                 }
                 if (!contributionId) {
-                        toast.error('Contribution ID is missing');
+                        toast.error("Contribution ID is missing");
                         return;
                 }
                 commentMutation.mutate({
@@ -1908,11 +2005,10 @@ function CommentInput({
 
         return (
                 <>
-                        {/* Add comment button */}
                         <div className="mt-2">
                                 <button
                                         type="button"
-                                        className="font-bold text-[#17161F] text-sm cursor-pointer hover:underline"
+                                        className="inline-flex items-center justify-center border border-charcoal/15 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-charcoal transition-colors hover:border-gold hover:bg-gold hover:text-charcoal"
                                         onClick={() => {
                                                 setShowCommentInput(!showCommentInput);
                                         }}
@@ -1921,28 +2017,27 @@ function CommentInput({
                                 </button>
                         </div>
 
-                        {/* Comment input field */}
                         {showCommentInput && (
-                                <div className="mt-3 border-t border-gray-300 pt-3">
+                                <div className="mt-4 border-t border-charcoal/10 pt-4">
                                         <textarea
-                                                className="w-full p-2 rounded border border-gray-300 bg-white text-sm text-[#17161F] resize-y min-h-[100px] focus:outline-none focus:ring-2 focus:ring-[#E37B5B] focus:border-transparent"
+                                                className="min-h-[110px] w-full resize-y border border-charcoal/15 bg-white/50 p-3 text-sm text-charcoal placeholder:text-charcoal/30 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 disabled:opacity-50"
                                                 placeholder="Write your comment here..."
                                                 value={commentText}
                                                 onChange={(e) => setCommentText(e.target.value)}
                                                 disabled={commentMutation.isPending}
                                         />
-                                        <div className="flex gap-2 mt-2">
+                                        <div className="mt-3 flex gap-2">
                                                 <button
                                                         type="button"
-                                                        className="px-4 py-1.5 bg-[#E37B5B] text-white text-sm rounded hover:bg-[#d16a4f] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                                        className="border border-gold bg-gold px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-charcoal transition-colors hover:bg-gold/80 disabled:cursor-not-allowed disabled:opacity-50"
                                                         onClick={handleSubmit}
                                                         disabled={commentMutation.isPending || !commentText.trim()}
                                                 >
-                                                        {commentMutation.isPending ? 'Submitting...' : 'Submit'}
+                                                        {commentMutation.isPending ? "Submitting..." : "Submit"}
                                                 </button>
                                                 <button
                                                         type="button"
-                                                        className="px-4 py-1.5 bg-gray-200 text-[#17161F] text-sm rounded hover:bg-gray-300 transition-colors disabled:opacity-50"
+                                                        className="border border-charcoal/15 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-charcoal/55 transition-colors hover:border-charcoal/30 hover:text-charcoal disabled:opacity-50"
                                                         onClick={() => {
                                                                 setShowCommentInput(false);
                                                                 setCommentText("");
