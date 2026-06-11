@@ -5,7 +5,6 @@ import { Loader2, UploadCloud, Image as ImageIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { StyledButton } from "~/components/extended-ui/Button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import {
@@ -26,6 +25,20 @@ import { SAFE_ROUTES } from "~/safe-routes";
 interface ContributionFormProps {
 	user: AuthUser;
 }
+
+const labelClass =
+	"mb-2 block text-[10px] font-bold uppercase tracking-[0.25em] text-ivory/50";
+const inputClass =
+	"w-full max-w-md border border-white/15 bg-white/[0.06] px-4 py-3 text-ivory placeholder:text-ivory/30 focus-visible:border-gold/50 focus-visible:ring-1 focus-visible:ring-gold/30";
+const inputClassNarrow =
+	"w-[150px] border border-white/15 bg-white/[0.06] px-4 py-3 text-ivory placeholder:text-ivory/30 focus-visible:border-gold/50 focus-visible:ring-1 focus-visible:ring-gold/30";
+const inputClassHalf =
+	"w-full max-w-[250px] border border-white/15 bg-white/[0.06] px-4 py-3 text-ivory placeholder:text-ivory/30 focus-visible:border-gold/50 focus-visible:ring-1 focus-visible:ring-gold/30";
+const selectTriggerClass =
+	"w-full max-w-md border border-white/15 bg-white/[0.06] px-4 py-3 text-ivory focus:ring-1 focus:ring-gold/30";
+const errorClass = "mt-1 px-1 text-xs text-red-400";
+const uploadClass =
+	"flex h-40 w-40 cursor-pointer flex-col items-center justify-center border border-white/15 bg-white/[0.03] text-ivory/60 transition-colors hover:border-gold/40 hover:bg-white/[0.06] sm:h-52 sm:w-52 xl:h-64 xl:w-64";
 
 // Contribution form schema based on book input schema
 export const contributionFormSchema = z.object({
@@ -1066,31 +1079,36 @@ export function ContributionForm({ user }: ContributionFormProps) {
 	};
 
 	return (
-		<section className="w-full text-[#0E0D14]">
-			<h2
-				className="text-[27px] sm:text-[35px] text-center text-5xl font-serif font-bold mb-15 tracking-wide"
-				style={{
-					fontFamily: 'Didot, serif',
-					fontWeight: 700,
-				}}
-			>
-				Contribute a text
-			</h2>
+		<section className="relative w-full px-4 pb-24 sm:px-8">
+			<div className="relative mx-auto max-w-3xl border border-white/10 bg-white/[0.02] px-6 py-10 sm:px-10 sm:py-14">
+				<div className="pointer-events-none absolute top-3 left-3 h-px w-3 bg-gold/30" />
+				<div className="pointer-events-none absolute top-3 left-3 h-3 w-px bg-gold/30" />
+				<div className="pointer-events-none absolute top-3 right-3 h-px w-3 bg-gold/30" />
+				<div className="pointer-events-none absolute top-3 right-3 h-3 w-px bg-gold/30" />
+				<div className="pointer-events-none absolute bottom-3 left-3 h-px w-3 bg-gold/30" />
+				<div className="pointer-events-none absolute bottom-3 left-3 h-3 w-px bg-gold/30" />
+				<div className="pointer-events-none absolute bottom-3 right-3 h-px w-3 bg-gold/30" />
+				<div className="pointer-events-none absolute bottom-3 right-3 h-3 w-px bg-gold/30" />
 
-			<div className="text-[20px] sm:text-[28px] max-w-6xl mx-auto px-4 sm:px-8">
-				<div className="sm:px-4">
+				<div className="mb-10 text-center">
+					<span className="marquee-label mb-3 block">Submission Form</span>
+					<h2 className="font-serif text-3xl text-ivory sm:text-4xl">
+						Document <span className="italic text-gold">Metadata</span>
+					</h2>
+				</div>
+
 					<form onSubmit={handleSubmit(onSubmit, console.error)}>
 						<div className="grid gap-2">
 							{/* Author selection section */}
 							<div className="grid gap-1 mb-8">
-								<Label className="text-xl mb-1">
+								<Label className={labelClass}>
 									Author:
 								</Label>
 								<Select
 									onValueChange={(value) => setValue("authorId", value)}
 									disabled={contributionMutation.isPending || authorsQuery.isLoading}
 								>
-									<SelectTrigger className="w-3/4 max-w-[400px] p-4 border border-black rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+									<SelectTrigger className={selectTriggerClass}>
 										<SelectValue placeholder={authorsQuery.isLoading ? "Loading authors..." : "Select an author"} />
 									</SelectTrigger>
 									<SelectContent>
@@ -1132,7 +1150,7 @@ export function ContributionForm({ user }: ContributionFormProps) {
 									</SelectContent>
 								</Select>
 								{errors?.authorId && (
-									<p className="px-1 text-red-600 text-xs mt-1">
+									<p className={errorClass}>
 										{errors.authorId.message}
 									</p>
 								)}
@@ -1140,18 +1158,18 @@ export function ContributionForm({ user }: ContributionFormProps) {
 
 							{/* Title section */}
 							<div className="grid gap-1 mb-8">
-								<Label className="text-xl mb-1">
+								<Label className={labelClass}>
 									Title:
 								</Label>
 								<Input
 									type="text"
 									placeholder="Title"
-									className="w-3/4 p-4 border border-black rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+									className={inputClass}
 									disabled={contributionMutation.isPending}
 									{...register("bookTitle")}
 								/>
 								{errors?.bookTitle && (
-									<p className="px-1 text-red-600 text-xs mt-1">
+									<p className={errorClass}>
 										{errors.bookTitle.message}
 									</p>
 								)}
@@ -1159,18 +1177,18 @@ export function ContributionForm({ user }: ContributionFormProps) {
 
 							{/* Subtitle section */}
 							<div className="grid gap-1 mb-8">
-								<Label className="text-xl mb-1">
+								<Label className={labelClass}>
 									Subtitle:
 								</Label>
 								<Input
 									type="text"
 									placeholder="Subtitle"
-									className="w-3/4 p-4 border border-black rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+									className={inputClass}
 									disabled={contributionMutation.isPending}
 									{...register("bookSubtitle")}
 								/>
 								{errors?.bookSubtitle && (
-									<p className="px-1 text-red-600 text-xs mt-1">
+									<p className={errorClass}>
 										{errors.bookSubtitle.message}
 									</p>
 								)}
@@ -1178,18 +1196,18 @@ export function ContributionForm({ user }: ContributionFormProps) {
 
 							{/* Original publication date */}
 							<div className="grid gap-1 mb-8">
-								<Label className="text-xl mb-1">
+								<Label className={labelClass}>
 									Original year of publication:
 								</Label>
 								<Input
 									type="text"
 									placeholder="Year"
-									className="w-[150px] p-4 border border-black rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+									className={inputClassNarrow}
 									disabled={contributionMutation.isPending}
 									{...register("originalPublicationDate")}
 								/>
 								{errors?.originalPublicationDate && (
-									<p className="px-1 text-red-600 text-xs mt-1">
+									<p className={errorClass}>
 										{errors.originalPublicationDate.message}
 									</p>
 								)}
@@ -1197,18 +1215,18 @@ export function ContributionForm({ user }: ContributionFormProps) {
 
 							{/* Discipline section */}
 							<div className="grid gap-1 mb-8">
-								<Label className="text-xl mb-1">
+								<Label className={labelClass}>
 									Discipline(s):
 								</Label>
 								<Input
 									type="text"
 									placeholder="Discipline"
-									className="w-1/2 max-w-[250px] p-4 border border-black rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+									className={inputClassHalf}
 									disabled={contributionMutation.isPending}
 									{...register("discipline")}
 								/>
 								{errors?.discipline && (
-									<p className="px-1 text-red-600 text-xs mt-1">
+									<p className={errorClass}>
 										{errors.discipline.message}
 									</p>
 								)}
@@ -1216,7 +1234,7 @@ export function ContributionForm({ user }: ContributionFormProps) {
 
 							{/* Translator section */}
 							<div className="grid gap-1 mb-8">
-								<Label className="text-xl mb-1">
+								<Label className={labelClass}>
 									Translator:
 								</Label>
 								<div className="flex flex-col sm:flex-row gap-8">
@@ -1224,12 +1242,12 @@ export function ContributionForm({ user }: ContributionFormProps) {
 										<Input
 											type="text"
 											placeholder="First name"
-											className="w-full max-w-[250px] p-4 border border-black rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+											className={inputClassHalf}
 											disabled={contributionMutation.isPending}
 											{...register("translatorFirstName")}
 										/>
 										{errors?.translatorFirstName && (
-											<p className="px-1 text-red-600 text-xs mt-1">
+											<p className={errorClass}>
 												{errors.translatorFirstName.message}
 											</p>
 										)}
@@ -1238,12 +1256,12 @@ export function ContributionForm({ user }: ContributionFormProps) {
 										<Input
 											type="text"
 											placeholder="Surname"
-											className="w-full max-w-[250px] p-4 border border-black rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+											className={inputClassHalf}
 											disabled={contributionMutation.isPending}
 											{...register("translatorLastName")}
 										/>
 										{errors?.translatorLastName && (
-											<p className="px-1 text-red-600 text-xs mt-1">
+											<p className={errorClass}>
 												{errors.translatorLastName.message}
 											</p>
 										)}
@@ -1253,18 +1271,18 @@ export function ContributionForm({ user }: ContributionFormProps) {
 
 							{/* Translation date */}
 							<div className="grid gap-1 mb-8">
-								<Label className="text-xl mb-1">
+								<Label className={labelClass}>
 									Translation date:
 								</Label>
 								<Input
 									type="text"
 									placeholder="Year"
-									className="w-[150px] p-4 border border-black rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+									className={inputClassNarrow}
 									disabled={contributionMutation.isPending}
 									{...register("translatingDate")}
 								/>
 								{errors?.translatingDate && (
-									<p className="px-1 text-red-600 text-xs mt-1">
+									<p className={errorClass}>
 										{errors.translatingDate.message}
 									</p>
 								)}
@@ -1272,18 +1290,18 @@ export function ContributionForm({ user }: ContributionFormProps) {
 
 							{/* Special thanks */}
 							<div className="grid gap-1 mb-8">
-								<Label className="text-xl mb-1">
+								<Label className={labelClass}>
 									Special thanks to a partner:
 								</Label>
 								<Input
 									type="text"
 									placeholder="Partner name"
-									className="w-1/2 max-w-[400px] p-4 border border-black rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+									className={inputClass}
 									disabled={contributionMutation.isPending}
 									{...register("specialThanks")}
 								/>
 								{errors?.specialThanks && (
-									<p className="px-1 text-red-600 text-xs mt-1">
+									<p className={errorClass}>
 										{errors.specialThanks.message}
 									</p>
 								)}
@@ -1303,10 +1321,10 @@ export function ContributionForm({ user }: ContributionFormProps) {
 									/>
 									<label
 										htmlFor="htmlFile"
-										className="flex flex-col items-center justify-center w-40 h-40 sm:w-52 sm:h-52 xl:w-64 xl:h-64 cursor-pointer text-[#0E0D14] uppercase text-center border-2 border-black rounded-sm hover:bg-gray-50"
+										className={uploadClass}
 									>
 										<UploadCloud className="w-12 h-12 mb-3" />
-										<span className="text-sm font-medium text-[#5D6362] truncate max-w-[9rem]">
+										<span className="max-w-[9rem] truncate text-sm font-medium text-ivory/60">
 											{fileValue instanceof File
 												? fileValue.name
 												: isFileList(fileValue) && fileValue.length > 0
@@ -1314,9 +1332,9 @@ export function ContributionForm({ user }: ContributionFormProps) {
 													: "Upload a file"}
 										</span>
 									</label>
-									<p className="mt-2 text-sm text-center">Upload HTML file or ZIP archive (with HTML and images)</p>
+									<p className="mt-2 text-center text-sm text-ivory/40">Upload HTML file or ZIP archive (with HTML and images)</p>
 									{errors?.htmlFile && (
-										<p className="px-1 text-red-600 text-xs mt-1">{String(errors.htmlFile.message)}</p>
+										<p className={errorClass}>{String(errors.htmlFile.message)}</p>
 									)}
 								</div>
 
@@ -1332,14 +1350,14 @@ export function ContributionForm({ user }: ContributionFormProps) {
 									/>
 									<label
 										htmlFor="coverImage"
-										className="flex flex-col items-center justify-center w-40 h-40 sm:w-52 sm:h-52 xl:w-64 xl:h-64 cursor-pointer text-[#0E0D14] uppercase text-center border-2 border-black rounded-sm hover:bg-gray-50"
+										className={uploadClass}
 									>
 										{coverValue instanceof File || (isFileList(coverValue) && coverValue.length > 0) ? (
 											<ImageIcon className="w-12 h-12 mb-3" />
 										) : (
 											<UploadCloud className="w-12 h-12 mb-3" />
 										)}
-										<span className="text-sm font-medium text-[#5D6362] truncate max-w-[9rem]">
+										<span className="max-w-[9rem] truncate text-sm font-medium text-ivory/60">
 											{coverValue instanceof File
 												? coverValue.name
 												: isFileList(coverValue) && coverValue.length > 0
@@ -1347,9 +1365,9 @@ export function ContributionForm({ user }: ContributionFormProps) {
 													: "Upload an image"}
 										</span>
 									</label>
-									<p className="mt-2 text-sm text-center">Upload a cover image (JPEG/PNG)</p>
+									<p className="mt-2 text-center text-sm text-ivory/40">Upload a cover image (JPEG/PNG)</p>
 									{errors?.coverImage && (
-										<p className="px-1 text-red-600 text-xs mt-1">{String(errors.coverImage.message)}</p>
+										<p className={errorClass}>{String(errors.coverImage.message)}</p>
 									)}
 								</div>
 							</div>
@@ -1363,8 +1381,11 @@ export function ContributionForm({ user }: ContributionFormProps) {
 
 								return displayableImages.length > 0 && (
 									<div className="mt-8 mb-8">
-										<Label className="mb-4 block text-xl">
-											Images found in HTML file <span className="text-sm text-gray-600">(Select images to include)</span>
+										<Label className={labelClass}>
+											Images found in HTML file{" "}
+											<span className="normal-case tracking-normal text-ivory/30">
+												(select images to include)
+											</span>
 										</Label>
 										<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
 											{displayableImages.map(({ img, originalIndex }) => {
@@ -1375,9 +1396,9 @@ export function ContributionForm({ user }: ContributionFormProps) {
 												return (
 													<div
 														key={originalIndex}
-														className={`relative border-2 rounded-lg overflow-hidden cursor-pointer transition-all ${isSelected
-															? 'border-blue-500 ring-2 ring-blue-500'
-															: 'border-gray-300 hover:border-gray-400'
+														className={`relative cursor-pointer overflow-hidden rounded-lg border-2 transition-all ${isSelected
+															? "border-gold ring-2 ring-gold/40"
+															: "border-white/15 hover:border-white/30"
 															}`}
 														onClick={() => toggleImageSelection(originalIndex)}
 													>
@@ -1404,9 +1425,9 @@ export function ContributionForm({ user }: ContributionFormProps) {
 															</div>
 														)}
 														{isSelected && (
-															<div className="absolute top-2 right-2 bg-blue-500 rounded-full p-1">
+															<div className="absolute top-2 right-2 rounded-full bg-gold p-1">
 																<svg
-																	className="w-4 h-4 text-white"
+																	className="h-4 w-4 text-charcoal"
 																	fill="none"
 																	strokeLinecap="round"
 																	strokeLinejoin="round"
@@ -1425,7 +1446,7 @@ export function ContributionForm({ user }: ContributionFormProps) {
 												);
 											})}
 										</div>
-										<p className="mt-2 text-sm text-gray-800">
+										<p className="mt-2 text-sm text-ivory/50">
 											{displayableImages.filter(({ originalIndex }) => selectedImageIndices.has(originalIndex)).length} of {displayableImages.length} images selected
 										</p>
 									</div>
@@ -1433,19 +1454,20 @@ export function ContributionForm({ user }: ContributionFormProps) {
 							})()}
 
 							{/* Submit button */}
-							<div className="text-center mt-12">
-								<StyledButton
-									className="py-3 px-10"
+							<div className="mt-12 text-center">
+								<button
+									type="submit"
+									disabled={contributionMutation.isPending}
+									className="inline-flex items-center gap-2 bg-white px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-charcoal transition-all hover:bg-gold disabled:cursor-not-allowed disabled:opacity-50"
 								>
 									{contributionMutation.isPending && (
-										<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+										<Loader2 className="h-4 w-4 animate-spin" />
 									)}
 									Submit Contribution
-								</StyledButton>
+								</button>
 							</div>
 						</div>
 					</form>
-				</div>
 			</div>
 		</section>
 	);
