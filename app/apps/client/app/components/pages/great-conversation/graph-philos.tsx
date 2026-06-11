@@ -46,7 +46,7 @@ export default function GraphPhilos({ vnodes, vlinks }: { vnodes: Node[], vlinks
           return "#f97316"; // orange
         case "neutral":
         default:
-          return "#E3DBDC"; // white/neutral
+          return "#C5A059"; // gold/neutral
       }
     };
 
@@ -148,8 +148,8 @@ export default function GraphPhilos({ vnodes, vlinks }: { vnodes: Node[], vlinks
       node
         .append("circle")
         .attr("r", 6)
-        .attr("fill", "#E3DBDC")
-        .attr("stroke", "#E3DBDC")
+        .attr("fill", "#C5A059")
+        .attr("stroke", "#C5A059")
         .attr("stroke-width", 2)
         .style("cursor", "pointer")
         .on("mouseover", function (event, d) {
@@ -194,7 +194,7 @@ export default function GraphPhilos({ vnodes, vlinks }: { vnodes: Node[], vlinks
         .append("text")
         .attr("dy", -12)
         .attr("text-anchor", "middle")
-        .attr("fill", "#ccdaeb")
+        .attr("fill", "#EAE8E4")
         .attr("font-size", "15px")
         .attr("font-family", "serif")
         .attr("transform", "rotate(-45)")
@@ -223,7 +223,7 @@ export default function GraphPhilos({ vnodes, vlinks }: { vnodes: Node[], vlinks
   }, []);
 
   return (
-    <section className="w-full text-[#E3DBDC] text-center px-4">
+    <section className="w-full text-ivory text-center">
       {/* <h1 className="text-[35px] font-serif font-bold mb-8 tracking-wide">
         Great Conversation Graph
       </h1> */}

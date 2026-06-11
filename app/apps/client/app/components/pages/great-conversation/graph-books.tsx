@@ -98,7 +98,7 @@ export default function GraphBooks({ vnodes, vlinks }: { vnodes: Node[], vlinks:
           return "#f97316"; // orange
         case "neutral":
         default:
-          return "#E3DBDC"; // white
+          return "#C5A059"; // gold/neutral
       }
     };
 
@@ -241,8 +241,8 @@ export default function GraphBooks({ vnodes, vlinks }: { vnodes: Node[], vlinks:
     const circle = node
       .append("circle")
       .attr("r", 55)
-      .attr("fill", "#A9B0C2")
-      .attr("stroke", "#fff")
+      .attr("fill", "#2a2518")
+      .attr("stroke", "#C5A059")
       .attr("stroke-width", 2);
 
     // Function to wrap text into multiple lines
@@ -284,7 +284,7 @@ export default function GraphBooks({ vnodes, vlinks }: { vnodes: Node[], vlinks:
       .append("text")
       .attr("font-size", "12px")
       .attr("font-family", "sans-serif")
-      .attr("fill", "#2D2B3D")
+      .attr("fill", "#EAE8E4")
       .attr("text-anchor", "middle")
       .style("pointer-events", "none")
       .style("user-select", "none")
@@ -399,7 +399,7 @@ export default function GraphBooks({ vnodes, vlinks }: { vnodes: Node[], vlinks:
   }, []);
 
   return (
-    <section className="w-full text-[#E3DBDC] text-center px-4">
+    <section className="w-full text-ivory text-center">
 
       <div
         ref={containerRef}
