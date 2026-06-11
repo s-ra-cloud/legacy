@@ -62,3 +62,5 @@ resources/*.json
 tsconfig.tsbuildinfo
 app/packages/ui/scripts/openapi-schema.json
 app/apps/admin/vite.config.ts*
+
+.ssh/
