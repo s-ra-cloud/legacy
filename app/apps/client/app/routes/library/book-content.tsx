@@ -37,10 +37,17 @@ export default function BookContentPage() {
         });
 
         return (
-                <main className="flex flex-col min-h-screen bg-charcoal">
-                        <div className="mt-30">
-                                <BookData res={res} isLoading={isLoading} error={error} user={user} />
-                        </div>
+                <main className="relative flex min-h-screen flex-col overflow-hidden bg-charcoal pt-20">
+                        <div
+                                aria-hidden
+                                className="pointer-events-none absolute inset-0 opacity-20"
+                                style={{
+                                        backgroundImage:
+                                                "radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06) 1px, transparent 1px), radial-gradient(circle at 80% 70%, rgba(197,160,89,0.05) 1px, transparent 1px)",
+                                        backgroundSize: "60px 60px, 90px 90px",
+                                }}
+                        />
+                        <BookData res={res} isLoading={isLoading} error={error} user={user} />
                 </main>
         )
 }
