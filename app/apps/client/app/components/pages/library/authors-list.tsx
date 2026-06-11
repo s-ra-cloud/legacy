@@ -12,10 +12,24 @@ const formatAuthorSlug = (author: Author) =>
 export const AuthorsList = ({
 	linkTo = SAFE_ROUTES.PROJECTS_LIBRARY,
 	isConversation = true,
+	variant = "dark",
 }: {
 	linkTo?: string;
 	isConversation?: boolean;
+	variant?: "dark" | "paper";
 }) => {
+	const cardClass =
+		variant === "paper"
+			? "group flex h-full cursor-pointer flex-col items-center rounded-lg border border-charcoal/10 bg-white px-2 py-6 shadow-sm transition-colors hover:border-gold/50 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
+			: "group flex h-full cursor-pointer flex-col items-center rounded-lg border border-white/[0.06] bg-white/[0.03] px-2 py-6 transition-colors hover:border-gold/30 hover:bg-white/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60";
+	const nameClass =
+		variant === "paper"
+			? "text-center font-serif text-[23px] font-bold text-charcoal transition-colors group-hover:text-gold"
+			: "text-center font-serif text-[23px] font-bold text-ivory transition-colors group-hover:text-gold";
+	const datesClass =
+		variant === "paper"
+			? "mt-1 text-center font-serif text-[19px] font-bold text-charcoal/60"
+			: "mt-1 text-center font-serif text-[19px] font-bold text-ivory/70";
 	const { data, isLoading, error } = $api.useQuery("get", "/authors");
 	const [revealList, setRevealList] = useState(false);
 
@@ -35,7 +49,9 @@ export const AuthorsList = ({
 	if (isLoading) return <AuthorLoading />;
 	if (error)
 		return (
-			<div className="p-8 text-center text-red-400">
+			<div
+				className={`p-8 text-center ${variant === "paper" ? "text-red-600" : "text-red-400"}`}
+			>
 				Error: {error.code}
 			</div>
 		);
@@ -58,16 +74,13 @@ export const AuthorsList = ({
 						}}
 						className="h-full"
 					>
-						<Link
-							to={`${linkTo}/${formatAuthorSlug(author)}`}
-							className="group flex h-full cursor-pointer flex-col items-center rounded-lg border border-white/[0.06] bg-white/[0.03] px-2 py-6 transition-colors hover:border-gold/30 hover:bg-white/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
-						>
+						<Link to={`${linkTo}/${formatAuthorSlug(author)}`} className={cardClass}>
 							<img
 								src={author.picture.url}
 								alt={author.fullName || "picture"}
 								className="mb-4 h-59 w-39 rounded-lg object-cover grayscale transition duration-500 group-hover:grayscale-0"
 							/>
-							<h3 className="text-center font-serif text-[23px] font-bold text-ivory transition-colors group-hover:text-gold">
+							<h3 className={nameClass}>
 								{author.fullName
 									?.split(" ")
 									.map(
@@ -76,7 +89,7 @@ export const AuthorsList = ({
 									)
 									.join(" ")}
 							</h3>
-							<p className="mt-1 text-center font-serif text-[19px] font-bold text-ivory/70">
+							<p className={datesClass}>
 								{author.birthDeath}
 							</p>
 							<span className="mt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-gold/80 underline-offset-4 transition-colors group-hover:text-gold">

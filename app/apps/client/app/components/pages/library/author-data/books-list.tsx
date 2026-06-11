@@ -23,7 +23,19 @@ function CornerTicks({ opacity = "50" }: { opacity?: string }) {
 	);
 }
 
-function AuthorHero({ res, isConversation }: { res: Author; isConversation: boolean }) {
+function AuthorHero({
+	res,
+	isConversation,
+	backTo = SAFE_ROUTES.PROJECTS_LIBRARY,
+	backLabel = "Library",
+	volLabel = "Vol. I · Library",
+}: {
+	res: Author;
+	isConversation: boolean;
+	backTo?: string;
+	backLabel?: string;
+	volLabel?: string;
+}) {
 	const bookCount = res.books?.length ?? 0;
 
 	return (
@@ -38,11 +50,11 @@ function AuthorHero({ res, isConversation }: { res: Author; isConversation: bool
 			{/* Back to library */}
 			<div className="border-b border-white/[0.06] px-6 py-3 sm:px-10">
 				<Link
-					to={SAFE_ROUTES.PROJECTS_LIBRARY}
+					to={backTo}
 					className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.25em] text-ivory/40 transition-colors hover:text-gold"
 				>
 					<ArrowLeft size={11} strokeWidth={2.5} />
-					Library
+					{backLabel}
 				</Link>
 			</div>
 
@@ -79,7 +91,7 @@ function AuthorHero({ res, isConversation }: { res: Author; isConversation: bool
 					>
 						<div className="h-px w-8 bg-gold/40" />
 						<span className="text-[9px] font-bold uppercase tracking-[0.4em] text-gold/60">
-							Vol. I · Library
+							{volLabel}
 						</span>
 					</motion.div>
 
@@ -130,69 +142,141 @@ function AuthorHero({ res, isConversation }: { res: Author; isConversation: bool
 	);
 }
 
+function BookGrid({
+	res,
+	id,
+	isConversation,
+}: {
+	res: Author;
+	id: string;
+	isConversation: boolean;
+}) {
+	return (
+		<section className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 sm:grid-cols-3 sm:gap-6 md:grid-cols-4 md:gap-8 lg:grid-cols-5 lg:gap-10 xl:gap-14">
+			{res.books?.map((book: Book, index: number) => (
+				<motion.div
+					key={book.id}
+					className="flex flex-col items-center py-2"
+					initial={{ opacity: 0, y: 14 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{
+						duration: 0.5,
+						delay: 0.1 + index * 0.06,
+						ease: [0.22, 1, 0.36, 1],
+					}}
+				>
+					<BookCard
+						book={book}
+						linkid={id}
+						baselink={
+							isConversation
+								? SAFE_ROUTES.PROJECTS_LIBRARY
+								: SAFE_ROUTES.PROJECTS_CONVERSATION_CONTRIBUTE
+						}
+					/>
+				</motion.div>
+			))}
+		</section>
+	);
+}
+
 export function Books({
 	res,
 	isLoading,
 	error,
 	id,
 	isConversation = true,
+	booksOnPaper = false,
+	backTo,
+	backLabel,
+	volLabel,
 }: {
 	res: Author | undefined;
 	isLoading: boolean;
 	error?: { code?: string; message?: string } | null;
 	id: string;
 	isConversation?: boolean;
+	booksOnPaper?: boolean;
+	backTo?: string;
+	backLabel?: string;
+	volLabel?: string;
 }) {
 	if (isLoading) return <AuthorBooksLoading />;
 	if (error || !res) return <AuthorBooksError error={error} />;
 
+	const worksLabel = res.gender === "female" ? "Her works" : "His works";
+
+	const sectionHeader = (
+		<motion.div
+			className={`flex items-center justify-center gap-4 px-4 ${booksOnPaper ? "mb-10" : "mb-10"}`}
+			initial={{ opacity: 0, y: 8 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+		>
+			<div
+				className={`h-px flex-1 max-w-24 bg-gradient-to-r from-transparent ${booksOnPaper ? "to-charcoal/20" : "to-gold/30"}`}
+			/>
+			<span
+				className={`text-[9px] font-bold uppercase tracking-[0.4em] ${booksOnPaper ? "text-charcoal/50" : "text-gold/60"}`}
+			>
+				{worksLabel}
+			</span>
+			<div
+				className={`h-px flex-1 max-w-24 bg-gradient-to-l from-transparent ${booksOnPaper ? "to-charcoal/20" : "to-gold/30"}`}
+			/>
+		</motion.div>
+	);
+
 	return (
 		<section>
-			{/* Author hero */}
-			<AuthorHero res={res} isConversation={isConversation} />
+			<div className={`px-4 sm:px-8 ${booksOnPaper ? "pt-28" : ""}`}>
+				<AuthorHero
+					res={res}
+					isConversation={isConversation}
+					backTo={backTo}
+					backLabel={backLabel}
+					volLabel={volLabel}
+				/>
+			</div>
 
-			{/* Section header */}
-			<motion.div
-				className="mb-10 flex items-center justify-center gap-4 px-4"
-				initial={{ opacity: 0, y: 8 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-			>
-				<div className="h-px flex-1 max-w-24 bg-gradient-to-r from-transparent to-gold/30" />
-				<span className="text-[9px] font-bold uppercase tracking-[0.4em] text-gold/60">
-					{res?.gender === "female" ? "Her works" : "His works"}
-				</span>
-				<div className="h-px flex-1 max-w-24 bg-gradient-to-l from-transparent to-gold/30" />
-			</motion.div>
-
-			{/* Book grid */}
-			<section className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 sm:grid-cols-3 sm:gap-6 md:grid-cols-4 md:gap-8 lg:grid-cols-5 lg:gap-10 xl:gap-14">
-				{res?.books?.map((book: Book, index: number) => (
-					<motion.div
-						key={book.id}
-						className="flex flex-col items-center py-2"
-						initial={{ opacity: 0, y: 14 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{
-							duration: 0.5,
-							delay: 0.1 + index * 0.06,
-							ease: [0.22, 1, 0.36, 1],
+			{booksOnPaper ? (
+				<section className="relative overflow-hidden bg-paper pb-24 text-charcoal">
+					<div
+						aria-hidden
+						className="pointer-events-none absolute inset-0 opacity-[0.04]"
+						style={{
+							backgroundImage:
+								"linear-gradient(to right, #0F1113 1px, transparent 1px), linear-gradient(to bottom, #0F1113 1px, transparent 1px)",
+							backgroundSize: "72px 72px",
 						}}
-					>
-						<BookCard
-							book={book}
-							linkid={id}
-							baselink={
-								isConversation
-									? SAFE_ROUTES.PROJECTS_LIBRARY
-									: SAFE_ROUTES.PROJECTS_CONVERSATION_CONTRIBUTE
-							}
-						/>
-					</motion.div>
-				))}
-			</section>
+					/>
+					<div
+						aria-hidden
+						className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-charcoal to-transparent"
+					/>
+					<div className="relative z-10 pt-12">
+						<div className="mb-2 text-center">
+							<span className="marquee-label mb-3 block">Step 02</span>
+							<h2 className="font-serif text-3xl text-charcoal sm:text-4xl">
+								Select a <span className="italic text-gold">Text</span>
+							</h2>
+							<p className="mx-auto mt-4 max-w-xl font-serif text-base italic text-charcoal/55">
+								Open the work in which you want to identify a reference to another
+								philosophical text.
+							</p>
+						</div>
+						{sectionHeader}
+						<BookGrid res={res} id={id} isConversation={isConversation} />
+					</div>
+				</section>
+			) : (
+				<>
+					{sectionHeader}
+					<BookGrid res={res} id={id} isConversation={isConversation} />
+				</>
+			)}
 
-			{isConversation && (
+			{isConversation && !booksOnPaper && (
 				<motion.div
 					className="mx-auto my-20 h-px max-w-3xl"
 					style={{

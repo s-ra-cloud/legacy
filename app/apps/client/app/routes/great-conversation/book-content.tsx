@@ -28,10 +28,10 @@ export default function BookContentPage() {
 	});
 
 	return (
-		<main className="flex flex-col min-h-screen bg-[#E2DCDC]">
-			<div className="mt-30">
-				<BookData res={res} isLoading={isLoading} user={user} />
-			</div>
+		<main className="relative flex min-h-screen flex-col overflow-hidden bg-charcoal text-ivory">
+			<div className="pointer-events-none absolute bottom-0 left-12 top-0 z-10 w-px bg-white/10 max-md:left-4" />
+			<div className="pointer-events-none absolute bottom-0 right-12 top-0 z-10 w-px bg-white/10 max-md:right-4" />
+			<BookData res={res} isLoading={isLoading} user={user} />
 		</main>
-	)
+	);
 }
