@@ -7,8 +7,8 @@ import { useNavigate, useSearchParams } from "react-router";
 import type { AuthUser, Book, GCContributionData } from "@repo/server";
 import { RequestBookModal } from "./request-book-modal";
 import useSelectedText from "../../../../hooks/useSelectedText";
-import type { RefObject } from "react";
-import { StyledButton } from "../../../extended-ui/Button";
+import type { ReactNode, RefObject } from "react";
+import { X } from "lucide-react";
 import {
         Select,
         SelectContent,
@@ -1178,6 +1178,55 @@ function ContributionPopup({
 
 // ---------------- Connection Modal Component -----------------
 
+function ModalCornerTicks() {
+        return (
+                <>
+                        <div className="pointer-events-none absolute top-3 left-3 h-px w-4 bg-charcoal/25" />
+                        <div className="pointer-events-none absolute top-3 left-3 h-4 w-px bg-charcoal/25" />
+                        <div className="pointer-events-none absolute top-3 right-3 h-px w-4 bg-charcoal/25" />
+                        <div className="pointer-events-none absolute top-3 right-3 h-4 w-px bg-charcoal/25" />
+                        <div className="pointer-events-none absolute bottom-3 left-3 h-px w-4 bg-charcoal/25" />
+                        <div className="pointer-events-none absolute bottom-3 left-3 h-4 w-px bg-charcoal/25" />
+                        <div className="pointer-events-none absolute bottom-3 right-3 h-px w-4 bg-charcoal/25" />
+                        <div className="pointer-events-none absolute bottom-3 right-3 h-4 w-px bg-charcoal/25" />
+                </>
+        );
+}
+
+function ModalFieldLabel({ children }: { children: ReactNode }) {
+        return (
+                <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.25em] text-charcoal/50">
+                        {children}
+                </p>
+        );
+}
+
+function ChoicePill({
+        active,
+        onClick,
+        children,
+        activeClassName = "border-gold bg-gold/10 text-charcoal",
+}: {
+        active: boolean;
+        onClick: () => void;
+        children: ReactNode;
+        activeClassName?: string;
+}) {
+        return (
+                <button
+                        type="button"
+                        onClick={onClick}
+                        className={`border px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] transition-colors ${
+                                active
+                                        ? activeClassName
+                                        : "border-charcoal/15 bg-white text-charcoal/55 hover:border-charcoal/30"
+                        }`}
+                >
+                        {children}
+                </button>
+        );
+}
+
 function ConnectionModal({ selectedText, onClose, bookDocumentId, bookTitle, user, onRequestBook }: { selectedText: string; onClose: () => void; bookDocumentId: string; bookTitle: string; user: AuthUser; onRequestBook: () => void }) {
         // React Query client for cache invalidation inside modal
         const queryClient = useQueryClient();
@@ -1303,135 +1352,229 @@ function ConnectionModal({ selectedText, onClose, bookDocumentId, bookTitle, use
         };
 
         const modalContent = (
-                <div className="fixed inset-0 z-50 flex items-center justify-center">
-                        {/* backdrop (clicking backdrop no longer closes modal) */}
-                        <div className="absolute inset-0 bg-black/50" />
+                <div
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="connection-modal-title"
+                >
+                        <div className="absolute inset-0 bg-charcoal/60 backdrop-blur-sm" />
 
-                        <div className="relative bg-[#1E1B27] text-white rounded-xl p-6 w-[420px] max-w-[90vw] max-h-[90vh] overflow-y-auto shadow-2xl z-10" onClick={(e) => e.stopPropagation()}>
-                                {/* close btn */}
-                                <button className="absolute top-2 right-3 text-xl" onClick={clearSelectionAndClose}>
-                                        ×
-                                </button>
-
-                                <h2 className="text-2xl text-center mb-4 text-[#E3DBDC]"
+                        <div
+                                className="relative z-10 flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden border border-charcoal/15 bg-paper text-charcoal shadow-[0_24px_80px_rgba(15,17,19,0.35)]"
+                                onClick={(e) => e.stopPropagation()}
+                        >
+                                <div
+                                        aria-hidden
+                                        className="pointer-events-none absolute inset-0 opacity-[0.04]"
                                         style={{
-                                                fontFamily: "Didot, serif",
-                                                fontWeight: 700,
-                                                textShadow: "2px 3px 4px #E37B5B"
+                                                backgroundImage:
+                                                        "linear-gradient(to right, #0F1113 1px, transparent 1px), linear-gradient(to bottom, #0F1113 1px, transparent 1px)",
+                                                backgroundSize: "48px 48px",
                                         }}
-                                >New connection</h2>
-
-                                {/* Referenced work */}
-                                <label className="block text-sm mb-1 text-[#E3DBDC]">Referenced work:</label>
-                                <Select
-                                        onValueChange={(val) => {
-                                                setReferencedWork(val);
-                                                setReferencedBookTitle(booksQuery.data?.find((b: Book) => b.documentId === val)?.BookTitle || "");
-                                                setShowReferencedBookModal(true); // 🔥 open the preview popup
-                                        }}
-                                        disabled={booksQuery.isLoading}
-                                >
-                                        <SelectTrigger className="w-full mb-1 p-2 rounded bg-[#E2DCDC] text-[#17161F] border border-gray-600 focus:outline-none">
-                                                <SelectValue placeholder={booksQuery.isLoading ? "Loading books..." : "Select a referenced work"} />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                                {/* search input */}
-                                                <div className="p-2">
-                                                        <Input
-                                                                value={bookFilter}
-                                                                onChange={e => setBookFilter(e.target.value)}
-                                                                placeholder="Start typing to search"
-                                                                className="w-full mb-2"
-                                                                onKeyDown={(e) => e.stopPropagation()}
-                                                                onClick={(e) => e.stopPropagation()}
-                                                        />
-                                                </div>
-                                                {booksQuery.isLoading ? (
-                                                        <SelectItem value="loading" disabled>Loading books...</SelectItem>
-                                                ) : booksQuery.isError ? (
-                                                        <SelectItem value="error" disabled>Error loading books</SelectItem>
-                                                ) : limitedBooks.length ? (
-                                                        limitedBooks.map((book: Book) => (
-                                                                <SelectItem key={book.documentId} value={book.documentId}>
-                                                                        {book.BookTitle}, "{book.author?.fullName}"
-                                                                </SelectItem>
-                                                        ))
-                                                ) : (
-                                                        <SelectItem value="no-match" disabled>No books found</SelectItem>
-                                                )}
-                                        </SelectContent>
-                                </Select>
-
-                                <div className="mb-3 text-right">
-                                        <button
-                                                className="text-xs text-blue-400 underline"
-                                                type="button"
-                                                onClick={() => {
-                                                        clearSelectionAndClose();
-                                                        onRequestBook();
-                                                }}
-                                        >
-                                                Can't find the referenced work? Request to add it
-                                        </button>
-                                </div>
-
-                                {referencedExcerpt && (
-                                        <div className="mb-4 p-2 rounded bg-[#E2DCDC] text-[#17161F] text-sm max-h-32 overflow-y-auto border border-gray-400 whitespace-pre-wrap">
-                                                {referencedExcerpt}
-                                        </div>
-                                )}
-
-                                {/* Type of connection */}
-                                <p className="mt-2 mb-1 text-[#E3DBDC]">Type of connection:</p>
-                                <div className="flex gap-6 mb-4">
-                                        <label className="flex items-center gap-2 cursor-pointer select-none">
-                                                <input type="checkbox" checked={!isImplicit} onChange={() => toggleType("explicit")} /> Explicit
-                                        </label>
-                                        <label className="flex items-center gap-2 cursor-pointer select-none">
-                                                <input type="checkbox" checked={isImplicit} onChange={() => toggleType("implicit")} /> Implicit
-                                        </label>
-                                </div>
-
-                                {/* Nature of connection */}
-                                <p className="mb-1 text-[#E3DBDC]">Nature of connection:</p>
-                                <div className="flex gap-6 mb-4">
-                                        <label className="flex items-center gap-2 cursor-pointer select-none">
-                                                <input type="checkbox" checked={nature === "agreement"} onChange={() => toggleNature("agreement")} /> Agreement
-                                        </label>
-                                        <label className="flex items-center gap-2 cursor-pointer select-none">
-                                                <input type="checkbox" checked={nature === "neutral / unsure"} onChange={() => toggleNature("neutral / unsure")} /> Neutral / unsure
-                                        </label>
-                                        <label className="flex items-center gap-2 cursor-pointer select-none">
-                                                <input type="checkbox" checked={nature === "opposition"} onChange={() => toggleNature("opposition")} /> Opposition
-                                        </label>
-                                </div>
-
-                                {isImplicit && (
-                                        <div className="mb-4">
-                                                <p className="mb-1 text-sm text-[#E3DBDC]">If the reference is implicit, check the relevant criteria:</p>
-                                                <div className="flex flex-col gap-2">
-                                                        <label className="flex items-center gap-2 cursor-pointer select-none">
-                                                                <input type="checkbox" checked={criteria.ideas} onChange={() => toggleCriteria("ideas")} /> Similarity of ideas
-                                                        </label>
-                                                        <label className="flex items-center gap-2 cursor-pointer select-none">
-                                                                <input type="checkbox" checked={criteria.bio} onChange={() => toggleCriteria("bio")} /> Biographical elements
-                                                        </label>
-                                                        <label className="flex items-center gap-2 cursor-pointer select-none">
-                                                                <input type="checkbox" checked={criteria.other} onChange={() => toggleCriteria("other")} /> Other elements
-                                                        </label>
-                                                </div>
-                                        </div>
-                                )}
-
-                                <textarea
-                                        className="w-full h-24 p-2 rounded bg-[#E2DCDC] text-[#17161F] border border-gray-600 focus:outline-none mb-6"
-                                        placeholder="Explain the connection..."
-                                        value={explanation}
-                                        onChange={(e) => setExplanation(e.target.value)}
                                 />
+                                <ModalCornerTicks />
 
-                                <div className="text-center mt-0">
-                                        <StyledButton text="Submit" onClick={submit} />
+                                <div className="relative border-b border-charcoal/10 px-5 py-4">
+                                        <div className="flex items-start justify-between gap-4">
+                                                <div>
+                                                        <span className="marquee-label mb-2 block">Great Conversation</span>
+                                                        <h2
+                                                                id="connection-modal-title"
+                                                                className="font-serif text-2xl text-charcoal"
+                                                        >
+                                                                New <span className="italic text-gold">Connection</span>
+                                                        </h2>
+                                                </div>
+                                                <button
+                                                        type="button"
+                                                        className="flex size-8 shrink-0 items-center justify-center border border-charcoal/10 text-charcoal/50 transition-colors hover:border-gold hover:bg-gold hover:text-charcoal"
+                                                        onClick={clearSelectionAndClose}
+                                                        aria-label="Close"
+                                                >
+                                                        <X size={14} strokeWidth={2.5} />
+                                                </button>
+                                        </div>
+                                </div>
+
+                                <div className="relative max-h-[calc(90vh-5.5rem)] overflow-y-auto px-5 py-5">
+                                        {selectedText && (
+                                                <div className="mb-5">
+                                                        <ModalFieldLabel>Your highlighted passage</ModalFieldLabel>
+                                                        <blockquote className="border-l-2 border-gold/60 bg-white/60 px-4 py-3 font-serif text-sm italic leading-relaxed text-charcoal/70">
+                                                                {selectedText}
+                                                        </blockquote>
+                                                </div>
+                                        )}
+
+                                        <div className="mb-4">
+                                                <ModalFieldLabel>Referenced work</ModalFieldLabel>
+                                                <Select
+                                                        onValueChange={(val) => {
+                                                                setReferencedWork(val);
+                                                                setReferencedBookTitle(
+                                                                        booksQuery.data?.find((b: Book) => b.documentId === val)?.BookTitle || "",
+                                                                );
+                                                                setShowReferencedBookModal(true);
+                                                        }}
+                                                        disabled={booksQuery.isLoading}
+                                                >
+                                                        <SelectTrigger className="w-full border border-charcoal/15 bg-white px-4 py-3 text-charcoal focus:ring-1 focus:ring-gold/30">
+                                                                <SelectValue
+                                                                        placeholder={
+                                                                                booksQuery.isLoading
+                                                                                        ? "Loading books..."
+                                                                                        : "Select a referenced work"
+                                                                        }
+                                                                />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                                <div className="p-2">
+                                                                        <Input
+                                                                                value={bookFilter}
+                                                                                onChange={(e) => setBookFilter(e.target.value)}
+                                                                                placeholder="Search by title or author"
+                                                                                className="mb-2 w-full border-charcoal/15 bg-white text-charcoal placeholder:text-charcoal/35"
+                                                                                onKeyDown={(e) => e.stopPropagation()}
+                                                                                onClick={(e) => e.stopPropagation()}
+                                                                        />
+                                                                </div>
+                                                                {booksQuery.isLoading ? (
+                                                                        <SelectItem value="loading" disabled>
+                                                                                Loading books...
+                                                                        </SelectItem>
+                                                                ) : booksQuery.isError ? (
+                                                                        <SelectItem value="error" disabled>
+                                                                                Error loading books
+                                                                        </SelectItem>
+                                                                ) : limitedBooks.length ? (
+                                                                        limitedBooks.map((book: Book) => (
+                                                                                <SelectItem
+                                                                                        key={book.documentId}
+                                                                                        value={book.documentId}
+                                                                                >
+                                                                                        {book.BookTitle}, &ldquo;{book.author?.fullName}&rdquo;
+                                                                                </SelectItem>
+                                                                        ))
+                                                                ) : (
+                                                                        <SelectItem value="no-match" disabled>
+                                                                                No books found
+                                                                        </SelectItem>
+                                                                )}
+                                                        </SelectContent>
+                                                </Select>
+                                                <div className="mt-2 text-right">
+                                                        <button
+                                                                className="text-[10px] font-bold uppercase tracking-[0.18em] text-gold underline-offset-2 hover:underline"
+                                                                type="button"
+                                                                onClick={() => {
+                                                                        clearSelectionAndClose();
+                                                                        onRequestBook();
+                                                                }}
+                                                        >
+                                                                Can&apos;t find it? Request to add
+                                                        </button>
+                                                </div>
+                                        </div>
+
+                                        {referencedExcerpt && (
+                                                <div className="mb-5">
+                                                        <ModalFieldLabel>Referenced passage</ModalFieldLabel>
+                                                        <div className="max-h-32 overflow-y-auto border border-charcoal/10 bg-white/60 px-4 py-3 font-serif text-sm leading-relaxed text-charcoal/70 whitespace-pre-wrap">
+                                                                {referencedExcerpt}
+                                                        </div>
+                                                </div>
+                                        )}
+
+                                        <div className="mb-5">
+                                                <ModalFieldLabel>Type of connection</ModalFieldLabel>
+                                                <div className="flex flex-wrap gap-2">
+                                                        <ChoicePill
+                                                                active={!isImplicit}
+                                                                onClick={() => toggleType("explicit")}
+                                                        >
+                                                                Explicit
+                                                        </ChoicePill>
+                                                        <ChoicePill
+                                                                active={isImplicit}
+                                                                onClick={() => toggleType("implicit")}
+                                                        >
+                                                                Implicit
+                                                        </ChoicePill>
+                                                </div>
+                                        </div>
+
+                                        <div className="mb-5">
+                                                <ModalFieldLabel>Nature of connection</ModalFieldLabel>
+                                                <div className="flex flex-wrap gap-2">
+                                                        <ChoicePill
+                                                                active={nature === "agreement"}
+                                                                onClick={() => toggleNature("agreement")}
+                                                                activeClassName="border-emerald-500/50 bg-emerald-50 text-emerald-900"
+                                                        >
+                                                                Agreement
+                                                        </ChoicePill>
+                                                        <ChoicePill
+                                                                active={nature === "neutral / unsure"}
+                                                                onClick={() => toggleNature("neutral / unsure")}
+                                                                activeClassName="border-slate-400/50 bg-slate-50 text-slate-800"
+                                                        >
+                                                                Neutral
+                                                        </ChoicePill>
+                                                        <ChoicePill
+                                                                active={nature === "opposition"}
+                                                                onClick={() => toggleNature("opposition")}
+                                                                activeClassName="border-orange-500/50 bg-orange-50 text-orange-900"
+                                                        >
+                                                                Opposition
+                                                        </ChoicePill>
+                                                </div>
+                                        </div>
+
+                                        {isImplicit && (
+                                                <div className="mb-5">
+                                                        <ModalFieldLabel>Implicit criteria</ModalFieldLabel>
+                                                        <div className="flex flex-wrap gap-2">
+                                                                <ChoicePill
+                                                                        active={criteria.ideas}
+                                                                        onClick={() => toggleCriteria("ideas")}
+                                                                >
+                                                                        Similarity of ideas
+                                                                </ChoicePill>
+                                                                <ChoicePill
+                                                                        active={criteria.bio}
+                                                                        onClick={() => toggleCriteria("bio")}
+                                                                >
+                                                                        Biographical
+                                                                </ChoicePill>
+                                                                <ChoicePill
+                                                                        active={criteria.other}
+                                                                        onClick={() => toggleCriteria("other")}
+                                                                >
+                                                                        Other
+                                                                </ChoicePill>
+                                                        </div>
+                                                </div>
+                                        )}
+
+                                        <div className="mb-6">
+                                                <ModalFieldLabel>Explain the connection</ModalFieldLabel>
+                                                <textarea
+                                                        className="min-h-24 w-full resize-y border border-charcoal/15 bg-white p-3 text-sm text-charcoal placeholder:text-charcoal/35 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold/30"
+                                                        placeholder="Optional — add context for other readers..."
+                                                        value={explanation}
+                                                        onChange={(e) => setExplanation(e.target.value)}
+                                                />
+                                        </div>
+
+                                        <button
+                                                type="button"
+                                                onClick={submit}
+                                                disabled={contributionMutation.isPending}
+                                                className="w-full bg-charcoal px-6 py-3.5 text-[10px] font-bold uppercase tracking-[0.3em] text-ivory transition-colors hover:bg-gold hover:text-charcoal disabled:cursor-not-allowed disabled:opacity-50"
+                                        >
+                                                {contributionMutation.isPending ? "Submitting..." : "Submit connection"}
+                                        </button>
                                 </div>
                         </div>
                 </div>
@@ -1501,12 +1644,16 @@ function ReferencedBookModal({ book, onClose, onTextSelected }: { book: any; onC
         }, [rawContent]);
 
         return createPortal(
-                <div className="fixed inset-0 z-50 flex items-center justify-center" onClick={onClose}>
-                        {/* backdrop */}
-                        <div className="absolute inset-0 bg-black/50" />
+                <div
+                        className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="referenced-book-title"
+                >
+                        <div className="absolute inset-0 bg-charcoal/70 backdrop-blur-sm" />
                         <div
-                                className="relative bg-[#f5eded] text-[#17161F] rounded-xl p-6 w-[90vw] lg:w-[70vw] max-h-[90vh] overflow-y-auto shadow-2xl z-10"
-                                onClick={(e) => e.stopPropagation()} // prevent propagation so clicking inside doesn't close
+                                className="relative z-10 flex max-h-[90vh] w-full max-w-5xl flex-col overflow-hidden border border-charcoal/15 bg-paper text-charcoal shadow-[0_24px_80px_rgba(15,17,19,0.4)]"
+                                onClick={(e) => e.stopPropagation()}
                                 onMouseUp={() => {
                                         const sel = window.getSelection();
                                         const text = sel?.toString().trim() || "";
@@ -1517,28 +1664,70 @@ function ReferencedBookModal({ book, onClose, onTextSelected }: { book: any; onC
                                         }
                                 }}
                         >
-                                <button className="absolute top-2 right-3 text-xl" onClick={onClose}>×</button>
-                                <h2 className="text-2xl font-bold mb-4 text-center">Referenced Work</h2>
-                                {/* Book details */}
-                                <p className="mb-2 text-center"><span className="font-semibold">Title:</span> {book.BookTitle}</p>
-                                {book.author?.fullName && (
-                                        <p className="mb-2 text-center"><span className="font-semibold">Author:</span> {book.author.fullName}</p>
-                                )}
+                                <div
+                                        aria-hidden
+                                        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+                                        style={{
+                                                backgroundImage:
+                                                        "linear-gradient(to right, #0F1113 1px, transparent 1px), linear-gradient(to bottom, #0F1113 1px, transparent 1px)",
+                                                backgroundSize: "48px 48px",
+                                        }}
+                                />
+                                <ModalCornerTicks />
 
-                                {isLoading ? (
-                                        <p className="mt-4">Loading content...</p>
-                                ) : error ? (
-                                        <p className="mt-4 text-red-600">Error loading content</p>
-                                ) : (
-                                        <div
-                                                className="scoped-html-content rich-contentv1 mt-4"
-                                                style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
-                                                dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
-                                        />
-                                )}
+                                <div className="relative border-b border-charcoal/10 px-5 py-4">
+                                        <div className="flex items-start justify-between gap-4">
+                                                <div className="text-center sm:text-left">
+                                                        <span className="marquee-label mb-2 block">Step 03</span>
+                                                        <h2
+                                                                id="referenced-book-title"
+                                                                className="font-serif text-2xl text-charcoal"
+                                                        >
+                                                                Locate the <span className="italic text-gold">Passage</span>
+                                                        </h2>
+                                                        <p className="mt-1 font-serif text-sm italic text-charcoal/55">
+                                                                Highlight the excerpt in the referenced work, then release to capture it.
+                                                        </p>
+                                                </div>
+                                                <button
+                                                        type="button"
+                                                        className="flex size-8 shrink-0 items-center justify-center border border-charcoal/10 text-charcoal/50 transition-colors hover:border-gold hover:bg-gold hover:text-charcoal"
+                                                        onClick={onClose}
+                                                        aria-label="Close"
+                                                >
+                                                        <X size={14} strokeWidth={2.5} />
+                                                </button>
+                                        </div>
+                                        <div className="mt-4 flex flex-wrap justify-center gap-3 sm:justify-start">
+                                                <span className="border border-charcoal/10 bg-white/50 px-3 py-1 font-serif text-sm text-charcoal">
+                                                        {book.BookTitle}
+                                                </span>
+                                                {book.author?.fullName && (
+                                                        <span className="border border-gold/25 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-gold">
+                                                                {book.author.fullName}
+                                                        </span>
+                                                )}
+                                        </div>
+                                </div>
+
+                                <div className="relative max-h-[calc(90vh-11rem)] overflow-y-auto px-5 py-5">
+                                        {isLoading ? (
+                                                <p className="py-8 text-center font-serif italic text-charcoal/50">
+                                                        Loading content...
+                                                </p>
+                                        ) : error ? (
+                                                <p className="py-8 text-center text-red-600">Error loading content</p>
+                                        ) : (
+                                                <div
+                                                        className="scoped-html-content rich-contentv1 font-serif leading-relaxed text-charcoal/80"
+                                                        style={{ wordBreak: "break-word", overflowWrap: "anywhere" }}
+                                                        dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+                                                />
+                                        )}
+                                </div>
                         </div>
                 </div>,
-                document.body
+                document.body,
         );
 }
 
