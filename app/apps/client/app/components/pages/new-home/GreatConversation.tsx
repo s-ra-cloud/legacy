@@ -175,6 +175,8 @@ export default function GreatConversation() {
   const draggingRef = useRef(false);
   const lastPos = useRef<{ x: number; y: number } | null>(null);
   const activeRef = useRef(0);
+  const autoAdvanceRef = useRef<number | null>(null);
+  const focusOnRef = useRef<(idx: number) => void>(() => {});
   activeRef.current = active;
 
   useEffect(() => {
@@ -201,6 +203,17 @@ export default function GreatConversation() {
     return () => cancelAnimationFrame(raf);
   }, [rotY]);
 
+  const resetAutoAdvance = useCallback(() => {
+    if (autoAdvanceRef.current !== null) {
+      window.clearInterval(autoAdvanceRef.current);
+    }
+    autoAdvanceRef.current = window.setInterval(() => {
+      if (draggingRef.current) return;
+      const next = (activeRef.current + 1) % philosophers.length;
+      focusOnRef.current(next);
+    }, 9000);
+  }, [philosophers.length]);
+
   const focusOn = useCallback(
     (idx: number) => {
       const p = philosophers[idx];
@@ -215,19 +228,21 @@ export default function GreatConversation() {
       const clampedX = Math.max(-Math.PI / 2.2, Math.min(Math.PI / 2.2, targetX));
       animate(rotY, wrapped, { duration: 1.2, ease: [0.22, 1, 0.36, 1] });
       animate(rotX, clampedX, { duration: 1.2, ease: [0.22, 1, 0.36, 1] });
+      resetAutoAdvance();
     },
-    [rotY, rotX, philosophers],
+    [rotY, rotX, philosophers, resetAutoAdvance],
   );
+  focusOnRef.current = focusOn;
 
   /** Auto-advance highlighted thinker every 9s (pause while dragging the globe). */
   useEffect(() => {
-    const id = window.setInterval(() => {
-      if (draggingRef.current) return;
-      const next = (activeRef.current + 1) % philosophers.length;
-      focusOn(next);
-    }, 9000);
-    return () => window.clearInterval(id);
-  }, [focusOn, philosophers.length]);
+    resetAutoAdvance();
+    return () => {
+      if (autoAdvanceRef.current !== null) {
+        window.clearInterval(autoAdvanceRef.current);
+      }
+    };
+  }, [resetAutoAdvance]);
 
   function onPointerDown(e: React.PointerEvent) {
     (e.target as Element).setPointerCapture(e.pointerId);
