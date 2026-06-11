@@ -42,15 +42,9 @@ export default [
         route(":authorId/:bookId", "routes/library/book-content.tsx"),
       ]),
     ]),
-  ]),
-
-  layout("components/layouts/public-gc.tsx", [
     ...prefix("projects/great-conversation", [
       index("routes/great-conversation/index.tsx"),
     ]),
-  ]),
-
-  layout("components/layouts/public-kt.tsx", [
     ...prefix("projects/knowledge-tree", [
       index("routes/knowledge-tree/index.tsx"),
       route("graph", "routes/knowledge-tree/testing.tsx"),
