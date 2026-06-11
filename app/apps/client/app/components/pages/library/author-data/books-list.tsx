@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { ArrowLeft } from "lucide-react";
+import { AuthorBooksError } from "./author-books-error";
 import { AuthorBooksLoading } from "./author-books-loading";
 import { BookCard } from "./book-card";
 import type { Author, Book } from "@repo/server";
@@ -132,20 +133,23 @@ function AuthorHero({ res, isConversation }: { res: Author; isConversation: bool
 export function Books({
 	res,
 	isLoading,
+	error,
 	id,
 	isConversation = true,
 }: {
 	res: Author | undefined;
 	isLoading: boolean;
+	error?: { code?: string; message?: string } | null;
 	id: string;
 	isConversation?: boolean;
 }) {
 	if (isLoading) return <AuthorBooksLoading />;
+	if (error || !res) return <AuthorBooksError error={error} />;
 
 	return (
 		<section>
 			{/* Author hero */}
-			{res && <AuthorHero res={res} isConversation={isConversation} />}
+			<AuthorHero res={res} isConversation={isConversation} />
 
 			{/* Section header */}
 			<motion.div
