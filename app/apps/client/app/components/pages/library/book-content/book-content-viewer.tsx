@@ -6,6 +6,7 @@ import { useNavigate, useSearchParams } from "react-router";
 import type { Book, AuthUser } from "@repo/server";
 import { SAFE_ROUTES } from "~/safe-routes";
 import { toast } from "sonner";
+import { BookError } from "./book-error";
 import { BookLoading } from "./book-loading";
 
 const BookHtmlContent = memo(function BookHtmlContent({
@@ -939,13 +940,14 @@ export function BookContentViewer({ book, user }: { book: Book; user: AuthUser |
 
         if (error) {
                 return (
-                <section className="bg-paper w-full flex pb-20 relative text-[#0e0d14]">
-                        <div className="hidden sm:block w-1/5 p-4 border-r border-[#0E0D14]/20" />
-                        <div className="w-full sm:w-3/5 p-4 flex items-center justify-center">
-                                <div className="text-lg text-red-600">Error: {error.message}</div>
-                        </div>
-                        <div className="hidden sm:block w-1/5 p-4 border-l border-[#0E0D14]/20" />
-                </section>
+                        <BookError
+                                title={
+                                        <>
+                                                Unable to <span className="text-gold">Open</span> the Volume
+                                        </>
+                                }
+                                message={error.message || "The manuscript could not be retrieved from the archive."}
+                        />
                 );
         }
 
