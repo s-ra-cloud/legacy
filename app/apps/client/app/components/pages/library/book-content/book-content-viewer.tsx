@@ -963,6 +963,10 @@ export function BookContentViewer({ book, user }: { book: Book; user: AuthUser |
                                         backgroundSize: "72px 72px",
                                 }}
                         />
+                        <div
+                                aria-hidden
+                                className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-charcoal to-transparent"
+                        />
                         <div className="hidden sm:block w-1/5 p-4 border-r border-[#0E0D14]/20" />
 
                         <div className="w-full sm:w-3/5 p-4" style={{ overflowX: "auto", maxWidth: "100%" }}>
