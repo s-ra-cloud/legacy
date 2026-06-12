@@ -246,6 +246,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Sufism',
     earthQuote: 'Declare your jihad on thirteen enemies you cannot see.',
     earthOrder: 9,
+    imageFile: 'al-ghazali.png',
   },
   {
     name: 'Maimonides',
@@ -261,6 +262,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Jewish Aristotelianism',
     earthQuote: 'Anticipate charity by preventing poverty.',
     earthOrder: 10,
+    imageFile: 'maimonides.png',
   },
   {
     name: 'Rene Descartes',
