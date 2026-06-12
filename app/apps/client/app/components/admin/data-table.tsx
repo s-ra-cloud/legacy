@@ -42,6 +42,7 @@ interface DataTableProps<TData, TValue> {
   pagination: PaginationState;
   paginationOptions: Pick<PaginationOptions, "rowCount">;
   isLoading: boolean;
+  variant?: "default" | "legacy";
 }
 
 export function DataTable<TData, TValue>({
@@ -51,7 +52,9 @@ export function DataTable<TData, TValue>({
   paginationOptions,
   filters,
   isLoading,
+  variant = "default",
 }: DataTableProps<TData, TValue>) {
+  const isLegacy = variant === "legacy";
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [_, setPaginationFilters] = useQueryStates({
     cursor: parseAsInteger.withDefault(1),
@@ -78,25 +81,48 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="flex h-full flex-col gap-1 overflow-hidden rounded border bg-sidebar">
-      {/* Responsive toolbar: wrap items on small screens and keep them on one line for medium+ */}
-      <div className="flex flex-wrap md:flex-nowrap items-center md:justify-between gap-2 p-2 w-full">
-        <TableGlobalSearch />
-        <TableFilters filters={filters} />
+    <div
+      className={cn(
+        "flex h-full flex-col gap-1 overflow-hidden",
+        isLegacy
+          ? "border border-white/10 bg-charcoal/60 backdrop-blur-sm"
+          : "rounded border bg-sidebar",
+      )}
+    >
+      <div
+        className={cn(
+          "flex w-full flex-wrap items-center gap-2 p-3 md:flex-nowrap md:justify-between",
+          isLegacy && "border-b border-white/10 bg-white/[0.02]",
+        )}
+      >
+        <TableGlobalSearch variant={variant} />
+        <TableFilters filters={filters} variant={variant} />
         {/* Spacer to push column selector & reset to the far end on medium+ screens */}
         <div className="hidden sm:block grow" />
-        <TableColumnsSelector table={table} />
-        <TableReset />
+        <TableColumnsSelector table={table} variant={variant} />
+        <TableReset variant={variant} />
         <div className="grow sm:hidden block" />
       </div>
       <div className="flex grow flex-col">
         <ScrollArea className="h-0 grow">
           <ScrollArea className="">
-            <Table className="relative table-auto">
-              <TableHeader className="z-10 border-t">
+            <Table
+              className={cn(
+                "relative table-auto",
+                isLegacy && "[&_td]:border-white/5 [&_th]:border-white/10",
+              )}
+            >
+              <TableHeader
+                className={cn("z-10 border-t", isLegacy && "border-white/10")}
+              >
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow
-                    className="bg-background transition-all"
+                    className={cn(
+                      "transition-all",
+                      isLegacy
+                        ? "border-white/10 bg-charcoal/80 hover:bg-charcoal/80"
+                        : "bg-background",
+                    )}
                     key={headerGroup.id}
                   >
                     {headerGroup.headers.map((header) => {
@@ -110,7 +136,8 @@ export function DataTable<TData, TValue>({
                             header.colSpan > 1 && "text-start",
                             "h-10 whitespace-nowrap first:border-s-0 [&>button]:inline-block",
                             "sticky top-0 last:w-0",
-                            // i + 1 === arr.length && "bg-gray-50 dark:bg-black/10",
+                            isLegacy &&
+                              "bg-charcoal/80 text-[10px] font-bold uppercase tracking-[0.2em] text-ivory/40",
                           )}
                         >
                           {header.isPlaceholder
@@ -142,7 +169,12 @@ export function DataTable<TData, TValue>({
                     <TableRow
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
-                      className="group/row relative bg-sidebar/20"
+                      className={cn(
+                        "group/row relative",
+                        isLegacy
+                          ? "border-white/5 bg-transparent hover:bg-white/[0.03]"
+                          : "bg-sidebar/20",
+                      )}
                     >
                       {row.getVisibleCells().map((cell) => (
                         <TableCell
@@ -165,7 +197,10 @@ export function DataTable<TData, TValue>({
                   <TableRow>
                     <TableCell
                       colSpan={columns.length}
-                      className="h-24 text-center"
+                      className={cn(
+                        "h-24 text-center",
+                        isLegacy && "text-ivory/40",
+                      )}
                     >
                       {m.noResult()}
                     </TableCell>
@@ -176,7 +211,7 @@ export function DataTable<TData, TValue>({
           </ScrollArea>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
-        <Paginator table={table} />
+        <Paginator table={table} variant={variant} />
       </div>
     </div>
   );

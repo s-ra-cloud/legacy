@@ -5,6 +5,7 @@ import {
   ChevronsLeftIcon,
   ChevronsRightIcon,
 } from "lucide-react";
+import { cn } from "~/lib/utils";
 import { m } from "~/paraglide/messages";
 import { Button } from "../ui/button";
 import {
@@ -18,16 +19,29 @@ import { PageNumberInput } from "./page-number-input";
 
 interface PaginatorProps<T> {
   table: Table<T>;
+  variant?: "default" | "legacy";
 }
 
-export function Paginator<T>({ table }: PaginatorProps<T>) {
+const legacyPaginatorButtonClass =
+  "rounded-none border-white/10 bg-transparent text-ivory/50 hover:bg-white/[0.05] hover:text-ivory disabled:opacity-30";
+
+export function Paginator<T>({
+  table,
+  variant = "default",
+}: PaginatorProps<T>) {
+  const isLegacy = variant === "legacy";
   const pagination = table.getState().pagination;
   return (
-    <div className="flex items-center gap-2 border-t p-2">
+    <div
+      className={cn(
+        "flex items-center gap-2 border-t p-3",
+        isLegacy && "border-white/10 text-ivory/50",
+      )}
+    >
       <Button
         variant="outline"
         size="icon"
-        className="p-1"
+        className={cn("p-1", isLegacy && legacyPaginatorButtonClass)}
         onClick={() => table.setPageIndex(0)}
         disabled={!table.getCanPreviousPage()}
       >
@@ -36,6 +50,7 @@ export function Paginator<T>({ table }: PaginatorProps<T>) {
       <Button
         variant="outline"
         size="icon"
+        className={cn(isLegacy && legacyPaginatorButtonClass)}
         onClick={() => table.previousPage()}
         disabled={!table.getCanPreviousPage()}
       >
@@ -44,6 +59,7 @@ export function Paginator<T>({ table }: PaginatorProps<T>) {
       <Button
         variant="outline"
         size="icon"
+        className={cn(isLegacy && legacyPaginatorButtonClass)}
         onClick={() => table.nextPage()}
         disabled={!table.getCanNextPage()}
       >
@@ -52,16 +68,21 @@ export function Paginator<T>({ table }: PaginatorProps<T>) {
       <Button
         variant="outline"
         size="icon"
+        className={cn(isLegacy && legacyPaginatorButtonClass)}
         onClick={() => table.setPageIndex(table.getPageCount() - 1)}
         disabled={!table.getCanNextPage()}
       >
         <ChevronsRightIcon size={15} />
       </Button>
-      <span className="flex items-center gap-1 text-sm">
+      <span
+        className={cn(
+          "flex items-center gap-1 text-sm",
+          isLegacy && "text-[11px] uppercase tracking-[0.15em]",
+        )}
+      >
         <div>Page</div>
         <strong>
-          {pagination.pageIndex + 1} of
-          {table.getPageCount()}
+          {pagination.pageIndex + 1} of {table.getPageCount()}
         </strong>
       </span>
       <div className="grow"></div>
@@ -74,7 +95,12 @@ export function Paginator<T>({ table }: PaginatorProps<T>) {
             const page = value - 1;
             table.setPageIndex(page);
           }}
-          className="w-40 rounded p-1"
+          className={cn(
+            "w-40 p-1",
+            isLegacy
+              ? "rounded-none border-white/10 bg-transparent text-ivory"
+              : "rounded",
+          )}
         />
       </span>
       <Select
@@ -85,7 +111,13 @@ export function Paginator<T>({ table }: PaginatorProps<T>) {
           table.setPageSize(Number(value));
         }}
       >
-        <SelectTrigger className="hidden h-9 w-fit md:flex">
+        <SelectTrigger
+          className={cn(
+            "hidden h-9 w-fit md:flex",
+            isLegacy &&
+              "rounded-none border-white/10 bg-transparent text-[10px] uppercase tracking-[0.15em] text-ivory/50",
+          )}
+        >
           <SelectValue placeholder="Rows Per Page" />
         </SelectTrigger>
         <SelectContent>

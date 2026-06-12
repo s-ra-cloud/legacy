@@ -17,11 +17,27 @@ import {
 import { cn } from "~/lib/utils";
 import { m } from "~/paraglide/messages";
 
-export function TableColumnsSelector<T>({ table }: { table: Table<T> }) {
+interface TableColumnsSelectorProps<T> {
+  table: Table<T>;
+  variant?: "default" | "legacy";
+}
+
+export function TableColumnsSelector<T>({
+  table,
+  variant = "default",
+}: TableColumnsSelectorProps<T>) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="ml-auto">
+        <Button
+          variant="outline"
+          size="sm"
+          className={cn(
+            "ml-auto",
+            variant === "legacy" &&
+              "rounded-none border-white/10 bg-transparent text-[10px] uppercase tracking-[0.15em] text-ivory/50 hover:bg-white/[0.05] hover:text-ivory",
+          )}
+        >
           {m.toggleColumns()}
         </Button>
       </PopoverTrigger>

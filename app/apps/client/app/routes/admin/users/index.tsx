@@ -29,7 +29,11 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function AdminUsersIndex({ loaderData }: Route.ComponentProps) {
   return (
     <HydrationBoundary state={loaderData.dehydratedState}>
-      <AdminUsersPage />
+      <main className="flex min-h-screen flex-col bg-charcoal">
+        <div className="mt-20 mb-10">
+          <AdminUsersPage />
+        </div>
+      </main>
     </HydrationBoundary>
   );
 }

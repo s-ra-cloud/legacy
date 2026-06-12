@@ -38,9 +38,16 @@ export type TableHeaderFilterOptions =
 
 interface TableFiltersProps {
   filters: zodToFiltersOutput;
+  variant?: "default" | "legacy";
 }
 
-export function TableFilters({ filters }: TableFiltersProps) {
+const legacyToolbarButtonClass =
+  "rounded-none border-white/10 bg-transparent text-[10px] uppercase tracking-[0.15em] text-ivory/50 hover:bg-white/[0.05] hover:text-ivory";
+
+export function TableFilters({
+  filters,
+  variant = "default",
+}: TableFiltersProps) {
   // const existingParams = useSearchParams();
   // const keys = Object.entries(filters)
   //   .filter(([, value]) => value)
@@ -78,7 +85,10 @@ export function TableFilters({ filters }: TableFiltersProps) {
 
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="h-8" variant={"outline"}>
+          <Button
+            className={variant === "legacy" ? legacyToolbarButtonClass : "h-8"}
+            variant="outline"
+          >
             <FilterIcon size={10} /> Filters
           </Button>
         </DialogTrigger>
