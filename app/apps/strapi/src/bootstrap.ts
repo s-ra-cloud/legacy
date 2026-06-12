@@ -351,6 +351,7 @@ const HOME_PHILOSOPHERS_SEED: HomePhilosopherSeed[] = [
     school: 'Analytic',
     earthQuote: 'Whereof one cannot speak, thereof one must be silent.',
     earthOrder: 15,
+    imageFile: 'wittgenstein.png',
   },
 ];
 
