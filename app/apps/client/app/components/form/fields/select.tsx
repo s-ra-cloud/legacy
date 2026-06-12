@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { cn } from "~/lib/utils";
 import { useFormField } from "../hook";
 
 interface SelectFieldProps {
@@ -21,6 +22,10 @@ interface SelectFieldProps {
   description?: string;
   disabled?: boolean;
   placeholder: string;
+  labelClassName?: string;
+  triggerClassName?: string;
+  contentClassName?: string;
+  itemClassName?: string;
   options: {
     label: string;
     value: string;
@@ -36,6 +41,10 @@ export function SelectField({
   description,
   disabled,
   placeholder,
+  labelClassName,
+  triggerClassName,
+  contentClassName,
+  itemClassName,
   options,
   selectProps,
 }: SelectFieldProps) {
@@ -44,7 +53,11 @@ export function SelectField({
 
   return (
     <FormItem>
-      {label && <FormLabel className="capitalize">{label}</FormLabel>}
+      {label && (
+        <FormLabel className={cn(!labelClassName && "capitalize", labelClassName)}>
+          {label}
+        </FormLabel>
+      )}
       <FormControl>
         <Select
           disabled={disabled}
@@ -52,12 +65,19 @@ export function SelectField({
           value={field.value}
           {...selectProps}
         >
-          <SelectTrigger className="!h-12 w-full">
+          <SelectTrigger className={cn("!h-12 w-full", triggerClassName)}>
             <SelectValue defaultValue={field.value} placeholder={placeholder} />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className={contentClassName}>
             {options.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                className={cn(
+                  itemClassName,
+                  option.icon && "flex items-center gap-2",
+                )}
+              >
                 {option.icon && <option.icon className="mr-2 h-4 w-4" />}
                 {option.label}
               </SelectItem>

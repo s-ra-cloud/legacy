@@ -42,6 +42,7 @@ interface DataTableProps<TData, TValue> {
   pagination: PaginationState;
   paginationOptions: Pick<PaginationOptions, "rowCount">;
   isLoading: boolean;
+  onPaginationChange?: (pagination: PaginationState) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -51,6 +52,7 @@ export function DataTable<TData, TValue>({
   paginationOptions,
   filters,
   isLoading,
+  onPaginationChange,
 }: DataTableProps<TData, TValue>) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [_, setPaginationFilters] = useQueryStates({
@@ -69,6 +71,10 @@ export function DataTable<TData, TValue>({
         typeof _pagination === "function"
           ? _pagination(pagination)
           : _pagination;
+      if (onPaginationChange) {
+        onPaginationChange(res);
+        return;
+      }
       setPaginationFilters({
         cursor: res.pageIndex + 1,
         limit: res.pageSize,
@@ -78,7 +84,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="flex h-full flex-col gap-1 overflow-hidden rounded border bg-sidebar">
+    <div className="flex min-h-[420px] flex-col gap-1 overflow-hidden rounded border bg-sidebar">
       <div className="flex items-center justify-between gap-2 p-2 ">
         <TableGlobalSearch />
         <TableFilters filters={filters} />
@@ -86,8 +92,8 @@ export function DataTable<TData, TValue>({
         <TableColumnsSelector table={table} />
         <TableReset />
       </div>
-      <div className="flex grow flex-col">
-        <ScrollArea className="h-0 grow">
+      <div className="flex min-h-0 flex-1 flex-col">
+        <ScrollArea className="min-h-[300px] flex-1">
           <ScrollArea className="">
             <Table className="relative table-auto">
               <TableHeader className="z-10 border-t">

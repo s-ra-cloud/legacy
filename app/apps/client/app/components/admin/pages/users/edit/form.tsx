@@ -21,8 +21,31 @@ import {
   toastUnknownError,
 } from "~/utils/error-handler/form";
 
+const legacyLabelClass =
+  "mb-1.5 block text-[10px] font-bold uppercase tracking-[0.3em] text-ivory/60";
+
 const legacyInputClass =
   "h-11 rounded-none border-white/[0.12] bg-white/[0.04] text-ivory placeholder:text-ivory/25 focus-visible:border-gold/50 focus-visible:ring-gold/15";
+
+const legacySelectTriggerClass =
+  "rounded-none border-white/[0.12] bg-white/[0.04] text-ivory data-[placeholder]:text-ivory/25 focus-visible:border-gold/50 focus-visible:ring-gold/15 [&_svg]:text-ivory/40 [&_[data-slot=select-value]]:text-ivory";
+
+const legacySelectContentClass =
+  "border-white/10 bg-charcoal text-ivory";
+
+const legacySelectItemClass =
+  "text-ivory focus:bg-gold/10 focus:text-ivory data-[highlighted]:bg-gold/10 data-[highlighted]:text-ivory [&_svg]:text-gold/70";
+
+const assignableRoles = ["ADMIN", "CLIENT"] as const satisfies ReadonlyArray<
+  (typeof userRoles)[number]
+>;
+
+const roleLabels: Record<(typeof userRoles)[number], string> = {
+  ADMIN: "Admin",
+  CLIENT: "Client",
+  MANAGER: "Manager",
+  ACCESS_MANAGER: "Access manager",
+};
 
 interface UserEditProps {
   userId: string;
@@ -47,6 +70,12 @@ export function UserEditForm({ userId }: UserEditProps) {
   }
 
   const data = userQuery.data;
+
+  const rolesForSelect = assignableRoles.includes(
+    data.role as (typeof assignableRoles)[number],
+  )
+    ? [...assignableRoles]
+    : ([data.role, ...assignableRoles] as (typeof userRoles)[number][]);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -140,6 +169,7 @@ export function UserEditForm({ userId }: UserEditProps) {
             <TextField
               formName="name"
               label="Name"
+              labelClassName={legacyLabelClass}
               inputProps={{
                 placeholder: "Full name",
                 className: legacyInputClass,
@@ -148,15 +178,20 @@ export function UserEditForm({ userId }: UserEditProps) {
             <SelectField
               formName="role"
               label="Role"
+              labelClassName={legacyLabelClass}
+              triggerClassName={legacySelectTriggerClass}
+              contentClassName={legacySelectContentClass}
+              itemClassName={legacySelectItemClass}
               placeholder="Select role"
-              options={userRoles.map((role) => ({
-                label: role.charAt(0) + role.slice(1).toLowerCase().replace("_", " "),
+              options={rolesForSelect.map((role) => ({
+                label: roleLabels[role],
                 value: role,
               }))}
             />
             <TextField
               formName="firstName"
               label="First name"
+              labelClassName={legacyLabelClass}
               inputProps={{
                 placeholder: "First name",
                 className: legacyInputClass,
@@ -165,6 +200,7 @@ export function UserEditForm({ userId }: UserEditProps) {
             <TextField
               formName="lastName"
               label="Last name"
+              labelClassName={legacyLabelClass}
               inputProps={{
                 placeholder: "Last name",
                 className: legacyInputClass,
@@ -173,6 +209,7 @@ export function UserEditForm({ userId }: UserEditProps) {
             <TextField
               formName="email"
               label="Email"
+              labelClassName={legacyLabelClass}
               inputProps={{
                 placeholder: "email@institution.edu",
                 className: legacyInputClass,
@@ -181,6 +218,10 @@ export function UserEditForm({ userId }: UserEditProps) {
             <SelectField
               formName="status"
               label="Status"
+              labelClassName={legacyLabelClass}
+              triggerClassName={legacySelectTriggerClass}
+              contentClassName={legacySelectContentClass}
+              itemClassName={legacySelectItemClass}
               placeholder="Select status"
               options={userStatuses.map((status) => ({
                 label: status === "ENABLED" ? "Active" : "Disabled",
@@ -190,6 +231,7 @@ export function UserEditForm({ userId }: UserEditProps) {
             <TextField
               formName="institution"
               label="Institution"
+              labelClassName={legacyLabelClass}
               inputProps={{
                 placeholder: "Institution",
                 className: legacyInputClass,
