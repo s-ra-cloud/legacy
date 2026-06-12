@@ -6,6 +6,7 @@ import type { paths } from "./api-types";
 
 export const fetchClient = createFetchClient<paths>({
   baseUrl: new URL("/api/v1", getRestApiOrigin()).toString(),
+  credentials: "include",
 });
 
 export const $api = createClient(fetchClient);

@@ -1,22 +1,25 @@
 import { useQueryStates } from "nuqs";
 import { Users } from "lucide-react";
 import { DataTable } from "~/components/admin/data-table";
+import { ErrorView } from "~/components/common/error";
 import { paginationFromQuery } from "~/components/paginator/pagination-query";
 import { $api } from "@repo/ui";
+import { parseUserManyQuery } from "~/routes/admin/users/query";
 import { userManyInputFilters, userManyInputNuqs } from "~/routes/admin/users";
-import { excludeNullParams } from "~/utils/nuqs/clean-params";
 import { useUsersColumns } from "./columns";
 
 interface AdminManyUsersTableProps {}
 
 export function AdminManyUsersTable(_: AdminManyUsersTableProps) {
-  const [filters] = useQueryStates(userManyInputNuqs, {
+  const [filters, setFilters] = useQueryStates(userManyInputNuqs, {
     shallow: true,
   });
 
+  const queryParams = parseUserManyQuery(filters);
+
   const query = $api.useQuery("get", "/users", {
     params: {
-      query: excludeNullParams(filters),
+      query: queryParams,
     },
   });
 
@@ -24,10 +27,16 @@ export function AdminManyUsersTable(_: AdminManyUsersTableProps) {
   const pagination = paginationFromQuery(query);
 
   const total = query.data?.pagination.total ?? 0;
-  const page = pagination.pageIndex + 1;
-  const pageSize = pagination.pageSize;
+  const page = Math.max(pagination.pageIndex + 1, 1);
+  const pageSize = Math.max(pagination.pageSize, 1);
   const from = total === 0 ? 0 : (page - 1) * pageSize + 1;
   const to = Math.min(page * pageSize, total);
+
+  if (query.isError) {
+    return (
+      <ErrorView error={query.error} retry={() => query.refetch()} />
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -45,19 +54,23 @@ export function AdminManyUsersTable(_: AdminManyUsersTableProps) {
         )}
       </div>
 
-      <div className="min-h-[480px]">
-        <DataTable
-          variant="legacy"
-          filters={userManyInputFilters}
-          isLoading={query.isPending}
-          columns={columns}
-          data={query.data?.items ?? []}
-          pagination={pagination}
-          paginationOptions={{
-            rowCount: pagination.rowCount,
-          }}
-        />
-      </div>
+      <DataTable
+        variant="legacy"
+        filters={userManyInputFilters}
+        isLoading={query.isPending}
+        columns={columns}
+        data={query.data?.items ?? []}
+        pagination={pagination}
+        paginationOptions={{
+          rowCount: pagination.rowCount,
+        }}
+        onPaginationChange={({ pageIndex, pageSize }) => {
+          setFilters({
+            cursor: pageIndex + 1,
+            limit: pageSize,
+          }).catch(console.error);
+        }}
+      />
     </div>
   );
 }

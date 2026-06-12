@@ -43,6 +43,7 @@ interface DataTableProps<TData, TValue> {
   paginationOptions: Pick<PaginationOptions, "rowCount">;
   isLoading: boolean;
   variant?: "default" | "legacy";
+  onPaginationChange?: (pagination: PaginationState) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -53,6 +54,7 @@ export function DataTable<TData, TValue>({
   filters,
   isLoading,
   variant = "default",
+  onPaginationChange,
 }: DataTableProps<TData, TValue>) {
   const isLegacy = variant === "legacy";
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -72,6 +74,10 @@ export function DataTable<TData, TValue>({
         typeof _pagination === "function"
           ? _pagination(pagination)
           : _pagination;
+      if (onPaginationChange) {
+        onPaginationChange(res);
+        return;
+      }
       setPaginationFilters({
         cursor: res.pageIndex + 1,
         limit: res.pageSize,
@@ -83,7 +89,7 @@ export function DataTable<TData, TValue>({
   return (
     <div
       className={cn(
-        "flex h-full flex-col gap-1 overflow-hidden",
+        "flex min-h-[420px] flex-col gap-1 overflow-hidden",
         isLegacy
           ? "border border-white/10 bg-charcoal/60 backdrop-blur-sm"
           : "rounded border bg-sidebar",
@@ -103,8 +109,8 @@ export function DataTable<TData, TValue>({
         <TableReset variant={variant} />
         <div className="grow sm:hidden block" />
       </div>
-      <div className="flex grow flex-col">
-        <ScrollArea className="h-0 grow">
+      <div className="flex min-h-0 flex-1 flex-col">
+        <ScrollArea className="min-h-[300px] flex-1">
           <ScrollArea className="">
             <Table
               className={cn(

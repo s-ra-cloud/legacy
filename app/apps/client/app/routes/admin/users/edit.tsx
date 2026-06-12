@@ -31,7 +31,11 @@ export default function AdminUsersEdit({
 }: Route.ComponentProps) {
   return (
     <HydrationBoundary state={loaderData.dehydratedState}>
-      <AdminUsersEditPage userId={params.userId} />
+      <main className="flex min-h-screen flex-col bg-charcoal">
+        <div className="mt-20 mb-10">
+          <AdminUsersEditPage userId={params.userId} />
+        </div>
+      </main>
     </HydrationBoundary>
   );
 }
