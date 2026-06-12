@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Input } from "~/components/ui/input";
@@ -142,6 +142,14 @@ export default function LoginForm() {
                 {errors.password.message}
               </p>
             )}
+            {/* <div className="mt-2 flex justify-end">
+              <Link
+                to={SAFE_ROUTES.AUTH_FORGOT_PASSWORD}
+                className="text-[10px] uppercase tracking-[0.25em] text-ivory/35 transition-colors duration-200 hover:text-gold/80"
+              >
+                Forgot password?
+              </Link>
+            </div> */}
           </div>
 
           {/* Submit */}
@@ -160,13 +168,13 @@ export default function LoginForm() {
           </div>
 
           {/* Links */}
-          <div className="flex items-center justify-center mt-1">
-            <a
-              href={SAFE_ROUTES.AUTH_SIGN_UP}
-              className="text-[10px] uppercase tracking-[0.25em] text-ivory/35 hover:text-gold/80 transition-colors duration-200"
+          <div className="mt-1 flex items-center justify-center">
+            <Link
+              to={SAFE_ROUTES.AUTH_SIGN_UP}
+              className="text-[10px] uppercase tracking-[0.25em] text-ivory/35 transition-colors duration-200 hover:text-gold/80"
             >
               Create account
-            </a>
+            </Link>
           </div>
         </div>
       </form>
