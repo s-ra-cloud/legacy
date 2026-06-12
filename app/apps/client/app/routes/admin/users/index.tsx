@@ -6,13 +6,13 @@ import { AdminUsersPage } from "~/components/admin/pages/users/page";
 import { $api } from "@repo/ui";
 import { getUserCtxOrRedirect } from "~/utils/auth";
 import { buildLoaderResponse, params } from "~/utils/loader";
-import { zodToFilters } from "~/utils/nuqs/zod-to-filters";
 import { zodToNuqs } from "~/utils/nuqs/zod-to-nuqs";
 import type { Route } from "./+types";
+import { userTableFilters } from "./filters";
 import { parseUserManyQuery } from "./query";
 
 export const userManyInputNuqs = zodToNuqs(userManyInputSchema);
-export const userManyInputFilters = zodToFilters(userManyInputSchema);
+export const userManyInputFilters = userTableFilters;
 const loadSearchParams = createLoader(userManyInputNuqs);
 
 export async function loader({ request }: Route.LoaderArgs) {

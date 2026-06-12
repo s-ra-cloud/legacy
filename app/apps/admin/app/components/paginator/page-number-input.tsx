@@ -1,31 +1,39 @@
 import { Minus, Plus } from "lucide-react";
 import type { ComponentProps } from "react";
 import { Button, Group, Input, NumberField } from "react-aria-components";
+import { cn } from "~/lib/utils";
 
-interface NumberInputProps extends ComponentProps<typeof NumberField> {
-  phantom?: never;
+interface PageNumberInputProps extends ComponentProps<typeof NumberField> {
+  variant?: "default";
 }
 
-export function PageNumberInput(props: NumberInputProps) {
+export function PageNumberInput({
+  variant = "default",
+  className,
+  ...props
+}: PageNumberInputProps) {
   return (
-    <NumberField {...props}>
-      <div className="space-y-2">
-        <Group className="relative inline-flex h-9 w-full items-center overflow-hidden whitespace-nowrap rounded-lg border border-input text-sm shadow-black/5 shadow-sm ring-offset-background transition-shadow data-[focus-within]:border-ring data-[disabled]:opacity-50 data-[focus-within]:outline-none">
-          <Button
-            slot="decrement"
-            className="-ms-px flex aspect-square h-[inherit] items-center justify-center rounded-s-lg border border-input bg-background text-muted-foreground/80 text-sm ring-offset-background transition-shadow hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <Minus size={16} strokeWidth={2} aria-hidden="true" />
-          </Button>
-          <Input className="w-full grow bg-background px-3 py-2 text-center text-foreground tabular-nums focus:outline-none" />
-          <Button
-            slot="increment"
-            className="-me-px flex aspect-square h-[inherit] items-center justify-center rounded-e-lg border border-input bg-background text-muted-foreground/80 text-sm ring-offset-background transition-shadow hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <Plus size={16} strokeWidth={2} aria-hidden="true" />
-          </Button>
-        </Group>
-      </div>
+    <NumberField {...props} className={cn("inline-flex", className)}>
+      <Group
+        className={cn(
+          "relative inline-flex h-9 items-center overflow-hidden whitespace-nowrap rounded-lg border border-input bg-background text-sm shadow-sm transition-colors data-[disabled]:opacity-50 data-[focus-within]:border-ring data-[focus-within]:outline-none",
+          variant === "default" && "",
+        )}
+      >
+        <Button
+          slot="decrement"
+          className="flex aspect-square h-9 w-9 shrink-0 items-center justify-center border-r border-input bg-background text-muted-foreground/80 text-sm transition-colors hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <Minus size={14} strokeWidth={2} aria-hidden="true" />
+        </Button>
+        <Input className="w-10 min-w-0 grow bg-background px-1 py-2 text-center text-sm text-foreground tabular-nums focus:outline-none" />
+        <Button
+          slot="increment"
+          className="flex aspect-square h-9 w-9 shrink-0 items-center justify-center border-l border-input bg-background text-muted-foreground/80 text-sm transition-colors hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <Plus size={14} strokeWidth={2} aria-hidden="true" />
+        </Button>
+      </Group>
     </NumberField>
   );
 }

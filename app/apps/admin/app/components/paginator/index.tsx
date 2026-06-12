@@ -22,8 +22,11 @@ interface PaginatorProps<T> {
 
 export function Paginator<T>({ table }: PaginatorProps<T>) {
   const pagination = table.getState().pagination;
+  const pageCount = Math.max(table.getPageCount(), 1);
+  const currentPage = pagination.pageIndex + 1;
+
   return (
-    <div className="flex items-center gap-2 border-t bg-sidebar p-2">
+    <div className="flex flex-wrap items-center gap-2 border-t bg-sidebar p-2">
       <Button
         variant="outline"
         size="icon"
@@ -52,28 +55,27 @@ export function Paginator<T>({ table }: PaginatorProps<T>) {
       <Button
         variant="outline"
         size="icon"
-        onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+        onClick={() => table.setPageIndex(pageCount - 1)}
         disabled={!table.getCanNextPage()}
       >
         <ChevronsRightIcon size={15} />
       </Button>
-      <span className="flex items-center gap-1 text-sm">
-        <div>Page</div>
+      <span className="flex items-center gap-1.5 text-sm tabular-nums">
+        <span>Page</span>
         <strong>
-          {pagination.pageIndex + 1} of {table.getPageCount()}
+          {currentPage} / {pageCount}
         </strong>
       </span>
-      <div className="grow"></div>
-      <span className="hidden items-center gap-1 md:flex">
-        {m.goToPage()}
+      <div className="grow" />
+      <span className="hidden items-center gap-2 md:flex">
+        <span className="text-muted-foreground text-sm">{m.goToPage()}</span>
         <PageNumberInput
           minValue={1}
-          defaultValue={pagination.pageIndex + 1}
+          maxValue={pageCount}
+          value={currentPage}
           onChange={(value) => {
-            const page = value - 1;
-            table.setPageIndex(page);
+            table.setPageIndex(Math.min(Math.max(value, 1), pageCount) - 1);
           }}
-          className="w-40 rounded p-1"
         />
       </span>
       <Select
