@@ -16,22 +16,24 @@ export default [
   route("account-disabled", "routes/pages/account-disabled.tsx"),
   // public pages
   layout("components/layouts/public.tsx", [
-    ...prefix("auth", [
-      route("forgot-password", "routes/auth/forgot-password.tsx"),
-      route("reset-password", "routes/auth/reset-password.tsx"),
-    ]),
-    route("forbidden", "routes/pages/forbidden.tsx"),
+    // ...prefix("auth", [
+    //   route("reset-password", "routes/auth/reset-password.tsx"),
+    // ]),
     ...prefix("/old-home", [
       index("routes/client/index.tsx"),
     ]),
   ]),
-
-  layout("components/layouts/new-client.tsx", [
+  
+  layout("components/layouts/new-auth.tsx", [
     ...prefix("auth", [
       route("sign-in", "routes/auth/sign-in.tsx"),
       route("sign-up", "routes/auth/sign-up.tsx"),
+      route("forgot-password", "routes/auth/forgot-password.tsx"),
     ]),
+  ]),
+  route("forbidden", "routes/pages/forbidden.tsx"),
 
+  layout("components/layouts/new-client.tsx", [
     route("home", "routes/pages/newhome.tsx"),
     route("manifesto", "routes/manifesto/index.tsx"),
     route("team", "routes/team/index.tsx"),
