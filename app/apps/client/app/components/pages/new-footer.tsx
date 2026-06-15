@@ -1,6 +1,6 @@
 import type { AuthUser } from "@repo/server";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight, Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Twitter } from "lucide-react";
 import { type ComponentType, useRef } from "react";
 import { Link } from "react-router";
 import { SAFE_ROUTES } from "~/safe-routes";
@@ -8,6 +8,16 @@ import { SAFE_ROUTES } from "~/safe-routes";
 interface NewFooterProps {
   user?: AuthUser | null;
 }
+
+const EXPLORE_LINKS = [
+  { to: SAFE_ROUTES.PROJECTS_LIBRARY, label: "Library" },
+  { to: SAFE_ROUTES.PROJECTS_CONVERSATION, label: "Great Conversation" },
+  { to: SAFE_ROUTES.PROJECTS_TREE, label: "Knowledge Tree" },
+  { to: SAFE_ROUTES.TEAM, label: "Team" },
+  { to: SAFE_ROUTES.MANIFESTO, label: "Manifesto" },
+] as const;
+
+const RESOURCE_LINKS = ["Documentation", "FAQ", "Open Source Code"] as const;
 
 export default function NewFooter({ user }: NewFooterProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -88,25 +98,13 @@ export default function NewFooter({ user }: NewFooterProps) {
           transition={{ duration: 0.9 }}
           className={`grid grid-cols-1 md:grid-cols-12 gap-12 mb-20${!user ? " border-t border-white/10 pt-12" : ""}`}
         >
-          <div className="md:col-span-3">
-            <FooterColumn
-              title="01. The Library"
-              links={["The Vaults", "Knowledge Tree", "Manuscripts", "Scientific Board", "Archives"]}
-            />
+          <div className="md:col-span-4">
+            <FooterNavColumn title="01. Explore" links={EXPLORE_LINKS} />
           </div>
-          <div className="md:col-span-3">
-            <FooterColumn
-              title="02. Synthesis"
-              links={["Documentation", "R&D Dataset", "API Access", "Gitbook", "Community"]}
-            />
+          <div className="md:col-span-4">
+            <FooterSoonColumn title="02. Resources" links={RESOURCE_LINKS} />
           </div>
-          <div className="md:col-span-3">
-            <FooterColumn
-              title="03. Institutional"
-              links={["Oxford", "Heidelberg", "Alexandria", "Louvre", "Press Kit"]}
-            />
-          </div>
-          <div className="md:col-span-3 flex flex-col items-start md:items-end gap-6">
+          <div className="md:col-span-4 flex flex-col items-start md:items-end gap-6">
             <h4 className="marquee-label">Global Access</h4>
             <div className="flex gap-1">
               {[0, 1, 2, 3].map((i) => (
@@ -144,16 +142,48 @@ export default function NewFooter({ user }: NewFooterProps) {
   );
 }
 
-function FooterColumn({ title, links }: { title: string; links: string[] }) {
+function FooterNavColumn({
+  title,
+  links,
+}: {
+  title: string;
+  links: ReadonlyArray<{ to: string; label: string }>;
+}) {
   return (
     <div className="space-y-6">
       <h4 className="marquee-label">{title}</h4>
       <ul className="space-y-3">
         {links.map((link) => (
-          <li key={link}>
-            <a href="#" className="text-lg text-ivory/40 hover:text-gold transition-colors font-serif italic">
+          <li key={link.label}>
+            <Link
+              to={link.to}
+              className="text-lg text-ivory/60 hover:text-gold transition-colors font-serif italic"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function FooterSoonColumn({ title, links }: { title: string; links: ReadonlyArray<string> }) {
+  return (
+    <div className="space-y-6">
+      <h4 className="marquee-label">{title}</h4>
+      <ul className="space-y-3">
+        {links.map((link) => (
+          <li key={link} className="flex items-center gap-3">
+            <span
+              aria-disabled="true"
+              className="text-lg text-ivory/25 font-serif italic cursor-not-allowed select-none"
+            >
               {link}
-            </a>
+            </span>
+            <span className="text-[8px] font-bold uppercase tracking-[0.25em] text-gold/40 border border-gold/20 rounded-full px-2 py-0.5">
+              Soon
+            </span>
           </li>
         ))}
       </ul>
