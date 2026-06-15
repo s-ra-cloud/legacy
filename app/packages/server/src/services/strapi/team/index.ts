@@ -33,7 +33,9 @@ type StrapiTeamData = Team;
 
 // Transform Strapi data to our schema
 function transformStrapiTeam(data: StrapiTeamData): Team {
-  data.picture.url = getStrapiMediaUrl(data.picture.url) ?? data.picture.url;
+  if (data.picture) {
+    data.picture.url = getStrapiMediaUrl(data.picture.url) ?? data.picture.url;
+  }
   return teamSchema.parse(data);
 }
 

@@ -793,7 +793,7 @@ export interface ApiTeamTeam extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::team.team'> &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    picture: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    picture: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
     role: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;

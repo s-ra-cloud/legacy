@@ -1,17 +1,70 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
+import type { ReactNode } from "react";
 import { $api } from "@repo/ui";
 import type { Team } from "@repo/server";
 
 const UNIVERSITY_LINKS: Record<string, string> = {
   "Raphaël Liogier": "https://ias.um6p.ma",
   "Laura Duparc": "",
+  "Mohamed Amine Elhariri": "https://www.linkedin.com/in/mohamed-amine-elhariri/",
   "James Evans": "https://sociology.uchicago.edu/directory/james-a-evans",
   "Pascal Taranto": "https://www.univ-amu.fr/fr/public/pascal-taranto",
   "Bernard Harcourt": "https://law.columbia.edu/faculty/bernard-e-harcourt",
   "Alexander Belikov": "https://growgraph.com",
   "Eric Parisot": "",
 };
+
+// Only http(s) links are allowed to render as anchors. CMS-authored content is
+// untrusted, so unsafe schemes (javascript:, data:, etc.) must never reach href.
+function safeHttpUrl(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol === "https:" || parsed.protocol === "http:") {
+      return parsed.href;
+    }
+  } catch {
+    // not a valid absolute URL
+  }
+  return null;
+}
+
+// Renders a plain-text description, turning markdown-style links
+// [label](url) into real clickable links that open in a new tab.
+function renderDescription(text: string): ReactNode[] {
+  const parts: ReactNode[] = [];
+  const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  let lastIndex = 0;
+  let key = 0;
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    const safeUrl = safeHttpUrl(match[2]);
+    if (safeUrl) {
+      parts.push(
+        <a
+          key={key++}
+          href={safeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-gold underline underline-offset-2 hover:text-gold/70 transition-colors"
+        >
+          {match[1]}
+        </a>,
+      );
+    } else {
+      // Unsafe or malformed URL: render the label as plain text.
+      parts.push(match[1]);
+    }
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+  return parts;
+}
 
 const SECTION_ORDER = [
   { key: "director", label: "Direction" },
@@ -121,7 +174,7 @@ function MemberCard({ member, index }: { member: Team; index: number }) {
 
           {member.description && (
             <p className="text-charcoal/65 text-sm md:text-[15px] leading-relaxed">
-              {member.description}
+              {renderDescription(member.description)}
             </p>
           )}
         </div>

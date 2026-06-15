@@ -21,7 +21,7 @@ export const teamSchema = z.object({
   category: z.enum(["Direction & Design", "Scientific advisors", "Research & development team"]),
   affiliation: z.string().nullable().optional(),
   description: descriptionSchema,
-  picture: strapiMediaSchema,
+  picture: strapiMediaSchema.nullable().optional(),
   publishedAt: datetimeSchema,
   updatedAt: datetimeSchema,
   createdAt: datetimeSchema,
