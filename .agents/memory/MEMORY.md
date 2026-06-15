@@ -1,0 +1,1 @@
+- [Repo server dist staleness](repo-server-dist-staleness.md) — `@repo/server` resolves to gitignored `./dist`; dev API breaks if dist not kept fresh via tsc --watch.

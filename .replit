@@ -42,6 +42,10 @@ args = "Client"
 task = "workflow.run"
 args = "Strapi"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Server build watch"
+
 [[workflows.workflow]]
 name = "Redis"
 author = "agent"
@@ -119,6 +123,17 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd app/apps/strapi && npm run develop"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "Server build watch"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd app && pnpm --filter @repo/server dev"
 
 [workflows.workflow.metadata]
 outputType = "console"
