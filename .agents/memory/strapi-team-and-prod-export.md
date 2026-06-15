@@ -17,12 +17,28 @@ that media `nullable().optional()`. Keep the three in lockstep: Strapi
 
 # Production content delivery (no auto-sync)
 
-There is no automated dev→production Strapi content sync wired into deploy. The
-delivery artifact is the encrypted export at
-`app/apps/strapi/export_20260518143539.tar.gz.enc` (git-lfs), imported in prod by
-`scripts/run-strapi-import.sh` (`strapi import --key oo --force`). Running that
-import in prod is a separate task; code + schema changes deploy automatically but
-content changes only go live when the import actually runs.
+Replit's publish flow migrates the DB *schema* dev→prod but NOT row data, so
+Strapi *content* (team members, etc.) never syncs automatically — prod has its
+own database. Symptom of the gap: a member added in dev (e.g. Mohamed Amine
+Elhariri) is simply absent from the prod `strapi.teams` table.
+
+The delivery artifact is the encrypted export at
+`app/apps/strapi/export_20260518143539.tar.gz.enc` (git-lfs, ~55KB real blob on
+disk), applied in prod by `scripts/run-strapi-import.sh`
+(`strapi import --key oo --force --exclude files`). This import is now wired into
+the BUILD phase of `scripts/build-prod.sh`, gated by env flag
+`STRAPI_IMPORT_ON_START=1` (a shared env var, not a secret). Build phase is the
+right place: it shares the deployment's DATABASE_URL (writes the live prod DB),
+isn't subject to the startup health-check timeout, and runs once per deploy (no
+autoscale multi-container race). It had been removed from build once before
+(when the build-phase version unsafely lacked `--exclude files`).
+
+**Why the flag, and the gotcha:** while `STRAPI_IMPORT_ON_START=1`, EVERY publish
+re-imports and `--force`-overwrites prod content from the committed export —
+which clobbers any edits made directly in the prod Strapi admin. Unset the flag
+after a successful import if prod content should be editable in-admin. The export
+is the source of truth: regenerate it (`strapi export --only content`) whenever
+dev content changes that need to reach prod.
 
 **Uploads live in a custom object-storage provider** (`config/plugins.ts`), not
 local disk, so `strapi export` does NOT bundle image binaries — a regenerated

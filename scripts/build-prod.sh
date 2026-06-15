@@ -39,6 +39,35 @@ npm run build
 
 cd "$ROOT"
 
+# ---------------------------------------------------------------------------
+# Strapi content import (opt-in via STRAPI_IMPORT_ON_START=1)
+# ---------------------------------------------------------------------------
+# Production Strapi *content* (team members, etc.) is NOT synced by Replit's
+# publish flow, which migrates schema only, not row data. The committed
+# encrypted export is the source of truth for prod content and is applied here,
+# in the BUILD phase, so it: (a) is not subject to the startup health-check
+# timeout, and (b) runs exactly once per deploy (no autoscale multi-container
+# race). The build container shares the deployment's DATABASE_URL, so this
+# writes to the live production database. The import is content-only and
+# asset-safe (run-strapi-import.sh uses --exclude files), so it never touches
+# the object-storage-backed media. Unset STRAPI_IMPORT_ON_START after a
+# successful deploy to stop re-importing (and to allow direct prod-admin edits).
+if [ "${STRAPI_IMPORT_ON_START:-}" = "1" ]; then
+  if [ -z "${DATABASE_URL:-}" ]; then
+    echo "[FATAL] STRAPI_IMPORT_ON_START=1 but DATABASE_URL is unset — refusing to import."
+    exit 1
+  fi
+  # Log a credential-stripped fingerprint so operators can confirm the target DB.
+  echo "==> Importing Strapi content into DB: $(printf '%s' "$DATABASE_URL" | sed -E 's#://[^@/]*@#://***:***@#')"
+  if ! NODE_ENV=production bash "$ROOT/scripts/run-strapi-import.sh"; then
+    echo "[FATAL] Strapi content import failed — aborting deploy."
+    exit 1
+  fi
+  echo "==> Strapi content import complete"
+else
+  echo "==> STRAPI_IMPORT_ON_START not set — skipping Strapi content import"
+fi
+
 echo "==> Ensuring Strapi Public role has all API permissions"
 # The SQL seed can create duplicate roles. This ensures the lowest-id Public role
 # (which Strapi actually uses for unauthenticated requests) has all API permissions.
