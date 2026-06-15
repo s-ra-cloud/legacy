@@ -6,7 +6,7 @@ import type { Team } from "@repo/server";
 
 const UNIVERSITY_LINKS: Record<string, string> = {
   "Raphaël Liogier": "https://ias.um6p.ma",
-  "Laura Duparc": "",
+  "Laura Duparc": "https://www.linkedin.com/in/laura-duparc-52504b215/",
   "Mohamed Amine Elhariri": "https://www.linkedin.com/in/mohamed-amine-elhariri/",
   "James Evans": "https://sociology.uchicago.edu/directory/james-a-evans",
   "Pascal Taranto": "https://www.univ-amu.fr/fr/public/pascal-taranto",
