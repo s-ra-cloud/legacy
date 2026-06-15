@@ -40,32 +40,30 @@ npm run build
 cd "$ROOT"
 
 # ---------------------------------------------------------------------------
-# Strapi content import (opt-in via STRAPI_IMPORT_ON_START=1)
+# Strapi Team content sync (opt-in via STRAPI_SYNC_TEAM=1)
 # ---------------------------------------------------------------------------
-# Production Strapi *content* (team members, etc.) is NOT synced by Replit's
-# publish flow, which migrates schema only, not row data. The committed
-# encrypted export is the source of truth for prod content and is applied here,
-# in the BUILD phase, so it: (a) is not subject to the startup health-check
-# timeout, and (b) runs exactly once per deploy (no autoscale multi-container
-# race). The build container shares the deployment's DATABASE_URL, so this
-# writes to the live production database. The import is content-only and
-# asset-safe (run-strapi-import.sh uses --exclude files), so it never touches
-# the object-storage-backed media. Unset STRAPI_IMPORT_ON_START after a
-# successful deploy to stop re-importing (and to allow direct prod-admin edits).
-if [ "${STRAPI_IMPORT_ON_START:-}" = "1" ]; then
+# Replit's publish flow migrates schema only, not Strapi row data, so Team
+# changes made in dev do not reach production automatically. This applies ONLY
+# the Team content type (scripts/sync-team-prod.sql) to the live production DB,
+# in the BUILD phase so it runs exactly once per deploy. The SQL is surgical and
+# idempotent: it touches strapi.teams ONLY (updates two descriptions, adds one
+# new member), performs no deletes, and never touches media or any other content
+# type. Unset STRAPI_SYNC_TEAM after a successful deploy so later direct
+# prod-admin edits to the Team are not overwritten on the next publish.
+if [ "${STRAPI_SYNC_TEAM:-}" = "1" ]; then
   if [ -z "${DATABASE_URL:-}" ]; then
-    echo "[FATAL] STRAPI_IMPORT_ON_START=1 but DATABASE_URL is unset — refusing to import."
+    echo "[FATAL] STRAPI_SYNC_TEAM=1 but DATABASE_URL is unset — refusing to sync."
     exit 1
   fi
   # Log a credential-stripped fingerprint so operators can confirm the target DB.
-  echo "==> Importing Strapi content into DB: $(printf '%s' "$DATABASE_URL" | sed -E 's#://[^@/]*@#://***:***@#')"
-  if ! NODE_ENV=production bash "$ROOT/scripts/run-strapi-import.sh"; then
-    echo "[FATAL] Strapi content import failed — aborting deploy."
+  echo "==> Syncing Strapi Team into DB: $(printf '%s' "$DATABASE_URL" | sed -E 's#://[^@/]*@#://***:***@#')"
+  if ! psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$ROOT/scripts/sync-team-prod.sql"; then
+    echo "[FATAL] Strapi Team sync failed — aborting deploy."
     exit 1
   fi
-  echo "==> Strapi content import complete"
+  echo "==> Strapi Team sync complete"
 else
-  echo "==> STRAPI_IMPORT_ON_START not set — skipping Strapi content import"
+  echo "==> STRAPI_SYNC_TEAM not set — skipping Strapi Team sync"
 fi
 
 echo "==> Ensuring Strapi Public role has all API permissions"

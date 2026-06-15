@@ -183,3 +183,4 @@ timeoutMs = 180000
 [userenv.production]
 
 [userenv.shared]
+STRAPI_SYNC_TEAM = "1"

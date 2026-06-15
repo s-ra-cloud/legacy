@@ -1,54 +1,50 @@
 ---
-name: Strapi team transform & production export path
-description: Null-picture API crash on photo-free team members, and how prod content is delivered via a content-only encrypted export.
+name: Strapi optional media transform & prod content delivery
+description: Null-picture API crash on photo-free team members, and how Strapi content must (and must not) be pushed to production.
 ---
 
 # Team API transform & null media
 
 The `@repo/server` Strapi team service transforms each entry by mutating
 `data.picture.url`. Any team member without a photo makes `picture` null and the
-API throws `TypeError: Cannot read properties of null (reading 'url')`, which
-surfaces in the client as "Failed to load team".
+API throws `Cannot read properties of null (reading 'url')`, surfacing in the
+client as "Failed to load team".
 
 **Rule:** when a Strapi media field is optional in the schema, the server
 transform must null-guard before touching `.url`, and the output schema must mark
-that media `nullable().optional()`. Keep the three in lockstep: Strapi
-`schema.json` (`required:false`), server transform, and server output zod schema.
+that media nullable/optional. Keep three in lockstep: Strapi `schema.json`
+(`required:false`), the server transform, and the server output zod schema.
 
 # Production content delivery (no auto-sync)
 
-Replit's publish flow migrates the DB *schema* dev→prod but NOT row data, so
-Strapi *content* (team members, etc.) never syncs automatically — prod has its
-own database. Symptom of the gap: a member added in dev (e.g. Mohamed Amine
-Elhariri) is simply absent from the prod `strapi.teams` table.
+Replit's publish flow migrates the DB *schema* dev→prod but NOT row data, and
+**prod has its own separate database**. So Strapi *content* (team members, etc.)
+never syncs automatically; a member added in dev is simply absent from prod.
 
-The delivery artifact is the encrypted export at
-`app/apps/strapi/export_20260518143539.tar.gz.enc` (git-lfs, ~55KB real blob on
-disk), applied in prod by `scripts/run-strapi-import.sh`
-(`strapi import --key oo --force --exclude files`). This import is now wired into
-the BUILD phase of `scripts/build-prod.sh`, gated by env flag
-`STRAPI_IMPORT_ON_START=1` (a shared env var, not a secret). Build phase is the
-right place: it shares the deployment's DATABASE_URL (writes the live prod DB),
-isn't subject to the startup health-check timeout, and runs once per deploy (no
-autoscale multi-container race). It had been removed from build once before
-(when the build-phase version unsafely lacked `--exclude files`).
+**Why this matters / incident:** a full-content `strapi import` with `--force`
+run against prod overwrote ALL content types with dev's versions (not just the
+intended one) and broke media relations. Lesson: never push content to prod with
+a whole-export force import. Push **one content type at a time**, surgically and
+idempotently, scoped to that type's table(s) only — no deletes, and don't touch
+media rows for entries whose pictures already match prod.
 
-**Why the flag, and the gotcha:** while `STRAPI_IMPORT_ON_START=1`, EVERY publish
-re-imports and `--force`-overwrites prod content from the committed export —
-which clobbers any edits made directly in the prod Strapi admin. Unset the flag
-after a successful import if prod content should be editable in-admin. The export
-is the source of truth: regenerate it (`strapi export --only content`) whenever
-dev content changes that need to reach prod.
+**How to apply:**
+- The only write path to prod from here is the deploy BUILD phase (the build
+  container shares the deployment's `DATABASE_URL`); the `executeSql` production
+  environment is a read-only replica.
+- Gate any prod content write behind an explicit opt-in env flag and unset it
+  after a successful deploy, so later direct prod-admin edits aren't clobbered on
+  the next publish.
+- Strapi v5 draft/publish: each entry is two rows sharing a `document_id` — a
+  draft (`published_at IS NULL`) and a published row (`published_at IS NOT NULL`);
+  the public site reads the published row. Write both.
+- Validate any prod-targeted SQL by running it against dev first (where the values
+  already match) — it should be a verifiable no-op proving syntax + idempotency.
 
-**Uploads live in a custom object-storage provider** (`config/plugins.ts`), not
-local disk, so `strapi export` does NOT bundle image binaries — a regenerated
-export is tiny (~50KB), not the legacy 82MB. Therefore:
+**Production database recovery:** prod DB supports point-in-time restore from the
+Database pane (retention depends on plan); this is separate from code-checkpoint
+rollback and is the clean way to undo a bad prod data mutation.
 
-- Regenerate content with `strapi export --only content`.
-- The import MUST use `--exclude files`, or a `--force` import will run the asset
-  phase and can delete the object-storage-backed images (binaries aren't in the
-  archive to restore).
-
-**Why:** the 82MB original export predates the object-storage migration; blindly
-swapping it for a content-only export under the old (no `--exclude files`) import
-flow risks wiping production media.
+**Uploads** live in a custom object-storage provider (not local disk), so Strapi
+exports do NOT bundle image binaries — a force import that runs the asset phase
+can delete object-storage-backed images. Avoid asset-phase imports against prod.
