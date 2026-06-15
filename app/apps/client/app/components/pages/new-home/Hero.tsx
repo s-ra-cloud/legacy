@@ -59,7 +59,7 @@ const SCRIPTS: readonly [
   ...Array<{ lang: string; text: string }>,
 ] = [
   { lang: "EN", text: "LEGACY" },
-  { lang: "GR", text: "LEGASY" },
+  { lang: "FR", text: "HÉRITAGE" },
   { lang: "CN", text: "遺產" },
   { lang: "AR", text: "ميراث" },
   { lang: "JP", text: "遺産" },
@@ -67,6 +67,15 @@ const SCRIPTS: readonly [
   { lang: "HI", text: "विरासत" },
   { lang: "ES", text: "LEGADO" },
   { lang: "HE", text: "מורשת" },
+  { lang: "DE", text: "ERBE" },
+  { lang: "IT", text: "EREDITÀ" },
+  { lang: "PT", text: "HERANÇA" },
+  { lang: "GR", text: "Κληρονομιά" },
+  { lang: "TR", text: "MİRAS" },
+  { lang: "KO", text: "유산" },
+  { lang: "VI", text: "DI SẢN" },
+  { lang: "TH", text: "มรดก" },
+  { lang: "TAMAZIGHT", text: "ⴰⵎⵔⴰⴷ"}
 ];
 
 const SCRAMBLE_POOL =
