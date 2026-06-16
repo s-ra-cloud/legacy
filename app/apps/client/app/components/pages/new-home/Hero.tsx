@@ -33,25 +33,37 @@ const HERO_PHILOSOPHERS_FALLBACK: readonly Philosopher[] = [
   { name: "Friedrich Nietzsche", dates: "1844 - 1900", era: "Modern", quote: "He who has a why to live can bear almost any how.", index: 10, showOnMobile: false },
 ];
 
-const SLOT_GRID_CLASSES: Record<number, string> = {
-  1: "max-md:col-start-1 max-md:row-start-1 max-md:min-h-[120px] md:col-start-1 md:row-start-1 md:row-span-2",
-  2: "max-md:col-start-2 max-md:row-start-1 max-md:min-h-[120px] md:col-start-2 md:row-start-1 md:min-h-0",
-  3: "col-start-3 row-start-1 md:col-start-3 md:row-start-1",
-  4: "max-md:col-start-2 max-md:row-start-3 max-md:min-h-[120px] md:col-start-4 md:row-start-1 md:min-h-0",
-  5: "col-start-5 row-start-1 row-span-2 md:col-start-5 md:row-start-1 md:row-span-2",
-  6: "col-start-1 row-start-3 row-span-2 md:col-start-1 md:row-start-3 md:row-span-2",
-  7: "col-start-2 row-start-4 md:col-start-2 md:row-start-4",
-  8: "max-md:col-start-1 max-md:row-start-3 max-md:min-h-[120px] md:col-start-3 md:row-start-4 md:min-h-0",
+const DESKTOP_SLOT_GRID_CLASSES: Record<number, string> = {
+  1: "md:col-start-1 md:row-start-1 md:row-span-2",
+  2: "md:col-start-2 md:row-start-1 md:min-h-0",
+  3: "md:col-start-3 md:row-start-1",
+  4: "md:col-start-4 md:row-start-1 md:min-h-0",
+  5: "md:col-start-5 md:row-start-1 md:row-span-2",
+  6: "md:col-start-1 md:row-start-3 md:row-span-2",
+  7: "md:col-start-2 md:row-start-4",
+  8: "md:col-start-3 md:row-start-4 md:min-h-0",
   9: "md:col-start-4 md:row-start-4 md:min-h-0",
-  10: "col-start-5 row-start-3 row-span-2 md:col-start-5 md:row-start-3 md:row-span-2",
+  10: "md:col-start-5 md:row-start-3 md:row-span-2",
 };
+
+/** Mobile corner slots (top row L/R, bottom row L/R) — independent of heroIndex */
+const MOBILE_SLOT_POSITIONS = [
+  "max-md:col-start-1 max-md:row-start-1 max-md:min-h-[120px]",
+  "max-md:col-start-2 max-md:row-start-1 max-md:min-h-[120px]",
+  "max-md:col-start-1 max-md:row-start-3 max-md:min-h-[120px]",
+  "max-md:col-start-2 max-md:row-start-3 max-md:min-h-[120px]",
+] as const;
 
 const SLOT_RENDER_ORDER = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
 const CENTER_AFTER_SLOT = 5;
 
-function slotClassName(philosopher: Philosopher): string {
-  const base = SLOT_GRID_CLASSES[philosopher.index] ?? "";
-  return philosopher.showOnMobile ? base : `${base} max-md:hidden`.trim();
+function desktopSlotClassName(philosopher: Philosopher): string {
+  const base = DESKTOP_SLOT_GRID_CLASSES[philosopher.index] ?? "";
+  return `${base} max-md:hidden`.trim();
+}
+
+function mobileSlotClassName(slotIndex: number): string | null {
+  return MOBILE_SLOT_POSITIONS[slotIndex] ?? null;
 }
 
 const SCRIPTS: readonly [
@@ -355,6 +367,15 @@ export default function Hero() {
     [philosophers],
   );
 
+  const mobilePhilosophers = useMemo(
+    () =>
+      philosophers
+        .filter((p) => p.showOnMobile)
+        .sort((a, b) => a.index - b.index)
+        .slice(0, MOBILE_SLOT_POSITIONS.length),
+    [philosophers],
+  );
+
   useEffect(() => {
     const mq = window.matchMedia("(hover: hover)");
     function syncHoverCapability() {
@@ -409,6 +430,23 @@ export default function Hero() {
             md:grid-cols-[1fr_1fr_1.2fr_1fr_1fr]
             md:grid-rows-[repeat(4,minmax(0,1fr))]"
         >
+          {mobilePhilosophers.map((philosopher, mobileSlot) => {
+            const position = mobileSlotClassName(mobileSlot);
+            if (!position) return null;
+
+            return (
+              <PortraitTile
+                key={`mobile-philo-${philosopher.index}`}
+                philosopher={philosopher}
+                index={mobileSlot}
+                hoverEnabled={hoverInteractionsEnabled}
+                isActive={!hoverInteractionsEnabled || hovered === philosopher}
+                onHover={setHovered}
+                className={`md:hidden ${position}`}
+              />
+            );
+          })}
+
           {SLOT_RENDER_ORDER.flatMap((slotIndex) => {
             const philosopher = philosophersByIndex.get(slotIndex);
             if (!philosopher) return [];
@@ -421,7 +459,7 @@ export default function Hero() {
                 hoverEnabled={hoverInteractionsEnabled}
                 isActive={!hoverInteractionsEnabled || hovered === philosopher}
                 onHover={setHovered}
-                className={slotClassName(philosopher)}
+                className={desktopSlotClassName(philosopher)}
               />,
             ];
 
