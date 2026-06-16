@@ -135,7 +135,7 @@ export default function NewFooter({ user }: NewFooterProps) {
               Cookies
             </a>
           </div>
-          <div>ESTABLISHED 1889</div>
+          <div>ESTABLISHED 2025</div>
         </div>
       </div>
     </footer>
