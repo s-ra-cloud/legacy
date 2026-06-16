@@ -78,14 +78,14 @@ export default [
         route(":userId/edit", "routes/admin/users/edit.tsx"),
       ]),
     ]),
-  ]),
-
-  layout("components/layouts/private-kt.tsx", [
     ...prefix("projects/knowledge-tree", [
       route("contribute", "routes/knowledge-tree/contribute.tsx"),
       route("advanced-search", "routes/knowledge-tree/advanced-search.tsx"),
     ]),
   ]),
+
+  // layout("components/layouts/private-kt.tsx", [
+  // ]),
 
   // index file is here
   // layout("components/layouts/client.tsx", [
