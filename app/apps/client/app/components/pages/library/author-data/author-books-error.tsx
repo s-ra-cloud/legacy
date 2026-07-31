@@ -3,16 +3,20 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router";
 import { SAFE_ROUTES } from "~/safe-routes";
 
+import { readableErrorMessage } from "~/lib/query-status";
+
 type AuthorBooksErrorProps = {
 	error?: { code?: string; message?: string } | null;
+	onRetry?: () => void;
+	retrying?: boolean;
 };
 
-export function AuthorBooksError({ error }: AuthorBooksErrorProps) {
+export function AuthorBooksError({ error, onRetry, retrying = false }: AuthorBooksErrorProps) {
 	const message =
 		error?.code === "NOT_FOUND" || error?.code === "404"
 			? "This author could not be found in the archive."
-			: error?.message ?? error?.code
-				? `Unable to load this author (${error.code ?? error.message}).`
+			: error
+				? readableErrorMessage(error)
 				: "Unable to load this author. The archive may be temporarily unavailable.";
 
 	return (
@@ -51,13 +55,25 @@ export function AuthorBooksError({ error }: AuthorBooksErrorProps) {
 					{message}
 				</p>
 
-				<Link
-					to={SAFE_ROUTES.PROJECTS_LIBRARY}
-					className="inline-flex items-center gap-2 border border-gold/30 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-gold/80 transition-colors hover:border-gold hover:text-gold"
-				>
-					<ArrowLeft size={11} strokeWidth={2.5} />
-					Return to Library
-				</Link>
+				<div className="flex flex-wrap items-center justify-center gap-4">
+					{onRetry && (
+						<button
+							type="button"
+							onClick={onRetry}
+							disabled={retrying}
+							className="inline-flex items-center gap-2 border border-gold/60 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-gold transition-colors hover:border-gold disabled:opacity-50"
+						>
+							{retrying ? "Retrying…" : "Try again"}
+						</button>
+					)}
+					<Link
+						to={SAFE_ROUTES.PROJECTS_LIBRARY}
+						className="inline-flex items-center gap-2 border border-gold/30 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-gold/80 transition-colors hover:border-gold hover:text-gold"
+					>
+						<ArrowLeft size={11} strokeWidth={2.5} />
+						Return to Library
+					</Link>
+				</div>
 			</motion.div>
 		</section>
 	);

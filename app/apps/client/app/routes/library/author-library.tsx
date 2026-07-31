@@ -3,6 +3,7 @@ import { useLocation } from "react-router";
 import { Books } from "~/components/pages/library/author-data/books-list";
 import { $api } from "@repo/ui";
 import { Expert } from "~/components/pages/library/author-data/author-expert";
+import { useSlowLoading } from "~/lib/query-status";
 
 export const meta: MetaFunction = () => [
   { title: "Author Library – Legacy" },
@@ -18,11 +19,12 @@ export default function AuthorLibraryPage() {
         const id = location.pathname.split("/").pop() || "";
         const authorId = id.split("-")[0] || "";
 
-        const { data: res, isLoading, error } = $api.useQuery("get", `/authors/{id}`, {
+        const { data: res, isLoading, error, refetch, isFetching } = $api.useQuery("get", `/authors/{id}`, {
                 params: {
                         path: { id: authorId },
                 },
         });
+        const slowLoading = useSlowLoading(isLoading);
 
         return (
                 <main className="flex flex-col">
@@ -44,7 +46,15 @@ export default function AuthorLibraryPage() {
                                         }}
                                 />
                                 <div className="relative z-10 px-4 sm:px-8 lg:px-12">
-                                        <Books res={res} isLoading={isLoading} error={error} id={id} />
+                                        <Books
+                                                res={res}
+                                                isLoading={isLoading}
+                                                error={error}
+                                                id={id}
+                                                slowLoading={slowLoading}
+                                                onRetry={() => refetch()}
+                                                retrying={isFetching}
+                                        />
                                 </div>
                         </section>
 

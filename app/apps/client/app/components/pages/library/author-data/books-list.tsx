@@ -190,6 +190,9 @@ export function Books({
 	backTo,
 	backLabel,
 	volLabel,
+	slowLoading = false,
+	onRetry,
+	retrying = false,
 }: {
 	res: Author | undefined;
 	isLoading: boolean;
@@ -200,9 +203,34 @@ export function Books({
 	backTo?: string;
 	backLabel?: string;
 	volLabel?: string;
+	slowLoading?: boolean;
+	onRetry?: () => void;
+	retrying?: boolean;
 }) {
-	if (isLoading) return <AuthorBooksLoading />;
-	if (error || !res) return <AuthorBooksError error={error} />;
+	if (isLoading)
+		return (
+			<div>
+				<AuthorBooksLoading />
+				{slowLoading && (
+					<div className="p-4 pb-10 text-center">
+						<p className="text-[11px] uppercase tracking-[0.3em] text-ivory/50">
+							This is taking longer than expected…
+						</p>
+						{onRetry && (
+							<button
+								type="button"
+								onClick={onRetry}
+								className="mt-4 inline-block border border-white/15 px-6 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-ivory/70 transition-colors hover:border-gold/60 hover:text-gold"
+							>
+								Try again
+							</button>
+						)}
+					</div>
+				)}
+			</div>
+		);
+	if (error || !res)
+		return <AuthorBooksError error={error} onRetry={onRetry} retrying={retrying} />;
 
 	const worksLabel = res.gender === "female" ? "Her works" : "His works";
 

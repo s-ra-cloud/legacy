@@ -3,6 +3,7 @@ import { $api } from "@repo/ui";
 import { BookData } from "~/components/pages/great-conversation/book-content/book-data";
 import { getUserOrRedirect } from "~/utils/auth";
 import { useLoaderData } from "react-router";
+import { useSlowLoading } from "~/lib/query-status";
 
 interface LoaderArgs {
   request: Request;
@@ -19,13 +20,14 @@ export default function BookContentPage() {
 	const id = location.pathname.split("/").pop() || "";
 	const bookId = id.split("-")[0] || "";
 
-	const { data: res, isLoading, error } = $api.useQuery("get", `/books/{id}`, {
+	const { data: res, isLoading, error, refetch, isFetching } = $api.useQuery("get", `/books/{id}`, {
 		params: {
 			path: {
 				id: bookId,
 			},
 		},
 	});
+	const slowLoading = useSlowLoading(isLoading);
 
 	return (
 		<main className="relative flex min-h-screen flex-col overflow-hidden bg-charcoal text-ivory">
@@ -40,7 +42,15 @@ export default function BookContentPage() {
 					backgroundSize: "60px 60px, 90px 90px",
 				}}
 			/>
-			<BookData res={res} isLoading={isLoading} error={error} user={user} />
+			<BookData
+				res={res}
+				isLoading={isLoading}
+				error={error}
+				user={user}
+				slowLoading={slowLoading}
+				onRetry={() => refetch()}
+				retrying={isFetching}
+			/>
 		</main>
 	);
 }

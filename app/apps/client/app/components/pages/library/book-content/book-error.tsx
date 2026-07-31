@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router";
 import { SAFE_ROUTES } from "~/safe-routes";
+import { readableErrorMessage } from "~/lib/query-status";
 
 type BookErrorProps = {
 	error?: { code?: string; message?: string } | null;
@@ -10,6 +11,8 @@ type BookErrorProps = {
 	message?: string;
 	backTo?: string;
 	backLabel?: string;
+	onRetry?: () => void;
+	retrying?: boolean;
 };
 
 export function BookError({
@@ -18,13 +21,15 @@ export function BookError({
 	message,
 	backTo = SAFE_ROUTES.PROJECTS_LIBRARY,
 	backLabel = "Return to Library",
+	onRetry,
+	retrying = false,
 }: BookErrorProps) {
 	const resolvedMessage =
 		message ??
 		(error?.code === "NOT_FOUND" || error?.code === "404"
 			? "This volume could not be found in the archive."
-			: error?.message ?? error?.code
-				? `Unable to load this volume (${error.code ?? error.message}).`
+			: error
+				? readableErrorMessage(error)
 				: "Unable to load this volume. The archive may be temporarily unavailable.");
 
 	return (
@@ -67,13 +72,25 @@ export function BookError({
 					{resolvedMessage}
 				</p>
 
-				<Link
-					to={backTo}
-					className="inline-flex items-center gap-2 border border-gold/30 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-gold/80 transition-colors hover:border-gold hover:text-gold"
-				>
-					<ArrowLeft size={11} strokeWidth={2.5} />
-					{backLabel}
-				</Link>
+				<div className="flex flex-wrap items-center justify-center gap-4">
+					{onRetry && (
+						<button
+							type="button"
+							onClick={onRetry}
+							disabled={retrying}
+							className="inline-flex items-center gap-2 border border-gold/60 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-gold transition-colors hover:border-gold disabled:opacity-50"
+						>
+							{retrying ? "Retrying…" : "Try again"}
+						</button>
+					)}
+					<Link
+						to={backTo}
+						className="inline-flex items-center gap-2 border border-gold/30 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-gold/80 transition-colors hover:border-gold hover:text-gold"
+					>
+						<ArrowLeft size={11} strokeWidth={2.5} />
+						{backLabel}
+					</Link>
+				</div>
 			</motion.div>
 		</section>
 	);

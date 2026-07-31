@@ -10,16 +10,43 @@ export function BookData({
 	isLoading,
 	error,
 	user,
+	slowLoading = false,
+	onRetry,
+	retrying = false,
 }: {
 	res: Book | undefined;
 	isLoading: boolean;
 	error?: { code?: string; message?: string } | null;
 	user: AuthUser | null;
+	slowLoading?: boolean;
+	onRetry?: () => void;
+	retrying?: boolean;
 }) {
 	if (isLoading)
-		return <BookLoading label="Finding the Volume" />;
+		return (
+			<div>
+				<BookLoading label="Finding the Volume" />
+				{slowLoading && (
+					<div className="p-4 pb-10 text-center">
+						<p className="text-[11px] uppercase tracking-[0.3em] text-ivory/50">
+							This is taking longer than expected…
+						</p>
+						{onRetry && (
+							<button
+								type="button"
+								onClick={onRetry}
+								className="mt-4 inline-block border border-white/15 px-6 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-ivory/70 transition-colors hover:border-gold/60 hover:text-gold"
+							>
+								Try again
+							</button>
+						)}
+					</div>
+				)}
+			</div>
+		);
 
-	if (error || !res) return <BookError error={error} />;
+	if (error || !res)
+		return <BookError error={error} onRetry={onRetry} retrying={retrying} />;
 
 	if (!res.BookTitle)
 		return (

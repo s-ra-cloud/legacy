@@ -6,6 +6,7 @@ import { GCError } from "~/components/pages/great-conversation/gc-error";
 import { GCGraphSection } from "~/components/pages/great-conversation/gc-graph-section";
 import { GCHero, GCPillars, GCVision } from "~/components/pages/great-conversation/gc-home";
 import { GCLoading } from "~/components/pages/great-conversation/gc-loading";
+import { useSlowLoading } from "~/lib/query-status";
 
 interface Node {
 	id: string;
@@ -143,10 +144,15 @@ export const meta: MetaFunction = () => [
 
 export default function GreatConversationIndexPage() {
 	const [showBooks, setShowBooks] = useState(false);
-	const { data: res, isLoading, error } = $api.useQuery("get", `/gc-contributions`);
+	const { data: res, isLoading, error, refetch, isFetching } = $api.useQuery(
+		"get",
+		`/gc-contributions`,
+	);
+	const slowLoading = useSlowLoading(isLoading);
 
-	if (isLoading) return <GCLoading />;
-	if (error) return <GCError error={error} />;
+	if (isLoading) return <GCLoading slow={slowLoading} onRetry={() => refetch()} />;
+	if (error)
+		return <GCError error={error} onRetry={() => refetch()} retrying={isFetching} />;
 
 	const { nodes: philosNodes, links: philosLinks } = GetPhilosNodes(res?.data || []);
 	const { nodes: booksNodes, links: booksLinks } = GetBooksNodes(res?.data || []);

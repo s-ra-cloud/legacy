@@ -2,16 +2,18 @@ import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router";
 import { SAFE_ROUTES } from "~/safe-routes";
+import { readableErrorMessage } from "~/lib/query-status";
 
 type GCErrorProps = {
 	error?: { code?: string; message?: string } | null;
+	onRetry?: () => void;
+	retrying?: boolean;
 };
 
-export function GCError({ error }: GCErrorProps) {
-	const message =
-		error?.message ?? error?.code
-			? `Unable to load contributions (${error.code ?? error.message}).`
-			: "Unable to load the conversation graph. Please try again later.";
+export function GCError({ error, onRetry, retrying = false }: GCErrorProps) {
+	const message = error
+		? readableErrorMessage(error)
+		: "Unable to load the conversation graph. Please try again later.";
 
 	return (
 		<section
@@ -39,13 +41,25 @@ export function GCError({ error }: GCErrorProps) {
 				<p className="mx-auto mb-10 max-w-md font-serif text-lg leading-relaxed text-ivory/50">
 					{message}
 				</p>
-				<Link
-					to={SAFE_ROUTES.HOME}
-					className="inline-flex items-center gap-2 border border-gold/30 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-gold/80 transition-colors hover:border-gold hover:text-gold"
-				>
-					<ArrowLeft size={11} strokeWidth={2.5} />
-					Return Home
-				</Link>
+				<div className="flex flex-wrap items-center justify-center gap-4">
+					{onRetry && (
+						<button
+							type="button"
+							onClick={onRetry}
+							disabled={retrying}
+							className="inline-flex items-center gap-2 border border-gold/60 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-gold transition-colors hover:border-gold hover:text-gold disabled:opacity-50"
+						>
+							{retrying ? "Retrying…" : "Try again"}
+						</button>
+					)}
+					<Link
+						to={SAFE_ROUTES.HOME}
+						className="inline-flex items-center gap-2 border border-gold/30 px-8 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-gold/80 transition-colors hover:border-gold hover:text-gold"
+					>
+						<ArrowLeft size={11} strokeWidth={2.5} />
+						Return Home
+					</Link>
+				</div>
 			</motion.div>
 		</section>
 	);

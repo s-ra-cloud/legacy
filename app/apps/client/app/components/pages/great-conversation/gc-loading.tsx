@@ -1,6 +1,12 @@
 import { motion } from "framer-motion";
 
-export function GCLoading() {
+export function GCLoading({
+	slow = false,
+	onRetry,
+}: {
+	slow?: boolean;
+	onRetry?: () => void;
+}) {
 	return (
 		<section
 			className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-charcoal px-6 py-24 text-ivory"
@@ -41,6 +47,22 @@ export function GCLoading() {
 						className="absolute inset-0 origin-left bg-gradient-to-r from-transparent via-gold to-transparent"
 					/>
 				</div>
+				{slow && (
+					<div className="mt-8 text-center">
+						<p className="text-[11px] uppercase tracking-[0.3em] text-ivory/50">
+							This is taking longer than expected…
+						</p>
+						{onRetry && (
+							<button
+								type="button"
+								onClick={onRetry}
+								className="mt-4 inline-block border border-white/15 px-6 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-ivory/70 transition-colors hover:border-gold/60 hover:text-gold"
+							>
+								Try again
+							</button>
+						)}
+					</div>
+				)}
 			</div>
 		</section>
 	);
