@@ -20,18 +20,28 @@ type Philosopher = {
   showOnMobile: boolean;
 };
 
+/**
+ * Baked-in hero roster mirroring the live CMS content. Shown instantly (no
+ * initials/placeholder flash) while the API loads, and used as the final
+ * content if the API fails. Keep in sync with Strapi's hero philosophers.
+ */
 const HERO_PHILOSOPHERS_FALLBACK: readonly Philosopher[] = [
-  { name: "Socrates", dates: "470 - 399 BC", era: "Classical Antiquity", quote: "The unexamined life is not worth living.", image: "/assets/Hero-philosopher/socrates.png", index: 1, showOnMobile: true },
+  { name: "Hannah Arendt", dates: "1906-1975", era: "Modern", quote: "There are no dangerous thoughts; thinking itself is dangerous.", image: "/assets/Hero-philosopher/hannah-arendt.png", index: 1, showOnMobile: false },
   { name: "Plato", dates: "428 - 348 BC", era: "Classical Antiquity", quote: "Thinking: the talking of the soul with itself.", image: "/assets/Hero-philosopher/plato.png", index: 2, showOnMobile: true },
-  { name: "Aristotle", dates: "384 - 322 BC", era: "Classical Antiquity", quote: "Knowing yourself is the beginning of all wisdom.", image: "/assets/Hero-philosopher/aristotle.png", index: 3, showOnMobile: false },
-  { name: "Confucius", dates: "551 - 479 BC", era: "Eastern Antiquity", quote: "Our greatest glory is not in never falling, but in rising every time we fall.", index: 4, showOnMobile: true },
-  { name: "Gautama Buddha", dates: "563 - 483 BC", era: "Eastern Antiquity", quote: "All that we are is the result of what we have thought.", index: 5, showOnMobile: false },
-  { name: "Avicenna", dates: "980 - 1037", era: "Islamic Golden Age", quote: "Knowledge is the conformity of the object and the intellect.", index: 6, showOnMobile: false },
-  { name: "Averroes", dates: "1126 - 1198", era: "Islamic Golden Age", quote: "Truth does not contradict truth.", index: 7, showOnMobile: false },
-  { name: "Rene Descartes", dates: "1596 - 1650", era: "Enlightenment", quote: "I think, therefore I am.", index: 8, showOnMobile: true },
-  { name: "Immanuel Kant", dates: "1724 - 1804", era: "Enlightenment", quote: "Act so that the maxim of your will could be a universal law.", index: 9, showOnMobile: false },
-  { name: "Friedrich Nietzsche", dates: "1844 - 1900", era: "Modern", quote: "He who has a why to live can bear almost any how.", index: 10, showOnMobile: false },
+  { name: "William James", dates: "1842-1910", era: "Modern", quote: "Our view of the world is truly shaped by what we decide to hear.", image: "/assets/Hero-philosopher/william-james.png", index: 3, showOnMobile: false },
+  { name: "Confucius", dates: "551 - 479 BC", era: "Eastern Antiquity", quote: "Our greatest glory is not in never falling, but in rising every time we fall.", image: "/assets/Hero-philosopher/confucius.png", index: 4, showOnMobile: true },
+  { name: "Gautama Buddha", dates: "563 - 483 BC", era: "Eastern Antiquity", quote: "All that we are is the result of what we have thought.", image: "/assets/Hero-philosopher/gautama-buddha.png", index: 5, showOnMobile: false },
+  { name: "Avicenna", dates: "980 - 1037", era: "Islamic Golden Age", quote: "Knowledge is the conformity of the object and the intellect.", image: "/assets/Hero-philosopher/avicenna.png", index: 6, showOnMobile: true },
+  { name: "Averroes", dates: "1126 - 1198", era: "Islamic Golden Age", quote: "Truth does not contradict truth.", image: "/assets/Hero-philosopher/averroes.png", index: 7, showOnMobile: false },
+  { name: "Frantz Fanon", dates: "1925-1961", era: "Modern", quote: "O my body, make of me always a man who questions!", image: "/assets/Hero-philosopher/frantz-fanon.png", index: 8, showOnMobile: false },
+  { name: "Immanuel Kant", dates: "1724 - 1804", era: "Enlightenment", quote: "Act so that the maxim of your will could be a universal law.", image: "/assets/Hero-philosopher/immanuel-kant.png", index: 9, showOnMobile: false },
+  { name: "Simone Weil", dates: "1909-1943", era: "Modern", quote: "Everything beautiful has a mark of eternity.", image: "/assets/Hero-philosopher/simone-weil.png", index: 10, showOnMobile: true },
 ];
+
+/** Local images by philosopher name — used instead of CMS URLs so tiles never re-download/swap. */
+const LOCAL_HERO_IMAGES: Record<string, string> = Object.fromEntries(
+  HERO_PHILOSOPHERS_FALLBACK.filter((p) => p.image).map((p) => [p.name, p.image as string]),
+);
 
 const DESKTOP_SLOT_GRID_CLASSES: Record<number, string> = {
   1: "md:col-start-1 md:row-start-1 md:row-span-2",
@@ -338,7 +348,9 @@ function mapApiPhilosopher(item: {
     quote: item.heroQuote ?? "",
     index: item.heroIndex,
     showOnMobile: item.showOnMobile ?? false,
-    image: item.image?.url,
+    // Prefer the local baked-in image so tiles render instantly with no swap;
+    // fall back to the CMS URL for philosophers we don't have locally.
+    image: LOCAL_HERO_IMAGES[item.name] ?? item.image?.url,
   };
 }
 
