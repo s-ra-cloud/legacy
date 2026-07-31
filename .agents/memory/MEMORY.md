@@ -1,2 +1,3 @@
 - [Repo server dist staleness](repo-server-dist-staleness.md) — `@repo/server` resolves to gitignored `./dist`; dev API breaks if dist not kept fresh via tsc --watch.
 - [Strapi optional media & prod content delivery](strapi-team-and-prod-export.md) — null-guard optional media across schema/transform/output; never full-force-import to prod, push one content type surgically via the deploy build phase.
+- [Strapi npm install firewall block](strapi-firewall-block.md) — @strapi/strapi 5.23.0 downloads are 403-blocked (critical CVE); fresh installs fail until Strapi is upgraded.
