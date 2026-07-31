@@ -3,9 +3,31 @@ import createFetchClient from "openapi-fetch";
 import createClient from "openapi-react-query";
 import type { paths } from "./api-types.js";
 
+/**
+ * Cap GET request time so a hung connection (e.g. CMS still starting) fails
+ * fast and lets react-query retry, instead of leaving pages on "Loading…"
+ * forever. Caller-supplied abort signals are preserved via AbortSignal.any.
+ */
+const GET_TIMEOUT_MS = 20_000;
+
+function fetchWithTimeout(input: Request): Promise<Response> {
+  if (
+    input.method === "GET" &&
+    typeof AbortSignal !== "undefined" &&
+    typeof AbortSignal.timeout === "function" &&
+    typeof AbortSignal.any === "function"
+  ) {
+    return fetch(input, {
+      signal: AbortSignal.any([input.signal, AbortSignal.timeout(GET_TIMEOUT_MS)]),
+    });
+  }
+  return fetch(input);
+}
+
 export const fetchClient = createFetchClient<paths>({
   baseUrl: new URL("/api/v1", getRestApiOrigin()).toString(),
   credentials: "include",
+  fetch: fetchWithTimeout,
 });
 
 export const $api = createClient(fetchClient);

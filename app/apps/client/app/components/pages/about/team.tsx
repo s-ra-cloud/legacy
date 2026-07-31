@@ -3,6 +3,7 @@ import { ExternalLink } from "lucide-react";
 import type { ReactNode } from "react";
 import { $api } from "@repo/ui";
 import type { Team } from "@repo/server";
+import { readableErrorMessage, useSlowLoading } from "~/lib/query-status";
 
 const UNIVERSITY_LINKS: Record<string, string> = {
   "Raphaël Liogier": "https://ias.um6p.ma",
@@ -203,20 +204,85 @@ function SectionHeading({ label, index }: { label: string; index: number }) {
   );
 }
 
+function MemberCardSkeleton({ index }: { index: number }) {
+  return (
+    <div
+      className="relative animate-pulse border border-charcoal/10 bg-paper p-6 md:p-8"
+      style={{ animationDelay: `${index * 150}ms` }}
+    >
+      <CornerTicks />
+      <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
+        <div className="shrink-0">
+          <div className="h-3 w-6 rounded bg-charcoal/10" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="mb-3 h-6 w-48 max-w-full rounded bg-charcoal/10" />
+          <div className="mb-5 h-3 w-32 max-w-full rounded bg-charcoal/[0.07]" />
+          <div className="space-y-2">
+            <div className="h-3 w-full rounded bg-charcoal/[0.06]" />
+            <div className="h-3 w-5/6 rounded bg-charcoal/[0.06]" />
+            <div className="h-3 w-2/3 rounded bg-charcoal/[0.06]" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TeamPanel({ children }: { children: ReactNode }) {
+  return (
+    <section className="relative bg-paper text-charcoal py-24 px-6 md:px-20 lg:px-32 border-y border-charcoal/5 overflow-hidden">
+      <div className="relative max-w-4xl mx-auto">{children}</div>
+    </section>
+  );
+}
+
+const RETRY_BUTTON_CLASS =
+  "mt-6 inline-block border border-charcoal/20 px-6 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-charcoal/70 transition-colors hover:border-gold/60 hover:text-gold disabled:opacity-50";
+
 export default function Team() {
-  const { data, isLoading, error } = $api.useQuery("get", "/teams");
+  const { data, isLoading, error, refetch, isFetching } = $api.useQuery("get", "/teams");
+  const slowLoading = useSlowLoading(isLoading);
 
   if (isLoading)
     return (
-      <div className="bg-paper py-32 text-center">
-        <span className="text-[10px] uppercase tracking-[0.4em] text-charcoal/40">Loading…</span>
-      </div>
+      <TeamPanel>
+        <div className="space-y-3">
+          {[0, 1, 2].map((i) => (
+            <MemberCardSkeleton key={i} index={i} />
+          ))}
+        </div>
+        <div className="mt-8 text-center">
+          <span className="text-[10px] uppercase tracking-[0.4em] text-charcoal/40">
+            {slowLoading ? "Still loading — this is taking longer than expected…" : "Loading the team…"}
+          </span>
+          {slowLoading && (
+            <div>
+              <button type="button" onClick={() => refetch()} className={RETRY_BUTTON_CLASS}>
+                Try again
+              </button>
+            </div>
+          )}
+        </div>
+      </TeamPanel>
     );
   if (error)
     return (
-      <div className="bg-paper py-32 text-center">
-        <span className="text-[10px] uppercase tracking-[0.3em] text-red-500">Failed to load team</span>
-      </div>
+      <TeamPanel>
+        <div className="text-center">
+          <p className="text-sm text-red-600">
+            Couldn't load the team — {readableErrorMessage(error)}
+          </p>
+          <button
+            type="button"
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className={RETRY_BUTTON_CLASS}
+          >
+            {isFetching ? "Retrying…" : "Try again"}
+          </button>
+        </div>
+      </TeamPanel>
     );
 
   const allMembers = data?.data ?? [];

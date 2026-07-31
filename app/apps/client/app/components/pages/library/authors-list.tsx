@@ -5,6 +5,7 @@ import { $api } from "@repo/ui";
 import type { Author } from "@repo/server";
 import { SAFE_ROUTES } from "~/safe-routes";
 import { AuthorLoading } from "./author-loading";
+import { readableErrorMessage, useSlowLoading } from "~/lib/query-status";
 
 const formatAuthorSlug = (author: Author) =>
 	`${author.documentId}-${author.fullName?.replace(/\s+/g, "-").toLowerCase()}`;
@@ -30,8 +31,12 @@ export const AuthorsList = ({
 		variant === "paper"
 			? "mt-1 text-center font-serif text-[19px] font-bold text-charcoal/60"
 			: "mt-1 text-center font-serif text-[19px] font-bold text-ivory/70";
-	const { data, isLoading, error } = $api.useQuery("get", "/authors");
+	const { data, isLoading, error, refetch, isFetching } = $api.useQuery(
+		"get",
+		"/authors",
+	);
 	const [revealList, setRevealList] = useState(false);
+	const slowLoading = useSlowLoading(isLoading);
 
 	useEffect(() => {
 		if (isLoading) {
@@ -46,13 +51,44 @@ export const AuthorsList = ({
 		return () => window.clearTimeout(id);
 	}, [isLoading, error]);
 
-	if (isLoading) return <AuthorLoading />;
+	const mutedClass = variant === "paper" ? "text-charcoal/50" : "text-ivory/50";
+	const retryButtonClass =
+		variant === "paper"
+			? "mt-4 inline-block border border-charcoal/20 px-6 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-charcoal/70 transition-colors hover:border-gold/60 hover:text-gold"
+			: "mt-4 inline-block border border-white/15 px-6 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-ivory/70 transition-colors hover:border-gold/60 hover:text-gold";
+
+	if (isLoading)
+		return (
+			<div>
+				<AuthorLoading />
+				{slowLoading && (
+					<div className="p-4 text-center">
+						<p className={`text-[11px] uppercase tracking-[0.3em] ${mutedClass}`}>
+							This is taking longer than expected…
+						</p>
+						<button type="button" onClick={() => refetch()} className={retryButtonClass}>
+							Try again
+						</button>
+					</div>
+				)}
+			</div>
+		);
 	if (error)
 		return (
-			<div
-				className={`p-8 text-center ${variant === "paper" ? "text-red-600" : "text-red-400"}`}
-			>
-				Error: {error.code}
+			<div className="p-8 text-center">
+				<p
+					className={`text-sm ${variant === "paper" ? "text-red-600" : "text-red-400"}`}
+				>
+					{readableErrorMessage(error)}
+				</p>
+				<button
+					type="button"
+					onClick={() => refetch()}
+					disabled={isFetching}
+					className={`${retryButtonClass} disabled:opacity-50`}
+				>
+					{isFetching ? "Retrying…" : "Try again"}
+				</button>
 			</div>
 		);
 	if (!revealList) return <AuthorLoading />;
