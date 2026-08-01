@@ -1,14 +1,71 @@
 
 import { envClient } from "@repo/shared/env-client";
 import { $api } from "@repo/ui";
+import { readableErrorMessage, useSlowLoading } from "~/lib/query-status";
 
 const IMG_BASE_URL = envClient.VITE_CMS_IMG_URL;
 
-export default  function Partnerships() {
-  const { data: res, isLoading } = $api.useQuery("get", "/partnerships");
+const RETRY_BUTTON_CLASS =
+  "mt-4 inline-block border border-white/20 px-6 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-white/70 transition-colors hover:border-white/60 hover:text-white disabled:opacity-50";
 
-  if (isLoading || !res) {
-    return (null);
+function PartnerCardSkeleton() {
+  return (
+    <div className="flex flex-col items-center text-center animate-pulse">
+      <div className="h-24 w-80 mb-2 rounded-2xl bg-white/10" />
+      <div className="h-6 w-56 mb-2 rounded bg-white/10" />
+      <div className="h-4 w-72 rounded bg-white/10" />
+    </div>
+  );
+}
+
+export default  function Partnerships() {
+  const { data: res, isLoading, error, refetch, isFetching } = $api.useQuery("get", "/partnerships");
+  const slowLoading = useSlowLoading(isLoading);
+
+  if (isLoading || (!res && !error)) {
+    return (
+      <section className="py-16 px-4 text-white">
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {[0, 1, 2, 3].map((i) => (
+            <PartnerCardSkeleton key={i} />
+          ))}
+        </div>
+        <div className="mt-8 text-center">
+          <span className="text-[10px] uppercase tracking-[0.4em] text-white/50">
+            {slowLoading
+              ? "Still loading — this is taking longer than expected…"
+              : "Loading partnerships…"}
+          </span>
+          {slowLoading && (
+            <div>
+              <button type="button" onClick={() => refetch()} className={RETRY_BUTTON_CLASS}>
+                Try again
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="py-16 px-4 text-white">
+        <div className="text-center max-w-5xl mx-auto">
+          <p className="text-sm text-red-300">
+            Couldn't load partnerships — {readableErrorMessage(error)}
+          </p>
+          <button
+            type="button"
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className={RETRY_BUTTON_CLASS}
+          >
+            {isFetching ? "Retrying…" : "Try again"}
+          </button>
+        </div>
+      </section>
+    );
   }
 
   return (

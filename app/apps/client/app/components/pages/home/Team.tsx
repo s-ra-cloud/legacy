@@ -3,15 +3,67 @@ import { Link } from 'react-router';
 import { $api } from "@repo/ui";
 import type { Team } from "@repo/server";
 import { SAFE_ROUTES } from "~/safe-routes";
+import { readableErrorMessage, useSlowLoading } from "~/lib/query-status";
 
+const RETRY_BUTTON_CLASS =
+	"mt-4 inline-block border border-black/20 px-6 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-black/70 transition-colors hover:border-black/60 hover:text-black disabled:opacity-50";
+
+function MemberCardSkeleton() {
+	return (
+		<div className="flex flex-col items-center text-center animate-pulse">
+			<div className="w-36 h-48 rounded-3xl bg-black/10 mb-3" />
+			<div className="h-4 w-28 rounded bg-black/10 mb-2" />
+			<div className="h-3 w-24 rounded bg-black/10" />
+		</div>
+	);
+}
 
 export default function Team() {
-	const { data, isLoading, error } = $api.useQuery("get", "/teams");
+	const { data, isLoading, error, refetch, isFetching } = $api.useQuery("get", "/teams");
+	const slowLoading = useSlowLoading(isLoading);
 
 	if (isLoading)
-		return <div className="text-center p-8">Loading team members...</div>;
+		return (
+			<section className="py-10 px-4">
+				<div className="flex flex-wrap justify-center gap-x-30 lg:gap-x-40 gap-y-8">
+					{[0, 1, 2, 3].map((i) => (
+						<MemberCardSkeleton key={i} />
+					))}
+				</div>
+				<div className="mt-8 text-center">
+					<span className="text-[10px] uppercase tracking-[0.4em] text-black/50">
+						{slowLoading
+							? "Still loading — this is taking longer than expected…"
+							: "Loading team members…"}
+					</span>
+					{slowLoading && (
+						<div>
+							<button type="button" onClick={() => refetch()} className={RETRY_BUTTON_CLASS}>
+								Try again
+							</button>
+						</div>
+					)}
+				</div>
+			</section>
+		);
 	if (error)
-		return (<div className="text-center p-8 text-red-500">Error: {error.code}</div>);
+		return (
+			<section className="py-10 px-4">
+				<div className="text-center">
+					<p className="text-sm text-red-600">
+						Couldn't load the team — {readableErrorMessage(error)}
+					</p>
+					<button
+						type="button"
+						onClick={() => refetch()}
+						disabled={isFetching}
+						className={RETRY_BUTTON_CLASS}
+					>
+						{isFetching ? "Retrying…" : "Try again"}
+					</button>
+				</div>
+			</section>
+		);
 
 	const teamMembers = data?.data;
 
