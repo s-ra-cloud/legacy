@@ -1,5 +1,116 @@
 import { motion } from "framer-motion";
 
+type Milestone = {
+  title: string;
+  description?: string;
+};
+
+const MILESTONES: Milestone[] = [
+  {
+    title: "Basic design for Landing Page, Team Page, Manifesto",
+    description:
+      "Creation of the project's public identity through a streamlined landing page, a clear presentation of contributors, and a concise manifesto outlining mission, principles, long-term vision, and the values structuring open, AI-assisted scholarship.",
+  },
+  {
+    title: "Basic Library Interface (module 1 alpha)",
+    description:
+      "Development of a basic user-friendly interface enabling exploration of classical texts with advanced tools for search, comparison, and annotation, ensuring seamless integration with UM6P servers.",
+  },
+  {
+    title: "Basic Knowledge Tree Interface (module 2 alpha)",
+    description:
+      "Conception of a visual system that represents academic genealogies, enabling navigation through mentors, students, and intellectual lineages, and preparing the platform for public contributions and open-source publication.",
+  },
+  {
+    title: "Basic Great Conversation Interface (module 3 alpha)",
+    description:
+      "Creation of a basic interface that maps explicit and implicit connections between classical texts, offering chronological and bidimensional network visualizations that support exploratory research on intellectual traditions.",
+  },
+  {
+    title: "Expansion of institutional partnerships",
+    description:
+      "Structured outreach to universities, archives, and laboratories to broaden participation and secure new datasets.",
+  },
+  {
+    title: "LGC Phase 1 — Wittgenstein",
+    description:
+      "In partnership with the Wittgenstein Archives in Bergen, Norway.",
+  },
+  {
+    title: "LGC Phase 2 — Hegel",
+    description: "In partnership with the 13/13 Seminar (Columbia).",
+  },
+  {
+    title: "Migration out of test environment",
+  },
+  {
+    title: "Integration of Knowledge Tree.io data with Academic Tree archives",
+    description:
+      "Fusion of two major datasets into a unified, validated structure, harmonizing identifiers, metadata, and lineage links, in collaboration with the University of Chicago Knowledge Lab.",
+  },
+  {
+    title: "Automated Transcription of Bentham French Manuscripts",
+    description:
+      "Implementation of an AI-driven OCR and transcription pipeline tailored to eighteenth- and nineteenth-century French handwriting, enabling rapid digitisation, searchable text, and scholarly annotation of Bentham manuscripts.",
+  },
+  {
+    title: "50 Mythic Texts from the Mediterranean Tradition",
+    description:
+      "Curated acquisition, preparation, and publication of fifty foundational Mediterranean mythological texts, providing clean digital editions, metadata, and cross-linking capabilities for integration into the AI Library and The Great Conversation.",
+  },
+  {
+    title: "CRISP Integration",
+    description: "Integrate CRISP so that users can chat with webmasters.",
+  },
+  {
+    title: "Visual overhaul",
+    description:
+      "Redesign of all user-facing interfaces for clarity, speed, and coherence across platforms, improving typography, navigation flow, colour hierarchy, and layout consistency to meet modern UX standards and support multilingual displays.",
+  },
+  {
+    title: "Public launch",
+    description:
+      "Final deployment of the platform to the global academic community, supported by onboarding materials, a 6-month outreach campaign, and institutional announcements, marking the transition from testing to sustained, long-term production use.",
+  },
+];
+
+function MilestoneRow({ milestone, index }: { milestone: Milestone; index: number }) {
+  return (
+    <motion.li
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.6, delay: 0.03 * index, ease: [0.22, 1, 0.36, 1] }}
+      className="relative pl-10 md:pl-14 pb-10 last:pb-0 group"
+    >
+      {/* Node */}
+      <span className="absolute left-[-5px] top-[7px] w-[11px] h-[11px] rotate-45 border border-gold/60 bg-charcoal group-hover:bg-gold/80 transition-colors duration-500" />
+
+      {/* Number */}
+      <span className="absolute left-4 md:left-6 top-1 text-[9px] font-mono font-bold tracking-[0.3em] text-gold/40">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+
+      <div className="border border-white/[0.06] bg-white/[0.015] group-hover:border-gold/25 transition-colors duration-500 p-5 md:p-7 relative">
+        {/* Corner ticks */}
+        <span className="absolute top-1.5 left-1.5 w-2 h-px bg-gold/40" />
+        <span className="absolute top-1.5 left-1.5 w-px h-2 bg-gold/40" />
+        <span className="absolute bottom-1.5 right-1.5 w-2 h-px bg-gold/40" />
+        <span className="absolute bottom-1.5 right-1.5 w-px h-2 bg-gold/40" />
+
+        <h3 className="font-serif text-ivory text-lg md:text-xl leading-snug group-hover:text-gold transition-colors duration-500">
+          {milestone.title}
+        </h3>
+        {milestone.description && (
+          <p className="mt-3 text-ivory/55 text-sm md:text-[15px] leading-relaxed">
+            {milestone.description}
+          </p>
+        )}
+      </div>
+    </motion.li>
+  );
+}
+
 export default function Roadmap() {
   return (
     <section className="py-24 px-6 md:px-20 lg:px-32">
@@ -23,76 +134,47 @@ export default function Roadmap() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="font-serif text-center text-[clamp(2.25rem,6vw,3.75rem)] tracking-tight text-ivory leading-[0.9] mb-16"
+        className="font-serif text-center text-[clamp(2.25rem,6vw,3.75rem)] tracking-tight text-ivory leading-[0.9] mb-6"
       >
         Road<span className="text-gold">map</span>
       </motion.h2>
 
-      {/* Content */}
-      <div className="relative max-w-5xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20">
-          {/* Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -16 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full md:w-1/2 lg:w-[45%] relative border border-gold/20 p-1"
-          >
-            {/* Corner ticks */}
-            <div className="absolute top-2.5 left-2.5 w-3 h-px bg-gold/50" />
-            <div className="absolute top-2.5 left-2.5 w-px h-3 bg-gold/50" />
-            <div className="absolute top-2.5 right-2.5 w-3 h-px bg-gold/50" />
-            <div className="absolute top-2.5 right-2.5 w-px h-3 bg-gold/50" />
-            <div className="absolute bottom-2.5 left-2.5 w-3 h-px bg-gold/50" />
-            <div className="absolute bottom-2.5 left-2.5 w-px h-3 bg-gold/50" />
-            <div className="absolute bottom-2.5 right-2.5 w-3 h-px bg-gold/50" />
-            <div className="absolute bottom-2.5 right-2.5 w-px h-3 bg-gold/50" />
-            <img
-              src="/assets/Roadmap.png"
-              alt="Legacy roadmap"
-              className="w-full h-auto select-none"
-            />
-          </motion.div>
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7, delay: 0.1 }}
+        className="text-center text-ivory/50 text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-16"
+      >
+        The project unfolds through a series of milestones — from first public
+        identity to full deployment for the global academic community.
+      </motion.p>
 
-          {/* Text */}
-          <motion.div
-            initial={{ opacity: 0, x: 16 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full md:flex-1 space-y-6"
-          >
-            <p className="text-ivory/70 text-lg md:text-xl leading-relaxed">
-              This project is developed according to a series of milestones,
-              which you can follow at the link below:
-            </p>
+      {/* Timeline */}
+      <div className="relative max-w-3xl mx-auto">
+        {/* Era marker */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-60px" }}
+          className="relative pl-10 md:pl-14 pb-10"
+        >
+          <span className="absolute left-[-13px] top-0 w-[27px] h-[27px] rotate-45 border border-gold/60 bg-charcoal flex items-center justify-center">
+            <span className="-rotate-45 block w-1.5 h-1.5 bg-gold" />
+          </span>
+          <span className="font-serif text-gold text-3xl md:text-4xl leading-none">
+            2025<span className="text-ivory/30"> →</span>
+          </span>
+        </motion.div>
 
-            <a
-              href="https://fos-network.gitbook.io/eep/legacy-roadmap"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="inline-flex items-center gap-3 group"
-            >
-              <span className="text-[10px] uppercase tracking-[0.3em] text-ivory/40 group-hover:text-gold/80 transition-colors duration-200 break-all">
-                fos-network.gitbook.io/eep/legacy-roadmap
-              </span>
-              <svg
-                className="w-3.5 h-3.5 text-ivory/25 group-hover:text-gold/60 shrink-0 transition-colors duration-200"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                />
-              </svg>
-            </a>
-          </motion.div>
-        </div>
+        {/* Spine */}
+        <div className="absolute left-0 top-3 bottom-3 w-px bg-gradient-to-b from-gold/60 via-gold/25 to-transparent" />
+
+        <ol>
+          {MILESTONES.map((m, i) => (
+            <MilestoneRow key={m.title} milestone={m} index={i} />
+          ))}
+        </ol>
       </div>
 
       {/* Bottom padding buffer */}

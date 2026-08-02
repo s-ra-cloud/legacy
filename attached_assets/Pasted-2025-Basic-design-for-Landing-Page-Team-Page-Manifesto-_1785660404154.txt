@@ -1,0 +1,43 @@
+2025
+
+
+Basic design for Landing Page, Team Page, Manifesto : Creation of the project’s public identity through a streamlined landing page, a clear presentation of contributors, and a concise manifesto outlining mission, principles, long-term vision, and the values structuring open, AI-assisted scholarship.
+
+
+Basic Library Interface (module 1 alpha) : Development of a basic user-friendly interface enabling exploration of classical texts with advanced tools for search, comparison, and annotation, ensuring seamless integration with UM6P servers 
+
+
+Basic Knowledge Tree Interface (module 2 alpha) : Conception of a visual system that represents academic genealogies, enabling navigation through mentors, students, and intellectual lineages, and preparing the platform for public contributions and open-source publication.
+
+
+BasicThe Great Conversation interface (module 3 alpha) : Creation of an basic interface that maps explicit and implicit connections between classical texts, offering chronological and bidimensional network visualizations that support exploratory research on intellectual traditions.
+
+
+Expansion of institutional partnerships : Structured outreach to universities, archives, and laboratories to broaden participation, secure new datasets.
+
+
+LGC Phase 1 : Wittgenstein, in partnership with the Wittgenstein Archives in Bergen, Norway
+
+
+LGC Phase 2 : Hegel, in partnership with the 13/13 Seminar (Columbia)
+
+
+Migration ouf of test environment
+
+
+Integration of Knowledge Tree.io data with Academic Tree archives : Fusion of two major datasets into a unified, validated structure, harmonizing identifiers, metadata, and lineage links, in collaboration with the University of Chicago Knowledge Lab.
+
+
+Automated Transcription of Bentham French Manuscripts : Implementation of an AI-driven OCR and transcription pipeline tailored to eighteenth- and nineteenth-century French handwriting, enabling rapid digitisation, searchable text, and scholarly annotation of Bentham manuscripts.
+
+
+50 Mythic Texts from the Mediterranean Tradition : Curated acquisition, preparation, and publication of fifty foundational Mediterranean mythological texts, providing clean digital editions, metadata, and cross-linking capabilities for integration into the AI Library and The Great Conversation.
+
+
+CRISP Integration : Integrate CRISP so that users can chat with webmasters.
+
+
+Visual overhaul : Redesign of all user-facing interfaces for clarity, speed, and coherence across platforms, improving typography, navigation flow, colour hierarchy, and layout consistency to meet modern UX standards and support multilingual displays.
+
+
+Public launch : Final deployment of the platform to the global academic community, supported by onboarding materials, a 6 month outreach campaign, and institutional announcements, marking the transition from testing to sustained, long-term production use.
