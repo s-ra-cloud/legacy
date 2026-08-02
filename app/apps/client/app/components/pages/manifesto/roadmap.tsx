@@ -1,9 +1,15 @@
+import { Fragment } from "react";
 import { motion } from "framer-motion";
 
 type Milestone = {
   title: string;
   description?: string;
+  /** Render a year marker on the timeline just before this milestone. */
+  yearBefore?: number;
 };
+
+/** How many leading milestones get the "in progress" blinking highlight. */
+const HIGHLIGHTED_COUNT = 6;
 
 const MILESTONES: Milestone[] = [
   {
@@ -30,6 +36,12 @@ const MILESTONES: Milestone[] = [
     title: "Expansion of institutional partnerships",
     description:
       "Structured outreach to universities, archives, and laboratories to broaden participation and secure new datasets.",
+  },
+  {
+    title: "Visual overhaul",
+    description:
+      "Redesign of all user-facing interfaces for clarity, speed, and coherence across platforms, improving typography, navigation flow, colour hierarchy, and layout consistency to meet modern UX standards and support multilingual displays.",
+    yearBefore: 2026,
   },
   {
     title: "LGC Phase 1 — Wittgenstein",
@@ -63,18 +75,40 @@ const MILESTONES: Milestone[] = [
     description: "Integrate CRISP so that users can chat with webmasters.",
   },
   {
-    title: "Visual overhaul",
-    description:
-      "Redesign of all user-facing interfaces for clarity, speed, and coherence across platforms, improving typography, navigation flow, colour hierarchy, and layout consistency to meet modern UX standards and support multilingual displays.",
-  },
-  {
     title: "Public launch",
     description:
       "Final deployment of the platform to the global academic community, supported by onboarding materials, a 6-month outreach campaign, and institutional announcements, marking the transition from testing to sustained, long-term production use.",
   },
 ];
 
-function MilestoneRow({ milestone, index }: { milestone: Milestone; index: number }) {
+function YearMarker({ year }: { year: number }) {
+  return (
+    <motion.li
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: "-60px" }}
+      className="relative pl-10 md:pl-14 pb-10 list-none"
+    >
+      <span className="absolute left-[-13px] top-0 w-[27px] h-[27px] rotate-45 border border-gold/60 bg-charcoal flex items-center justify-center">
+        <span className="-rotate-45 block w-1.5 h-1.5 bg-gold" />
+      </span>
+      <span className="font-serif text-gold text-3xl md:text-4xl leading-none">
+        {year}
+        <span className="text-ivory/30"> →</span>
+      </span>
+    </motion.li>
+  );
+}
+
+function MilestoneRow({
+  milestone,
+  index,
+  highlighted,
+}: {
+  milestone: Milestone;
+  index: number;
+  highlighted: boolean;
+}) {
   return (
     <motion.li
       initial={{ opacity: 0, y: 14 }}
@@ -84,14 +118,26 @@ function MilestoneRow({ milestone, index }: { milestone: Milestone; index: numbe
       className="relative pl-10 md:pl-14 pb-10 last:pb-0 group"
     >
       {/* Node */}
-      <span className="absolute left-[-5px] top-[7px] w-[11px] h-[11px] rotate-45 border border-gold/60 bg-charcoal group-hover:bg-gold/80 transition-colors duration-500" />
+      <span
+        className={`absolute left-[-5px] top-[7px] w-[11px] h-[11px] rotate-45 border transition-colors duration-500 ${
+          highlighted
+            ? "border-gold bg-gold/80 roadmap-blink"
+            : "border-gold/60 bg-charcoal group-hover:bg-gold/80"
+        }`}
+      />
 
       {/* Number */}
       <span className="absolute left-4 md:left-6 top-1 text-[9px] font-mono font-bold tracking-[0.3em] text-gold/40">
         {String(index + 1).padStart(2, "0")}
       </span>
 
-      <div className="border border-white/[0.06] bg-white/[0.015] group-hover:border-gold/25 transition-colors duration-500 p-5 md:p-7 relative">
+      <div
+        className={`border transition-colors duration-500 p-5 md:p-7 relative ${
+          highlighted
+            ? "border-gold/30 bg-gold/[0.035] roadmap-glow"
+            : "border-white/[0.06] bg-white/[0.015] group-hover:border-gold/25"
+        }`}
+      >
         {/* Corner ticks */}
         <span className="absolute top-1.5 left-1.5 w-2 h-px bg-gold/40" />
         <span className="absolute top-1.5 left-1.5 w-px h-2 bg-gold/40" />
@@ -172,9 +218,25 @@ export default function Roadmap() {
 
         <ol>
           {MILESTONES.map((m, i) => (
-            <MilestoneRow key={m.title} milestone={m} index={i} />
+            <Fragment key={m.title}>
+              {m.yearBefore && <YearMarker year={m.yearBefore} />}
+              <MilestoneRow milestone={m} index={i} highlighted={i < HIGHLIGHTED_COUNT} />
+            </Fragment>
           ))}
         </ol>
+
+        <style>{`
+          @keyframes roadmap-blink {
+            0%, 100% { opacity: 1; box-shadow: 0 0 6px 1px rgba(212, 175, 55, 0.55); }
+            50% { opacity: 0.45; box-shadow: 0 0 12px 3px rgba(212, 175, 55, 0.25); }
+          }
+          .roadmap-blink { animation: roadmap-blink 2.4s ease-in-out infinite; }
+          @keyframes roadmap-glow {
+            0%, 100% { box-shadow: inset 0 0 0 0 rgba(212, 175, 55, 0.0), 0 0 14px -6px rgba(212, 175, 55, 0.35); }
+            50% { box-shadow: inset 0 0 24px -18px rgba(212, 175, 55, 0.25), 0 0 22px -6px rgba(212, 175, 55, 0.18); }
+          }
+          .roadmap-glow { animation: roadmap-glow 2.4s ease-in-out infinite; }
+        `}</style>
       </div>
 
       {/* Bottom padding buffer */}
