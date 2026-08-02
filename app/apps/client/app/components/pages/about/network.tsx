@@ -1,5 +1,5 @@
 import useEmblaCarousel from "embla-carousel-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { CarouselSection, SectionHeader } from "./utils";
 import { $api } from "@repo/ui";
@@ -75,7 +75,6 @@ export default function Network() {
     $api.useQuery("get", "/contributors");
 
   const [selectedPartner, setSelectedPartner] = useState<Partner | Contributor | null>(null);
-  const [selectedPart, setSelectedPart] = useState<boolean | null>(null);
 
   if (isLoading || contributorsLoading)
     return (
@@ -124,59 +123,23 @@ export default function Network() {
 
       {/* Accordion sections */}
       <div className="max-w-6xl mx-auto space-y-0">
-        <SectionHeader
-          title="Contributing Scholars"
-          onToggle={() => {
-            setSelectedPart(selectedPart === false ? null : false);
-            setSelectedPartner(null);
-          }}
-          isExpanded={selectedPart === false}
-        />
-        <AnimatePresence>
-          {selectedPart === false && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden"
-            >
-              <CarouselSection
-                emblaRef={emblaRefContributors}
-                chunks={contributorChunks}
-                onMemberClick={setSelectedPartner}
-                selectedMember={selectedPartner}
-                onCloseModal={() => setSelectedPartner(null)}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <SectionHeader title="Contributing Scholars" onToggle={() => {}} isExpanded={true} />
+        <div>
+          <CarouselSection
+            emblaRef={emblaRefContributors}
+            chunks={contributorChunks}
+            onMemberClick={setSelectedPartner}
+            selectedMember={selectedPartner}
+            onCloseModal={() => setSelectedPartner(null)}
+          />
+        </div>
 
-        <SectionHeader
-          title="Partner Institutions"
-          onToggle={() => {
-            setSelectedPart(selectedPart === true ? null : true);
-            setSelectedPartner(null);
-          }}
-          isExpanded={selectedPart === true}
-        />
-        <AnimatePresence>
-          {selectedPart === true && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden"
-            >
-              <div className="py-8 px-1 space-y-3 max-w-4xl mx-auto">
-                {partnerChunks.map((partner, i) => (
-                  <PartnerCard key={partner.id} partner={partner} index={i} />
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <SectionHeader title="Partner Institutions" onToggle={() => {}} isExpanded={true} />
+        <div className="py-8 px-1 space-y-3 max-w-4xl mx-auto">
+          {partnerChunks.map((partner, i) => (
+            <PartnerCard key={partner.id} partner={partner} index={i} />
+          ))}
+        </div>
       </div>
 
       {/* CTA */}
