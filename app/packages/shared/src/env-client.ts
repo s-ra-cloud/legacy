@@ -27,12 +27,14 @@ const _env = (() => {
 export const envClient = _env as Env;
 
 /**
- * Origin for REST API calls from the browser.
- * In dev, use the current page origin so requests hit the Vite dev server and `/api`
- * can be proxied to the API (avoids CORS). SSR uses `VITE_API_URL` directly (no CORS).
+ * Origin for REST API calls.
+ * In the browser (dev AND prod), always use the current page origin so requests
+ * stay same-origin — this avoids CORS entirely and keeps working on any domain
+ * the site is served from (e.g. legacy-project.io or *.replit.app).
+ * SSR has no window, so it uses `VITE_API_URL` directly (no CORS applies).
  */
 export function getRestApiOrigin(): string {
-  if (import.meta.env.DEV && typeof window !== "undefined") {
+  if (typeof window !== "undefined") {
     return window.location.origin;
   }
   return envClient.VITE_API_URL;
