@@ -5,8 +5,69 @@ import { CarouselSection, SectionHeader } from "./utils";
 import { $api } from "@repo/ui";
 import type { Partner, Contributor } from "@repo/server";
 
+function PartnerCard({ partner, index }: { partner: Partner; index: number }) {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.6, delay: 0.05 * index, ease: [0.22, 1, 0.36, 1] }}
+      className="relative bg-charcoal border border-white/[0.08] p-6 md:p-8 group hover:border-gold/30 transition-colors duration-500"
+    >
+      {/* Corner ticks */}
+      <span className="absolute top-0 left-0 w-3 h-px bg-gold/40" />
+      <span className="absolute top-0 left-0 w-px h-3 bg-gold/40" />
+      <span className="absolute top-0 right-0 w-3 h-px bg-gold/40" />
+      <span className="absolute top-0 right-0 w-px h-3 bg-gold/40" />
+      <span className="absolute bottom-0 left-0 w-3 h-px bg-gold/40" />
+      <span className="absolute bottom-0 left-0 w-px h-3 bg-gold/40" />
+      <span className="absolute bottom-0 right-0 w-3 h-px bg-gold/40" />
+      <span className="absolute bottom-0 right-0 w-px h-3 bg-gold/40" />
+
+      <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
+        <div className="shrink-0">
+          <span className="text-[9px] font-mono font-bold tracking-[0.4em] text-gold/50">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        </div>
+
+        <div className="flex-1 min-w-0">
+          <h3 className="font-serif text-ivory text-xl md:text-2xl leading-tight mb-2 group-hover:text-gold transition-colors duration-500">
+            {partner.name}
+          </h3>
+
+          {(partner.role || partner.affiliation) && (
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4">
+              {partner.role && (
+                <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-ivory/40">
+                  {partner.role}
+                </span>
+              )}
+              {partner.affiliation && (
+                <>
+                  {partner.role && <span className="text-ivory/20 hidden sm:inline">·</span>}
+                  <span className="text-[9px] uppercase tracking-[0.25em] text-gold/60">
+                    {partner.affiliation}
+                  </span>
+                </>
+              )}
+            </div>
+          )}
+
+          {partner.description && (
+            <p className="text-ivory/60 text-sm md:text-[15px] leading-relaxed">
+              {partner.description}
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div className="absolute left-0 top-4 bottom-4 w-px bg-gold/0 group-hover:bg-gold/30 transition-colors duration-500" />
+    </motion.article>
+  );
+}
+
 export default function Network() {
-  const [emblaRef] = useEmblaCarousel({ align: "start", slidesToScroll: 1 });
   const [emblaRefContributors] = useEmblaCarousel({ align: "start", slidesToScroll: 1 });
 
   const { data: partners, isLoading, error } = $api.useQuery("get", "/partners");
@@ -108,13 +169,11 @@ export default function Network() {
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               className="overflow-hidden"
             >
-              <CarouselSection
-                emblaRef={emblaRef}
-                chunks={partnerChunks}
-                onMemberClick={setSelectedPartner}
-                selectedMember={selectedPartner}
-                onCloseModal={() => setSelectedPartner(null)}
-              />
+              <div className="py-8 px-1 space-y-3 max-w-4xl mx-auto">
+                {partnerChunks.map((partner, i) => (
+                  <PartnerCard key={partner.id} partner={partner} index={i} />
+                ))}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
