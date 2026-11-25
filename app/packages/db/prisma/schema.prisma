@@ -60,8 +60,84 @@ model User {
   Account          Account[]
   userActivity     UserActivity[]
   media            Media[]            @relation("media")
+  gcRevisions      GCVerificationRevision[]
+  gcMergeProposals GCMergeProposal[]
+  gcMergeEvents    GCMergeEvent[]
 
   @@map("users")
+}
+
+// Human content review is independent of Better Auth's Verification OTP table.
+model GCVerificationEntity {
+  key String @id
+  kind String
+  original Json
+  revision Int @default(0)
+  revisions GCVerificationRevision[]
+  @@map("gc_verification_entities")
+}
+
+// Identity overlays only. Source identities and original relationship endpoints
+// are never rewritten by a merge or its reversal.
+model GCMergeProposal {
+  id String @id
+  kind String
+  keys Json
+  canonicalKey String @map("canonical_key")
+  resolutions Json
+  explanation String
+  citation String @default("")
+  contextHash String @map("context_hash")
+  records Json
+  status String @default("pending")
+  version Int @default(1)
+  proposerId String @map("proposer_id")
+  proposer User @relation(fields: [proposerId], references: [id], onDelete: Restrict)
+  proposerName String @map("proposer_name")
+  createdAt DateTime @default(now()) @map("created_at")
+  events GCMergeEvent[]
+  @@index([kind, createdAt(sort: Desc), id(sort: Desc)], map: "gc_merge_kind_history")
+  @@map("gc_merge_proposals")
+}
+
+model GCMergeEvent {
+  id String @id
+  proposalId String @map("proposal_id")
+  proposal GCMergeProposal @relation(fields: [proposalId], references: [id], onDelete: Restrict)
+  action String
+  actorId String @map("actor_id")
+  actor User @relation(fields: [actorId], references: [id], onDelete: Restrict)
+  actorName String @map("actor_name")
+  explanation String
+  createdAt DateTime @default(now()) @map("created_at")
+  @@index([proposalId, createdAt, id], map: "gc_merge_event_history")
+  @@map("gc_merge_events")
+}
+
+model GCVerificationRevision {
+  id String @id
+  submissionId String? @map("submission_id")
+  submission GCVerificationRevision? @relation("SubmissionVersions", fields: [submissionId], references: [id])
+  versions GCVerificationRevision[] @relation("SubmissionVersions")
+  amendsRevisionId String? @map("amends_revision_id")
+  amends GCVerificationRevision? @relation("AmendmentPredecessor", fields: [amendsRevisionId], references: [id])
+  amendments GCVerificationRevision[] @relation("AmendmentPredecessor")
+  entityKey String @map("entity_key")
+  entity GCVerificationEntity @relation(fields: [entityKey], references: [key])
+  revision Int
+  values Json
+  coverage Json
+  sourcePayload Json @map("source_payload")
+  userId String @map("user_id")
+  user User @relation(fields: [userId], references: [id], onDelete: Restrict)
+  firstName String @map("first_name")
+  lastName String @map("last_name")
+  createdAt DateTime @default(now()) @map("created_at")
+  source String?
+  @@unique([entityKey, revision])
+  @@index([userId, createdAt(sort: Desc), id(sort: Desc)], map: "gc_revision_owner_history")
+  @@index([submissionId, revision(sort: Desc)], map: "gc_revision_submission")
+  @@map("gc_verification_revisions")
 }
 
 model Account {

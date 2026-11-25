@@ -1,0 +1,474 @@
+[
+  {
+    "id": "Adam_N.N.",
+    "birthYear": null, "precision": "unknown", "status": "unidentified",
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-102%2C58v%5B2%5D_linear.html",
+    "retrievedAt": "2026-11-11",
+    "note": "The archive identifies only Adam N.N. No independently established full identity or birth date; do not match a famous Adam by first name."
+  },
+  {
+    "id": "Attila",
+    "birthYear": null, "precision": "unknown", "status": "disputed",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Attila",
+    "retrievedAt": "2026-11-11",
+    "note": "Identified as the ruler of the Huns. The biographical discussion explicitly debates the birth year, including 395 and circa 406. Do not silently select the infobox estimate."
+  },
+  {
+    "id": "Bachtin__Nicholas",
+    "birthYear": null, "precision": "unknown", "status": "disputed",
+    "sourceUrl": "https://discovery.nationalarchives.gov.uk/details/c/F49387",
+    "evidenceUrls": ["https://en.wikipedia.org/wiki/Nikolai_Bachtin"],
+    "retrievedAt": "2026-11-11",
+    "note": "Nicholas/Nikolai Bachtin is the Birmingham classicist and Wittgenstein's friend, not his brother Mikhail. The National Archives authority gives 1895–1950, while the encyclopedia gives 1894–1950. The birth year remains disputed pending stronger evidence."
+  },
+  {
+    "id": "Ballard__Melville",
+    "birthYear": 1839, "birthDate": "1839-07-31", "precision": "day",
+    "sourceUrl": "https://asdpioneers.com/archives/notable-alumni-2-2",
+    "evidenceUrls": ["https://usdeafhistory.com/wp-content/uploads/2017/12/ballard-m-bio2.pdf"],
+    "retrievedAt": "2026-11-11",
+    "note": "American School for the Deaf alumni history identifies the deaf teacher Melville Ballard and gives 31 July 1839. This matches the deaf autobiographical witness quoted via William James in the archive, not Melvin J. Ballard."
+  },
+  {
+    "id": "Bolstad__Johannes_Johannesson",
+    "birthYear": null, "precision": "unknown", "status": "ambiguous",
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C207%5B2%5Det208%5B1%5D_linear.html",
+    "evidenceUrls": ["https://www.stiftinga-wittgenstein.no/en/ludwig-og-skjoldingane"],
+    "retrievedAt": "2026-11-11",
+    "note": "The 1937 diary names Joh. Bolstad as a companion seeking a maid for Rebni. The Skjolden foundation identifies Arne's father Johannes J. Bolstad as 1843–1930, which cannot establish the living 1937 companion's date. The search also returns an unrelated 1665–1750 namesake. Neither date is assigned."
+  },
+  {
+    "id": "Brouwer__Luitzen",
+    "birthYear": 1881, "birthDate": "1881-02-27", "precision": "day",
+    "sourceUrl": "https://mathshistory.st-andrews.ac.uk/Biographies/Brouwer/",
+    "retrievedAt": "2026-11-11",
+    "note": "MacTutor identifies Luitzen Egbertus Jan Brouwer, the mathematician and intuitionist, born 27 February 1881. The abbreviated archive forename is preserved."
+  },
+  {
+    "id": "Christie_N.N.",
+    "birthYear": null, "precision": "unknown", "status": "unidentified",
+    "sourceUrl": "http://purl.org/wittgensteinsource/ont/instances/Christie_N.N.",
+    "retrievedAt": "2026-11-11",
+    "note": "The supplied archive authority supplies Christie N.N. without a full name or retrievable passage. No independent identity or birth date was established; do not substitute a famous Christie."
+  },
+  {
+    "id": "Draegni__Arne",
+    "birthYear": 1871, "precision": "year",
+    "sourceUrl": "https://www.stiftinga-wittgenstein.no/en/ludwig-og-skjoldingane",
+    "retrievedAt": "2026-11-11",
+    "note": "The Wittgenstein in Skjolden foundation identifies the postman and coachman Arne Drægni, Halvard's younger brother, as 1871–1946."
+  },
+  {
+    "id": "Draegni__Halvard_Johan_Thomasson",
+    "birthYear": 1869, "birthDate": "1869-09-25", "precision": "day",
+    "sourceUrl": "https://nbl.snl.no/Halvard_Dr%C3%A6gni",
+    "evidenceUrls": ["https://www.stiftinga-wittgenstein.no/en/ludwig-og-skjoldingane"],
+    "retrievedAt": "2026-11-11",
+    "note": "Norsk biografisk leksikon gives Halvard Johan Thomasson Drægni's birth as 25 September 1869. The Skjolden foundation independently establishes his connection to Wittgenstein."
+  },
+  {
+    "id": "Dziewicki__Michal_Henryk",
+    "birthYear": 1851, "birthDate": "1851-03-21", "precision": "day",
+    "sourceUrl": "https://www.ipsb.nina.gov.pl/a/biografia/michal-seweryn-dziewicki-1851-1928-lektor-filolog-literat-tlumacz",
+    "evidenceUrls": ["https://polona.pl/preview/d844c2cf-93c7-4a2e-93a0-c303757602d0"],
+    "retrievedAt": "2026-11-11",
+    "note": "Polski Słownik Biograficzny gives Michał Seweryn Dziewicki's birth as 21 March 1851; the Polish National Library's record for Bremer's study uses the authority Michał Henryk Dziewicki (1851–1928). These name forms identify the same logician and translator."
+  },
+  {
+    "id": "Earl_of_Gloucester",
+    "birthYear": null, "precision": "unknown", "status": "fictional",
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-166%2C24v%5B2%5Det25r%5B1%5Det25v%5B1%5Det26r%5B1%5Det26v%5B1%5D_linear.html",
+    "retrievedAt": "2026-11-11",
+    "note": "The passage describes Edgar pretending to lead Gloucester to a cliff: the character in Shakespeare's King Lear, not a dated historical holder of the earldom. No individual historical birth date applies."
+  },
+  {
+    "id": "Epimenides",
+    "birthYear": null, "precision": "unknown", "status": "unknown",
+    "sourceUrl": "https://www.britannica.com/biography/Epimenides",
+    "retrievedAt": "2026-11-11",
+    "note": "Britannica identifies a Cretan seer who flourished in the sixth century BCE, with a question mark, and discusses legendary accounts. A floruit is not a birth year; no year-precision birth is established."
+  },
+  {
+    "id": "Ernst__Paul",
+    "birthYear": 1866, "birthDate": "1866-03-07", "precision": "day",
+    "sourceUrl": "https://www.britannica.com/biography/Paul-Ernst",
+    "evidenceUrls": ["https://wab.uib.no/nachlass/bemerkung/Ts-213%2C433r%5B1%5D_linear.html"],
+    "retrievedAt": "2026-11-11",
+    "note": "Identified as Paul Karl Friedrich Ernst, the German writer on philosophical and literary problems (7 March 1866), in the archive's literary/philosophical context; not the later American pulp writer of the same name."
+  },
+  {
+    "id": "Euklid",
+    "birthYear": -325, "precision": "approximate-year",
+    "sourceUrl": "https://mathshistory.st-andrews.ac.uk/Biographies/Euclid/",
+    "retrievedAt": "2026-11-11",
+    "note": "MacTutor estimates Euclid of Alexandria's birth as about 325 BCE. This is an approximate scholarly chronology, not an established exact year; distinguish the philosopher Euclid of Megara."
+  },
+  {
+    "id": "Fox__George",
+    "birthYear": 1624, "birthDate": "1624-07", "precision": "month",
+    "sourceUrl": "https://www.britannica.com/summary/George-Fox",
+    "retrievedAt": "2026-11-11",
+    "note": "Britannica identifies the Quaker founder and gives July 1624 without a day. This reference resolves chronology only to month precision; it does not adjudicate competing day-level statements."
+  },
+  {
+    "id": "Grimm__Jacob;_Grimm__Wilhelm",
+    "birthYear": null, "precision": "unknown", "status": "group",
+    "sourceUrl": "http://purl.org/wittgensteinsource/ont/instances/Grimm__Jacob%3B_Grimm__Wilhelm",
+    "retrievedAt": "2026-11-11",
+    "note": "Joint author record for Jacob and Wilhelm Grimm. Two people have different births; neither the earlier nor the later birth represents this joint identity. Preserve the existing group ID."
+  },
+  {
+    "id": "Gürth__Oskar",
+    "birthYear": null, "precision": "unknown", "status": "unknown",
+    "sourceUrl": "http://benediktinerlexikon.de/wiki/G%C3%BCrth,_Basilia",
+    "evidenceUrls": ["https://wab.uib.no/nachlass/bemerkung/Ms-102%2C68v%5B3%5D_linear.html"],
+    "retrievedAt": "2026-11-11",
+    "note": "The biographical lexicon identifies an officer and publishing director Oskar Gürth as Basilia Gürth's father, but supplies no birth date for him. His daughter's 1923 birth and other officers' dates must not be reused."
+  },
+  {
+    "id": "Hardy__Godfrey",
+    "birthYear": 1877, "birthDate": "1877-02-07", "precision": "day",
+    "sourceUrl": "https://mathshistory.st-andrews.ac.uk/Obituaries/Hardy_RAS/",
+    "retrievedAt": "2026-11-11",
+    "note": "The Royal Astronomical Society obituary reproduced by MacTutor gives Godfrey Harold Hardy's birth as 7 February 1877. The archive quotes his Mathematical Proof."
+  },
+  {
+    "id": "Hijab__W.A.",
+    "birthYear": 1919, "precision": "year",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Wasfi_Hijab",
+    "evidenceUrls": ["https://wab.uib.no/ojs/index.php/agora-alws/article/view/2428/2580"],
+    "retrievedAt": "2026-11-11",
+    "note": "The biography explicitly identifies Wasfi (W.A.) Hijab (1919–2004), the mathematician and Wittgenstein student. His own WAB-hosted symposium paper is credited to Wasfi A. Hijab; no day or month is inferred."
+  },
+  {
+    "id": "Hunt__E.B.",
+    "birthYear": null, "precision": "unknown", "status": "ambiguous",
+    "sourceUrl": "http://purl.org/wittgensteinsource/ont/instances/Hunt__E.B.",
+    "evidenceUrls": ["http://purl.org/wittgensteinsource/ont/instances/Hunt__Edward_Bruce"],
+    "retrievedAt": "2026-11-11",
+    "note": "The supplied authority inventory also contains Edward Bruce Hunt, but does not explicitly equate that record with E.B. Hunt. Searches did not establish a biographical link or birth. Do not use dates of Bruce Hunt, Edward Bissell Hunt, or a modern physician."
+  },
+  {
+    "id": "Jackson__A.C.",
+    "birthYear": 1911, "precision": "year",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Frank_Cameron_Jackson",
+    "retrievedAt": "2026-11-11",
+    "note": "The biography identifies Frank Jackson's father Allan Cameron Jackson (1911–1990), a philosopher who went to Cambridge in 1946 to study under Wittgenstein. This establishes the relevant A.C. Jackson, not the Tulsa surgeon of the same initials."
+  },
+  {
+    "id": "Jesus_von_Nazaret",
+    "birthYear": null, "precision": "unknown", "status": "disputed",
+    "sourceUrl": "https://www.britannica.com/topic/When-Was-Jesus-Born",
+    "retrievedAt": "2026-11-11",
+    "note": "Britannica explains that neither the birth year nor day is known and that reconstructions from the Gospels are tentative. Do not select one endpoint of an estimated BCE range, December 25, or year zero."
+  },
+  {
+    "id": "Joseph__H.W.B.",
+    "birthYear": 1867, "birthDate": "1867-09-28", "precision": "day",
+    "sourceUrl": "https://en.wikipedia.org/wiki/H._W._B._Joseph",
+    "retrievedAt": "2026-11-11",
+    "note": "Horace William Brindley Joseph, published as H.W.B. Joseph, was the Oxford philosopher and author of An Introduction to Logic, born 28 September 1867."
+  },
+  {
+    "id": "Karl_der_Grosse",
+    "birthYear": null, "precision": "unknown", "status": "disputed",
+    "sourceUrl": "https://www.britannica.com/biography/Charlemagne",
+    "retrievedAt": "2026-11-11",
+    "note": "Charlemagne's birth is conventionally dated 742 but Britannica considers 747 or 748 more likely. Its heading's 747? does not settle the alternatives. Preserve a disputed, undated chronology rather than choose one year."
+  },
+  {
+    "id": "Khayyam__Omar",
+    "birthYear": 1048, "birthDate": "1048-05-18", "precision": "day",
+    "sourceUrl": "https://mathshistory.st-andrews.ac.uk/Biographies/Khayyam/",
+    "evidenceUrls": ["https://www.britannica.com/facts/Omar-Khayyam-Persian-poet-and-astronomer"],
+    "retrievedAt": "2026-11-11",
+    "note": "MacTutor and Britannica independently give the Persian mathematician and poet's birth as 18 May 1048. This is the cited reference chronology, superseding conflicting structured statements, not a claim that Wikidata's dispute was repaired."
+  },
+  {
+    "id": "Klingenberg__Sofia",
+    "birthYear": 1879, "precision": "year",
+    "sourceUrl": "https://www.stiftinga-wittgenstein.no/en/ludwig-og-skjoldingane",
+    "retrievedAt": "2026-11-11",
+    "note": "The Skjolden foundation identifies Wittgenstein's landlady Sofia Klingenberg, Halvard Drægni's sister and Hans Klingenberg's wife, as 1879–1953."
+  },
+  {
+    "id": "Kraus__Karl",
+    "birthYear": 1874, "birthDate": "1874-04-28", "precision": "day",
+    "sourceUrl": "https://www.britannica.com/biography/Karl-Kraus",
+    "evidenceUrls": ["https://wab.uib.no/nachlass/bemerkung/Ms-154%2C15v%5B3%5Det16r%5B1%5D_linear.html"],
+    "retrievedAt": "2026-11-11",
+    "note": "The literary influence is the Austrian satirist and editor of Die Fackel, born 28 April 1874, not a later physicist or another Karl Kraus."
+  },
+  {
+    "id": "Lee__Desmond",
+    "birthYear": 1908, "birthDate": "1908-08-30", "precision": "day",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Desmond_Lee_(classical_scholar)",
+    "retrievedAt": "2026-11-11",
+    "note": "Sir Henry Desmond Pritchard Lee, the classical scholar and recorder of Wittgenstein's 1930–1932 lectures, was born 30 August 1908. Not the Singapore politician."
+  },
+  {
+    "id": "Lindsay__A.D.",
+    "birthYear": 1879, "birthDate": "1879-05-14", "precision": "day",
+    "sourceUrl": "https://www.keele.ac.uk/library/specialcollections/lordlindsay/lindsaypapers2026.pdf",
+    "retrievedAt": "2026-11-11",
+    "note": "Keele University's Lindsay Papers handlist gives Alexander Dunlop Lindsay's birth in Glasgow as 14 May 1879."
+  },
+  {
+    "id": "McTaggart__John_Ellis",
+    "birthYear": 1866, "birthDate": "1866-09-03", "precision": "day",
+    "sourceUrl": "https://plato.stanford.edu/entries/mctaggart/",
+    "retrievedAt": "2026-11-11",
+    "note": "Stanford identifies John McTaggart Ellis McTaggart, originally named John McTaggart Ellis, and gives 3 September 1866. Preserve the archive's shorter name and ID."
+  },
+  {
+    "id": "Murakami_N.N.",
+    "birthYear": null, "precision": "unknown", "status": "unidentified",
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C31%5B3%5Det32%5B1%5Det33%5B1%5Det34%5B1%5Det35%5B1%5Det36%5B1%5Det36%5B2%5Det37%5B1%5Det38%5B1%5Det39%5B1%5Det40%5B1%5D_linear.html",
+    "retrievedAt": "2026-11-11",
+    "note": "The archive gives Murakami N.N.; neither a full identity nor a reliable birth was established. A surname match is not evidence for any modern writer named Murakami."
+  },
+  {
+    "id": "Ogden__Charles_Kay;_Richards__Ivor_Armstrong",
+    "birthYear": null, "precision": "unknown", "status": "group",
+    "sourceUrl": "http://purl.org/wittgensteinsource/ont/instances/Ogden__Charles_Kay%3B_Richards__Ivor_Armstrong",
+    "retrievedAt": "2026-11-11",
+    "note": "Joint author identity for C.K. Ogden and I.A. Richards, not one person. Do not select one collaborator's birth or split/merge graph IDs."
+  },
+  {
+    "id": "Pattisson__Gilbert",
+    "birthYear": 1908, "precision": "year",
+    "sourceUrl": "https://archives.trin.cam.ac.uk/index.php/letters-and-postcards-from-ludwig-wittgenstein-to-gilbert-pattisson",
+    "retrievedAt": "2026-11-11",
+    "note": "Trinity College's catalogue of Wittgenstein's letters explicitly identifies their recipient as Gilbert Richard Pattisson (1908–1994), accountant."
+  },
+  {
+    "id": "Price__H.H.",
+    "birthYear": 1899, "birthDate": "1899-05-17", "precision": "day",
+    "sourceUrl": "https://plato.stanford.edu/entries/price/",
+    "retrievedAt": "2026-11-11",
+    "note": "Stanford identifies Henry Habberley Price, who published as H.H. Price, born 17 May 1899."
+  },
+  {
+    "id": "Priestley__Raymond__E.",
+    "birthYear": 1886, "birthDate": "1886-07-20", "precision": "day",
+    "sourceUrl": "https://adb.anu.edu.au/biography/priestley-sir-raymond-edward-8116",
+    "retrievedAt": "2026-11-11",
+    "note": "The Australian Dictionary of Biography identifies Sir Raymond Edward Priestley, scientist and vice-chancellor, born 20 July 1886 at Tewkesbury. The archive's extra comma is not a different identity."
+  },
+  {
+    "id": "Pythagoras_von_Samos",
+    "birthYear": -570, "precision": "approximate-year",
+    "sourceUrl": "https://www.britannica.com/biography/Pythagoras",
+    "retrievedAt": "2026-11-11",
+    "note": "Britannica dates Pythagoras of Samos's birth to circa 570 BCE. Retain approximation and historical BCE numbering."
+  },
+  {
+    "id": "Queen_Victoria",
+    "birthYear": 1819, "birthDate": "1819-05-24", "precision": "day",
+    "sourceUrl": "https://www.royal.uk/encyclopedia/victoria-r-1837-1901",
+    "retrievedAt": "2026-11-11",
+    "note": "The Royal Family's historical biography gives Queen Victoria's birth at Kensington Palace as 24 May 1819."
+  },
+  {
+    "id": "Raven__Canon",
+    "birthYear": null, "precision": "unknown", "status": "ambiguous",
+    "sourceUrl": "http://purl.org/wittgensteinsource/ont/instances/Raven__Canon",
+    "evidenceUrls": ["https://giffordlectures.org/speaker/charles-earle-raven"],
+    "retrievedAt": "2026-11-11",
+    "note": "Charles Earle Raven (born 4 July 1885) was a Cambridge theologian and a canon of Liverpool, making him a plausible candidate. But the supplied Canon Raven record lacks a retrievable passage or full name connecting it to that biography. Do not assign the candidate's birth without confirmation."
+  },
+  {
+    "id": "Rebni__Anna",
+    "birthYear": 1869, "precision": "year",
+    "sourceUrl": "https://www.stiftinga-wittgenstein.no/en/ludwig-og-skjoldingane",
+    "retrievedAt": "2026-11-11",
+    "note": "The Skjolden foundation identifies Anna Rebni, manager of Eide gard and Wittgenstein's friend, as 1869–1971."
+  },
+  {
+    "id": "Respinger__Marguerite",
+    "birthYear": 1904, "precision": "year",
+    "sourceUrl": "https://www.stiftinga-wittgenstein.no/en/ludwig-og-skjoldingane",
+    "retrievedAt": "2026-11-11",
+    "note": "The Skjolden foundation identifies Wittgenstein's Swiss companion Marguerite Respinger as 1904–2000, later married to Talle/Talla Sjögren."
+  },
+  {
+    "id": "Richards__?",
+    "birthYear": null, "precision": "unknown", "status": "unidentified",
+    "sourceUrl": "http://purl.org/wittgensteinsource/ont/instances/Richards__%3F",
+    "retrievedAt": "2026-11-11",
+    "note": "The archive explicitly leaves this Richards unidentified. Neither Ivor Armstrong Richards nor Ben Richards is established by a surname alone; do not borrow their dates."
+  },
+  {
+    "id": "Roth_N.N.",
+    "birthYear": null, "precision": "unknown", "status": "unidentified",
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-102%2C49v%5B3%5D_linear.html",
+    "retrievedAt": "2026-11-11",
+    "note": "The archive supplies only Roth N.N. No independently established full identity or birth date; do not match a writer named Roth by surname."
+  },
+  {
+    "id": "Rothe_N.N.",
+    "birthYear": null, "precision": "unknown", "status": "unidentified",
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C65%5B4%5Det66%5B1%5D_linear.html",
+    "retrievedAt": "2026-11-11",
+    "note": "The archive supplies Rothe N.N. No full identity or reliable birth date was established; retain this record separately from Roth N.N."
+  },
+  {
+    "id": "Runge__Otto",
+    "birthYear": 1777, "birthDate": "1777-07-23", "precision": "day",
+    "sourceUrl": "https://www.britannica.com/biography/Philipp-Otto-Runge",
+    "evidenceUrls": ["https://wab.uib.no/nachlass/bemerkung/Ms-176%2C5v%5B3%5Det6r%5B1%5D_linear.html"],
+    "retrievedAt": "2026-11-11",
+    "note": "The archive explicitly discusses Runge's letter in Goethe's Farbenlehre and colour theory. This identifies painter and colour theorist Philipp Otto Runge, born 23 July 1777, not another Otto Runge."
+  },
+  {
+    "id": "Russell__Bertrand;_Whitehead__Alfred_North",
+    "birthYear": null, "precision": "unknown", "status": "group",
+    "sourceUrl": "http://purl.org/wittgensteinsource/ont/instances/Russell__Bertrand%3B_Whitehead__Alfred_North",
+    "retrievedAt": "2026-11-11",
+    "note": "Joint author record for Bertrand Russell and Alfred North Whitehead. Their individual births cannot be assigned to the collaboration. Preserve this ID and the individual records."
+  },
+  {
+    "id": "Salzer__Max",
+    "birthYear": null, "precision": "unknown", "status": "unknown",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Wittgenstein_family",
+    "evidenceUrls": ["https://www.med-huber.at/stammbaum/tree/huber/individual/I0654/Maria-Salzer-Wittgenstein"],
+    "retrievedAt": "2026-11-11",
+    "note": "The family biography identifies Max Salzer as Helene Wittgenstein's husband. A private genealogy gives Maximilian Salzer 1868–1941, but no independent institutional or biographical source establishing that birth was found. Keep undated rather than promote a user-contributed family tree to a verified date."
+  },
+  {
+    "id": "Scholz__Friedrich",
+    "birthYear": null, "precision": "unknown", "status": "ambiguous",
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-102%2C63v%5B3%5D_linear.html",
+    "evidenceUrls": ["https://wab.uib.no/nachlass/bemerkung/Ms-102%2C56v%5B1%5D_linear.html"],
+    "retrievedAt": "2026-11-11",
+    "note": "The 1915 diary describes Scholz's officers' mess and musical evenings. No full biographical identification or birth date was established. Do not use dates of a composer or the logician Heinrich Scholz merely because of shared names."
+  },
+  {
+    "id": "Sibylle_von_Cumae",
+    "birthYear": null, "precision": "unknown", "status": "legendary",
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C92%5B2%5Det93%5B1%5Det94%5B1%5Det95%5B1%5D_linear.html",
+    "retrievedAt": "2026-11-11",
+    "note": "The passage invokes the Cumaean Sibyl, a legendary prophetic figure, not a documented biographical person with a historical birth date."
+  },
+  {
+    "id": "Sjögren__Talla",
+    "birthYear": null, "precision": "unknown", "status": "unknown",
+    "sourceUrl": "https://wittgenstein-initiative.com/marguerite-respinger-and-ludwig-wittgenstein-love-and-power-coming-soon",
+    "evidenceUrls": ["https://www.stiftinga-wittgenstein.no/en/ludwig-og-skjoldingane"],
+    "retrievedAt": "2026-11-11",
+    "note": "The Wittgenstein Initiative and Skjolden foundation identify Talla/Talle Sjögren as Marguerite Respinger's husband and Arvid's brother. The accessible accounts do not establish his birth; do not use Marguerite's date or a modern namesake."
+  },
+  {
+    "id": "Stonborough__Jerome_(Gatte_von_Margarete_Wittgenstein)",
+    "birthYear": 1873, "precision": "year",
+    "sourceUrl": "https://onlinecollection.leopoldmuseum.org/en/object/39233/",
+    "retrievedAt": "2026-11-11",
+    "note": "The Leopold Museum identifies New York industrialist Jerome Stonborough (1873–1938) as Margarete Wittgenstein's husband. Preserve both archive IDs with their differing whitespace rather than merge them."
+  },
+  {
+    "id": "Stonborough__Jerome__(Gatte_von_Margarete_Wittgenstein)",
+    "birthYear": 1873, "precision": "year",
+    "sourceUrl": "https://onlinecollection.leopoldmuseum.org/en/object/39233/",
+    "retrievedAt": "2026-11-11",
+    "note": "The Leopold Museum identifies New York industrialist Jerome Stonborough (1873–1938) as Margarete Wittgenstein's husband. This second whitespace-variant archive ID remains distinct."
+  },
+  {
+    "id": "Thomas_a_Kempis",
+    "birthYear": null, "precision": "unknown", "status": "disputed",
+    "sourceUrl": "https://www.britannica.com/facts/Thomas-a-Kempis",
+    "retrievedAt": "2026-11-11",
+    "note": "Britannica gives the birth of Thomas Hemerken/Thomas à Kempis as 1379 or 1380. Do not select either endpoint or replace the alternative years with a falsely exact 1380."
+  },
+  {
+    "id": "Townsend__Raymond_D.",
+    "birthYear": 1902, "precision": "year",
+    "sourceUrl": "https://www.nordicwittgensteinreview.com/article/download/3697/75/9957",
+    "retrievedAt": "2026-11-11",
+    "note": "The scholarly article Wittgenstein in Alethea Graham's Diary, footnote 32, identifies Raymond Townsend (1902–1986), a New Zealander and Wittgenstein's student. No match to unrelated genealogy results is used."
+  },
+  {
+    "id": "Trenkler__Adolf",
+    "birthYear": null, "precision": "unknown", "status": "unknown",
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-101%2C1r%5B1%5D_linear.html",
+    "retrievedAt": "2026-11-11",
+    "note": "The archive names Adolf Trenkler in the wartime diary. Searches for the full name and Wittgenstein connection did not establish a reliable biography or birth date; dates of unrelated Trenklers are not used."
+  },
+  {
+    "id": "Vlcek_N.N.",
+    "birthYear": null, "precision": "unknown", "status": "unidentified",
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-102%2C33v%5B2%5Det34v%5B1%5Det35v%5B1%5D_linear.html",
+    "retrievedAt": "2026-11-11",
+    "note": "The archive gives Vlcek N.N. No independent full identity or birth was established; the incomplete surname must not be expanded to a convenient namesake."
+  },
+  {
+    "id": "Wallenstein__Albrecht_von",
+    "birthYear": 1583, "birthDate": "1583-09-24", "precision": "day",
+    "sourceUrl": "https://www.britannica.com/biography/Albrecht-von-Wallenstein",
+    "retrievedAt": "2026-11-11",
+    "note": "Britannica explicitly gives 24 September 1583, with 14 September Old Style in brackets. The two day-level forms reflect calendars, not different birth years. Store the reference's New Style date."
+  },
+  {
+    "id": "Wanicek__Aloisia",
+    "birthYear": null, "precision": "unknown", "status": "unknown",
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ts-204%2CIr%5B1%5D_linear.html",
+    "retrievedAt": "2026-11-11",
+    "note": "The archive identifies Aloisia Wanicek, but no reliable biographical birth source was located. A search result for Marie Wanicek is a different forename and cannot supply this date."
+  },
+  {
+    "id": "Ward__James",
+    "birthYear": 1843, "birthDate": "1843-01-27", "precision": "day",
+    "sourceUrl": "https://www.britannica.com/biography/James-Ward",
+    "evidenceUrls": ["https://wab.uib.no/nachlass/bemerkung/Ms-137%2C81b%5B6%5Det82a%5B1%5D_linear.html"],
+    "retrievedAt": "2026-11-11",
+    "note": "The philosophical/psychological reference is identified as Cambridge philosopher and psychologist James Ward, born 27 January 1843 in Hull, not the painter James Ward (1769–1859)."
+  },
+  {
+    "id": "Weide_?",
+    "birthYear": null, "precision": "unknown", "status": "unidentified",
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ts-205%2C5%5B2%5D_linear.html",
+    "retrievedAt": "2026-11-11",
+    "note": "The archive explicitly supplies Weide ? rather than a full identity. No independently supported birth can be assigned."
+  },
+  {
+    "id": "Wittgenstein__Kurt",
+    "birthYear": 1878, "precision": "year",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Wittgenstein_family",
+    "retrievedAt": "2026-11-11",
+    "note": "The family biography identifies Kurt, also known as Konrad, as Karl Wittgenstein's son and Ludwig's brother, born in Vienna in 1878. Retain year precision."
+  },
+  {
+    "id": "Wittgenstein__Leopoldine",
+    "birthYear": 1850, "precision": "year",
+    "sourceUrl": "https://schenkerdocumentsonline.org/profiles/person/entity-000970.html",
+    "retrievedAt": "2026-11-11",
+    "note": "Schenker Documents Online identifies Leopoldine (Poldi) Wittgenstein, née Kalmus, mother of Paul and Ludwig, as 1850–1926. Use the scholarly edition's year precision."
+  },
+  {
+    "id": "Wittgenstein__Paul_(Onkel)",
+    "birthYear": 1842, "precision": "year",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Wittgenstein_family",
+    "retrievedAt": "2026-11-11",
+    "note": "The family tree identifies Paul Josef Gustav Wittgenstein (1842–1928), Karl's brother and Justine Hochstetter's husband. This is Ludwig's uncle, not the pianist born 1887 or the younger relative born 1907."
+  },
+  {
+    "id": "Zwingli__Ulrich",
+    "birthYear": 1484, "birthDate": "1484-01-01", "precision": "day",
+    "sourceUrl": "https://www.britannica.com/summary/Huldrych-Zwingli",
+    "retrievedAt": "2026-11-11",
+    "note": "The Swiss reformer Ulrich/Huldrych Zwingli is identified by Britannica, born 1 January 1484 at Wildhaus. Not a later namesake."
+  },
+  {
+    "id": "[Multiple_authors]",
+    "birthYear": null, "precision": "unknown", "status": "group",
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-162b%2C63r%5B1%5D_linear.html",
+    "retrievedAt": "2026-11-11",
+    "note": "The supplied record is explicitly a multiple-author placeholder, not a single named person. No individual birth date applies."
+  },
+  {
+    "id": "instances",
+    "birthYear": null, "precision": "unknown", "status": "invalid-record",
+    "sourceUrl": "http://purl.org/wittgensteinsource/ont/instances/",
+    "retrievedAt": "2026-11-11",
+    "note": "The supplied authority record has an empty display name and the namespace-level ID instances. It does not establish a person. Preserve the existing graph/catalogue ID, but do not invent a person or a birth."
+  }
+]

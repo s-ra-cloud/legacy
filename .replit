@@ -1,10 +1,12 @@
-modules = ["python-3.11", "nodejs-20", "postgresql-16"]
-[nix]
-channel = "stable-25_05"
+modules = ["nodejs-22", "python-3.11", "postgresql-16"]
 
-[agent]
-expertMode = true
-integrations = ["javascript_object_storage:2.0.0"]
+[deployment]
+router = "application"
+deploymentTarget = "autoscale"
+
+[deployment.postBuild]
+args = ["pnpm", "store", "prune"]
+env = { "CI" = "true" }
 
 [workflows]
 runButton = "Project"
@@ -16,127 +18,83 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Redis"
+args = "gc-regressions"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "MinIO"
+args = "gc-ui-regressions"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Start application"
+args = "library-regressions"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "API"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Admin"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Client"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Strapi"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Server build watch"
+args = "kt-relationship-regressions"
 
 [[workflows.workflow]]
-name = "Redis"
+name = "gc-regressions"
 author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "redis-server --port 6379 --bind 127.0.0.1 --save \"\" --appendonly no --daemonize no"
+args = "pnpm --filter @workspace/scripts test:gc"
 
 [workflows.workflow.metadata]
-outputType = "console"
+isValidation = true
 
 [[workflows.workflow]]
-name = "MinIO"
+name = "gc-ui-regressions"
 author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "mkdir -p .data/minio && minio server .data/minio --address 127.0.0.1:9000 --console-address 127.0.0.1:9001"
+args = "pnpm --filter @workspace/scripts test:gc-ui"
 
 [workflows.workflow.metadata]
-outputType = "console"
+isValidation = true
 
 [[workflows.workflow]]
-name = "Start application"
+name = "library-regressions"
 author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "mkdir -p .data/nginx/logs .data/nginx/tmp && cp -n \"$(dirname \"$(dirname \"$(readlink -f \"$(which nginx)\")\")\")/conf/mime.types\" .data/nginx/mime.types 2>/dev/null || true; exec nginx -c $PWD/nginx.replit.conf -p $PWD -e $PWD/.data/nginx/logs/error.log"
-waitForPort = 5000
+args = "pnpm --filter @workspace/scripts test:library"
 
 [workflows.workflow.metadata]
-outputType = "webview"
+isValidation = true
 
 [[workflows.workflow]]
-name = "API"
+name = "kt-relationship-regressions"
 author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd app && pnpm --filter '@repo/api' dev"
-waitForPort = 3000
+args = "pnpm --filter @workspace/scripts test:kt-relationships"
 
 [workflows.workflow.metadata]
-outputType = "console"
+isValidation = true
 
-[[workflows.workflow]]
-name = "Admin"
-author = "agent"
+[agent]
+stack = "PNPM_WORKSPACE"
+expertMode = true
+integrations = ["javascript_object_storage:2.0.0"]
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd app && pnpm --filter admin dev"
-waitForPort = 3001
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 300000
 
-[workflows.workflow.metadata]
-outputType = "console"
+[userenv]
 
-[[workflows.workflow]]
-name = "Client"
-author = "agent"
+[userenv.production]
 
-[workflows.workflow.metadata]
-outputType = "console"
+[userenv.shared]
+STRAPI_SYNC_TEAM = "1"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd app && pnpm --filter '@repo/client' dev"
-waitForPort = 5173
-
-[[workflows.workflow]]
-name = "Strapi"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd app/apps/strapi && npm run develop"
-
-[workflows.workflow.metadata]
-outputType = "console"
-
-[[workflows.workflow]]
-name = "Server build watch"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd app && pnpm --filter @repo/server dev"
-
-[workflows.workflow.metadata]
-outputType = "console"
+[nix]
+channel = "stable-25_05"
+packages = ["minio", "nginx", "postgresql", "redis"]
 
 [[ports]]
 localPort = 1337
@@ -146,7 +104,6 @@ exposeLocalhost = true
 [[ports]]
 localPort = 3000
 externalPort = 3000
-exposeLocalhost = true
 
 [[ports]]
 localPort = 3001
@@ -160,30 +117,12 @@ externalPort = 80
 [[ports]]
 localPort = 5173
 externalPort = 5173
-exposeLocalhost = true
 
 [[ports]]
 localPort = 5174
 externalPort = 3002
-exposeLocalhost = true
 
 [[ports]]
 localPort = 9000
 externalPort = 9000
 exposeLocalhost = true
-
-[deployment]
-deploymentTarget = "autoscale"
-run = ["bash", "scripts/start-prod.sh"]
-build = ["bash", "scripts/build-prod.sh"]
-
-[postMerge]
-path = "scripts/post-merge.sh"
-timeoutMs = 180000
-
-[userenv]
-
-[userenv.production]
-
-[userenv.shared]
-STRAPI_SYNC_TEAM = "1"

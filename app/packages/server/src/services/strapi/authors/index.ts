@@ -38,7 +38,7 @@ function transformStrapiAuthor(data: StrapiAuthorData): Author {
   data.books?.forEach((book) => {
     if (book.submittedFiles) {
       book.submittedFiles.cover.url = getStrapiMediaUrl(book.submittedFiles.cover.url) ?? book.submittedFiles.cover.url;
-      book.submittedFiles.file.url = getStrapiMediaUrl(book.submittedFiles.file.url) ?? book.submittedFiles.file.url;
+      if (book.submittedFiles.file) book.submittedFiles.file.url = getStrapiMediaUrl(book.submittedFiles.file.url) ?? book.submittedFiles.file.url;
     }
   });
   data.books?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
@@ -72,11 +72,13 @@ async function getAll(ctx: ServiceContext, input: AuthorsInput = {}) {
 
   // Handle search across multiple fields
   if (input.search) {
-    filters.$or = [
-      { firstName: { $containsi: input.search } },
-      { lastName: { $containsi: input.search } },
-      { birthDeath: { $containsi: input.search } },
-    ];
+    filters.$and = input.search.trim().split(/\s+/).filter(Boolean).map(term => ({
+      $or: [
+        { firstName: { $containsi: term } },
+        { lastName: { $containsi: term } },
+        { birthDeath: { $containsi: term } },
+      ],
+    }));
   }
 
   const populate = {
@@ -103,7 +105,7 @@ async function getAll(ctx: ServiceContext, input: AuthorsInput = {}) {
     filters,
     sort: input.sort || "lastName:asc",
     limit: input.limit || 10,
-    offset: input.cursor ? (input.cursor - 1) * (input.limit || 10) : 0,
+    page: input.cursor || 1,
   });
 
   if (!response) {

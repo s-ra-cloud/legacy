@@ -13,8 +13,15 @@ export const requestedBookSchema = z
   .object({
     id: numberSchema,
     documentId: idSchema,
-    bookName: nameSchema,
-    authorName: nameSchema,
+    bookName: z.string().nullish(),
+    authorName: z.string().min(1),
+    entityType: z.enum(["author", "work"]).nullish(),
+    reviewStatus: z.enum(["proposed", "accepted", "rejected"]).nullish(),
+    contributionDocumentId: z.string().nullish(),
+    authorDocumentId: z.string().nullish(),
+    dependsOnRequestDocumentId: z.string().nullish(),
+    linkedEntityDocumentId: z.string().nullish(),
+    reviewNote: z.string().nullish(),
     createdAt: datetimeSchema,
     updatedAt: datetimeSchema,
   })

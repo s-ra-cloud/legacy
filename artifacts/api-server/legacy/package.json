@@ -1,0 +1,41 @@
+{
+  "name": "@repo/api",
+  "type": "module",
+  "private": "true",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "dotenv -e ../../../app/.env -- vite",
+    "start": "dotenv -e ../../../app/.env -- node dist/node.js",
+    "build": "tsc && esbuild src/node.ts --bundle --platform=node --format=esm --packages=external --outfile=dist/node.js",
+    "test": "node --import tsx --test src/runtime-config.test.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "clean": "git clean -xdf node_modules dist .cache .turbo"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.1",
+    "@hono/zod-validator": "^0.4.3",
+    "@repo/server": "workspace:*",
+    "@repo/db": "workspace:*",
+    "@repo/shared": "workspace:*",
+    "@scalar/hono-api-reference": "^0.8.3",
+    "hono": "^4.7.6",
+    "hono-openapi": "^0.4.6",
+    "zod": "catalog:",
+    "zod-openapi": "^4.2.4",
+    "@google-cloud/storage": "^7.19.0",
+    "google-auth-library": "^9.6.3"
+  },
+  "devDependencies": {
+    "@hono/vite-dev-server": "^0.19.1",
+    "@repo/tsconfig": "workspace:*",
+    "@types/node": "^20.11.17",
+    "esbuild": "^0.28.2",
+    "tsx": "^4.19.3",
+    "vite": "^5.4.18"
+  }
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "Plato",
+    "birthYear": -429,
+    "precision": "approximate-year",
+    "sourceUrl": "https://plato.stanford.edu/entries/plato/",
+    "retrievedAt": "2026-11-11",
+    "note": "Stanford Encyclopedia of Philosophy states 429?–347 BCE; retain explicit approximation."
+  },
+  {
+    "id": "Sokrates",
+    "birthYear": -469,
+    "precision": "year",
+    "sourceUrl": "https://plato.stanford.edu/entries/socrates/",
+    "retrievedAt": "2026-11-11",
+    "note": "Stanford Encyclopedia of Philosophy gives the philosopher's lifetime as 469–399 BCE."
+  }
+]

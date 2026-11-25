@@ -14,6 +14,7 @@ import {
   gcCommentResponseSchema,
 } from "./schema/output.js";
 import type { GCCommentData } from "./schema/input.js";
+import { enrichPublicAttribution } from "../public-attribution.js";
 
 // Strapi generic response
 interface StrapiResponse<T> {
@@ -30,9 +31,9 @@ interface StrapiResponse<T> {
 
 type StrapiGCCommentData = GCComment;
 
-// No transformation currently needed but keeping function for future use
-function transformStrapiGCComment(data: StrapiGCCommentData): GCComment {
-  return gcCommentSchema.parse(data);
+// Resolve public attribution before the response schema drops private CMS fields.
+async function transformStrapiGCComment(ctx: ServiceContext, data: StrapiGCCommentData): Promise<GCComment> {
+  return gcCommentSchema.parse(await enrichPublicAttribution(ctx, data));
 }
 
 interface CommentsInput {
@@ -82,7 +83,7 @@ async function getAll(ctx: ServiceContext, input: CommentsInput = {}) {
     throw new Error("Failed to fetch GC comments from Strapi");
   }
 
-  const data = response.data.map(transformStrapiGCComment);
+  const data = await Promise.all(response.data.map((item) => transformStrapiGCComment(ctx, item)));
 
   const validated = gcCommentsPaginatedSchema.parse({
     data,
@@ -120,7 +121,7 @@ async function get(ctx: ServiceContext, input: CommentGetInput) {
     throw new Error(`Failed to fetch comment ${input.id}`);
   }
 
-  const data = transformStrapiGCComment(response.data);
+  const data = await transformStrapiGCComment(ctx, response.data);
   const validated = gcCommentResponseSchema.parse({ data, meta: response.meta });
   return validated.data;
 }
@@ -157,7 +158,7 @@ async function getByContributorEmail(
     throw new Error(`Failed to fetch comments by contributor email ${input.contributorEmail}`);
   }
 
-  const data = response.data.map(transformStrapiGCComment);
+  const data = await Promise.all(response.data.map((item) => transformStrapiGCComment(ctx, item)));
 
   try {
     const validated = gcCommentsPaginatedSchema.parse({ data, meta: response.meta });
@@ -206,7 +207,7 @@ async function getByContribution(ctx: ServiceContext, input: CommentGetByContrib
     throw new Error(`Failed to fetch comments by contribution ${input.contributionId}`);
   }
 
-  const data = response.data.map(transformStrapiGCComment);
+  const data = await Promise.all(response.data.map((item) => transformStrapiGCComment(ctx, item)));
 
   try {
     const validated = gcCommentsPaginatedSchema.parse({ data, meta: response.meta });
@@ -265,7 +266,7 @@ async function create(ctx: ServiceContext, data: GCCommentData) {
     throw new Error("Failed to create GC comment");
   }
 
-  const transformed = transformStrapiGCComment(response.data);
+  const transformed = await transformStrapiGCComment(ctx, response.data);
   const validated = gcCommentResponseSchema.parse({ data: transformed, meta: response.meta });
   return validated.data;
 }

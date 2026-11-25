@@ -1,0 +1,119 @@
+{
+  "Zwingli__Ulrich": {
+    "birthYear": 1484,
+    "birthDate": null,
+    "precision": "year",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q123034",
+    "status": "reference-source",
+    "identityArticle": "https://en.wikipedia.org/wiki/Huldrych_Zwingli",
+    "basis": "Birth statements agree on this year; no precise day is asserted."
+  },
+  "Brouwer__Luitzen": {
+    "birthYear": 1881,
+    "birthDate": null,
+    "precision": "year",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q155887",
+    "status": "reference-source",
+    "identityArticle": "https://en.wikipedia.org/wiki/L._E._J._Brouwer",
+    "basis": "Birth statements agree on this year; no precise day is asserted."
+  },
+  "Priestley__Raymond__E.": {
+    "birthYear": 1886,
+    "birthDate": null,
+    "precision": "year",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q1558934",
+    "status": "reference-source",
+    "identityArticle": "https://en.wikipedia.org/wiki/Raymond_Priestley",
+    "basis": "Birth statements agree on this year; no precise day is asserted."
+  },
+  "Runge__Otto": {
+    "birthYear": 1777,
+    "birthDate": null,
+    "precision": "year",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q166585",
+    "status": "reference-source",
+    "identityArticle": "https://en.wikipedia.org/wiki/Philipp_Otto_Runge",
+    "basis": "Birth statements agree on this year; no precise day is asserted."
+  },
+  "Joseph__H.W.B.": {
+    "birthYear": 1867,
+    "birthDate": null,
+    "precision": "year",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q16943692",
+    "status": "reference-source",
+    "identityArticle": "https://en.wikipedia.org/wiki/H._W._B._Joseph",
+    "basis": "Birth statements agree on this year; no precise day is asserted."
+  },
+  "Hardy__Godfrey": {
+    "birthYear": 1877,
+    "birthDate": null,
+    "precision": "year",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q184337",
+    "status": "reference-source",
+    "identityArticle": "https://en.wikipedia.org/wiki/G._H._Hardy",
+    "basis": "Birth statements agree on this year; no precise day is asserted."
+  },
+  "Jesus_von_Nazaret": {
+    "birthYear": -4,
+    "birthDate": null,
+    "precision": "approximate-year",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q302",
+    "status": "reference-source",
+    "identityArticle": "https://en.wikipedia.org/wiki/Jesus",
+    "basis": "Birth year from the explicitly identified biography; differing source years are represented by an approximate median."
+  },
+  "Karl_der_Grosse": {
+    "birthYear": 745,
+    "birthDate": null,
+    "precision": "approximate-year",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q3044",
+    "status": "reference-source",
+    "identityArticle": "https://en.wikipedia.org/wiki/Charlemagne",
+    "basis": "Birth year from the explicitly identified biography; differing source years are represented by an approximate median."
+  },
+  "Price__H.H.": {
+    "birthYear": 1899,
+    "birthDate": null,
+    "precision": "year",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q3751249",
+    "status": "reference-source",
+    "identityArticle": "https://en.wikipedia.org/wiki/H._H._Price",
+    "basis": "Birth statements agree on this year; no precise day is asserted."
+  },
+  "Kraus__Karl": {
+    "birthYear": 1874,
+    "birthDate": null,
+    "precision": "year",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q44328",
+    "status": "reference-source",
+    "identityArticle": "https://en.wikipedia.org/wiki/Karl_Kraus_(writer)",
+    "basis": "Birth statements agree on this year; no precise day is asserted."
+  },
+  "McTaggart__John_Ellis": {
+    "birthYear": 1866,
+    "birthDate": null,
+    "precision": "year",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q463553",
+    "status": "reference-source",
+    "identityArticle": "https://en.wikipedia.org/wiki/J._M._E._McTaggart",
+    "basis": "Birth statements agree on this year; no precise day is asserted."
+  },
+  "Ward__James": {
+    "birthYear": 1843,
+    "birthDate": null,
+    "precision": "year",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q6145127",
+    "status": "reference-source",
+    "identityArticle": "https://en.wikipedia.org/wiki/James_Ward_(psychologist)",
+    "basis": "Birth statements agree on this year; no precise day is asserted."
+  },
+  "Queen_Victoria": {
+    "birthYear": 1819,
+    "birthDate": null,
+    "precision": "year",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q9439",
+    "status": "reference-source",
+    "identityArticle": "https://en.wikipedia.org/wiki/Queen_Victoria",
+    "basis": "Birth statements agree on this year; no precise day is asserted."
+  }
+}

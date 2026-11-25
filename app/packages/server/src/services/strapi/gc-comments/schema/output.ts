@@ -6,6 +6,7 @@ import {
   numberSchema,
 } from "@repo/shared";
 import { gcContributionSchema } from "../../gc-contribution/schema/output.js";
+import { publicAttributionTextSchema } from "../../public-attribution-schema.js";
 
 // GC Contribution relation schema (minimal for comments)
 export const gcContributionMinimalSchema = gcContributionSchema.partial().nullish();
@@ -16,8 +17,8 @@ export const gcCommentSchema = z
     id: numberSchema,
     documentId: idSchema,
     comment: z.string().min(1, 'Comment is required'),
-    contributorEmail: z.string().nullish(),
-    contributorName: z.string().nullish(),
+    contributorName: publicAttributionTextSchema,
+    contributorInstitution: publicAttributionTextSchema,
     gc_contribution: gcContributionMinimalSchema,
     publishedAt: datetimeSchema,
     updatedAt: datetimeSchema,

@@ -11,6 +11,8 @@ import {
   numberSchema
 } from "@repo/shared";
 import { strapiMediaSchema } from "../../../../strapi/types/schemas.js";
+import { referenceDetailsSchema } from "../../gc-contribution/schema/reference.js";
+import { publicAttributionTextSchema } from "../../public-attribution-schema.js";
 
 export const authorSchema = z.object({
   documentId: idSchema,
@@ -25,7 +27,7 @@ export const authorSchema = z.object({
 export const fileWithCoverSchema = z
   .object({
     cover: strapiMediaSchema,
-    file: strapiMediaSchema,
+    file: strapiMediaSchema.nullish(),
   })
   .openapi({
     description: "Component holding main file and its cover image",
@@ -43,6 +45,8 @@ export const fileWithCoverSchema = z
   export const connectionNatureEnum = z.enum([
     "agreement",
     "neutral / unsure",
+    "neutral",
+    "mixed",
     "opposition",
   ]).openapi({
     description: "Nature of the connection"
@@ -61,9 +65,8 @@ export const fileWithCoverSchema = z
     id: numberSchema,
     documentId: idSchema,
     comment: z.string().min(1, 'Comment is required'),
-    contributorEmail: z.string().nullish(),
-    contributorName: z.string().nullish(),
-    contributorInstitution: z.string().nullish(),
+    contributorName: publicAttributionTextSchema,
+    contributorInstitution: publicAttributionTextSchema,
     publishedAt: datetimeSchema,
     updatedAt: datetimeSchema,
     createdAt: datetimeSchema,
@@ -74,27 +77,31 @@ export const fileWithCoverSchema = z
   export const contributionsSchema = z.object({
     id: numberSchema,
     documentId: idSchema,
-    connectionType: connectionTypeEnum,
+    connectionType: connectionTypeEnum.nullish(),
+    referenceDetails: referenceDetailsSchema.nullish(),
+    submissionKey: z.string().nullish(),
     connectionSource: connectionSourceEnum.nullish(),
-    connectionNature: connectionNatureEnum,
+    connectionNature: connectionNatureEnum.nullish(),
     isSimilarityIdeas: booleanSchema.nullish(),
     isBiographical: booleanSchema.nullish(),
     isOther: booleanSchema.nullish(),
     explainConnection: descriptionSchema.nullish(),
+    connectionUncertain: z.boolean().nullish(),
+    originComment: z.string().max(65535).nullish(),
+    supportingReference: z.string().max(65535).nullish(),
     bookA_id: idSchema,
-    bookB_id: idSchema,
+    bookB_id: idSchema.nullish(),
     bookA_textExcerpt: descriptionSchema,
-    bookB_textExcerpt: descriptionSchema,
-    bookA_title: z.string().min(2, 'Book title is required'),
-    bookB_title: z.string().min(2, 'Book title is required'),
+    bookB_textExcerpt: descriptionSchema.nullish(),
+    bookA_title: z.string().min(1, 'Book title is required'),
+    bookB_title: z.string().nullish(),
     books: z.array(bookMinimalSchema).nullish(),
     gc_comments: z.array(commentsSchema).nullish(),
     createdAt: datetimeSchema,
     updatedAt: datetimeSchema,
     publishedAt: datetimeSchema,
-    contributorEmail: z.string().nullish(),
-    contributorName: z.string().nullish(),
-    contributorInstitution: z.string().nullish(),
+    contributorName: publicAttributionTextSchema,
+    contributorInstitution: publicAttributionTextSchema,
   })
   .openapi({
     description: "Contributions object returned from Strapi",

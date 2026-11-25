@@ -14,14 +14,24 @@
   "attributes": {
     "bookName": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "authorName": {
       "type": "string",
       "required": true
     },
     "requesterEmail": {
-      "type": "string"
-    }
+      "type": "string",
+      "private": true
+    },
+    "requesterUserId": { "type": "string", "private": true },
+    "entityType": { "type": "enumeration", "enum": ["author", "work"], "default": "work" },
+    "reviewStatus": { "type": "enumeration", "enum": ["proposed", "accepted", "rejected"], "default": "proposed" },
+    "reviewNote": { "type": "text" },
+    "reviewedBy": { "type": "string", "private": true },
+    "linkedEntityDocumentId": { "type": "string" },
+    "contributionDocumentId": { "type": "string" },
+    "authorDocumentId": { "type": "string" },
+    "dependsOnRequestDocumentId": { "type": "string" }
   }
 }

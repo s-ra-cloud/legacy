@@ -63,3 +63,17 @@ There is intentionally no public upload/import endpoint and no startup import.
 The graph API bounds neighborhood size/depth and path-search work. It excludes
 collaborations and affiliations, supports multiple mentors, and reports truncation
 and search limits. A limited search is never evidence that no historical path exists.
+
+## Relationship display regressions
+
+Run `pnpm --filter @workspace/scripts test:kt-relationships` from the project root.
+The synthetic fixtures cover direction, multiple mentors, reciprocal roles,
+cycles, shared branches, unknown types, shortest-hop radial sectors, persistent
+selection, profile grouping, bounded views, filters, display/theme switching,
+dense accessible names, keyboard actions and graph controls.
+
+The component tests run real React and D3 with a Sigma adapter that follows
+Sigma 4's evaluated-style/source-attribute reducer contract. They do not verify
+GPU drawing, CSS reflow or native scrolling. Check those in the public explorer
+at `/projects/knowledge-tree?researcher=1`, adding `&view=constellation` for
+the second display. No fixture records or credentials are written to a database.

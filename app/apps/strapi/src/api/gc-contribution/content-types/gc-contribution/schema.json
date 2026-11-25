@@ -17,7 +17,7 @@
   "attributes": {
     "connectionType": {
       "type": "enumeration",
-      "required": true,
+      "required": false,
       "enum": [
         "explicit",
         "implicit"
@@ -29,11 +29,13 @@
     },
     "connectionNature": {
       "type": "enumeration",
-      "required": true,
+      "required": false,
       "enum": [
         "agreement",
         "neutral / unsure",
-        "opposition"
+        "opposition",
+        "neutral",
+        "mixed"
       ]
     },
     "isSimilarityIdeas": {
@@ -81,17 +83,24 @@
     "explainConnection": {
       "type": "text"
     },
+    "connectionUncertain": { "type": "boolean" },
+    "originComment": { "type": "text" },
+    "supportingReference": { "type": "text" },
     "contributorEmail": {
       "type": "string",
-      "required": false
+      "required": false,
+      "private": true
     },
+    "contributorUserId": { "type": "string", "private": true },
+    "contributorName": { "type": "string" },
+    "contributorInstitution": { "type": "string" },
     "bookA_id": {
       "type": "string",
       "required": true
     },
     "bookB_id": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "bookA_textExcerpt": {
       "type": "text",
@@ -99,7 +108,7 @@
     },
     "bookB_textExcerpt": {
       "type": "text",
-      "required": true
+      "required": false
     },
     "bookA_title": {
       "type": "string",
@@ -107,8 +116,20 @@
     },
     "bookB_title": {
       "type": "string",
-      "required": true
+      "required": false
     },
+    "referenceDetails": { "type": "json" },
+    "referenceRevisionHistory": { "type": "json", "private": true },
+    "submissionKey": { "type": "string" },
+    "submissionFingerprint": { "type": "string", "private": true },
+    "connectionReviewStatus": {
+      "type": "enumeration",
+      "enum": ["catalogue_review", "ready_to_continue", "editorial_review", "accepted", "rejected"]
+    },
+    "connectionReviewNote": { "type": "text" },
+    "connectionReviewedBy": { "type": "string", "private": true },
+    "continuationKey": { "type": "string", "private": true },
+    "continuationFingerprint": { "type": "string", "private": true },
     "books": {
       "type": "relation",
       "relation": "manyToMany",

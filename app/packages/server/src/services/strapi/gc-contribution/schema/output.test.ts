@@ -26,5 +26,5 @@ for (const [name, schema] of [
 }
 
 test("public contribution input cannot claim archive or AI provenance", () => {
-  assert.equal("connectionSource" in gcContributionDataSchema.shape, false);
+  assert.equal("connectionSource" in gcContributionDataSchema.innerType().shape, false);
 });

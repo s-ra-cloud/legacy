@@ -46,6 +46,27 @@ export type Account = {
     createdAt: Generated<(string | Date)>;
     updatedAt: (string | Date);
 };
+export type GCVerificationEntity = {
+    key: string;
+    kind: string;
+    original: unknown;
+    revision: Generated<number>;
+};
+export type GCVerificationRevision = {
+    id: string;
+    submissionId: string | null;
+    amendsRevisionId: string | null;
+    entityKey: string;
+    revision: number;
+    values: unknown;
+    coverage: unknown;
+    sourcePayload: unknown;
+    userId: string;
+    firstName: string;
+    lastName: string;
+    createdAt: Generated<(string | Date)>;
+    source: string | null;
+};
 export type Media = {
     id: string;
     fileName: string;
@@ -130,6 +151,8 @@ export type Verification = {
 };
 export type DB = {
     accounts: Account;
+    gcVerificationEntities: GCVerificationEntity;
+    gcVerificationRevisions: GCVerificationRevision;
     media: Media;
     notifications: Notification;
     sessions: Session;
