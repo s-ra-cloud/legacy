@@ -73,10 +73,12 @@ An academic genealogy explorer for documented mentor–student relationships. It
 
 - **Start with a NeoAlexandria thinker** (all 8 authors are listed and can be filtered), or **search the Academic Tree by name**. Not every thinker has a documented record.
 - **Radial Genealogy:** puts one thinker at the centre and reads their recorded teachers and students outward, generation by generation.
-- **Scholarly Constellation:** shows a thinker within the wider network of advisor and student relationships.
-- **Dataset:** a snapshot of The Academic Family Tree from 23 April 2026, with **896,262 researchers**, **1,850,796 documented connections** and **50,771 institutions**. The core genealogy is complete. Publication references are still being imported and grant references haven't been imported yet, so some profiles may be incomplete.
+- **Scholarly Constellation:** shows a thinker within the wider network of advisor and student relationships, as a WebGL graph.
+- **Researcher profiles:** degrees, research area, homepage and ORCID where the source provides them, plus the documented teachers and students.
+- **Connection finder:** finds the shortest documented mentorship path between two researchers, in both directions. A path isn't a measure of intellectual influence, and "no path found" doesn't mean no historical connection exists.
+- **Dataset:** a snapshot of The Academic Family Tree from 23 April 2026 ([Zenodo export](https://zenodo.org/records/19739198) by Stephen V. David), with **896,262 researchers**, **1,850,796 documented connections** and **50,771 institutions**. The core genealogy is complete. Publication references are still being imported and grant references haven't been imported yet, so some profiles may be incomplete.
 - **Paper mode:** a light reading theme.
-- *In preparation:* a **Chronological View** of mentorships across eras, and **Suggest a Record** / **CSV upload** for cited corrections and additions. These will be reviewed before publication and kept separate from the original Academic Tree data.
+- *In preparation:* a **Chronological View** of mentorships across eras, **advanced search**, and **Suggest a Record** / **CSV upload** for cited corrections and additions. These will be reviewed before publication and kept separate from the original Academic Tree data.
 - Related project: [**Academic Hunter**](https://github.com/ZachLaik/academic-mentorship-data-hunter), a separate research project that finds additional academic relationships. None of its results are merged into the Knowledge Tree.
 
 ## Home page
@@ -129,7 +131,7 @@ LEGACY welcomes:
 
 **To add a reference to The Great Conversation:** sign in, go to `/projects/great-conversation/contribute`, pick an author and a book, highlight the passage, and record the referenced work, whether the reference is explicit or implicit, and its stance (agreement, neutrality or opposition).
 
-To propose anything else, use the [Contact page](https://legacy-project.io/contact-us).
+To propose anything else, email **[laura.duparc@um6p.ma](mailto:laura.duparc@um6p.ma)**.
 
 ## Partners and funding
 
@@ -148,7 +150,7 @@ To propose anything else, use the [Contact page](https://legacy-project.io/conta
 | Module | Source | License / notes |
 |---|---|---|
 | The Great Conversation | Wittgenstein Archives at the University of Bergen (WAB) / Bergen Nachlass Edition | Snapshot of 10 Nov 2026; stance classifications are AI-generated unless reviewed |
-| Knowledge Tree | [The Academic Family Tree](https://academictree.org/) | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/); snapshot of 23 Apr 2026 |
+| Knowledge Tree | [The Academic Family Tree](https://academictree.org/), [Zenodo export](https://zenodo.org/records/19739198) by Stephen V. David | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/); snapshot of 23 Apr 2026. LEGACY is an independent viewer, not an official partner |
 | Home globe | Quotations from public-domain editions | Each quotation links to its source |
 
 ## Roadmap
@@ -169,7 +171,7 @@ To propose anything else, use the [Contact page](https://legacy-project.io/conta
 
 ## Technical overview
 
-> The sections below describe the code in this repository. Some live-site features described above, such as the Academic Tree import, the Bergen archive data and merge proposals, may come from code that hasn't been pushed here yet.
+> The sections below describe the code in this repository. The Great Conversation's Bergen archive data, verification and merge proposals are live on the site but not in this repository yet.
 
 LEGACY is a **TypeScript monorepo** (pnpm workspaces + Turborepo) with five services behind **nginx**:
 
@@ -182,21 +184,24 @@ LEGACY is a **TypeScript monorepo** (pnpm workspaces + Turborepo) with five serv
                      React Router 7  Hono +        React Router  Strapi 5 CMS   storage
                      (SSR)           OpenAPI       (SSR)         (books, team,  (uploads)
                                        │                         contributions)
-                                       ├──► PostgreSQL 16 (users, sessions, media; Strapi in `strapi` schema)
+                                       ├──► PostgreSQL 16 (users, sessions, media; Strapi in `strapi`;
+                                       │                  Academic Tree data in `knowledge_tree`)
                                        └──► Redis (cache / sessions)
 ```
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 19, React Router v7 (SSR), TanStack Query / Form / Table, Tailwind CSS v4, shadcn/ui, Framer Motion, D3 |
-| API | Hono, hono-openapi, Zod, Scalar API reference |
-| Auth | better-auth (email + password, Google OAuth) |
+| Frontend | React 19, React Router v7 (SSR), TanStack Query / Form / Table, Tailwind CSS v4, shadcn/ui, Framer Motion |
+| Graphs | D3 (Great Conversation, radial genealogy), Sigma.js 4 + Graphology with ForceAtlas2 (WebGL constellation) |
+| API | Hono, hono-openapi, Zod, Scalar API reference; bundled with esbuild for production |
+| Auth | better-auth 1.7 (email + password, Google OAuth) |
 | Database | PostgreSQL 16, Prisma (schema and migrations), Kysely (type-safe queries) |
-| CMS | Strapi 5 (in its own `strapi` Postgres schema) |
+| CMS | Strapi 5.60 (in its own `strapi` Postgres schema) |
 | Storage | MinIO locally, with a custom object-storage provider for Strapi uploads in production |
 | Cache | Redis |
 | i18n | Paraglide / inlang (English and French) |
-| Tooling | Turborepo, pnpm 10, Biome, ESLint, TypeScript 5.8 |
+| Tooling | Turborepo, pnpm 10, Biome, ESLint, TypeScript 5.8, Vitest and `node:test` |
+| Data import | Python 3.11 (resumable Academic Tree importer) |
 
 ## Project structure
 
@@ -211,13 +216,16 @@ LEGACY is a **TypeScript monorepo** (pnpm workspaces + Turborepo) with five serv
 │   ├── packages/
 │   │   ├── server/              # Business logic, organised into services (users, media, strapi/*…)
 │   │   ├── db/                  # Prisma schema and migrations, Kysely client and generated types
+│   │   │   └── knowledge-tree/  # SQL schema for the isolated knowledge_tree namespace
 │   │   ├── shared/              # Env validation, Zod helpers, HTTP errors, media URL helpers
 │   │   └── ui/                  # Headless components and the generated OpenAPI client
 │   ├── tooling/typescript/      # Shared tsconfig presets
 │   ├── docker-compose.yaml      # Postgres + Redis + app + nginx
 │   ├── nginx.conf / nginx.dev.conf
 │   └── AGENTS.md                # Architecture conventions
-├── scripts/                     # Production build/start, post-merge, Strapi seed and sync SQL
+├── scripts/                     # Production build/start, post-merge, Strapi seed and sync SQL, release-safety test
+│   └── knowledge-tree/          # Academic Tree importer (import.py), smoke test, pipeline README
+├── docs/                        # Release checklist, Knowledge Tree recovery notes, security upgrade assessment
 ├── nginx.replit.conf            # nginx config used on Replit (dev and prod)
 ├── .replit / replit.nix         # Replit workflows and system packages
 └── docker/                      # Postgres multi-database init script
@@ -253,10 +261,7 @@ cd apps/strapi && npm install && cd ../..
 
 ### 2. Configure
 
-```bash
-cp .env.example .env                           # then fill in the variables below
-cp apps/strapi/.env.example apps/strapi/.env   # replace every "tobemodified"
-```
+Create `app/.env` with the [server and client variables](#environment-variables), and `app/apps/strapi/.env` with the Strapi variables. There are no `.env.example` templates in the repo any more. Generate random values for every Strapi secret.
 
 ### 3. Database
 
@@ -264,6 +269,16 @@ cp apps/strapi/.env.example apps/strapi/.env   # replace every "tobemodified"
 pnpm --filter @repo/db db:migrate     # apply Prisma migrations
 psql "$DATABASE_URL" -c 'CREATE SCHEMA IF NOT EXISTS strapi;'
 ```
+
+**Knowledge Tree data (optional, development only).** Apply the schema, then import the Academic Family Tree export files (see [`scripts/knowledge-tree/README.md`](scripts/knowledge-tree/README.md)):
+
+```bash
+psql "$DATABASE_URL" -f app/packages/db/knowledge-tree/schema.sql
+python3 scripts/knowledge-tree/import.py --development --files <export-dir> --core-only
+python3 scripts/knowledge-tree/import.py --development --files <export-dir>
+```
+
+The first pass loads researchers, connections and institutions; the second adds publication and grant references. The importer is resumable and idempotent. Without this data, the Knowledge Tree API returns 503.
 
 ### 4. Build the shared packages once
 
@@ -285,7 +300,7 @@ pnpm serve                        # optional: nginx on a single port
 |---|---|
 | Client | http://localhost:5173 |
 | Admin | http://localhost:3001 |
-| API | http://localhost:3000/api |
+| API | http://localhost:3000/api/v1 |
 | API reference | http://localhost:3000/api/v1/openapi/reference |
 | Strapi | http://localhost:1337/admin |
 | MinIO console | http://localhost:9001 |
@@ -303,6 +318,8 @@ pnpm serve                        # optional: nginx on a single port
 | `pnpm db:migrate` | Run Prisma migrations |
 | `pnpm --filter @repo/db db:studio` | Open Prisma Studio |
 | `pnpm api:typegen` | Regenerate the typed API client from the OpenAPI spec |
+| `pnpm --filter @repo/api test` | API runtime-config tests |
+| `node --test scripts/test-release-safety.test.mjs` (from the repo root) | Release-safety checks |
 | `pnpm lang` | Compile translations |
 
 ## Environment variables
@@ -319,6 +336,7 @@ Validated with Zod in [`packages/shared/src/env.server.ts`](app/packages/shared/
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` | Google sign-in |
 | `MINIO_*` | Object storage |
 | `TZ` | Time zone (default `Africa/Casablanca`) |
+| `API_HOST`, `API_PORT` | API listener (default `127.0.0.1:3000`); `PORT` is the public nginx port |
 
 **Client (build time)**
 
@@ -344,6 +362,11 @@ All endpoints are under `/api/v1`. Interactive docs (Scalar) are at **`/api/v1/o
 | `/gc-contributions`, `/comments` | Great Conversation references and their comments |
 | `/home-philosophers` | Philosophers shown in the landing-page hero and globe |
 | `/teams`, `/contributors`, `/partners`, `/partnerships` | Team, scholars and institutions |
+| `/knowledge-tree/search?q=` | Search researchers by name (20 results max) |
+| `/knowledge-tree/stats` | Dataset counts and import progress |
+| `/knowledge-tree/researchers/:id` | Researcher profile |
+| `/knowledge-tree/network/:id` | Mentors and students around a researcher, generation by generation (depth and size are capped) |
+| `/knowledge-tree/path?from=&to=` | Shortest documented mentorship path between two researchers |
 
 ## Content model (Strapi)
 
@@ -363,8 +386,9 @@ All endpoints are under `/api/v1`. Interactive docs (Scalar) are at **`/api/v1/o
 
 Production runs on a **Replit autoscale deployment** and is served at **legacy-project.io**.
 
-- **Build:** [`scripts/build-prod.sh`](scripts/build-prod.sh) installs dependencies, builds the shared packages, generates the Prisma client, pushes the schema, makes sure the `strapi` schema exists, builds Admin, Client and Strapi, and grants the Strapi Public role its API permissions.
+- **Build:** [`scripts/build-prod.sh`](scripts/build-prod.sh) installs dependencies, builds the shared packages, generates the Prisma client, bundles the API to `dist/node.js`, and builds Admin, Client and Strapi. The build fails if any step fails. It **doesn't migrate the database**: schema changes go through Replit's Publish schema review.
 - **Start:** [`scripts/start-prod.sh`](scripts/start-prod.sh) starts Redis, then nginx right away so the health check passes. It then seeds uploads to object storage once (guarded by a sentinel) and runs Strapi, API, Admin and Client under restart-on-exit watchdogs.
+- **Release checklist:** follow [`docs/release-checklist.md`](docs/release-checklist.md) before every publish.
 - **Content sync:** Replit migrates the database *schema* to production, not its *rows*. To push Team changes, set `STRAPI_SYNC_TEAM=1` for one deploy. That applies [`scripts/sync-team-prod.sql`](scripts/sync-team-prod.sql), which is surgical and idempotent. Unset the flag afterwards.
 
 ## Known pitfalls
@@ -373,12 +397,16 @@ Production runs on a **Replit autoscale deployment** and is served at **legacy-p
 - **Same-origin requests in the browser.** Production is served at `legacy-project.io`, but `VITE_API_URL`/`VITE_APP_URL` are baked in at build time. Browser code must use relative URLs or `window.location.origin`, or the cross-origin requests fail on CORS.
 - **Never force-import a full Strapi export into production.** It overwrites every content type and can delete media stored in object storage. Push one content type at a time, idempotently.
 - **Optional media fields.** When a Strapi media field is optional, null-guard it in the server transform and mark it nullable in the output schema.
-- **Strapi version.** `@strapi/strapi@5.23.0` is flagged for a critical CVE and blocked by some package firewalls, so fresh installs can fail. Upgrade Strapi to fix this.
+- **No schema changes in build or startup.** Don't reintroduce `prisma db push`, `--accept-data-loss` or startup DDL. The API checks the schema at startup and exits with an explanation if it's missing something.
+- **Knowledge Tree in production.** Publishing schema doesn't copy rows, and production has no `pg_trgm` extension. Load production data with a separately authorised, data-only import, and never overwrite production data. See [`docs/knowledge-tree-production-recovery.md`](docs/knowledge-tree-production-recovery.md).
+- **Test the constellation with WebGL on.** Type checks and SSR builds pass even when the Sigma.js render is broken.
 
 ## Contact
 
-For questions, partnerships or to join the expert network, use the [Contact page](https://legacy-project.io/contact-us).
+For questions, partnerships or to join the expert network, email **[laura.duparc@um6p.ma](mailto:laura.duparc@um6p.ma)**.
 
 ## License
 
-LEGACY is free software, licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html).
+LEGACY is free software: you can redistribute it and/or modify it under the terms of the **GNU General Public License v3.0**. See [`LICENSE`](LICENSE) for the full text.
+
+Third-party data keeps its own license. In particular, the Academic Family Tree data is under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
