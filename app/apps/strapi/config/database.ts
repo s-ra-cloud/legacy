@@ -1,0 +1,84 @@
+import path from 'path';
+
+export default ({ env }) => {
+  const client = env('DATABASE_CLIENT', 'sqlite');
+
+  const connections = {
+    mysql: {
+      connection: {
+        host: env('DATABASE_HOST', 'localhost'),
+        port: env.int('DATABASE_PORT', 3306),
+        database: env('DATABASE_NAME', 'strapi'),
+        user: env('DATABASE_USERNAME', 'strapi'),
+        password: env('DATABASE_PASSWORD', 'strapi'),
+        ssl: env.bool('DATABASE_SSL', false) && {
+          key: env('DATABASE_SSL_KEY', undefined),
+          cert: env('DATABASE_SSL_CERT', undefined),
+          ca: env('DATABASE_SSL_CA', undefined),
+          capath: env('DATABASE_SSL_CAPATH', undefined),
+          cipher: env('DATABASE_SSL_CIPHER', undefined),
+          rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
+        },
+      },
+      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+    },
+    postgres: {
+      connection: {
+        connectionString: env('DATABASE_URL'),
+        host: env('DATABASE_HOST', 'localhost'),
+        port: env.int('DATABASE_PORT', 5432),
+        database: env('DATABASE_NAME', 'strapi'),
+        user: env('DATABASE_USERNAME', 'strapi'),
+        password: env('DATABASE_PASSWORD', 'strapi'),
+        ssl: env.bool('DATABASE_SSL', false) && {
+          key: env('DATABASE_SSL_KEY', undefined),
+          cert: env('DATABASE_SSL_CERT', undefined),
+          ca: env('DATABASE_SSL_CA', undefined),
+          capath: env('DATABASE_SSL_CAPATH', undefined),
+          cipher: env('DATABASE_SSL_CIPHER', undefined),
+          rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
+        },
+        schema: env('DATABASE_SCHEMA', 'public'),
+        // TCP keepalive — prevents the managed-DB server from silently
+        // dropping idle connections after its own idle-timeout threshold.
+        // Without this Strapi crashes with "Connection terminated unexpectedly"
+        // every hour or two of low traffic.
+        keepAlive: true,
+        keepAliveInitialDelayMillis: 10000,
+      },
+      pool: {
+        min: env.int('DATABASE_POOL_MIN', 0),
+        max: env.int('DATABASE_POOL_MAX', 5),
+        // Release idle connections after 10 s — well inside any managed-DB
+        // idle-connection timeout — so the pool never hands out stale sockets.
+        idleTimeoutMillis: env.int('DATABASE_POOL_IDLE_TIMEOUT', 10000),
+        reapIntervalMillis: env.int('DATABASE_POOL_REAP_INTERVAL', 1000),
+        createTimeoutMillis: env.int('DATABASE_POOL_CREATE_TIMEOUT', 60000),
+        // Mark a connection as invalid the moment its socket emits an error.
+        // Knex/tarn then destroys the broken socket before handing it out,
+        // preventing the "pool full of zombies → timeout" crash.
+        afterCreate: (conn: any, done: (err: Error | null, conn: any) => void) => {
+          conn.on('error', () => {
+            conn._invalid = true;
+          });
+          done(null, conn);
+        },
+        propagateCreateError: false,
+      },
+    },
+    sqlite: {
+      connection: {
+        filename: path.join(__dirname, '..', '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+      },
+      useNullAsDefault: true,
+    },
+  };
+
+  return {
+    connection: {
+      client,
+      ...connections[client],
+      acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
+    },
+  };
+};

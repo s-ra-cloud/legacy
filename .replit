@@ -1,0 +1,189 @@
+modules = ["python-3.11", "nodejs-20", "postgresql-16"]
+[nix]
+channel = "stable-25_05"
+
+[agent]
+expertMode = true
+integrations = ["javascript_object_storage:2.0.0"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Redis"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "MinIO"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "API"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Admin"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Client"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Strapi"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Server build watch"
+
+[[workflows.workflow]]
+name = "Redis"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "redis-server --port 6379 --bind 127.0.0.1 --save \"\" --appendonly no --daemonize no"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "MinIO"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "mkdir -p .data/minio && minio server .data/minio --address 127.0.0.1:9000 --console-address 127.0.0.1:9001"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "mkdir -p .data/nginx/logs .data/nginx/tmp && cp -n \"$(dirname \"$(dirname \"$(readlink -f \"$(which nginx)\")\")\")/conf/mime.types\" .data/nginx/mime.types 2>/dev/null || true; exec nginx -c $PWD/nginx.replit.conf -p $PWD -e $PWD/.data/nginx/logs/error.log"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow]]
+name = "API"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd app && pnpm --filter '@repo/api' dev"
+waitForPort = 3000
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "Admin"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd app && pnpm --filter admin dev"
+waitForPort = 3001
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "Client"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd app && pnpm --filter '@repo/client' dev"
+waitForPort = 5173
+
+[[workflows.workflow]]
+name = "Strapi"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd app/apps/strapi && npm run develop"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "Server build watch"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd app && pnpm --filter @repo/server dev"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[ports]]
+localPort = 1337
+externalPort = 3003
+exposeLocalhost = true
+
+[[ports]]
+localPort = 3000
+externalPort = 3000
+exposeLocalhost = true
+
+[[ports]]
+localPort = 3001
+externalPort = 3001
+exposeLocalhost = true
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 5173
+externalPort = 5173
+exposeLocalhost = true
+
+[[ports]]
+localPort = 5174
+externalPort = 3002
+exposeLocalhost = true
+
+[[ports]]
+localPort = 9000
+externalPort = 9000
+exposeLocalhost = true
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["bash", "scripts/start-prod.sh"]
+build = ["bash", "scripts/build-prod.sh"]
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 180000
+
+[userenv]
+
+[userenv.production]
+
+[userenv.shared]
+STRAPI_SYNC_TEAM = "1"

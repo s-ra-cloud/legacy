@@ -1,0 +1,12 @@
+- [Repo server dist staleness](repo-server-dist-staleness.md) — `@repo/server` resolves to gitignored `./dist`; dev API breaks if dist not kept fresh via tsc --watch.
+- [Strapi optional media & prod content delivery](strapi-team-and-prod-export.md) — null-guard optional media across schema/transform/output; never full-force-import to prod, push one content type surgically via the deploy build phase.
+- [Strapi install firewall](strapi-firewall-block.md) — historical blocked releases require aligned upgrades; synchronize pnpm and separate npm installation paths.
+- [Custom domain vs baked VITE origins](custom-domain-origin-coupling.md) — prod serves at legacy-project.io; browser code must stay same-origin, never use baked VITE_API_URL/VITE_APP_URL cross-origin (CORS blocks, curl won't show it).
+- [Quotation editorial policy](quotation-editorial-policy.md) — landing-page quotes require traceable work/edition citations; original CMS copy contained misattributions.
+- [Partner placement](partner-placement.md) — CHL belongs within the existing homepage and Team partner lists, not in standalone banners.
+- [Auth upgrade constraints](auth-upgrade-constraints.md) — preserve uploaded-media profiles, dual Zod compatibility, exact trusted origins and shared SSR query context.
+- [Clean release source](clean-release-source.md) — local builds can hide ignored source configuration; compare snapshot inputs before changing dependencies.
+- [Knowledge Tree WebGL](knowledge-tree-webgl.md) — Sigma 4 style replacement and size units need real WebGL verification; the standard capture browser may lack WebGL 2.
+- [Knowledge Tree brand](knowledge-tree-brand.md) — user requires the module's visual design to match the rest of the Legacy site.
+- [Knowledge Tree production schema](knowledge-tree-production-schema.md) — Publish detects prefixed public tables but omitted the custom namespace; verify extension prerequisites and preserve data.
+- [Private-flow verification](private-flow-verification.md) — isolated shared-component tests do not verify signed-in routes; keep auth intact and report that distinction.

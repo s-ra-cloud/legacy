@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "requested_books",
+  "info": {
+    "singularName": "requested-book",
+    "pluralName": "requested-books",
+    "displayName": "Requested books",
+    "description": "Books requested by users to be added"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "bookName": {
+      "type": "string",
+      "required": true
+    },
+    "authorName": {
+      "type": "string",
+      "required": true
+    },
+    "requesterEmail": {
+      "type": "string"
+    }
+  }
+}

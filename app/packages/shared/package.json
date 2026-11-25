@@ -1,0 +1,42 @@
+{
+  "name": "@repo/shared",
+  "type": "module",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./env-client": {
+      "types": "./dist/env-client.d.ts",
+      "import": "./dist/env-client.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "clean": "git clean -xdf node_modules dist .cache .turbo"
+  },
+  "dependencies": {
+    "file-type": "^21.0.0",
+    "pino": "^9.6.0",
+    "zod": "catalog:",
+    "zod-openapi": "^4.2.4"
+  },
+  "devDependencies": {
+    "@repo/tsconfig": "workspace:*",
+    "pino-pretty": "^13.0.0"
+  }
+}

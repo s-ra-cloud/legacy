@@ -1,0 +1,64 @@
+{
+  "kind": "collectionType",
+  "collectionName": "authors",
+  "info": {
+    "singularName": "author",
+    "pluralName": "authors",
+    "displayName": "author"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "firstName": {
+      "type": "string",
+      "required": false
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "gender": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "male",
+        "female"
+      ]
+    },
+    "birthDeath": {
+      "type": "string",
+      "default": "(00-00 BCE)",
+      "required": true,
+      "regex": "\\(([A-Za-z0-9]+-[A-Za-z0-9]+(?: [A-Za-z0-9]+)*)\\)"
+    },
+    "picture": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "expert": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::contributing-scholars.contributing-scholars"
+    },
+    "youtubeLink": {
+      "type": "string"
+    },
+    "books": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::book.book",
+      "pluginOptions": {
+        "rest": {
+          "expose": true
+        }
+      },
+      "mappedBy": "author"
+    }
+  }
+}

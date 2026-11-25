@@ -1,0 +1,132 @@
+{
+  "kind": "collectionType",
+  "collectionName": "home_philosophers",
+  "info": {
+    "singularName": "home-philosopher",
+    "pluralName": "home-philosophers",
+    "displayName": "Home Philosopher"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "dates": {
+      "type": "string",
+      "required": true
+    },
+    "era": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "showInHero": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "heroIndex": {
+      "type": "integer",
+      "unique": true,
+      "min": 1,
+      "conditions": {
+        "visible": {
+          "==": [{ "var": "showInHero" }, true]
+        }
+      }
+    },
+    "showOnMobile": {
+      "type": "boolean",
+      "default": false,
+      "conditions": {
+        "visible": {
+          "==": [{ "var": "showInHero" }, true]
+        }
+      }
+    },
+    "heroQuote": {
+      "type": "text",
+      "conditions": {
+        "visible": {
+          "==": [{ "var": "showInHero" }, true]
+        }
+      }
+    },
+    "showOnEarth": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "city": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [{ "var": "showOnEarth" }, true]
+        }
+      }
+    },
+    "country": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [{ "var": "showOnEarth" }, true]
+        }
+      }
+    },
+    "lat": {
+      "type": "float",
+      "conditions": {
+        "visible": {
+          "==": [{ "var": "showOnEarth" }, true]
+        }
+      }
+    },
+    "lon": {
+      "type": "float",
+      "conditions": {
+        "visible": {
+          "==": [{ "var": "showOnEarth" }, true]
+        }
+      }
+    },
+    "school": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [{ "var": "showOnEarth" }, true]
+        }
+      }
+    },
+    "earthQuote": {
+      "type": "text",
+      "conditions": {
+        "visible": {
+          "==": [{ "var": "showOnEarth" }, true]
+        }
+      }
+    },
+    "earthOrder": {
+      "type": "integer",
+      "min": 1,
+      "conditions": {
+        "visible": {
+          "==": [{ "var": "showOnEarth" }, true]
+        }
+      }
+    }
+  }
+}

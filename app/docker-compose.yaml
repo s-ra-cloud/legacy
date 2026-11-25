@@ -1,0 +1,78 @@
+services:
+  db:
+    container_name: legacy_database
+    image: postgres:16
+    restart: always
+    volumes:
+      - data:/var/lib/postgresql/data
+      - ./init-databases.sql:/docker-entrypoint-initdb.d/init-databases.sql
+    env_file: .env
+    networks:
+      - network
+    healthcheck:
+      test:
+        ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB} || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  redis:
+    container_name: legacy_redis
+    image: redis:7-alpine
+    restart: always
+    command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSWORD"
+    volumes:
+      - redis:/data
+    env_file: .env
+    networks:
+      - network
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a $$REDIS_PASSWORD ping | grep PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  app:
+    build:
+      context: .
+    container_name: legacy_app
+    image: legacy-app
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./apps/strapi/public/uploads:/app/apps/strapi/public/uploads
+      - ./apps/strapi/types:/app/apps/strapi/types
+      - ./apps/strapi/src:/app/apps/strapi/src
+      - ./apps/strapi/config:/app/apps/strapi/config
+      - ./apps/strapi/.env:/app/apps/strapi/.env
+    networks:
+      - network
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  server:
+    image: nginx:alpine
+    container_name: legacy_server
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: always
+    ports:
+      - "8080:80"
+    networks:
+      - network
+    depends_on:
+      - app
+
+volumes:
+  data:
+  redis:
+
+networks:
+  network:
+    driver: bridge

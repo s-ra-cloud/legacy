@@ -1,0 +1,49 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "dev": {
+      "env": [
+        "EMAIL_*",
+        "MINIO_*",
+        "REDIS_*",
+        "NODE_ENV",
+        "API_URL",
+        "DATABASE_URL",
+        "APP_CLIENT_URL",
+        "VITE_*"
+      ],
+      "cache": false,
+      "persistent": true
+    },
+    "lang": {
+      "cache": false
+    },
+    "api:typegen": {
+      "cache": false
+    },
+    "db:migrate": {
+      "cache": false
+    },
+    "lint": {
+      "cache": false,
+      "dependsOn": ["^lint"]
+    },
+    "lint:fix": {
+      "cache": false,
+      "dependsOn": ["^lint:fix"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist", "build"]
+    },
+    "clean": {
+      "cache": false,
+      "persistent": false
+    },
+    "biome:check": {},
+    "biome:fix": {
+      "cache": false
+    }
+  }
+}

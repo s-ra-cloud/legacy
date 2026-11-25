@@ -1,0 +1,220 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "example_message": "Hello world {username}",
+  "profile": {
+    "notificationSettings": {
+      "title": "Notification Settings",
+      "description": "Manage how you receive notifications from us.",
+      "emailNotifications": {
+        "title": "Email Notifications",
+        "description": "Receive important updates and news via email."
+      },
+      "pushNotifications": {
+        "title": "Push Notifications",
+        "description": "Get real-time alerts on your device (if supported)."
+      },
+      "pushDisabled": "Push notifications are currently disabled in this demo.",
+      "saveChanges": "Save Changes"
+    },
+    "linkedAccounts": {
+      "title": "Linked Accounts",
+      "description": "Manage your connected social accounts.",
+      "noAccounts": "No accounts linked yet.",
+      "addNewAccount": "Add New Account:",
+      "connect": "Connect",
+      "remove": "Remove",
+      "allConnected": "All available providers connected."
+    },
+    "passwordChange": {
+      "title": "Change Password",
+      "description": "Make sure to choose a strong password.",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "cancel": "Cancel",
+      "saveChanges": "Save Changes",
+      "validation": {
+        "currentRequired": "Current password is required.",
+        "newMinLength": "New password must be at least 8 characters.",
+        "confirmMinLength": "Confirm password must be at least 8 characters.",
+        "passwordsDontMatch": "Passwords don't match"
+      }
+    },
+    "profileForm": {
+      "name": "Name",
+      "email": "Email",
+      "namePlaceholder": "Your name",
+      "emailPlaceholder": "your.email@example.com",
+      "updateProfile": "Update Profile",
+      "validation": {
+        "nameMinLength": "Name must be at least 2 characters.",
+        "emailInvalid": "Please enter a valid email address."
+      },
+      "phoneNumber": "Phone Number"
+    },
+    "avatar": {
+      "changePhoto": "Change Photo",
+      "removePhoto": "Remove Photo"
+    },
+    "title": "Profile",
+    "description": "Manage your account settings and preferences.",
+    "tabs": {
+      "profile": "Profile",
+      "security": "Security",
+      "connections": "Connections",
+      "notifications": "Notifications"
+    },
+    "publicProfile": {
+      "title": "Public Profile",
+      "description": "This information will be displayed publicly."
+    },
+    "security": {
+      "title": "Security",
+      "description": "Manage your account security settings.",
+      "password": {
+        "title": "Password",
+        "description": "Change your password to keep your account secure."
+      }
+    },
+    "edit": {
+      "title": "Edit Profile",
+      "description": "Edit your profile"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "title": "Welcome back",
+      "description": "Enter your email to sign in to your account",
+      "noAccount": "Don't have an account? Sign Up",
+      "form": {
+        "email": "Email",
+        "emailPlaceholder": "name@example.com",
+        "password": "Password",
+        "passwordPlaceholder": "********",
+        "submit": "Sign In",
+        "error": {
+          "title": "Something went wrong.",
+          "description": "Your Sign In request failed. Please try again."
+        },
+        "validation": {
+          "email": "Please enter a valid email address.",
+          "password": "Password must be at least 8 characters."
+        }
+      }
+    },
+    "signUp": {
+      "title": "Create an account",
+      "description": "Enter your information to create an account",
+      "hasAccount": "Already have an account? Sign In",
+      "form": {
+        "name": "Name",
+        "namePlaceholder": "Your Name",
+        "email": "Email",
+        "emailPlaceholder": "name@example.com",
+        "password": "Password",
+        "passwordPlaceholder": "********",
+        "repeatPassword": "Repeat Password",
+        "repeatPasswordPlaceholder": "********",
+        "submit": "Sign Up",
+        "error": {
+          "title": "Something went wrong.",
+          "description": "Your Sign Up request failed. Please try again."
+        },
+        "validation": {
+          "name": "Name must be at least 3 characters.",
+          "email": "Please enter a valid email address.",
+          "password": "Password must be at least 8 characters."
+        }
+      }
+    },
+    "social": {
+      "continueWith": "Or continue with",
+      "providers": {
+        "apple": "Apple",
+        "google": "Google",
+        "facebook": "Facebook"
+      }
+    },
+    "errors": {
+      "USER_NOT_FOUND": "User not found",
+      "FAILED_TO_CREATE_USER": "Failed to create user",
+      "FAILED_TO_CREATE_SESSION": "Failed to create session",
+      "FAILED_TO_UPDATE_USER": "Failed to update user",
+      "FAILED_TO_GET_SESSION": "Failed to get session",
+      "INVALID_PASSWORD": "Invalid password",
+      "INVALID_EMAIL": "Invalid email",
+      "INVALID_EMAIL_OR_PASSWORD": "Invalid email or password",
+      "SOCIAL_ACCOUNT_ALREADY_LINKED": "Social account already linked",
+      "PROVIDER_NOT_FOUND": "Provider not found",
+      "INVALID_TOKEN": "Invalid token",
+      "ID_TOKEN_NOT_SUPPORTED": "id_token not supported",
+      "FAILED_TO_GET_USER_INFO": "Failed to get user information",
+      "USER_EMAIL_NOT_FOUND": "User email not found",
+      "EMAIL_NOT_VERIFIED": "Email not verified",
+      "PASSWORD_TOO_SHORT": "Password too short",
+      "PASSWORD_TOO_LONG": "Password too long",
+      "USER_ALREADY_EXISTS": "User already exists",
+      "EMAIL_CAN_NOT_BE_UPDATED": "Email cannot be updated",
+      "CREDENTIAL_ACCOUNT_NOT_FOUND": "Credential account not found",
+      "SESSION_EXPIRED": "Session expired. Please re-authenticate to perform this action.",
+      "FAILED_TO_UNLINK_LAST_ACCOUNT": "You cannot unlink your last account",
+      "ACCOUNT_NOT_FOUND": "Account not found",
+      "UNKNOWN_ERROR": "Unknown error"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "description": "Enter your email address and we'll send you a link to reset your password",
+      "form": {
+        "email": "Email",
+        "emailPlaceholder": "name@example.com",
+        "submit": "Send Reset Link",
+        "success": {
+          "title": "Reset link sent",
+          "description": "Check your email for a link to reset your password"
+        },
+        "error": {
+          "title": "Something went wrong",
+          "description": "Failed to send reset link. Please try again."
+        }
+      }
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "description": "Enter your new password below",
+      "form": {
+        "password": "New Password",
+        "passwordPlaceholder": "********",
+        "confirmPassword": "Confirm Password",
+        "confirmPasswordPlaceholder": "********",
+        "submit": "Reset Password",
+        "success": {
+          "title": "Password reset successful",
+          "description": "Your password has been reset successfully. You can now sign in with your new password."
+        },
+        "error": {
+          "title": "Something went wrong",
+          "description": "Failed to reset password. Please try again."
+        },
+        "validation": {
+          "password": "Password must be at least 8 characters.",
+          "passwordsDontMatch": "Passwords don't match"
+        }
+      },
+      "invalidLink": {
+        "title": "Invalid Reset Link",
+        "description": "This password reset link is invalid or has expired. Please request a new one.",
+        "requestNew": "Request New Reset Link"
+      }
+    }
+  },
+  "admin": "Admin",
+  "users": "Users",
+  "noResult": "No results.",
+  "searchPlaceholder": "Search ...",
+  "noColumnsFound": "No Columns found.",
+  "toggleColumns": "Toggle columns",
+  "addUser": "Add User",
+  "download": "Download",
+  "goToPage": "Go to page:",
+  "show": "Show"
+}
