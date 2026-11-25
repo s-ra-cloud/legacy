@@ -46,8 +46,11 @@ export async function fetcher<T>(
         filters?: Record<string, unknown>;
         locale?: string;
         offset?: number;
+        page?: number;
         limit?: number;
-        sort?: string;
+        sort?: string | string[];
+        status?: "published";
+        fields?: string[];
     },
 ) {
     const populate = extra?.populate ?? {};
@@ -58,13 +61,17 @@ export async function fetcher<T>(
     const sort = extra?.sort ?? "id:asc";
 
     const params = {
+        ...(extra?.status ? { status: extra.status } : {}),
+        ...(extra?.fields ? { fields: extra.fields } : {}),
         populate,
         sort,
         filters,
         publicationState: "live",
         locale,
         pagination: {
-            page: offset,
+            // Explicit one-based pages avoid confusing service cursors with offsets.
+            // Retain the legacy offset behavior for unrelated callers.
+            page: extra?.page ?? offset,
             pageSize: limit,
         },
     };

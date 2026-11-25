@@ -1,0 +1,448 @@
+{
+  "Attila": {
+    "year": 400,
+    "lowerYear": 395,
+    "upperYear": 400,
+    "sourceUrl": "https://www.wikidata.org/wiki/Q36724",
+    "basis": "Approximate placement at 400 CE within the source's competing year-level birth statements, 395–400 CE. Not an exact birth date."
+  },
+  "Epimenides": {
+    "year": -650,
+    "lowerYear": -700,
+    "upperYear": -601,
+    "sourceUrl": "https://www.wikidata.org/wiki/Q319406",
+    "basis": "Approximate midpoint of the seventh-century BCE birth statement. The source has century precision; 650 BCE is a placement estimate, not a known year."
+  },
+  "Euklid": {
+    "year": -325,
+    "lowerYear": -400,
+    "upperYear": -301,
+    "sourceUrl": "https://www.wikidata.org/wiki/Q8747",
+    "basis": "Approximate placement in the fourth century BCE, near the source's more specific birth statement. The source mixes year-level and century-level claims; 325 BCE is not an established exact date."
+  },
+  "Fox__George": {
+    "year": 1624,
+    "lowerYear": 1624,
+    "upperYear": 1624,
+    "sourceUrl": "https://www.wikidata.org/wiki/Q310439",
+    "basis": "Birth statements differ in month/day precision but agree on the year 1624. No day or month is asserted."
+  },
+  "Khayyam__Omar": {
+    "year": 1048,
+    "lowerYear": 1048,
+    "upperYear": 1048,
+    "sourceUrl": "https://www.wikidata.org/wiki/Q35900",
+    "basis": "Source birth-date statements agree on 1048 but differ in calendar day and precision. No exact day is asserted."
+  },
+  "Pythagoras_von_Samos": {
+    "year": -575,
+    "lowerYear": -582,
+    "upperYear": -570,
+    "sourceUrl": "https://www.wikidata.org/wiki/Q10261",
+    "basis": "Approximate placement within the source's competing year-level birth statements, 582–570 BCE, rounded to a five-year value. Not a settled birth date."
+  },
+  "Thomas_a_Kempis": {
+    "year": 1380,
+    "lowerYear": 1379,
+    "upperYear": 1380,
+    "sourceUrl": "https://www.wikidata.org/wiki/Q220976",
+    "basis": "Approximate placement at 1380 within competing source birth years, 1379–1380."
+  },
+  "Wallenstein__Albrecht_von": {
+    "year": 1583,
+    "lowerYear": 1583,
+    "upperYear": 1583,
+    "sourceUrl": "https://www.wikidata.org/wiki/Q153545",
+    "basis": "Source dates differ in calendar day but agree on the birth year 1583. No exact day is asserted."
+  },
+  "Adam_N.N.": {
+    "year": 1885,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-102%2C58v%5B2%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1915, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Bachtin__Nicholas": {
+    "year": 1907,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C162%5B2%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1937, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Ballard__Melville": {
+    "year": 1914,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ts-227a%2C202%5B4%5Det203%5B1%5Det204%5B2%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1944, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Bolstad__Johannes_Johannesson": {
+    "year": 1907,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C207%5B2%5Det208%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1937, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Brouwer__Luitzen": {
+    "year": 1900,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1930, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Christie_N.N.": {
+    "year": 1917,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1947, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Draegni__Arne": {
+    "year": 1885,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-102%2C54v%5B2%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1915, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Draegni__Halvard_Johan_Thomasson": {
+    "year": 1884,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-101%2C48v%5B4%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1914, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Dziewicki__Michal_Henryk": {
+    "year": 1885,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-102%2C72v%5B5%5Det73v%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1915, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Earl_of_Gloucester": {
+    "year": 1911,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-166%2C24v%5B2%5Det25r%5B1%5Det25v%5B1%5Det26r%5B1%5Det26v%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1941, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Ernst__Paul": {
+    "year": 1888,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-104%2C119%5B1%5Det120%5B1%5Det121%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1918, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Gürth__Oskar": {
+    "year": 1884,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-102%2C47v%5B5%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1914, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Hardy__Godfrey": {
+    "year": 1899,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1929, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Hijab__W.A.": {
+    "year": 1917,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1947, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Hunt__E.B.": {
+    "year": 1916,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1946, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Jackson__A.C.": {
+    "year": 1916,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1946, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Jesus_von_Nazaret": {
+    "year": 1901,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-153b%2C29r%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1931, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Joseph__H.W.B.": {
+    "year": 1899,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1929, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Karl_der_Grosse": {
+    "year": 1918,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-137%2C89b%5B2%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1948, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Klingenberg__Sofia": {
+    "year": 1884,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-102%2C1v%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1914, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Kraus__Karl": {
+    "year": 1900,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C30%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1930, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Lee__Desmond": {
+    "year": 1900,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1930, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Lindsay__A.D.": {
+    "year": 1899,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1929, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "McTaggart__John_Ellis": {
+    "year": 1899,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1929, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Murakami_N.N.": {
+    "year": 1900,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C31%5B3%5Det32%5B1%5Det33%5B1%5Det34%5B1%5Det35%5B1%5Det36%5B1%5Det36%5B2%5Det37%5B1%5Det38%5B1%5Det39%5B1%5Det40%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1930, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Pattisson__Gilbert": {
+    "year": 1900,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C31%5B3%5Det32%5B1%5Det33%5B1%5Det34%5B1%5Det35%5B1%5Det36%5B1%5Det36%5B2%5Det37%5B1%5Det38%5B1%5Det39%5B1%5Det40%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1930, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Price__H.H.": {
+    "year": 1899,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1929, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Priestley__Raymond__E.": {
+    "year": 1900,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1930, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Queen_Victoria": {
+    "year": 1917,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ts-229%2C275%5B3%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1947, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Raven__Canon": {
+    "year": 1899,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1929, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Rebni__Anna": {
+    "year": 1906,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C146%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1936, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Respinger__Marguerite": {
+    "year": 1900,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C1%5B1%5Det2%5B1%5Det3%5B1%5Det4%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1930, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Richards__?": {
+    "year": 1917,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1947, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Roth_N.N.": {
+    "year": 1885,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-102%2C49v%5B3%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1915, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Rothe_N.N.": {
+    "year": 1901,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C65%5B4%5Det66%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1931, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Runge__Otto": {
+    "year": 1920,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-173%2C18v%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1950, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Salzer__Max": {
+    "year": 1907,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C221%5B2%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1937, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Scholz__Friedrich": {
+    "year": 1885,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-102%2C56v%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1915, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Sibylle_von_Cumae": {
+    "year": 1901,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C92%5B2%5Det93%5B1%5Det94%5B1%5Det95%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1931, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Sjögren__Talla": {
+    "year": 1900,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C31%5B3%5Det32%5B1%5Det33%5B1%5Det34%5B1%5Det35%5B1%5Det36%5B1%5Det36%5B2%5Det37%5B1%5Det38%5B1%5Det39%5B1%5Det40%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1930, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Stonborough__Jerome_(Gatte_von_Margarete_Wittgenstein)": {
+    "year": 1907,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C153%5B2%5Det154%5B1%5Det155%5B1%5Det156%5B1%5Det157%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1937, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Stonborough__Jerome__(Gatte_von_Margarete_Wittgenstein)": {
+    "year": 1907,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C153%5B2%5Det154%5B1%5Det155%5B1%5Det156%5B1%5Det157%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1937, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Townsend__Raymond_D.": {
+    "year": 1901,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1931, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Trenkler__Adolf": {
+    "year": 1884,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-101%2C1r%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1914, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Vlcek_N.N.": {
+    "year": 1884,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-102%2C31v%5B3%5Det32v%5B1%5Det33v%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1914, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Wanicek__Aloisia": {
+    "year": 1888,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ts-204%2CIr%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1918, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Ward__James": {
+    "year": 1918,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-137%2C81b%5B6%5Det82a%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1948, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Weide_?": {
+    "year": 1895,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ts-205%2C5%5B2%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1925, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Wittgenstein__Kurt": {
+    "year": 1901,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C125%5B2%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1931, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Wittgenstein__Leopoldine": {
+    "year": 1884,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-101%2C27v%5B2%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1914, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Wittgenstein__Paul_(Onkel)": {
+    "year": 1884,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-102%2C8v%5B2%5Det9v%5B1%5Det10v%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1914, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Zwingli__Ulrich": {
+    "year": 1909,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1939, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Cox__Christopher": {
+    "year": 1899,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1929, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Dobson__Frank": {
+    "year": 1908,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1938, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Duncan__Isadora": {
+    "year": 1916,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1946, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Edward_II": {
+    "year": 1908,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1938, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Fermat__Pierre_de": {
+    "year": 1900,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ts-209%2C104%5B5%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1930, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Herrmann__Rosalie": {
+    "year": 1901,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C92%5B2%5Det93%5B1%5Det94%5B1%5Det95%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1931, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Jolles__Adele": {
+    "year": 1884,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-101%2C28v%5B2%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1914, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Livius__Titus": {
+    "year": 1919,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1949, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Moore__Timothy": {
+    "year": 1910,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1940, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "O'Hara__Charles": {
+    "year": 1908,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1938, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Paulus_von_Tarsus": {
+    "year": 1901,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-183%2C131%5B4%5Det132%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1931, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Sjögren__Arvid": {
+    "year": 1900,
+    "sourceUrl": "https://wab.uib.no/nachlass/bemerkung/Ms-107%2C229%5B4%5Det230%5B1%5D_linear.html",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1930, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  },
+  "Taylor__James": {
+    "year": 1908,
+    "sourceUrl": "",
+    "basis": "Provisional placement, not a known birth year: earliest available dated archive mention in 1938, minus an assumed age of 30. Identity and age are not established by this model.",
+    "kind": "placement"
+  }
+}

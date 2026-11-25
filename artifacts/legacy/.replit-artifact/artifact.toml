@@ -1,0 +1,32 @@
+kind = "web"
+previewPath = "/"
+title = "Legacy"
+description = "The existing Legacy website, preserving its React Router server-rendered client, administration, and connected services."
+version = "1.0.0"
+id = "artifacts/legacy"
+router = "path"
+
+[[services]]
+name = "web"
+paths = ["/"]
+localPort = 24282
+
+[services.development]
+run = "pnpm --filter @workspace/legacy run dev"
+
+[services.production]
+build = ["pnpm", "--filter", "@workspace/legacy", "run", "build"]
+
+[services.production.run]
+args = ["bash", "scripts/start-prod.sh"]
+
+[services.production.run.env]
+PORT = "24282"
+NODE_ENV = "production"
+
+[services.production.health.startup]
+path = "/"
+
+[services.env]
+PORT = "24282"
+BASE_PATH = "/"

@@ -1,0 +1,32 @@
+{
+  "name": "@workspace/scripts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "hello": "tsx ./src/hello.ts",
+    "test:gc": "node --test --test-concurrency=1 great-conversation/*.test.mjs",
+    "test:gc-ui": "node --test --test-concurrency=1 great-conversation/*-ui.test.mjs",
+    "test:gc-db": "node --test great-conversation/verification-api.integration.mjs",
+    "test:gc-owner-db": "node --test great-conversation/owner-history.integration.mjs",
+    "test:library": "node --test --test-concurrency=1 library/*.test.mjs",
+    "test:kt-browser": "node --test knowledge-tree/browser-import.test.mjs knowledge-tree/browser-worker.test.mjs knowledge-tree/browser-admin-api.test.mjs",
+    "test:kt-core-ui": "node --test knowledge-tree/core-controls-ui.test.mjs",
+    "test:kt-relationships": "node --test --test-concurrency=1 knowledge-tree/ancestry.test.mjs knowledge-tree/relationships*.test.mjs",
+    "test:kt-core-db": "node --test knowledge-tree/core-recovery-db.test.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "d3": "^7.9.2",
+    "esbuild": "0.28.2",
+    "jsdom": "^26.1.0",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tsx": "catalog:"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.22.0",
+    "pg": "^8.23.1"
+  }
+}

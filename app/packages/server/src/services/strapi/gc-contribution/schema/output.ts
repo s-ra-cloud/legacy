@@ -8,6 +8,8 @@ import {
   descriptionSchema,
 } from "@repo/shared";
 import { bookSchema, commentsSchema, connectionSourceEnum } from "../../books/schema/output.js";
+import { referenceDetailsSchema } from "./reference.js";
+import { publicAttributionTextSchema } from "../../public-attribution-schema.js";
 
 // Enumerations matching Strapi values
 export const connectionTypeEnum = z.enum(["explicit", "implicit"]).openapi({
@@ -18,6 +20,8 @@ export const connectionNatureEnum = z.enum([
   "agreement",
   "neutral / unsure",
   "opposition",
+  "neutral",
+  "mixed",
 ]).openapi({
   description: "Nature of the connection"
 });
@@ -27,19 +31,28 @@ export const gcContributionSchema = z
   .object({
     id: numberSchema,
     documentId: idSchema,
-    connectionType: connectionTypeEnum,
+    contributorName: publicAttributionTextSchema,
+    contributorInstitution: publicAttributionTextSchema,
+    connectionType: connectionTypeEnum.nullish(),
+    referenceDetails: referenceDetailsSchema.nullish(),
+    submissionKey: z.string().nullish(),
     connectionSource: connectionSourceEnum.nullish(),
-    connectionNature: connectionNatureEnum,
+    connectionReviewStatus: z.enum(["catalogue_review", "ready_to_continue", "editorial_review", "accepted", "rejected"]).nullish(),
+    connectionReviewNote: z.string().nullish(),
+    connectionNature: connectionNatureEnum.nullish(),
     isSimilarityIdeas: booleanSchema.nullish(),
     isBiographical: booleanSchema.nullish(),
     isOther: booleanSchema.nullish(),
     explainConnection: descriptionSchema.nullish(),
+    connectionUncertain: z.boolean().nullish(),
+    originComment: z.string().max(65535).nullish(),
+    supportingReference: z.string().max(65535).nullish(),
     bookA_id: idSchema,
-    bookB_id: idSchema,
+    bookB_id: idSchema.nullish(),
     bookA_textExcerpt: descriptionSchema,
-    bookB_textExcerpt: descriptionSchema,
-    bookA_title: z.string().min(2, 'Book title is required'),
-    bookB_title: z.string().min(2, 'Book title is required'),
+    bookB_textExcerpt: descriptionSchema.nullish(),
+    bookA_title: z.string().min(1, 'Book title is required'),
+    bookB_title: z.string().nullish(),
     books: z.array(bookSchema.partial()).nullable().optional(),
     gc_comments: z.array(commentsSchema).nullish(),
     publishedAt: datetimeSchema,

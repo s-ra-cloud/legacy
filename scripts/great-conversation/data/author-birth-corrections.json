@@ -1,0 +1,195 @@
+[
+  {
+    "id": "Kleist__Heinrich_von",
+    "birthYear": 1777, "birthDate": "1777-10-18", "precision": "day",
+    "sourceUrl": "https://www.britannica.com/biography/Heinrich-von-Kleist",
+    "evidenceUrls": ["https://wab.uib.no/nachlass/bemerkung/Ms-183%2C71%5B2%5Det72%5B1%5D_linear.html"],
+    "retrievedAt": "2026-11-11",
+    "note": "The archive's literary context identifies the dramatist Heinrich von Kleist, born 18 October 1777, not the nobleman born 1797 in the former automatic match Q131732192."
+  },
+  {
+    "id": "Macaulay__Thomas",
+    "birthYear": 1800, "birthDate": "1800-10-25", "precision": "day",
+    "sourceUrl": "https://www.britannica.com/biography/Thomas-Babington-Macaulay-Baron-Macaulay",
+    "evidenceUrls": ["https://wab.uib.no/nachlass/bemerkung/Ms-118%2C21v%5B2%5D_linear.html"],
+    "retrievedAt": "2026-11-11",
+    "note": "The archive explicitly discusses Macaulay's Essays: the historian and essayist Thomas Babington Macaulay, born 25 October 1800, not the American installation artist born 1946 in Q115169872."
+  },
+  {
+    "id": "Edward_II",
+    "birthYear": null, "precision": "unknown", "status": "ambiguous",
+    "sourceUrl": "https://www.britannica.com/biography/Edward-II-king-of-England",
+    "retrievedAt": "2026-11-11",
+    "note": "Rejected Edward II Count of Bar (1339) in the former automatic match Q764578. The likely English king Edward II was born 25 April 1284, but the supplied metadata-only regnal label does not itself establish that identity. Withhold the date until the reference context confirms the king."
+  },
+  {
+    "id": "Heinrich_IV",
+    "birthYear": 1553, "birthDate": "1553-12-13", "precision": "day",
+    "sourceUrl": "https://www.britannica.com/summary/Henry-IV-king-of-France",
+    "evidenceUrls": ["https://wab.uib.no/nachlass/bemerkung/Ms-115%2C217%5B4%5Det218%5B1%5Det219%5B1%5D_linear.html"],
+    "retrievedAt": "2026-11-11",
+    "note": "The Nachlass passage explicitly specifies the king of France. Henry IV of France was born 13 December 1553, not 1539 as in the unrelated German count Q1597817."
+  },
+  {
+    "id": "Moore__Dorothy",
+    "birthYear": 1892, "precision": "year",
+    "sourceUrl": "https://archives.trin.cam.ac.uk/index.php/photographs-of-ludwig-wittgenstein",
+    "evidenceUrls": ["https://wab.uib.no/nachlass/bemerkung/Ms-183%2C10%5B2%5Det11%5B1%5D_linear.html"],
+    "retrievedAt": "2026-11-11",
+    "note": "Trinity College identifies Dorothy Mildred Moore née Ely (1892–1977), wife of G.E. Moore and creator of Wittgenstein photographs. The diary's Mrs Moore is not the American singer born 1946 in Q5298560."
+  },
+  {
+    "id": "Moore__Timothy",
+    "birthYear": null, "precision": "unknown", "status": "ambiguous",
+    "sourceUrl": "http://www.musicweb-international.com/classrev/2003/mar03/Moore_obit.htm",
+    "retrievedAt": "2026-11-11",
+    "note": "Rejected the sculptor born 1945 in the former match Q113467593. An obituary identifies composer Timothy Moore (1922–2003), G.E. Moore's second son, born in Cambridge in 1922. The metadata-only archive record lacks a passage confirming that familial identity, so do not automatically substitute this plausible candidate's date."
+  },
+  {
+    "id": "Cox__Christopher",
+    "birthYear": null, "precision": "unknown", "status": "ambiguous",
+    "sourceUrl": "http://purl.org/wittgensteinsource/ont/instances/Cox__Christopher",
+    "evidenceUrls": ["https://www.csad.ox.ac.uk/archive3", "https://www.wikidata.org/wiki/Q553335"],
+    "retrievedAt": "2026-11-11",
+    "note": "Rejected the American politician Christopher Cox born 1952, after Wittgenstein's death. Oxford documents an educationist Christopher Cox (1899–1982), but the supplied metadata-only record does not establish that candidate. Withhold rather than substitute another namesake."
+  },
+  {
+    "id": "Dobson__Frank",
+    "birthYear": null, "precision": "unknown", "status": "ambiguous",
+    "sourceUrl": "http://purl.org/wittgensteinsource/ont/instances/Dobson__Frank",
+    "evidenceUrls": ["https://www.wikidata.org/wiki/Q300182", "https://www.britannica.com/biography/Frank-Dobson"],
+    "retrievedAt": "2026-11-11",
+    "note": "Rejected the politician born 1940. A sculptor Frank Dobson was born 1886, but the metadata-only archive entry lacks a passage establishing that candidate. The former exact-name match did not prove identity."
+  },
+  {
+    "id": "Herrmann__Rosalie",
+    "birthYear": null, "precision": "unknown", "status": "ambiguous",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q104701751",
+    "retrievedAt": "2026-11-11",
+    "note": "The matched entity is a Holocaust victim born 1875. The shared full name does not independently identify her as the Rosalie Herrmann in Wittgenstein's personal context. Withhold the inherited date pending an explicit biographical connection."
+  },
+  {
+    "id": "Jolles__Adele",
+    "birthYear": null, "precision": "unknown", "status": "ambiguous",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q104808004",
+    "evidenceUrls": ["https://de.wikipedia.org/wiki/Stanislaus_Jolles", "https://www.holocaust.cz/de/opferdatenbank/opfer/3081-adele-jolles"],
+    "retrievedAt": "2026-11-11",
+    "note": "Wittgenstein lodged with Stanislaus Jolles and his wife Adele. The matched Holocaust record gives Adele Jolles née Ehrensaal, born 1866, but the inspected sources do not explicitly connect these identities. Withhold rather than treat a shared name as confirmation."
+  },
+  {
+    "id": "O'Hara__Charles",
+    "birthYear": null, "precision": "unknown", "status": "ambiguous",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q2959926",
+    "retrievedAt": "2026-11-11",
+    "note": "The automatic candidate is a British army general born 1740. No inspected archive passage or biographical source establishes that general as the metadata-only Charles O'Hara record. Remove the unsupported birth rather than infer a match."
+  },
+  {
+    "id": "Sjögren__Arvid",
+    "birthYear": null, "precision": "unknown", "status": "ambiguous",
+    "sourceUrl": "https://www.stiftinga-wittgenstein.no/en/ludwig-og-skjoldingane",
+    "evidenceUrls": ["https://www.wikidata.org/wiki/Q114564357"],
+    "retrievedAt": "2026-11-11",
+    "note": "The Skjolden foundation establishes Wittgenstein's travel companion Arvid Sjögren but supplies no birth. The Wikidata candidate born 1859 lacks a descriptive or biographical connection to that companion. Withhold the inherited date."
+  },
+  {
+    "id": "Taylor__James",
+    "birthYear": null, "precision": "unknown", "status": "ambiguous",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Lectures_and_Conversations_on_Aesthetics,_Psychology,_and_Religious_Belief",
+    "evidenceUrls": ["https://www.wikidata.org/wiki/Q310300"],
+    "retrievedAt": "2026-11-11",
+    "note": "James Taylor recorded Wittgenstein's lectures; the American singer born 1948 in the former automatic match is incompatible with that role. No reliable birth for the recorder was established, so leave undated."
+  },
+  {
+    "id": "Fermat__Pierre_de",
+    "birthYear": null, "precision": "unknown", "status": "disputed",
+    "sourceUrl": "https://mathshistory.st-andrews.ac.uk/Biographies/Fermat/",
+    "evidenceUrls": ["https://mathshistory.st-andrews.ac.uk/Strick/Fermat.pdf"],
+    "retrievedAt": "2026-11-11",
+    "note": "The mathematician's identity is clear but his birth year is disputed. MacTutor discusses 1601 versus a younger same-named son; the accompanying historical study discusses 1607 or 1608. Do not present the inherited 1607 as certain."
+  },
+  {
+    "id": "Livius__Titus",
+    "birthYear": null, "precision": "unknown", "status": "disputed",
+    "sourceUrl": "https://www.britannica.com/biography/Livy",
+    "retrievedAt": "2026-11-11",
+    "note": "Britannica gives Livy's birth as 59 or 64 BCE. The inherited single year 59 BCE falsely settled the dispute; neither alternative is selected."
+  },
+  {
+    "id": "Duncan__Isadora",
+    "birthYear": null, "precision": "unknown", "status": "disputed",
+    "sourceUrl": "https://www.britannica.com/biography/Isadora-Duncan",
+    "retrievedAt": "2026-11-11",
+    "note": "Britannica gives 26 May 1877 or 27 May 1878. The dancer's identity is clear, but the inherited date selected one of disputed birth years."
+  },
+  {
+    "id": "Paulus_von_Tarsus",
+    "birthYear": null, "precision": "unknown", "status": "disputed",
+    "sourceUrl": "https://www.britannica.com/biography/Saint-Paul-the-Apostle",
+    "evidenceUrls": ["https://www.wikidata.org/wiki/Q9200"],
+    "retrievedAt": "2026-11-11",
+    "note": "Paul's birth is uncertain: Britannica places it around 4 BCE while the inherited Wikidata chronology used 5 CE. Do not silently turn either reconstruction into a certain year."
+  },
+  {
+    "id": "Heraklit",
+    "birthYear": -540, "precision": "approximate-year",
+    "sourceUrl": "https://www.britannica.com/biography/Heraclitus",
+    "retrievedAt": "2026-11-11",
+    "note": "Britannica dates Heraclitus's birth to circa 540 BCE. Replace the inherited apparently exact 535 BCE with this explicitly approximate reference chronology."
+  },
+  {
+    "id": "Hermann_der_Cherusker",
+    "birthYear": -18, "precision": "approximate-year",
+    "sourceUrl": "https://www.britannica.com/biography/Arminius/Introduction",
+    "retrievedAt": "2026-11-11",
+    "note": "Britannica identifies Hermann/Arminius and gives 18 BCE with a question mark. Preserve the uncertainty rather than retain the inherited exact-looking 17 BCE."
+  },
+  {
+    "id": "Ockham__Wilhelm_von",
+    "birthYear": 1287, "precision": "approximate-year",
+    "sourceUrl": "https://plato.stanford.edu/entries/ockham/",
+    "retrievedAt": "2026-11-11",
+    "note": "Stanford gives William of Ockham circa 1287–1347. The birth year is approximate, not a precise first of January."
+  },
+  {
+    "id": "Zenon_von_Elea",
+    "birthYear": -490, "precision": "approximate-year",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Zeno_of_Elea",
+    "retrievedAt": "2026-11-11",
+    "note": "The philosopher of Elea is conventionally dated circa 490 BCE. Preserve approximation, distinguish Zeno of Citium, and do not expose the structured source's January 1 placeholder as a real date."
+  },
+  {
+    "id": "Servetus__Michael",
+    "birthYear": 1511, "precision": "approximate-year",
+    "sourceUrl": "https://www.britannica.com/biography/Michael-Servetus",
+    "retrievedAt": "2026-11-11",
+    "note": "Britannica gives Michael Servetus's birth as 1511 with a question mark. Keep this reference chronology approximate instead of the inherited day-level certainty."
+  },
+  {
+    "id": "Beethoven__Ludwig_van",
+    "birthYear": 1770, "precision": "year",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Ludwig_van_Beethoven",
+    "retrievedAt": "2026-11-11",
+    "note": "Beethoven's birth year is 1770, but the surviving dated record is his baptism on 17 December. The commonly inferred 16 December birth is not an authenticated day-level record; retain only the year."
+  },
+  {
+    "id": "Cervantes__Miguel_de",
+    "birthYear": 1547, "precision": "year",
+    "sourceUrl": "https://www.britannica.com/biography/Miguel-de-Cervantes",
+    "retrievedAt": "2026-11-11",
+    "note": "Britannica gives 29 September 1547 with a question mark for the day. Retain the established year only; the inherited 9 October baptism date must not be used as a precise birth."
+  },
+  {
+    "id": "Shakespeare__William",
+    "birthYear": 1564, "precision": "year",
+    "sourceUrl": "https://www.britannica.com/summary/William-Shakespeare",
+    "retrievedAt": "2026-11-11",
+    "note": "The surviving dated record is Shakespeare's baptism on 26 April 1564. Retain the birth year, not the inherited first-of-April placeholder or an inferred exact birthday."
+  },
+  {
+    "id": "Molière",
+    "birthYear": 1622, "precision": "approximate-year",
+    "sourceUrl": "https://www.britannica.com/biography/Moliere-French-dramatist",
+    "retrievedAt": "2026-11-11",
+    "note": "Britannica explicitly labels 15 January 1622 as baptism, not birth. Retain circa 1622 as the biographical birth chronology rather than use the baptism day as an exact birth."
+  }
+]

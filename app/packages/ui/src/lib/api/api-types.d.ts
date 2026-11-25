@@ -4,6 +4,73 @@
  */
 
 export interface paths {
+    "/gc-verifications/mine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getGc-verificationsMine"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/gc-verifications/mine/{submissionId}/amend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["postGc-verificationsMineBySubmissionIdAmend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/gc-verifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Latest human person, work or relation reviews */
+        get: operations["getGc-verifications"];
+        put?: never;
+        /** Review a person, work or relation with preserved source evidence */
+        post: operations["postGc-verifications"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/gc-verifications/entity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Source values and human verification history */
+        get: operations["getGc-verificationsEntity"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/users": {
         parameters: {
             query?: never;
@@ -380,26 +447,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/home-philosophers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get all home philosophers
-         * @description Get a paginated list of home philosophers with optional hero/earth filters
-         */
-        get: operations["getHomePhilosophers"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/contributors": {
         parameters: {
             query?: never;
@@ -514,6 +561,23 @@ export interface paths {
         get: operations["getAuthorsById"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/books/{id}/text": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Replace an existing library book's text */
+        post: operations["postBooksByIdText"];
         delete?: never;
         options?: never;
         head?: never;
@@ -656,6 +720,75 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/comments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all GC comments */
+        get: operations["getComments"];
+        put?: never;
+        /** Create GC comment */
+        post: operations["postComments"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/comments/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get GC comment by ID */
+        get: operations["getCommentsById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/comments/contributor/{email}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get GC comments by contributor email */
+        get: operations["getCommentsContributorByEmail"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/comments/contribution/{contributionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get GC comments by contribution ID */
+        get: operations["getCommentsContributionByContributionId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/requested-books": {
         parameters: {
             query?: never;
@@ -668,6 +801,26 @@ export interface paths {
         put?: never;
         /** Create requested book entry */
         post: operations["postRequested-books"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/home-philosophers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get all home philosophers
+         * @description Get a paginated list of home philosophers with optional hero/earth filters
+         */
+        get: operations["getHome-philosophers"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -770,6 +923,452 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    "getGc-verificationsMine": {
+        parameters: {
+            query?: {
+                search?: string;
+                kind?: "person" | "work" | "relation";
+                from?: string;
+                to?: string;
+                cursor?: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    "postGc-verificationsMineBySubmissionIdAmend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                submissionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    review: {
+                        key: string;
+                        expectedRevision: number;
+                        sourceToken: string;
+                        source: string | null;
+                        /** @constant */
+                        kind: "person";
+                        values: {
+                            firstName: string | null;
+                            lastName: string | null;
+                            birthDate: {
+                                label: string;
+                                /** @enum {string} */
+                                precision: "unknown" | "year" | "approximate" | "range" | "day";
+                                startYear: number | null;
+                                endYear: number | null;
+                                /** @enum {string} */
+                                kind: "birth" | "publication" | "edition" | "composition" | "unknown";
+                            };
+                        };
+                        coverage: [
+                            "firstName",
+                            "lastName",
+                            "birthDate"
+                        ];
+                    } | {
+                        key: string;
+                        expectedRevision: number;
+                        sourceToken: string;
+                        source: string | null;
+                        /** @constant */
+                        kind: "work";
+                        values: {
+                            title: string;
+                            date: {
+                                label: string;
+                                /** @enum {string} */
+                                precision: "unknown" | "year" | "approximate" | "range" | "day";
+                                startYear: number | null;
+                                endYear: number | null;
+                                /** @enum {string} */
+                                kind: "birth" | "publication" | "edition" | "composition" | "unknown";
+                            };
+                        };
+                        coverage: [
+                            "title",
+                            "date"
+                        ];
+                    } | {
+                        key: string;
+                        expectedRevision: number;
+                        sourceToken: string;
+                        source: string | null;
+                        /** @constant */
+                        kind: "relation";
+                        values: {
+                            /** @enum {string} */
+                            connectionType: "explicit" | "implicit" | "unknown";
+                            /** @enum {string} */
+                            stance: "approval" | "disapproval" | "neutral" | "mixed" | "insufficient_evidence";
+                            /** @enum {string} */
+                            assessment: "supported" | "not_supported" | "insufficient_evidence";
+                            explanation: string;
+                        };
+                        coverage: [
+                            "evidence",
+                            "connectionType",
+                            "stance",
+                            "assessment"
+                        ];
+                    };
+                    /** Format: uuid */
+                    expectedOwnRevisionId: string;
+                };
+            };
+        };
+        responses: never;
+    };
+    "getGc-verifications": {
+        parameters: {
+            query: {
+                kind: "person" | "work" | "relation";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id?: string;
+                            submissionId?: string;
+                            amendsRevisionId?: string | null;
+                            key: string;
+                            /** @enum {string} */
+                            kind: "person" | "work" | "relation";
+                            revision: number;
+                            values: {
+                                firstName: string | null;
+                                lastName: string | null;
+                                birthDate: {
+                                    label: string;
+                                    /** @enum {string} */
+                                    precision: "unknown" | "year" | "approximate" | "range" | "day";
+                                    startYear: number | null;
+                                    endYear: number | null;
+                                    /** @enum {string} */
+                                    kind: "birth" | "publication" | "edition" | "composition" | "unknown";
+                                };
+                            } | {
+                                title: string;
+                                date: {
+                                    label: string;
+                                    /** @enum {string} */
+                                    precision: "unknown" | "year" | "approximate" | "range" | "day";
+                                    startYear: number | null;
+                                    endYear: number | null;
+                                    /** @enum {string} */
+                                    kind: "birth" | "publication" | "edition" | "composition" | "unknown";
+                                };
+                            } | {
+                                /** @enum {string} */
+                                connectionType: "explicit" | "implicit" | "unknown";
+                                /** @enum {string} */
+                                stance: "approval" | "disapproval" | "neutral" | "mixed" | "insufficient_evidence";
+                                /** @enum {string} */
+                                assessment: "supported" | "not_supported" | "insufficient_evidence";
+                                explanation: string;
+                            };
+                            coverage: string[];
+                            userId: string;
+                            firstName: string;
+                            lastName: string;
+                            createdAt: string;
+                            source: string | null;
+                            sourcePayload?: {
+                                [key: string]: unknown;
+                            };
+                        }[];
+                    };
+                };
+            };
+        };
+    };
+    "postGc-verifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    key: string;
+                    expectedRevision: number;
+                    sourceToken: string;
+                    source: string | null;
+                    /** @constant */
+                    kind: "person";
+                    values: {
+                        firstName: string | null;
+                        lastName: string | null;
+                        birthDate: {
+                            label: string;
+                            /** @enum {string} */
+                            precision: "unknown" | "year" | "approximate" | "range" | "day";
+                            startYear: number | null;
+                            endYear: number | null;
+                            /** @enum {string} */
+                            kind: "birth" | "publication" | "edition" | "composition" | "unknown";
+                        };
+                    };
+                    coverage: [
+                        "firstName",
+                        "lastName",
+                        "birthDate"
+                    ];
+                } | {
+                    key: string;
+                    expectedRevision: number;
+                    sourceToken: string;
+                    source: string | null;
+                    /** @constant */
+                    kind: "work";
+                    values: {
+                        title: string;
+                        date: {
+                            label: string;
+                            /** @enum {string} */
+                            precision: "unknown" | "year" | "approximate" | "range" | "day";
+                            startYear: number | null;
+                            endYear: number | null;
+                            /** @enum {string} */
+                            kind: "birth" | "publication" | "edition" | "composition" | "unknown";
+                        };
+                    };
+                    coverage: [
+                        "title",
+                        "date"
+                    ];
+                } | {
+                    key: string;
+                    expectedRevision: number;
+                    sourceToken: string;
+                    source: string | null;
+                    /** @constant */
+                    kind: "relation";
+                    values: {
+                        /** @enum {string} */
+                        connectionType: "explicit" | "implicit" | "unknown";
+                        /** @enum {string} */
+                        stance: "approval" | "disapproval" | "neutral" | "mixed" | "insufficient_evidence";
+                        /** @enum {string} */
+                        assessment: "supported" | "not_supported" | "insufficient_evidence";
+                        explanation: string;
+                    };
+                    coverage: [
+                        "evidence",
+                        "connectionType",
+                        "stance",
+                        "assessment"
+                    ];
+                };
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        saved: true;
+                    };
+                };
+            };
+            /** @description Invalid reviewed fields or coverage */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Authentication required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Account access denied */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Source entity not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Stale review; reload before submitting */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    "getGc-verificationsEntity": {
+        parameters: {
+            query: {
+                key: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        key: string;
+                        /** @enum {string} */
+                        kind: "person" | "work" | "relation";
+                        /** @enum {string} */
+                        status: "verified" | "unverified";
+                        revision: number;
+                        sourceToken: string | null;
+                        sourceAvailable?: boolean;
+                        sourceUnavailableReason?: string | null;
+                        original: {
+                            [key: string]: unknown;
+                        };
+                        currentSource: {
+                            [key: string]: unknown;
+                        } | null;
+                        values: {
+                            firstName: string | null;
+                            lastName: string | null;
+                            birthDate: {
+                                label: string;
+                                /** @enum {string} */
+                                precision: "unknown" | "year" | "approximate" | "range" | "day";
+                                startYear: number | null;
+                                endYear: number | null;
+                                /** @enum {string} */
+                                kind: "birth" | "publication" | "edition" | "composition" | "unknown";
+                            };
+                        } | {
+                            title: string;
+                            date: {
+                                label: string;
+                                /** @enum {string} */
+                                precision: "unknown" | "year" | "approximate" | "range" | "day";
+                                startYear: number | null;
+                                endYear: number | null;
+                                /** @enum {string} */
+                                kind: "birth" | "publication" | "edition" | "composition" | "unknown";
+                            };
+                        } | {
+                            /** @enum {string} */
+                            connectionType: "explicit" | "implicit" | "unknown";
+                            /** @enum {string} */
+                            stance: "approval" | "disapproval" | "neutral" | "mixed" | "insufficient_evidence";
+                            /** @enum {string} */
+                            assessment: "supported" | "not_supported" | "insufficient_evidence";
+                            explanation: string;
+                        };
+                        history: {
+                            id?: string;
+                            submissionId?: string;
+                            amendsRevisionId?: string | null;
+                            key: string;
+                            /** @enum {string} */
+                            kind: "person" | "work" | "relation";
+                            revision: number;
+                            values: {
+                                firstName: string | null;
+                                lastName: string | null;
+                                birthDate: {
+                                    label: string;
+                                    /** @enum {string} */
+                                    precision: "unknown" | "year" | "approximate" | "range" | "day";
+                                    startYear: number | null;
+                                    endYear: number | null;
+                                    /** @enum {string} */
+                                    kind: "birth" | "publication" | "edition" | "composition" | "unknown";
+                                };
+                            } | {
+                                title: string;
+                                date: {
+                                    label: string;
+                                    /** @enum {string} */
+                                    precision: "unknown" | "year" | "approximate" | "range" | "day";
+                                    startYear: number | null;
+                                    endYear: number | null;
+                                    /** @enum {string} */
+                                    kind: "birth" | "publication" | "edition" | "composition" | "unknown";
+                                };
+                            } | {
+                                /** @enum {string} */
+                                connectionType: "explicit" | "implicit" | "unknown";
+                                /** @enum {string} */
+                                stance: "approval" | "disapproval" | "neutral" | "mixed" | "insufficient_evidence";
+                                /** @enum {string} */
+                                assessment: "supported" | "not_supported" | "insufficient_evidence";
+                                explanation: string;
+                            };
+                            coverage: string[];
+                            userId: string;
+                            firstName: string;
+                            lastName: string;
+                            createdAt: string;
+                            source: string | null;
+                            sourcePayload?: {
+                                [key: string]: unknown;
+                            };
+                        }[];
+                    };
+                };
+            };
+            /** @description Source entity not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Live source temporarily unavailable and no saved relation history */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     getUsers: {
         parameters: {
             query?: {
@@ -2701,7 +3300,7 @@ export interface operations {
                              */
                             description: string;
                             /** @description Strapi media object */
-                            picture: {
+                            picture?: {
                                 id: number;
                                 documentId: string;
                                 name: string;
@@ -2712,7 +3311,7 @@ export interface operations {
                                 ext: string;
                                 mime: string;
                                 url: string;
-                            };
+                            } | null;
                             /** Format: date-time */
                             publishedAt: string;
                             /** Format: date-time */
@@ -2797,7 +3396,7 @@ export interface operations {
                          */
                         description: string;
                         /** @description Strapi media object */
-                        picture: {
+                        picture?: {
                             id: number;
                             documentId: string;
                             name: string;
@@ -2808,7 +3407,7 @@ export interface operations {
                             ext: string;
                             mime: string;
                             url: string;
-                        };
+                        } | null;
                         /** Format: date-time */
                         publishedAt: string;
                         /** Format: date-time */
@@ -2885,101 +3484,7 @@ export interface operations {
                              */
                             description: string;
                             /** @description Strapi media object */
-                            picture: {
-                                id: number;
-                                documentId: string;
-                                name: string;
-                                alternativeText: string | null;
-                                caption: string | null;
-                                width: number | null;
-                                height: number | null;
-                                ext: string;
-                                mime: string;
-                                url: string;
-                            };
-                            /** Format: date-time */
-                            publishedAt: string;
-                            /** Format: date-time */
-                            updatedAt: string;
-                            /** Format: date-time */
-                            createdAt: string;
-                        }[];
-                        meta: {
-                            pagination?: {
-                                page: number;
-                                pageSize: number;
-                                pageCount: number;
-                                total: number;
-                            };
-                        };
-                    };
-                };
-            };
-            /** @description Not Found Response */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /**
-                         * @description HTTP status code
-                         * @example 404
-                         * @constant
-                         */
-                        status: 404;
-                        code: string;
-                        requestId?: string;
-                        root: [
-                            "NOT_FOUND"
-                        ];
-                    };
-                };
-            };
-        };
-    };
-    getHomePhilosophers: {
-        parameters: {
-            query?: {
-                cursor?: number;
-                limit?: number;
-                sort?: string;
-                showInHero?: boolean;
-                showOnEarth?: boolean;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Home philosophers retrieved successfully */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            id: number;
-                            documentId: string;
-                            name: string;
-                            slug: string;
-                            dates: string;
-                            era: string;
-                            showInHero: boolean;
-                            showOnEarth: boolean;
-                            heroIndex?: number | null;
-                            showOnMobile?: boolean | null;
-                            heroQuote?: string | null;
-                            city?: string | null;
-                            country?: string | null;
-                            lat?: number | null;
-                            lon?: number | null;
-                            school?: string | null;
-                            earthQuote?: string | null;
-                            earthOrder?: number | null;
-                            image?: {
+                            picture?: {
                                 id: number;
                                 documentId: string;
                                 name: string;
@@ -3016,10 +3521,17 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 404
+                         * @constant
+                         */
                         status: 404;
                         code: string;
                         requestId?: string;
-                        root: ["NOT_FOUND"];
+                        root: [
+                            "NOT_FOUND"
+                        ];
                     };
                 };
             };
@@ -3493,7 +4005,7 @@ export interface operations {
                                         url: string;
                                     };
                                     /** @description Strapi media object */
-                                    file: {
+                                    file?: {
                                         id: number;
                                         documentId: string;
                                         name: string;
@@ -3504,7 +4016,7 @@ export interface operations {
                                         ext: string;
                                         mime: string;
                                         url: string;
-                                    };
+                                    } | null;
                                 };
                                 gc_contributions?: {
                                     id: number;
@@ -3515,14 +4027,38 @@ export interface operations {
                                     documentId: string;
                                     /**
                                      * @description Type of connection between the two works
-                                     * @enum {string}
+                                     * @enum {string|null}
                                      */
-                                    connectionType: "explicit" | "implicit";
+                                    connectionType?: "explicit" | "implicit" | null;
+                                    referenceDetails?: {
+                                        /** @enum {string} */
+                                        explicitLevel: "author" | "work" | "passage";
+                                        /** @enum {string|null} */
+                                        implicitLevel: "work" | "passage" | null;
+                                        /** @enum {string} */
+                                        effectiveLevel: "author" | "work" | "passage";
+                                        author: {
+                                            documentId?: string;
+                                            name: string;
+                                            proposed: boolean;
+                                        };
+                                        work?: {
+                                            documentId?: string;
+                                            title: string;
+                                            proposed: boolean;
+                                        };
+                                    } | null;
+                                    submissionKey?: string | null;
+                                    /**
+                                     * @description Origin of the connection; absent for unclassified historical contributions
+                                     * @enum {string|null}
+                                     */
+                                    connectionSource?: "archive" | "scholar" | "ai" | null;
                                     /**
                                      * @description Nature of the connection
-                                     * @enum {string}
+                                     * @enum {string|null}
                                      */
-                                    connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                                    connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                                     /**
                                      * @description Boolean value
                                      * @example true
@@ -3552,7 +4088,7 @@ export interface operations {
                                      * @description ID of the resource
                                      * @example cuida1b2c3d4e5f6g7h8i9j
                                      */
-                                    bookB_id: string;
+                                    bookB_id?: string | null;
                                     /**
                                      * @description Description of the resource
                                      * @example This is a description
@@ -3562,9 +4098,56 @@ export interface operations {
                                      * @description Description of the resource
                                      * @example This is a description
                                      */
-                                    bookB_textExcerpt: string;
+                                    bookB_textExcerpt?: string | null;
                                     bookA_title: string;
-                                    bookB_title: string;
+                                    bookB_title?: string | null;
+                                    books?: {
+                                        id: number;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        /**
+                                         * @description Name of the resource
+                                         * @example John Doe
+                                         */
+                                        BookTitle: string;
+                                        /** @description Author object */
+                                        author: {
+                                            /**
+                                             * @description ID of the resource
+                                             * @example cuida1b2c3d4e5f6g7h8i9j
+                                             */
+                                            documentId: string;
+                                            firstName?: string | null;
+                                            /**
+                                             * @description Name of the resource
+                                             * @example John Doe
+                                             */
+                                            lastName: string;
+                                            fullName?: string | null;
+                                            birthDeath?: string | null;
+                                        };
+                                    }[] | null;
+                                    gc_comments?: {
+                                        id: number;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        comment: string;
+                                        contributorEmail?: string | null;
+                                        contributorName?: string | null;
+                                        contributorInstitution?: string | null;
+                                        /** Format: date-time */
+                                        publishedAt: string;
+                                        /** Format: date-time */
+                                        updatedAt: string;
+                                        /** Format: date-time */
+                                        createdAt: string;
+                                    }[] | null;
                                     /** Format: date-time */
                                     createdAt: string;
                                     /** Format: date-time */
@@ -3572,6 +4155,8 @@ export interface operations {
                                     /** Format: date-time */
                                     publishedAt: string;
                                     contributorEmail?: string | null;
+                                    contributorName?: string | null;
+                                    contributorInstitution?: string | null;
                                 }[] | null;
                                 /** Format: date-time */
                                 publishedAt: string;
@@ -3768,7 +4353,7 @@ export interface operations {
                                     url: string;
                                 };
                                 /** @description Strapi media object */
-                                file: {
+                                file?: {
                                     id: number;
                                     documentId: string;
                                     name: string;
@@ -3779,7 +4364,7 @@ export interface operations {
                                     ext: string;
                                     mime: string;
                                     url: string;
-                                };
+                                } | null;
                             };
                             gc_contributions?: {
                                 id: number;
@@ -3790,14 +4375,38 @@ export interface operations {
                                 documentId: string;
                                 /**
                                  * @description Type of connection between the two works
-                                 * @enum {string}
+                                 * @enum {string|null}
                                  */
-                                connectionType: "explicit" | "implicit";
+                                connectionType?: "explicit" | "implicit" | null;
+                                referenceDetails?: {
+                                    /** @enum {string} */
+                                    explicitLevel: "author" | "work" | "passage";
+                                    /** @enum {string|null} */
+                                    implicitLevel: "work" | "passage" | null;
+                                    /** @enum {string} */
+                                    effectiveLevel: "author" | "work" | "passage";
+                                    author: {
+                                        documentId?: string;
+                                        name: string;
+                                        proposed: boolean;
+                                    };
+                                    work?: {
+                                        documentId?: string;
+                                        title: string;
+                                        proposed: boolean;
+                                    };
+                                } | null;
+                                submissionKey?: string | null;
+                                /**
+                                 * @description Origin of the connection; absent for unclassified historical contributions
+                                 * @enum {string|null}
+                                 */
+                                connectionSource?: "archive" | "scholar" | "ai" | null;
                                 /**
                                  * @description Nature of the connection
-                                 * @enum {string}
+                                 * @enum {string|null}
                                  */
-                                connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                                connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                                 /**
                                  * @description Boolean value
                                  * @example true
@@ -3827,7 +4436,7 @@ export interface operations {
                                  * @description ID of the resource
                                  * @example cuida1b2c3d4e5f6g7h8i9j
                                  */
-                                bookB_id: string;
+                                bookB_id?: string | null;
                                 /**
                                  * @description Description of the resource
                                  * @example This is a description
@@ -3837,9 +4446,56 @@ export interface operations {
                                  * @description Description of the resource
                                  * @example This is a description
                                  */
-                                bookB_textExcerpt: string;
+                                bookB_textExcerpt?: string | null;
                                 bookA_title: string;
-                                bookB_title: string;
+                                bookB_title?: string | null;
+                                books?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    /**
+                                     * @description Name of the resource
+                                     * @example John Doe
+                                     */
+                                    BookTitle: string;
+                                    /** @description Author object */
+                                    author: {
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        firstName?: string | null;
+                                        /**
+                                         * @description Name of the resource
+                                         * @example John Doe
+                                         */
+                                        lastName: string;
+                                        fullName?: string | null;
+                                        birthDeath?: string | null;
+                                    };
+                                }[] | null;
+                                gc_comments?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    comment: string;
+                                    contributorEmail?: string | null;
+                                    contributorName?: string | null;
+                                    contributorInstitution?: string | null;
+                                    /** Format: date-time */
+                                    publishedAt: string;
+                                    /** Format: date-time */
+                                    updatedAt: string;
+                                    /** Format: date-time */
+                                    createdAt: string;
+                                }[] | null;
                                 /** Format: date-time */
                                 createdAt: string;
                                 /** Format: date-time */
@@ -3847,6 +4503,8 @@ export interface operations {
                                 /** Format: date-time */
                                 publishedAt: string;
                                 contributorEmail?: string | null;
+                                contributorName?: string | null;
+                                contributorInstitution?: string | null;
                             }[] | null;
                             /** Format: date-time */
                             publishedAt: string;
@@ -3937,6 +4595,38 @@ export interface operations {
             };
         };
     };
+    postBooksByIdText: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    mediaId: number;
+                    expectedFileId: number;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        ok: true;
+                    };
+                };
+            };
+        };
+    };
     getBooks: {
         parameters: {
             query?: never;
@@ -4002,7 +4692,7 @@ export interface operations {
                                     url: string;
                                 };
                                 /** @description Strapi media object */
-                                file: {
+                                file?: {
                                     id: number;
                                     documentId: string;
                                     name: string;
@@ -4013,7 +4703,7 @@ export interface operations {
                                     ext: string;
                                     mime: string;
                                     url: string;
-                                };
+                                } | null;
                             };
                             gc_contributions?: {
                                 id: number;
@@ -4024,14 +4714,38 @@ export interface operations {
                                 documentId: string;
                                 /**
                                  * @description Type of connection between the two works
-                                 * @enum {string}
+                                 * @enum {string|null}
                                  */
-                                connectionType: "explicit" | "implicit";
+                                connectionType?: "explicit" | "implicit" | null;
+                                referenceDetails?: {
+                                    /** @enum {string} */
+                                    explicitLevel: "author" | "work" | "passage";
+                                    /** @enum {string|null} */
+                                    implicitLevel: "work" | "passage" | null;
+                                    /** @enum {string} */
+                                    effectiveLevel: "author" | "work" | "passage";
+                                    author: {
+                                        documentId?: string;
+                                        name: string;
+                                        proposed: boolean;
+                                    };
+                                    work?: {
+                                        documentId?: string;
+                                        title: string;
+                                        proposed: boolean;
+                                    };
+                                } | null;
+                                submissionKey?: string | null;
+                                /**
+                                 * @description Origin of the connection; absent for unclassified historical contributions
+                                 * @enum {string|null}
+                                 */
+                                connectionSource?: "archive" | "scholar" | "ai" | null;
                                 /**
                                  * @description Nature of the connection
-                                 * @enum {string}
+                                 * @enum {string|null}
                                  */
-                                connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                                connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                                 /**
                                  * @description Boolean value
                                  * @example true
@@ -4061,7 +4775,7 @@ export interface operations {
                                  * @description ID of the resource
                                  * @example cuida1b2c3d4e5f6g7h8i9j
                                  */
-                                bookB_id: string;
+                                bookB_id?: string | null;
                                 /**
                                  * @description Description of the resource
                                  * @example This is a description
@@ -4071,9 +4785,56 @@ export interface operations {
                                  * @description Description of the resource
                                  * @example This is a description
                                  */
-                                bookB_textExcerpt: string;
+                                bookB_textExcerpt?: string | null;
                                 bookA_title: string;
-                                bookB_title: string;
+                                bookB_title?: string | null;
+                                books?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    /**
+                                     * @description Name of the resource
+                                     * @example John Doe
+                                     */
+                                    BookTitle: string;
+                                    /** @description Author object */
+                                    author: {
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        firstName?: string | null;
+                                        /**
+                                         * @description Name of the resource
+                                         * @example John Doe
+                                         */
+                                        lastName: string;
+                                        fullName?: string | null;
+                                        birthDeath?: string | null;
+                                    };
+                                }[] | null;
+                                gc_comments?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    comment: string;
+                                    contributorEmail?: string | null;
+                                    contributorName?: string | null;
+                                    contributorInstitution?: string | null;
+                                    /** Format: date-time */
+                                    publishedAt: string;
+                                    /** Format: date-time */
+                                    updatedAt: string;
+                                    /** Format: date-time */
+                                    createdAt: string;
+                                }[] | null;
                                 /** Format: date-time */
                                 createdAt: string;
                                 /** Format: date-time */
@@ -4081,6 +4842,8 @@ export interface operations {
                                 /** Format: date-time */
                                 publishedAt: string;
                                 contributorEmail?: string | null;
+                                contributorName?: string | null;
+                                contributorInstitution?: string | null;
                             }[] | null;
                             /** Format: date-time */
                             publishedAt: string;
@@ -4187,7 +4950,7 @@ export interface operations {
                                 url: string;
                             };
                             /** @description Strapi media object */
-                            file: {
+                            file?: {
                                 id: number;
                                 documentId: string;
                                 name: string;
@@ -4198,7 +4961,7 @@ export interface operations {
                                 ext: string;
                                 mime: string;
                                 url: string;
-                            };
+                            } | null;
                         };
                         gc_contributions?: {
                             id: number;
@@ -4209,14 +4972,38 @@ export interface operations {
                             documentId: string;
                             /**
                              * @description Type of connection between the two works
-                             * @enum {string}
+                             * @enum {string|null}
                              */
-                            connectionType: "explicit" | "implicit";
+                            connectionType?: "explicit" | "implicit" | null;
+                            referenceDetails?: {
+                                /** @enum {string} */
+                                explicitLevel: "author" | "work" | "passage";
+                                /** @enum {string|null} */
+                                implicitLevel: "work" | "passage" | null;
+                                /** @enum {string} */
+                                effectiveLevel: "author" | "work" | "passage";
+                                author: {
+                                    documentId?: string;
+                                    name: string;
+                                    proposed: boolean;
+                                };
+                                work?: {
+                                    documentId?: string;
+                                    title: string;
+                                    proposed: boolean;
+                                };
+                            } | null;
+                            submissionKey?: string | null;
+                            /**
+                             * @description Origin of the connection; absent for unclassified historical contributions
+                             * @enum {string|null}
+                             */
+                            connectionSource?: "archive" | "scholar" | "ai" | null;
                             /**
                              * @description Nature of the connection
-                             * @enum {string}
+                             * @enum {string|null}
                              */
-                            connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                            connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                             /**
                              * @description Boolean value
                              * @example true
@@ -4246,7 +5033,7 @@ export interface operations {
                              * @description ID of the resource
                              * @example cuida1b2c3d4e5f6g7h8i9j
                              */
-                            bookB_id: string;
+                            bookB_id?: string | null;
                             /**
                              * @description Description of the resource
                              * @example This is a description
@@ -4256,9 +5043,56 @@ export interface operations {
                              * @description Description of the resource
                              * @example This is a description
                              */
-                            bookB_textExcerpt: string;
+                            bookB_textExcerpt?: string | null;
                             bookA_title: string;
-                            bookB_title: string;
+                            bookB_title?: string | null;
+                            books?: {
+                                id: number;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                documentId: string;
+                                /**
+                                 * @description Name of the resource
+                                 * @example John Doe
+                                 */
+                                BookTitle: string;
+                                /** @description Author object */
+                                author: {
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    firstName?: string | null;
+                                    /**
+                                     * @description Name of the resource
+                                     * @example John Doe
+                                     */
+                                    lastName: string;
+                                    fullName?: string | null;
+                                    birthDeath?: string | null;
+                                };
+                            }[] | null;
+                            gc_comments?: {
+                                id: number;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                documentId: string;
+                                comment: string;
+                                contributorEmail?: string | null;
+                                contributorName?: string | null;
+                                contributorInstitution?: string | null;
+                                /** Format: date-time */
+                                publishedAt: string;
+                                /** Format: date-time */
+                                updatedAt: string;
+                                /** Format: date-time */
+                                createdAt: string;
+                            }[] | null;
                             /** Format: date-time */
                             createdAt: string;
                             /** Format: date-time */
@@ -4266,6 +5100,8 @@ export interface operations {
                             /** Format: date-time */
                             publishedAt: string;
                             contributorEmail?: string | null;
+                            contributorName?: string | null;
+                            contributorInstitution?: string | null;
                         }[] | null;
                         /** Format: date-time */
                         publishedAt: string;
@@ -4365,7 +5201,7 @@ export interface operations {
                                 url: string;
                             };
                             /** @description Strapi media object */
-                            file: {
+                            file?: {
                                 id: number;
                                 documentId: string;
                                 name: string;
@@ -4376,7 +5212,7 @@ export interface operations {
                                 ext: string;
                                 mime: string;
                                 url: string;
-                            };
+                            } | null;
                         };
                         gc_contributions?: {
                             id: number;
@@ -4387,14 +5223,38 @@ export interface operations {
                             documentId: string;
                             /**
                              * @description Type of connection between the two works
-                             * @enum {string}
+                             * @enum {string|null}
                              */
-                            connectionType: "explicit" | "implicit";
+                            connectionType?: "explicit" | "implicit" | null;
+                            referenceDetails?: {
+                                /** @enum {string} */
+                                explicitLevel: "author" | "work" | "passage";
+                                /** @enum {string|null} */
+                                implicitLevel: "work" | "passage" | null;
+                                /** @enum {string} */
+                                effectiveLevel: "author" | "work" | "passage";
+                                author: {
+                                    documentId?: string;
+                                    name: string;
+                                    proposed: boolean;
+                                };
+                                work?: {
+                                    documentId?: string;
+                                    title: string;
+                                    proposed: boolean;
+                                };
+                            } | null;
+                            submissionKey?: string | null;
+                            /**
+                             * @description Origin of the connection; absent for unclassified historical contributions
+                             * @enum {string|null}
+                             */
+                            connectionSource?: "archive" | "scholar" | "ai" | null;
                             /**
                              * @description Nature of the connection
-                             * @enum {string}
+                             * @enum {string|null}
                              */
-                            connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                            connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                             /**
                              * @description Boolean value
                              * @example true
@@ -4424,7 +5284,7 @@ export interface operations {
                              * @description ID of the resource
                              * @example cuida1b2c3d4e5f6g7h8i9j
                              */
-                            bookB_id: string;
+                            bookB_id?: string | null;
                             /**
                              * @description Description of the resource
                              * @example This is a description
@@ -4434,9 +5294,56 @@ export interface operations {
                              * @description Description of the resource
                              * @example This is a description
                              */
-                            bookB_textExcerpt: string;
+                            bookB_textExcerpt?: string | null;
                             bookA_title: string;
-                            bookB_title: string;
+                            bookB_title?: string | null;
+                            books?: {
+                                id: number;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                documentId: string;
+                                /**
+                                 * @description Name of the resource
+                                 * @example John Doe
+                                 */
+                                BookTitle: string;
+                                /** @description Author object */
+                                author: {
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    firstName?: string | null;
+                                    /**
+                                     * @description Name of the resource
+                                     * @example John Doe
+                                     */
+                                    lastName: string;
+                                    fullName?: string | null;
+                                    birthDeath?: string | null;
+                                };
+                            }[] | null;
+                            gc_comments?: {
+                                id: number;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                documentId: string;
+                                comment: string;
+                                contributorEmail?: string | null;
+                                contributorName?: string | null;
+                                contributorInstitution?: string | null;
+                                /** Format: date-time */
+                                publishedAt: string;
+                                /** Format: date-time */
+                                updatedAt: string;
+                                /** Format: date-time */
+                                createdAt: string;
+                            }[] | null;
                             /** Format: date-time */
                             createdAt: string;
                             /** Format: date-time */
@@ -4444,6 +5351,8 @@ export interface operations {
                             /** Format: date-time */
                             publishedAt: string;
                             contributorEmail?: string | null;
+                            contributorName?: string | null;
+                            contributorInstitution?: string | null;
                         }[] | null;
                         /** Format: date-time */
                         publishedAt: string;
@@ -4544,7 +5453,7 @@ export interface operations {
                                     url: string;
                                 };
                                 /** @description Strapi media object */
-                                file: {
+                                file?: {
                                     id: number;
                                     documentId: string;
                                     name: string;
@@ -4555,7 +5464,7 @@ export interface operations {
                                     ext: string;
                                     mime: string;
                                     url: string;
-                                };
+                                } | null;
                             };
                             gc_contributions?: {
                                 id: number;
@@ -4566,14 +5475,38 @@ export interface operations {
                                 documentId: string;
                                 /**
                                  * @description Type of connection between the two works
-                                 * @enum {string}
+                                 * @enum {string|null}
                                  */
-                                connectionType: "explicit" | "implicit";
+                                connectionType?: "explicit" | "implicit" | null;
+                                referenceDetails?: {
+                                    /** @enum {string} */
+                                    explicitLevel: "author" | "work" | "passage";
+                                    /** @enum {string|null} */
+                                    implicitLevel: "work" | "passage" | null;
+                                    /** @enum {string} */
+                                    effectiveLevel: "author" | "work" | "passage";
+                                    author: {
+                                        documentId?: string;
+                                        name: string;
+                                        proposed: boolean;
+                                    };
+                                    work?: {
+                                        documentId?: string;
+                                        title: string;
+                                        proposed: boolean;
+                                    };
+                                } | null;
+                                submissionKey?: string | null;
+                                /**
+                                 * @description Origin of the connection; absent for unclassified historical contributions
+                                 * @enum {string|null}
+                                 */
+                                connectionSource?: "archive" | "scholar" | "ai" | null;
                                 /**
                                  * @description Nature of the connection
-                                 * @enum {string}
+                                 * @enum {string|null}
                                  */
-                                connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                                connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                                 /**
                                  * @description Boolean value
                                  * @example true
@@ -4603,7 +5536,7 @@ export interface operations {
                                  * @description ID of the resource
                                  * @example cuida1b2c3d4e5f6g7h8i9j
                                  */
-                                bookB_id: string;
+                                bookB_id?: string | null;
                                 /**
                                  * @description Description of the resource
                                  * @example This is a description
@@ -4613,9 +5546,56 @@ export interface operations {
                                  * @description Description of the resource
                                  * @example This is a description
                                  */
-                                bookB_textExcerpt: string;
+                                bookB_textExcerpt?: string | null;
                                 bookA_title: string;
-                                bookB_title: string;
+                                bookB_title?: string | null;
+                                books?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    /**
+                                     * @description Name of the resource
+                                     * @example John Doe
+                                     */
+                                    BookTitle: string;
+                                    /** @description Author object */
+                                    author: {
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        firstName?: string | null;
+                                        /**
+                                         * @description Name of the resource
+                                         * @example John Doe
+                                         */
+                                        lastName: string;
+                                        fullName?: string | null;
+                                        birthDeath?: string | null;
+                                    };
+                                }[] | null;
+                                gc_comments?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    comment: string;
+                                    contributorEmail?: string | null;
+                                    contributorName?: string | null;
+                                    contributorInstitution?: string | null;
+                                    /** Format: date-time */
+                                    publishedAt: string;
+                                    /** Format: date-time */
+                                    updatedAt: string;
+                                    /** Format: date-time */
+                                    createdAt: string;
+                                }[] | null;
                                 /** Format: date-time */
                                 createdAt: string;
                                 /** Format: date-time */
@@ -4623,6 +5603,8 @@ export interface operations {
                                 /** Format: date-time */
                                 publishedAt: string;
                                 contributorEmail?: string | null;
+                                contributorName?: string | null;
+                                contributorInstitution?: string | null;
                             }[] | null;
                             /** Format: date-time */
                             publishedAt: string;
@@ -4744,14 +5726,38 @@ export interface operations {
                             documentId: string;
                             /**
                              * @description Type of connection between the two works
-                             * @enum {string}
+                             * @enum {string|null}
                              */
-                            connectionType: "explicit" | "implicit";
+                            connectionType?: "explicit" | "implicit" | null;
+                            referenceDetails?: {
+                                /** @enum {string} */
+                                explicitLevel: "author" | "work" | "passage";
+                                /** @enum {string|null} */
+                                implicitLevel: "work" | "passage" | null;
+                                /** @enum {string} */
+                                effectiveLevel: "author" | "work" | "passage";
+                                author: {
+                                    documentId?: string;
+                                    name: string;
+                                    proposed: boolean;
+                                };
+                                work?: {
+                                    documentId?: string;
+                                    title: string;
+                                    proposed: boolean;
+                                };
+                            } | null;
+                            submissionKey?: string | null;
+                            /**
+                             * @description Origin of the connection; absent for unclassified historical contributions
+                             * @enum {string|null}
+                             */
+                            connectionSource?: "archive" | "scholar" | "ai" | null;
                             /**
                              * @description Nature of the connection
-                             * @enum {string}
+                             * @enum {string|null}
                              */
-                            connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                            connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                             /**
                              * @description Boolean value
                              * @example true
@@ -4781,7 +5787,7 @@ export interface operations {
                              * @description ID of the resource
                              * @example cuida1b2c3d4e5f6g7h8i9j
                              */
-                            bookB_id: string;
+                            bookB_id?: string | null;
                             /**
                              * @description Description of the resource
                              * @example This is a description
@@ -4791,9 +5797,9 @@ export interface operations {
                              * @description Description of the resource
                              * @example This is a description
                              */
-                            bookB_textExcerpt: string;
+                            bookB_textExcerpt?: string | null;
                             bookA_title: string;
-                            bookB_title: string;
+                            bookB_title?: string | null;
                             books?: {
                                 id?: number;
                                 /**
@@ -4843,7 +5849,7 @@ export interface operations {
                                         url: string;
                                     };
                                     /** @description Strapi media object */
-                                    file: {
+                                    file?: {
                                         id: number;
                                         documentId: string;
                                         name: string;
@@ -4854,7 +5860,7 @@ export interface operations {
                                         ext: string;
                                         mime: string;
                                         url: string;
-                                    };
+                                    } | null;
                                 };
                                 gc_contributions?: {
                                     id: number;
@@ -4865,14 +5871,38 @@ export interface operations {
                                     documentId: string;
                                     /**
                                      * @description Type of connection between the two works
-                                     * @enum {string}
+                                     * @enum {string|null}
                                      */
-                                    connectionType: "explicit" | "implicit";
+                                    connectionType?: "explicit" | "implicit" | null;
+                                    referenceDetails?: {
+                                        /** @enum {string} */
+                                        explicitLevel: "author" | "work" | "passage";
+                                        /** @enum {string|null} */
+                                        implicitLevel: "work" | "passage" | null;
+                                        /** @enum {string} */
+                                        effectiveLevel: "author" | "work" | "passage";
+                                        author: {
+                                            documentId?: string;
+                                            name: string;
+                                            proposed: boolean;
+                                        };
+                                        work?: {
+                                            documentId?: string;
+                                            title: string;
+                                            proposed: boolean;
+                                        };
+                                    } | null;
+                                    submissionKey?: string | null;
+                                    /**
+                                     * @description Origin of the connection; absent for unclassified historical contributions
+                                     * @enum {string|null}
+                                     */
+                                    connectionSource?: "archive" | "scholar" | "ai" | null;
                                     /**
                                      * @description Nature of the connection
-                                     * @enum {string}
+                                     * @enum {string|null}
                                      */
-                                    connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                                    connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                                     /**
                                      * @description Boolean value
                                      * @example true
@@ -4902,7 +5932,7 @@ export interface operations {
                                      * @description ID of the resource
                                      * @example cuida1b2c3d4e5f6g7h8i9j
                                      */
-                                    bookB_id: string;
+                                    bookB_id?: string | null;
                                     /**
                                      * @description Description of the resource
                                      * @example This is a description
@@ -4912,9 +5942,56 @@ export interface operations {
                                      * @description Description of the resource
                                      * @example This is a description
                                      */
-                                    bookB_textExcerpt: string;
+                                    bookB_textExcerpt?: string | null;
                                     bookA_title: string;
-                                    bookB_title: string;
+                                    bookB_title?: string | null;
+                                    books?: {
+                                        id: number;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        /**
+                                         * @description Name of the resource
+                                         * @example John Doe
+                                         */
+                                        BookTitle: string;
+                                        /** @description Author object */
+                                        author: {
+                                            /**
+                                             * @description ID of the resource
+                                             * @example cuida1b2c3d4e5f6g7h8i9j
+                                             */
+                                            documentId: string;
+                                            firstName?: string | null;
+                                            /**
+                                             * @description Name of the resource
+                                             * @example John Doe
+                                             */
+                                            lastName: string;
+                                            fullName?: string | null;
+                                            birthDeath?: string | null;
+                                        };
+                                    }[] | null;
+                                    gc_comments?: {
+                                        id: number;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        comment: string;
+                                        contributorEmail?: string | null;
+                                        contributorName?: string | null;
+                                        contributorInstitution?: string | null;
+                                        /** Format: date-time */
+                                        publishedAt: string;
+                                        /** Format: date-time */
+                                        updatedAt: string;
+                                        /** Format: date-time */
+                                        createdAt: string;
+                                    }[] | null;
                                     /** Format: date-time */
                                     createdAt: string;
                                     /** Format: date-time */
@@ -4922,6 +5999,8 @@ export interface operations {
                                     /** Format: date-time */
                                     publishedAt: string;
                                     contributorEmail?: string | null;
+                                    contributorName?: string | null;
+                                    contributorInstitution?: string | null;
                                 }[] | null;
                                 /** Format: date-time */
                                 publishedAt?: string;
@@ -4929,6 +6008,24 @@ export interface operations {
                                 updatedAt?: string;
                                 /** Format: date-time */
                                 createdAt?: string;
+                            }[] | null;
+                            gc_comments?: {
+                                id: number;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                documentId: string;
+                                comment: string;
+                                contributorEmail?: string | null;
+                                contributorName?: string | null;
+                                contributorInstitution?: string | null;
+                                /** Format: date-time */
+                                publishedAt: string;
+                                /** Format: date-time */
+                                updatedAt: string;
+                                /** Format: date-time */
+                                createdAt: string;
                             }[] | null;
                             /** Format: date-time */
                             publishedAt: string;
@@ -4995,14 +6092,38 @@ export interface operations {
                         documentId: string;
                         /**
                          * @description Type of connection between the two works
-                         * @enum {string}
+                         * @enum {string|null}
                          */
-                        connectionType: "explicit" | "implicit";
+                        connectionType?: "explicit" | "implicit" | null;
+                        referenceDetails?: {
+                            /** @enum {string} */
+                            explicitLevel: "author" | "work" | "passage";
+                            /** @enum {string|null} */
+                            implicitLevel: "work" | "passage" | null;
+                            /** @enum {string} */
+                            effectiveLevel: "author" | "work" | "passage";
+                            author: {
+                                documentId?: string;
+                                name: string;
+                                proposed: boolean;
+                            };
+                            work?: {
+                                documentId?: string;
+                                title: string;
+                                proposed: boolean;
+                            };
+                        } | null;
+                        submissionKey?: string | null;
+                        /**
+                         * @description Origin of the connection; absent for unclassified historical contributions
+                         * @enum {string|null}
+                         */
+                        connectionSource?: "archive" | "scholar" | "ai" | null;
                         /**
                          * @description Nature of the connection
-                         * @enum {string}
+                         * @enum {string|null}
                          */
-                        connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                        connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                         /**
                          * @description Boolean value
                          * @example true
@@ -5032,7 +6153,7 @@ export interface operations {
                          * @description ID of the resource
                          * @example cuida1b2c3d4e5f6g7h8i9j
                          */
-                        bookB_id: string;
+                        bookB_id?: string | null;
                         /**
                          * @description Description of the resource
                          * @example This is a description
@@ -5042,9 +6163,9 @@ export interface operations {
                          * @description Description of the resource
                          * @example This is a description
                          */
-                        bookB_textExcerpt: string;
+                        bookB_textExcerpt?: string | null;
                         bookA_title: string;
-                        bookB_title: string;
+                        bookB_title?: string | null;
                         books?: {
                             id?: number;
                             /**
@@ -5094,7 +6215,7 @@ export interface operations {
                                     url: string;
                                 };
                                 /** @description Strapi media object */
-                                file: {
+                                file?: {
                                     id: number;
                                     documentId: string;
                                     name: string;
@@ -5105,7 +6226,7 @@ export interface operations {
                                     ext: string;
                                     mime: string;
                                     url: string;
-                                };
+                                } | null;
                             };
                             gc_contributions?: {
                                 id: number;
@@ -5116,14 +6237,38 @@ export interface operations {
                                 documentId: string;
                                 /**
                                  * @description Type of connection between the two works
-                                 * @enum {string}
+                                 * @enum {string|null}
                                  */
-                                connectionType: "explicit" | "implicit";
+                                connectionType?: "explicit" | "implicit" | null;
+                                referenceDetails?: {
+                                    /** @enum {string} */
+                                    explicitLevel: "author" | "work" | "passage";
+                                    /** @enum {string|null} */
+                                    implicitLevel: "work" | "passage" | null;
+                                    /** @enum {string} */
+                                    effectiveLevel: "author" | "work" | "passage";
+                                    author: {
+                                        documentId?: string;
+                                        name: string;
+                                        proposed: boolean;
+                                    };
+                                    work?: {
+                                        documentId?: string;
+                                        title: string;
+                                        proposed: boolean;
+                                    };
+                                } | null;
+                                submissionKey?: string | null;
+                                /**
+                                 * @description Origin of the connection; absent for unclassified historical contributions
+                                 * @enum {string|null}
+                                 */
+                                connectionSource?: "archive" | "scholar" | "ai" | null;
                                 /**
                                  * @description Nature of the connection
-                                 * @enum {string}
+                                 * @enum {string|null}
                                  */
-                                connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                                connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                                 /**
                                  * @description Boolean value
                                  * @example true
@@ -5153,7 +6298,7 @@ export interface operations {
                                  * @description ID of the resource
                                  * @example cuida1b2c3d4e5f6g7h8i9j
                                  */
-                                bookB_id: string;
+                                bookB_id?: string | null;
                                 /**
                                  * @description Description of the resource
                                  * @example This is a description
@@ -5163,9 +6308,56 @@ export interface operations {
                                  * @description Description of the resource
                                  * @example This is a description
                                  */
-                                bookB_textExcerpt: string;
+                                bookB_textExcerpt?: string | null;
                                 bookA_title: string;
-                                bookB_title: string;
+                                bookB_title?: string | null;
+                                books?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    /**
+                                     * @description Name of the resource
+                                     * @example John Doe
+                                     */
+                                    BookTitle: string;
+                                    /** @description Author object */
+                                    author: {
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        firstName?: string | null;
+                                        /**
+                                         * @description Name of the resource
+                                         * @example John Doe
+                                         */
+                                        lastName: string;
+                                        fullName?: string | null;
+                                        birthDeath?: string | null;
+                                    };
+                                }[] | null;
+                                gc_comments?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    comment: string;
+                                    contributorEmail?: string | null;
+                                    contributorName?: string | null;
+                                    contributorInstitution?: string | null;
+                                    /** Format: date-time */
+                                    publishedAt: string;
+                                    /** Format: date-time */
+                                    updatedAt: string;
+                                    /** Format: date-time */
+                                    createdAt: string;
+                                }[] | null;
                                 /** Format: date-time */
                                 createdAt: string;
                                 /** Format: date-time */
@@ -5173,6 +6365,8 @@ export interface operations {
                                 /** Format: date-time */
                                 publishedAt: string;
                                 contributorEmail?: string | null;
+                                contributorName?: string | null;
+                                contributorInstitution?: string | null;
                             }[] | null;
                             /** Format: date-time */
                             publishedAt?: string;
@@ -5180,6 +6374,24 @@ export interface operations {
                             updatedAt?: string;
                             /** Format: date-time */
                             createdAt?: string;
+                        }[] | null;
+                        gc_comments?: {
+                            id: number;
+                            /**
+                             * @description ID of the resource
+                             * @example cuida1b2c3d4e5f6g7h8i9j
+                             */
+                            documentId: string;
+                            comment: string;
+                            contributorEmail?: string | null;
+                            contributorName?: string | null;
+                            contributorInstitution?: string | null;
+                            /** Format: date-time */
+                            publishedAt: string;
+                            /** Format: date-time */
+                            updatedAt: string;
+                            /** Format: date-time */
+                            createdAt: string;
                         }[] | null;
                         /** Format: date-time */
                         publishedAt: string;
@@ -5239,14 +6451,38 @@ export interface operations {
                         documentId: string;
                         /**
                          * @description Type of connection between the two works
-                         * @enum {string}
+                         * @enum {string|null}
                          */
-                        connectionType: "explicit" | "implicit";
+                        connectionType?: "explicit" | "implicit" | null;
+                        referenceDetails?: {
+                            /** @enum {string} */
+                            explicitLevel: "author" | "work" | "passage";
+                            /** @enum {string|null} */
+                            implicitLevel: "work" | "passage" | null;
+                            /** @enum {string} */
+                            effectiveLevel: "author" | "work" | "passage";
+                            author: {
+                                documentId?: string;
+                                name: string;
+                                proposed: boolean;
+                            };
+                            work?: {
+                                documentId?: string;
+                                title: string;
+                                proposed: boolean;
+                            };
+                        } | null;
+                        submissionKey?: string | null;
+                        /**
+                         * @description Origin of the connection; absent for unclassified historical contributions
+                         * @enum {string|null}
+                         */
+                        connectionSource?: "archive" | "scholar" | "ai" | null;
                         /**
                          * @description Nature of the connection
-                         * @enum {string}
+                         * @enum {string|null}
                          */
-                        connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                        connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                         /**
                          * @description Boolean value
                          * @example true
@@ -5276,7 +6512,7 @@ export interface operations {
                          * @description ID of the resource
                          * @example cuida1b2c3d4e5f6g7h8i9j
                          */
-                        bookB_id: string;
+                        bookB_id?: string | null;
                         /**
                          * @description Description of the resource
                          * @example This is a description
@@ -5286,9 +6522,9 @@ export interface operations {
                          * @description Description of the resource
                          * @example This is a description
                          */
-                        bookB_textExcerpt: string;
+                        bookB_textExcerpt?: string | null;
                         bookA_title: string;
-                        bookB_title: string;
+                        bookB_title?: string | null;
                         books?: {
                             id?: number;
                             /**
@@ -5338,7 +6574,7 @@ export interface operations {
                                     url: string;
                                 };
                                 /** @description Strapi media object */
-                                file: {
+                                file?: {
                                     id: number;
                                     documentId: string;
                                     name: string;
@@ -5349,7 +6585,7 @@ export interface operations {
                                     ext: string;
                                     mime: string;
                                     url: string;
-                                };
+                                } | null;
                             };
                             gc_contributions?: {
                                 id: number;
@@ -5360,14 +6596,38 @@ export interface operations {
                                 documentId: string;
                                 /**
                                  * @description Type of connection between the two works
-                                 * @enum {string}
+                                 * @enum {string|null}
                                  */
-                                connectionType: "explicit" | "implicit";
+                                connectionType?: "explicit" | "implicit" | null;
+                                referenceDetails?: {
+                                    /** @enum {string} */
+                                    explicitLevel: "author" | "work" | "passage";
+                                    /** @enum {string|null} */
+                                    implicitLevel: "work" | "passage" | null;
+                                    /** @enum {string} */
+                                    effectiveLevel: "author" | "work" | "passage";
+                                    author: {
+                                        documentId?: string;
+                                        name: string;
+                                        proposed: boolean;
+                                    };
+                                    work?: {
+                                        documentId?: string;
+                                        title: string;
+                                        proposed: boolean;
+                                    };
+                                } | null;
+                                submissionKey?: string | null;
+                                /**
+                                 * @description Origin of the connection; absent for unclassified historical contributions
+                                 * @enum {string|null}
+                                 */
+                                connectionSource?: "archive" | "scholar" | "ai" | null;
                                 /**
                                  * @description Nature of the connection
-                                 * @enum {string}
+                                 * @enum {string|null}
                                  */
-                                connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                                connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                                 /**
                                  * @description Boolean value
                                  * @example true
@@ -5397,7 +6657,7 @@ export interface operations {
                                  * @description ID of the resource
                                  * @example cuida1b2c3d4e5f6g7h8i9j
                                  */
-                                bookB_id: string;
+                                bookB_id?: string | null;
                                 /**
                                  * @description Description of the resource
                                  * @example This is a description
@@ -5407,9 +6667,56 @@ export interface operations {
                                  * @description Description of the resource
                                  * @example This is a description
                                  */
-                                bookB_textExcerpt: string;
+                                bookB_textExcerpt?: string | null;
                                 bookA_title: string;
-                                bookB_title: string;
+                                bookB_title?: string | null;
+                                books?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    /**
+                                     * @description Name of the resource
+                                     * @example John Doe
+                                     */
+                                    BookTitle: string;
+                                    /** @description Author object */
+                                    author: {
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        firstName?: string | null;
+                                        /**
+                                         * @description Name of the resource
+                                         * @example John Doe
+                                         */
+                                        lastName: string;
+                                        fullName?: string | null;
+                                        birthDeath?: string | null;
+                                    };
+                                }[] | null;
+                                gc_comments?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    comment: string;
+                                    contributorEmail?: string | null;
+                                    contributorName?: string | null;
+                                    contributorInstitution?: string | null;
+                                    /** Format: date-time */
+                                    publishedAt: string;
+                                    /** Format: date-time */
+                                    updatedAt: string;
+                                    /** Format: date-time */
+                                    createdAt: string;
+                                }[] | null;
                                 /** Format: date-time */
                                 createdAt: string;
                                 /** Format: date-time */
@@ -5417,6 +6724,8 @@ export interface operations {
                                 /** Format: date-time */
                                 publishedAt: string;
                                 contributorEmail?: string | null;
+                                contributorName?: string | null;
+                                contributorInstitution?: string | null;
                             }[] | null;
                             /** Format: date-time */
                             publishedAt?: string;
@@ -5424,6 +6733,24 @@ export interface operations {
                             updatedAt?: string;
                             /** Format: date-time */
                             createdAt?: string;
+                        }[] | null;
+                        gc_comments?: {
+                            id: number;
+                            /**
+                             * @description ID of the resource
+                             * @example cuida1b2c3d4e5f6g7h8i9j
+                             */
+                            documentId: string;
+                            comment: string;
+                            contributorEmail?: string | null;
+                            contributorName?: string | null;
+                            contributorInstitution?: string | null;
+                            /** Format: date-time */
+                            publishedAt: string;
+                            /** Format: date-time */
+                            updatedAt: string;
+                            /** Format: date-time */
+                            createdAt: string;
                         }[] | null;
                         /** Format: date-time */
                         publishedAt: string;
@@ -5484,14 +6811,38 @@ export interface operations {
                             documentId: string;
                             /**
                              * @description Type of connection between the two works
-                             * @enum {string}
+                             * @enum {string|null}
                              */
-                            connectionType: "explicit" | "implicit";
+                            connectionType?: "explicit" | "implicit" | null;
+                            referenceDetails?: {
+                                /** @enum {string} */
+                                explicitLevel: "author" | "work" | "passage";
+                                /** @enum {string|null} */
+                                implicitLevel: "work" | "passage" | null;
+                                /** @enum {string} */
+                                effectiveLevel: "author" | "work" | "passage";
+                                author: {
+                                    documentId?: string;
+                                    name: string;
+                                    proposed: boolean;
+                                };
+                                work?: {
+                                    documentId?: string;
+                                    title: string;
+                                    proposed: boolean;
+                                };
+                            } | null;
+                            submissionKey?: string | null;
+                            /**
+                             * @description Origin of the connection; absent for unclassified historical contributions
+                             * @enum {string|null}
+                             */
+                            connectionSource?: "archive" | "scholar" | "ai" | null;
                             /**
                              * @description Nature of the connection
-                             * @enum {string}
+                             * @enum {string|null}
                              */
-                            connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                            connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                             /**
                              * @description Boolean value
                              * @example true
@@ -5521,7 +6872,7 @@ export interface operations {
                              * @description ID of the resource
                              * @example cuida1b2c3d4e5f6g7h8i9j
                              */
-                            bookB_id: string;
+                            bookB_id?: string | null;
                             /**
                              * @description Description of the resource
                              * @example This is a description
@@ -5531,9 +6882,9 @@ export interface operations {
                              * @description Description of the resource
                              * @example This is a description
                              */
-                            bookB_textExcerpt: string;
+                            bookB_textExcerpt?: string | null;
                             bookA_title: string;
-                            bookB_title: string;
+                            bookB_title?: string | null;
                             books?: {
                                 id?: number;
                                 /**
@@ -5583,7 +6934,7 @@ export interface operations {
                                         url: string;
                                     };
                                     /** @description Strapi media object */
-                                    file: {
+                                    file?: {
                                         id: number;
                                         documentId: string;
                                         name: string;
@@ -5594,7 +6945,7 @@ export interface operations {
                                         ext: string;
                                         mime: string;
                                         url: string;
-                                    };
+                                    } | null;
                                 };
                                 gc_contributions?: {
                                     id: number;
@@ -5605,14 +6956,38 @@ export interface operations {
                                     documentId: string;
                                     /**
                                      * @description Type of connection between the two works
-                                     * @enum {string}
+                                     * @enum {string|null}
                                      */
-                                    connectionType: "explicit" | "implicit";
+                                    connectionType?: "explicit" | "implicit" | null;
+                                    referenceDetails?: {
+                                        /** @enum {string} */
+                                        explicitLevel: "author" | "work" | "passage";
+                                        /** @enum {string|null} */
+                                        implicitLevel: "work" | "passage" | null;
+                                        /** @enum {string} */
+                                        effectiveLevel: "author" | "work" | "passage";
+                                        author: {
+                                            documentId?: string;
+                                            name: string;
+                                            proposed: boolean;
+                                        };
+                                        work?: {
+                                            documentId?: string;
+                                            title: string;
+                                            proposed: boolean;
+                                        };
+                                    } | null;
+                                    submissionKey?: string | null;
+                                    /**
+                                     * @description Origin of the connection; absent for unclassified historical contributions
+                                     * @enum {string|null}
+                                     */
+                                    connectionSource?: "archive" | "scholar" | "ai" | null;
                                     /**
                                      * @description Nature of the connection
-                                     * @enum {string}
+                                     * @enum {string|null}
                                      */
-                                    connectionNature: "agreement" | "neutral / unsure" | "opposition";
+                                    connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
                                     /**
                                      * @description Boolean value
                                      * @example true
@@ -5642,7 +7017,7 @@ export interface operations {
                                      * @description ID of the resource
                                      * @example cuida1b2c3d4e5f6g7h8i9j
                                      */
-                                    bookB_id: string;
+                                    bookB_id?: string | null;
                                     /**
                                      * @description Description of the resource
                                      * @example This is a description
@@ -5652,9 +7027,56 @@ export interface operations {
                                      * @description Description of the resource
                                      * @example This is a description
                                      */
-                                    bookB_textExcerpt: string;
+                                    bookB_textExcerpt?: string | null;
                                     bookA_title: string;
-                                    bookB_title: string;
+                                    bookB_title?: string | null;
+                                    books?: {
+                                        id: number;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        /**
+                                         * @description Name of the resource
+                                         * @example John Doe
+                                         */
+                                        BookTitle: string;
+                                        /** @description Author object */
+                                        author: {
+                                            /**
+                                             * @description ID of the resource
+                                             * @example cuida1b2c3d4e5f6g7h8i9j
+                                             */
+                                            documentId: string;
+                                            firstName?: string | null;
+                                            /**
+                                             * @description Name of the resource
+                                             * @example John Doe
+                                             */
+                                            lastName: string;
+                                            fullName?: string | null;
+                                            birthDeath?: string | null;
+                                        };
+                                    }[] | null;
+                                    gc_comments?: {
+                                        id: number;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        comment: string;
+                                        contributorEmail?: string | null;
+                                        contributorName?: string | null;
+                                        contributorInstitution?: string | null;
+                                        /** Format: date-time */
+                                        publishedAt: string;
+                                        /** Format: date-time */
+                                        updatedAt: string;
+                                        /** Format: date-time */
+                                        createdAt: string;
+                                    }[] | null;
                                     /** Format: date-time */
                                     createdAt: string;
                                     /** Format: date-time */
@@ -5662,6 +7084,8 @@ export interface operations {
                                     /** Format: date-time */
                                     publishedAt: string;
                                     contributorEmail?: string | null;
+                                    contributorName?: string | null;
+                                    contributorInstitution?: string | null;
                                 }[] | null;
                                 /** Format: date-time */
                                 publishedAt?: string;
@@ -5670,6 +7094,1935 @@ export interface operations {
                                 /** Format: date-time */
                                 createdAt?: string;
                             }[] | null;
+                            gc_comments?: {
+                                id: number;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                documentId: string;
+                                comment: string;
+                                contributorEmail?: string | null;
+                                contributorName?: string | null;
+                                contributorInstitution?: string | null;
+                                /** Format: date-time */
+                                publishedAt: string;
+                                /** Format: date-time */
+                                updatedAt: string;
+                                /** Format: date-time */
+                                createdAt: string;
+                            }[] | null;
+                            /** Format: date-time */
+                            publishedAt: string;
+                            /** Format: date-time */
+                            updatedAt: string;
+                            /** Format: date-time */
+                            createdAt: string;
+                        }[];
+                        meta: {
+                            pagination?: {
+                                page: number;
+                                pageSize: number;
+                                pageCount: number;
+                                total: number;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description Not Found Response */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 404
+                         * @constant
+                         */
+                        status: 404;
+                        code: string;
+                        requestId?: string;
+                        root: [
+                            "NOT_FOUND"
+                        ];
+                    };
+                };
+            };
+        };
+    };
+    getComments: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Comments retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: number;
+                            /**
+                             * @description ID of the resource
+                             * @example cuida1b2c3d4e5f6g7h8i9j
+                             */
+                            documentId: string;
+                            comment: string;
+                            contributorEmail?: string | null;
+                            contributorName?: string | null;
+                            /** @description GC Contribution object returned from Strapi */
+                            gc_contribution?: {
+                                id?: number;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                documentId?: string;
+                                /**
+                                 * @description Type of connection between the two works
+                                 * @enum {string|null}
+                                 */
+                                connectionType?: "explicit" | "implicit" | null;
+                                referenceDetails?: {
+                                    /** @enum {string} */
+                                    explicitLevel: "author" | "work" | "passage";
+                                    /** @enum {string|null} */
+                                    implicitLevel: "work" | "passage" | null;
+                                    /** @enum {string} */
+                                    effectiveLevel: "author" | "work" | "passage";
+                                    author: {
+                                        documentId?: string;
+                                        name: string;
+                                        proposed: boolean;
+                                    };
+                                    work?: {
+                                        documentId?: string;
+                                        title: string;
+                                        proposed: boolean;
+                                    };
+                                } | null;
+                                submissionKey?: string | null;
+                                /**
+                                 * @description Origin of the connection; absent for unclassified historical contributions
+                                 * @enum {string|null}
+                                 */
+                                connectionSource?: "archive" | "scholar" | "ai" | null;
+                                /**
+                                 * @description Nature of the connection
+                                 * @enum {string|null}
+                                 */
+                                connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
+                                /**
+                                 * @description Boolean value
+                                 * @example true
+                                 */
+                                isSimilarityIdeas?: boolean | null;
+                                /**
+                                 * @description Boolean value
+                                 * @example true
+                                 */
+                                isBiographical?: boolean | null;
+                                /**
+                                 * @description Boolean value
+                                 * @example true
+                                 */
+                                isOther?: boolean | null;
+                                /**
+                                 * @description Description of the resource
+                                 * @example This is a description
+                                 */
+                                explainConnection?: string | null;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                bookA_id?: string;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                bookB_id?: string | null;
+                                /**
+                                 * @description Description of the resource
+                                 * @example This is a description
+                                 */
+                                bookA_textExcerpt?: string;
+                                /**
+                                 * @description Description of the resource
+                                 * @example This is a description
+                                 */
+                                bookB_textExcerpt?: string | null;
+                                bookA_title?: string;
+                                bookB_title?: string | null;
+                                books?: {
+                                    id?: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId?: string;
+                                    /**
+                                     * @description Name of the resource
+                                     * @example John Doe
+                                     */
+                                    BookTitle?: string;
+                                    BookSubtitle?: string | null;
+                                    OriginalPublicationDate?: string;
+                                    TranslatorName?: string | null;
+                                    TranslatingDate?: string | null;
+                                    SpecialThanks?: string | null;
+                                    /** @description Author object */
+                                    author?: {
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        firstName?: string | null;
+                                        /**
+                                         * @description Name of the resource
+                                         * @example John Doe
+                                         */
+                                        lastName: string;
+                                        fullName?: string | null;
+                                        birthDeath?: string | null;
+                                    } | null;
+                                    /** @description Component holding main file and its cover image */
+                                    submittedFiles?: {
+                                        /** @description Strapi media object */
+                                        cover: {
+                                            id: number;
+                                            documentId: string;
+                                            name: string;
+                                            alternativeText: string | null;
+                                            caption: string | null;
+                                            width: number | null;
+                                            height: number | null;
+                                            ext: string;
+                                            mime: string;
+                                            url: string;
+                                        };
+                                        /** @description Strapi media object */
+                                        file?: {
+                                            id: number;
+                                            documentId: string;
+                                            name: string;
+                                            alternativeText: string | null;
+                                            caption: string | null;
+                                            width: number | null;
+                                            height: number | null;
+                                            ext: string;
+                                            mime: string;
+                                            url: string;
+                                        } | null;
+                                    };
+                                    gc_contributions?: {
+                                        id: number;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        /**
+                                         * @description Type of connection between the two works
+                                         * @enum {string|null}
+                                         */
+                                        connectionType?: "explicit" | "implicit" | null;
+                                        referenceDetails?: {
+                                            /** @enum {string} */
+                                            explicitLevel: "author" | "work" | "passage";
+                                            /** @enum {string|null} */
+                                            implicitLevel: "work" | "passage" | null;
+                                            /** @enum {string} */
+                                            effectiveLevel: "author" | "work" | "passage";
+                                            author: {
+                                                documentId?: string;
+                                                name: string;
+                                                proposed: boolean;
+                                            };
+                                            work?: {
+                                                documentId?: string;
+                                                title: string;
+                                                proposed: boolean;
+                                            };
+                                        } | null;
+                                        submissionKey?: string | null;
+                                        /**
+                                         * @description Origin of the connection; absent for unclassified historical contributions
+                                         * @enum {string|null}
+                                         */
+                                        connectionSource?: "archive" | "scholar" | "ai" | null;
+                                        /**
+                                         * @description Nature of the connection
+                                         * @enum {string|null}
+                                         */
+                                        connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
+                                        /**
+                                         * @description Boolean value
+                                         * @example true
+                                         */
+                                        isSimilarityIdeas?: boolean | null;
+                                        /**
+                                         * @description Boolean value
+                                         * @example true
+                                         */
+                                        isBiographical?: boolean | null;
+                                        /**
+                                         * @description Boolean value
+                                         * @example true
+                                         */
+                                        isOther?: boolean | null;
+                                        /**
+                                         * @description Description of the resource
+                                         * @example This is a description
+                                         */
+                                        explainConnection?: string | null;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        bookA_id: string;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        bookB_id?: string | null;
+                                        /**
+                                         * @description Description of the resource
+                                         * @example This is a description
+                                         */
+                                        bookA_textExcerpt: string;
+                                        /**
+                                         * @description Description of the resource
+                                         * @example This is a description
+                                         */
+                                        bookB_textExcerpt?: string | null;
+                                        bookA_title: string;
+                                        bookB_title?: string | null;
+                                        books?: {
+                                            id: number;
+                                            /**
+                                             * @description ID of the resource
+                                             * @example cuida1b2c3d4e5f6g7h8i9j
+                                             */
+                                            documentId: string;
+                                            /**
+                                             * @description Name of the resource
+                                             * @example John Doe
+                                             */
+                                            BookTitle: string;
+                                            /** @description Author object */
+                                            author: {
+                                                /**
+                                                 * @description ID of the resource
+                                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                                 */
+                                                documentId: string;
+                                                firstName?: string | null;
+                                                /**
+                                                 * @description Name of the resource
+                                                 * @example John Doe
+                                                 */
+                                                lastName: string;
+                                                fullName?: string | null;
+                                                birthDeath?: string | null;
+                                            };
+                                        }[] | null;
+                                        gc_comments?: {
+                                            id: number;
+                                            /**
+                                             * @description ID of the resource
+                                             * @example cuida1b2c3d4e5f6g7h8i9j
+                                             */
+                                            documentId: string;
+                                            comment: string;
+                                            contributorEmail?: string | null;
+                                            contributorName?: string | null;
+                                            contributorInstitution?: string | null;
+                                            /** Format: date-time */
+                                            publishedAt: string;
+                                            /** Format: date-time */
+                                            updatedAt: string;
+                                            /** Format: date-time */
+                                            createdAt: string;
+                                        }[] | null;
+                                        /** Format: date-time */
+                                        createdAt: string;
+                                        /** Format: date-time */
+                                        updatedAt: string;
+                                        /** Format: date-time */
+                                        publishedAt: string;
+                                        contributorEmail?: string | null;
+                                        contributorName?: string | null;
+                                        contributorInstitution?: string | null;
+                                    }[] | null;
+                                    /** Format: date-time */
+                                    publishedAt?: string;
+                                    /** Format: date-time */
+                                    updatedAt?: string;
+                                    /** Format: date-time */
+                                    createdAt?: string;
+                                }[] | null;
+                                gc_comments?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    comment: string;
+                                    contributorEmail?: string | null;
+                                    contributorName?: string | null;
+                                    contributorInstitution?: string | null;
+                                    /** Format: date-time */
+                                    publishedAt: string;
+                                    /** Format: date-time */
+                                    updatedAt: string;
+                                    /** Format: date-time */
+                                    createdAt: string;
+                                }[] | null;
+                                /** Format: date-time */
+                                publishedAt?: string;
+                                /** Format: date-time */
+                                updatedAt?: string;
+                                /** Format: date-time */
+                                createdAt?: string;
+                            } | null;
+                            /** Format: date-time */
+                            publishedAt: string;
+                            /** Format: date-time */
+                            updatedAt: string;
+                            /** Format: date-time */
+                            createdAt: string;
+                        }[];
+                        meta: {
+                            pagination?: {
+                                page: number;
+                                pageSize: number;
+                                pageCount: number;
+                                total: number;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description Not Found Response */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 404
+                         * @constant
+                         */
+                        status: 404;
+                        code: string;
+                        requestId?: string;
+                        root: [
+                            "NOT_FOUND"
+                        ];
+                    };
+                };
+            };
+        };
+    };
+    postComments: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Comment created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: number;
+                        /**
+                         * @description ID of the resource
+                         * @example cuida1b2c3d4e5f6g7h8i9j
+                         */
+                        documentId: string;
+                        comment: string;
+                        contributorEmail?: string | null;
+                        contributorName?: string | null;
+                        /** @description GC Contribution object returned from Strapi */
+                        gc_contribution?: {
+                            id?: number;
+                            /**
+                             * @description ID of the resource
+                             * @example cuida1b2c3d4e5f6g7h8i9j
+                             */
+                            documentId?: string;
+                            /**
+                             * @description Type of connection between the two works
+                             * @enum {string|null}
+                             */
+                            connectionType?: "explicit" | "implicit" | null;
+                            referenceDetails?: {
+                                /** @enum {string} */
+                                explicitLevel: "author" | "work" | "passage";
+                                /** @enum {string|null} */
+                                implicitLevel: "work" | "passage" | null;
+                                /** @enum {string} */
+                                effectiveLevel: "author" | "work" | "passage";
+                                author: {
+                                    documentId?: string;
+                                    name: string;
+                                    proposed: boolean;
+                                };
+                                work?: {
+                                    documentId?: string;
+                                    title: string;
+                                    proposed: boolean;
+                                };
+                            } | null;
+                            submissionKey?: string | null;
+                            /**
+                             * @description Origin of the connection; absent for unclassified historical contributions
+                             * @enum {string|null}
+                             */
+                            connectionSource?: "archive" | "scholar" | "ai" | null;
+                            /**
+                             * @description Nature of the connection
+                             * @enum {string|null}
+                             */
+                            connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
+                            /**
+                             * @description Boolean value
+                             * @example true
+                             */
+                            isSimilarityIdeas?: boolean | null;
+                            /**
+                             * @description Boolean value
+                             * @example true
+                             */
+                            isBiographical?: boolean | null;
+                            /**
+                             * @description Boolean value
+                             * @example true
+                             */
+                            isOther?: boolean | null;
+                            /**
+                             * @description Description of the resource
+                             * @example This is a description
+                             */
+                            explainConnection?: string | null;
+                            /**
+                             * @description ID of the resource
+                             * @example cuida1b2c3d4e5f6g7h8i9j
+                             */
+                            bookA_id?: string;
+                            /**
+                             * @description ID of the resource
+                             * @example cuida1b2c3d4e5f6g7h8i9j
+                             */
+                            bookB_id?: string | null;
+                            /**
+                             * @description Description of the resource
+                             * @example This is a description
+                             */
+                            bookA_textExcerpt?: string;
+                            /**
+                             * @description Description of the resource
+                             * @example This is a description
+                             */
+                            bookB_textExcerpt?: string | null;
+                            bookA_title?: string;
+                            bookB_title?: string | null;
+                            books?: {
+                                id?: number;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                documentId?: string;
+                                /**
+                                 * @description Name of the resource
+                                 * @example John Doe
+                                 */
+                                BookTitle?: string;
+                                BookSubtitle?: string | null;
+                                OriginalPublicationDate?: string;
+                                TranslatorName?: string | null;
+                                TranslatingDate?: string | null;
+                                SpecialThanks?: string | null;
+                                /** @description Author object */
+                                author?: {
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    firstName?: string | null;
+                                    /**
+                                     * @description Name of the resource
+                                     * @example John Doe
+                                     */
+                                    lastName: string;
+                                    fullName?: string | null;
+                                    birthDeath?: string | null;
+                                } | null;
+                                /** @description Component holding main file and its cover image */
+                                submittedFiles?: {
+                                    /** @description Strapi media object */
+                                    cover: {
+                                        id: number;
+                                        documentId: string;
+                                        name: string;
+                                        alternativeText: string | null;
+                                        caption: string | null;
+                                        width: number | null;
+                                        height: number | null;
+                                        ext: string;
+                                        mime: string;
+                                        url: string;
+                                    };
+                                    /** @description Strapi media object */
+                                    file?: {
+                                        id: number;
+                                        documentId: string;
+                                        name: string;
+                                        alternativeText: string | null;
+                                        caption: string | null;
+                                        width: number | null;
+                                        height: number | null;
+                                        ext: string;
+                                        mime: string;
+                                        url: string;
+                                    } | null;
+                                };
+                                gc_contributions?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    /**
+                                     * @description Type of connection between the two works
+                                     * @enum {string|null}
+                                     */
+                                    connectionType?: "explicit" | "implicit" | null;
+                                    referenceDetails?: {
+                                        /** @enum {string} */
+                                        explicitLevel: "author" | "work" | "passage";
+                                        /** @enum {string|null} */
+                                        implicitLevel: "work" | "passage" | null;
+                                        /** @enum {string} */
+                                        effectiveLevel: "author" | "work" | "passage";
+                                        author: {
+                                            documentId?: string;
+                                            name: string;
+                                            proposed: boolean;
+                                        };
+                                        work?: {
+                                            documentId?: string;
+                                            title: string;
+                                            proposed: boolean;
+                                        };
+                                    } | null;
+                                    submissionKey?: string | null;
+                                    /**
+                                     * @description Origin of the connection; absent for unclassified historical contributions
+                                     * @enum {string|null}
+                                     */
+                                    connectionSource?: "archive" | "scholar" | "ai" | null;
+                                    /**
+                                     * @description Nature of the connection
+                                     * @enum {string|null}
+                                     */
+                                    connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
+                                    /**
+                                     * @description Boolean value
+                                     * @example true
+                                     */
+                                    isSimilarityIdeas?: boolean | null;
+                                    /**
+                                     * @description Boolean value
+                                     * @example true
+                                     */
+                                    isBiographical?: boolean | null;
+                                    /**
+                                     * @description Boolean value
+                                     * @example true
+                                     */
+                                    isOther?: boolean | null;
+                                    /**
+                                     * @description Description of the resource
+                                     * @example This is a description
+                                     */
+                                    explainConnection?: string | null;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    bookA_id: string;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    bookB_id?: string | null;
+                                    /**
+                                     * @description Description of the resource
+                                     * @example This is a description
+                                     */
+                                    bookA_textExcerpt: string;
+                                    /**
+                                     * @description Description of the resource
+                                     * @example This is a description
+                                     */
+                                    bookB_textExcerpt?: string | null;
+                                    bookA_title: string;
+                                    bookB_title?: string | null;
+                                    books?: {
+                                        id: number;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        /**
+                                         * @description Name of the resource
+                                         * @example John Doe
+                                         */
+                                        BookTitle: string;
+                                        /** @description Author object */
+                                        author: {
+                                            /**
+                                             * @description ID of the resource
+                                             * @example cuida1b2c3d4e5f6g7h8i9j
+                                             */
+                                            documentId: string;
+                                            firstName?: string | null;
+                                            /**
+                                             * @description Name of the resource
+                                             * @example John Doe
+                                             */
+                                            lastName: string;
+                                            fullName?: string | null;
+                                            birthDeath?: string | null;
+                                        };
+                                    }[] | null;
+                                    gc_comments?: {
+                                        id: number;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        comment: string;
+                                        contributorEmail?: string | null;
+                                        contributorName?: string | null;
+                                        contributorInstitution?: string | null;
+                                        /** Format: date-time */
+                                        publishedAt: string;
+                                        /** Format: date-time */
+                                        updatedAt: string;
+                                        /** Format: date-time */
+                                        createdAt: string;
+                                    }[] | null;
+                                    /** Format: date-time */
+                                    createdAt: string;
+                                    /** Format: date-time */
+                                    updatedAt: string;
+                                    /** Format: date-time */
+                                    publishedAt: string;
+                                    contributorEmail?: string | null;
+                                    contributorName?: string | null;
+                                    contributorInstitution?: string | null;
+                                }[] | null;
+                                /** Format: date-time */
+                                publishedAt?: string;
+                                /** Format: date-time */
+                                updatedAt?: string;
+                                /** Format: date-time */
+                                createdAt?: string;
+                            }[] | null;
+                            gc_comments?: {
+                                id: number;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                documentId: string;
+                                comment: string;
+                                contributorEmail?: string | null;
+                                contributorName?: string | null;
+                                contributorInstitution?: string | null;
+                                /** Format: date-time */
+                                publishedAt: string;
+                                /** Format: date-time */
+                                updatedAt: string;
+                                /** Format: date-time */
+                                createdAt: string;
+                            }[] | null;
+                            /** Format: date-time */
+                            publishedAt?: string;
+                            /** Format: date-time */
+                            updatedAt?: string;
+                            /** Format: date-time */
+                            createdAt?: string;
+                        } | null;
+                        /** Format: date-time */
+                        publishedAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                        /** Format: date-time */
+                        createdAt: string;
+                    };
+                };
+            };
+            /** @description Not Found Response */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 404
+                         * @constant
+                         */
+                        status: 404;
+                        code: string;
+                        requestId?: string;
+                        root: [
+                            "NOT_FOUND"
+                        ];
+                    };
+                };
+            };
+        };
+    };
+    getCommentsById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Comment retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: number;
+                        /**
+                         * @description ID of the resource
+                         * @example cuida1b2c3d4e5f6g7h8i9j
+                         */
+                        documentId: string;
+                        comment: string;
+                        contributorEmail?: string | null;
+                        contributorName?: string | null;
+                        /** @description GC Contribution object returned from Strapi */
+                        gc_contribution?: {
+                            id?: number;
+                            /**
+                             * @description ID of the resource
+                             * @example cuida1b2c3d4e5f6g7h8i9j
+                             */
+                            documentId?: string;
+                            /**
+                             * @description Type of connection between the two works
+                             * @enum {string|null}
+                             */
+                            connectionType?: "explicit" | "implicit" | null;
+                            referenceDetails?: {
+                                /** @enum {string} */
+                                explicitLevel: "author" | "work" | "passage";
+                                /** @enum {string|null} */
+                                implicitLevel: "work" | "passage" | null;
+                                /** @enum {string} */
+                                effectiveLevel: "author" | "work" | "passage";
+                                author: {
+                                    documentId?: string;
+                                    name: string;
+                                    proposed: boolean;
+                                };
+                                work?: {
+                                    documentId?: string;
+                                    title: string;
+                                    proposed: boolean;
+                                };
+                            } | null;
+                            submissionKey?: string | null;
+                            /**
+                             * @description Origin of the connection; absent for unclassified historical contributions
+                             * @enum {string|null}
+                             */
+                            connectionSource?: "archive" | "scholar" | "ai" | null;
+                            /**
+                             * @description Nature of the connection
+                             * @enum {string|null}
+                             */
+                            connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
+                            /**
+                             * @description Boolean value
+                             * @example true
+                             */
+                            isSimilarityIdeas?: boolean | null;
+                            /**
+                             * @description Boolean value
+                             * @example true
+                             */
+                            isBiographical?: boolean | null;
+                            /**
+                             * @description Boolean value
+                             * @example true
+                             */
+                            isOther?: boolean | null;
+                            /**
+                             * @description Description of the resource
+                             * @example This is a description
+                             */
+                            explainConnection?: string | null;
+                            /**
+                             * @description ID of the resource
+                             * @example cuida1b2c3d4e5f6g7h8i9j
+                             */
+                            bookA_id?: string;
+                            /**
+                             * @description ID of the resource
+                             * @example cuida1b2c3d4e5f6g7h8i9j
+                             */
+                            bookB_id?: string | null;
+                            /**
+                             * @description Description of the resource
+                             * @example This is a description
+                             */
+                            bookA_textExcerpt?: string;
+                            /**
+                             * @description Description of the resource
+                             * @example This is a description
+                             */
+                            bookB_textExcerpt?: string | null;
+                            bookA_title?: string;
+                            bookB_title?: string | null;
+                            books?: {
+                                id?: number;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                documentId?: string;
+                                /**
+                                 * @description Name of the resource
+                                 * @example John Doe
+                                 */
+                                BookTitle?: string;
+                                BookSubtitle?: string | null;
+                                OriginalPublicationDate?: string;
+                                TranslatorName?: string | null;
+                                TranslatingDate?: string | null;
+                                SpecialThanks?: string | null;
+                                /** @description Author object */
+                                author?: {
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    firstName?: string | null;
+                                    /**
+                                     * @description Name of the resource
+                                     * @example John Doe
+                                     */
+                                    lastName: string;
+                                    fullName?: string | null;
+                                    birthDeath?: string | null;
+                                } | null;
+                                /** @description Component holding main file and its cover image */
+                                submittedFiles?: {
+                                    /** @description Strapi media object */
+                                    cover: {
+                                        id: number;
+                                        documentId: string;
+                                        name: string;
+                                        alternativeText: string | null;
+                                        caption: string | null;
+                                        width: number | null;
+                                        height: number | null;
+                                        ext: string;
+                                        mime: string;
+                                        url: string;
+                                    };
+                                    /** @description Strapi media object */
+                                    file?: {
+                                        id: number;
+                                        documentId: string;
+                                        name: string;
+                                        alternativeText: string | null;
+                                        caption: string | null;
+                                        width: number | null;
+                                        height: number | null;
+                                        ext: string;
+                                        mime: string;
+                                        url: string;
+                                    } | null;
+                                };
+                                gc_contributions?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    /**
+                                     * @description Type of connection between the two works
+                                     * @enum {string|null}
+                                     */
+                                    connectionType?: "explicit" | "implicit" | null;
+                                    referenceDetails?: {
+                                        /** @enum {string} */
+                                        explicitLevel: "author" | "work" | "passage";
+                                        /** @enum {string|null} */
+                                        implicitLevel: "work" | "passage" | null;
+                                        /** @enum {string} */
+                                        effectiveLevel: "author" | "work" | "passage";
+                                        author: {
+                                            documentId?: string;
+                                            name: string;
+                                            proposed: boolean;
+                                        };
+                                        work?: {
+                                            documentId?: string;
+                                            title: string;
+                                            proposed: boolean;
+                                        };
+                                    } | null;
+                                    submissionKey?: string | null;
+                                    /**
+                                     * @description Origin of the connection; absent for unclassified historical contributions
+                                     * @enum {string|null}
+                                     */
+                                    connectionSource?: "archive" | "scholar" | "ai" | null;
+                                    /**
+                                     * @description Nature of the connection
+                                     * @enum {string|null}
+                                     */
+                                    connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
+                                    /**
+                                     * @description Boolean value
+                                     * @example true
+                                     */
+                                    isSimilarityIdeas?: boolean | null;
+                                    /**
+                                     * @description Boolean value
+                                     * @example true
+                                     */
+                                    isBiographical?: boolean | null;
+                                    /**
+                                     * @description Boolean value
+                                     * @example true
+                                     */
+                                    isOther?: boolean | null;
+                                    /**
+                                     * @description Description of the resource
+                                     * @example This is a description
+                                     */
+                                    explainConnection?: string | null;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    bookA_id: string;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    bookB_id?: string | null;
+                                    /**
+                                     * @description Description of the resource
+                                     * @example This is a description
+                                     */
+                                    bookA_textExcerpt: string;
+                                    /**
+                                     * @description Description of the resource
+                                     * @example This is a description
+                                     */
+                                    bookB_textExcerpt?: string | null;
+                                    bookA_title: string;
+                                    bookB_title?: string | null;
+                                    books?: {
+                                        id: number;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        /**
+                                         * @description Name of the resource
+                                         * @example John Doe
+                                         */
+                                        BookTitle: string;
+                                        /** @description Author object */
+                                        author: {
+                                            /**
+                                             * @description ID of the resource
+                                             * @example cuida1b2c3d4e5f6g7h8i9j
+                                             */
+                                            documentId: string;
+                                            firstName?: string | null;
+                                            /**
+                                             * @description Name of the resource
+                                             * @example John Doe
+                                             */
+                                            lastName: string;
+                                            fullName?: string | null;
+                                            birthDeath?: string | null;
+                                        };
+                                    }[] | null;
+                                    gc_comments?: {
+                                        id: number;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        comment: string;
+                                        contributorEmail?: string | null;
+                                        contributorName?: string | null;
+                                        contributorInstitution?: string | null;
+                                        /** Format: date-time */
+                                        publishedAt: string;
+                                        /** Format: date-time */
+                                        updatedAt: string;
+                                        /** Format: date-time */
+                                        createdAt: string;
+                                    }[] | null;
+                                    /** Format: date-time */
+                                    createdAt: string;
+                                    /** Format: date-time */
+                                    updatedAt: string;
+                                    /** Format: date-time */
+                                    publishedAt: string;
+                                    contributorEmail?: string | null;
+                                    contributorName?: string | null;
+                                    contributorInstitution?: string | null;
+                                }[] | null;
+                                /** Format: date-time */
+                                publishedAt?: string;
+                                /** Format: date-time */
+                                updatedAt?: string;
+                                /** Format: date-time */
+                                createdAt?: string;
+                            }[] | null;
+                            gc_comments?: {
+                                id: number;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                documentId: string;
+                                comment: string;
+                                contributorEmail?: string | null;
+                                contributorName?: string | null;
+                                contributorInstitution?: string | null;
+                                /** Format: date-time */
+                                publishedAt: string;
+                                /** Format: date-time */
+                                updatedAt: string;
+                                /** Format: date-time */
+                                createdAt: string;
+                            }[] | null;
+                            /** Format: date-time */
+                            publishedAt?: string;
+                            /** Format: date-time */
+                            updatedAt?: string;
+                            /** Format: date-time */
+                            createdAt?: string;
+                        } | null;
+                        /** Format: date-time */
+                        publishedAt: string;
+                        /** Format: date-time */
+                        updatedAt: string;
+                        /** Format: date-time */
+                        createdAt: string;
+                    };
+                };
+            };
+            /** @description Not Found Response */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 404
+                         * @constant
+                         */
+                        status: 404;
+                        code: string;
+                        requestId?: string;
+                        root: [
+                            "NOT_FOUND"
+                        ];
+                    };
+                };
+            };
+        };
+    };
+    getCommentsContributorByEmail: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                email: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Comments retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: number;
+                            /**
+                             * @description ID of the resource
+                             * @example cuida1b2c3d4e5f6g7h8i9j
+                             */
+                            documentId: string;
+                            comment: string;
+                            contributorEmail?: string | null;
+                            contributorName?: string | null;
+                            /** @description GC Contribution object returned from Strapi */
+                            gc_contribution?: {
+                                id?: number;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                documentId?: string;
+                                /**
+                                 * @description Type of connection between the two works
+                                 * @enum {string|null}
+                                 */
+                                connectionType?: "explicit" | "implicit" | null;
+                                referenceDetails?: {
+                                    /** @enum {string} */
+                                    explicitLevel: "author" | "work" | "passage";
+                                    /** @enum {string|null} */
+                                    implicitLevel: "work" | "passage" | null;
+                                    /** @enum {string} */
+                                    effectiveLevel: "author" | "work" | "passage";
+                                    author: {
+                                        documentId?: string;
+                                        name: string;
+                                        proposed: boolean;
+                                    };
+                                    work?: {
+                                        documentId?: string;
+                                        title: string;
+                                        proposed: boolean;
+                                    };
+                                } | null;
+                                submissionKey?: string | null;
+                                /**
+                                 * @description Origin of the connection; absent for unclassified historical contributions
+                                 * @enum {string|null}
+                                 */
+                                connectionSource?: "archive" | "scholar" | "ai" | null;
+                                /**
+                                 * @description Nature of the connection
+                                 * @enum {string|null}
+                                 */
+                                connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
+                                /**
+                                 * @description Boolean value
+                                 * @example true
+                                 */
+                                isSimilarityIdeas?: boolean | null;
+                                /**
+                                 * @description Boolean value
+                                 * @example true
+                                 */
+                                isBiographical?: boolean | null;
+                                /**
+                                 * @description Boolean value
+                                 * @example true
+                                 */
+                                isOther?: boolean | null;
+                                /**
+                                 * @description Description of the resource
+                                 * @example This is a description
+                                 */
+                                explainConnection?: string | null;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                bookA_id?: string;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                bookB_id?: string | null;
+                                /**
+                                 * @description Description of the resource
+                                 * @example This is a description
+                                 */
+                                bookA_textExcerpt?: string;
+                                /**
+                                 * @description Description of the resource
+                                 * @example This is a description
+                                 */
+                                bookB_textExcerpt?: string | null;
+                                bookA_title?: string;
+                                bookB_title?: string | null;
+                                books?: {
+                                    id?: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId?: string;
+                                    /**
+                                     * @description Name of the resource
+                                     * @example John Doe
+                                     */
+                                    BookTitle?: string;
+                                    BookSubtitle?: string | null;
+                                    OriginalPublicationDate?: string;
+                                    TranslatorName?: string | null;
+                                    TranslatingDate?: string | null;
+                                    SpecialThanks?: string | null;
+                                    /** @description Author object */
+                                    author?: {
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        firstName?: string | null;
+                                        /**
+                                         * @description Name of the resource
+                                         * @example John Doe
+                                         */
+                                        lastName: string;
+                                        fullName?: string | null;
+                                        birthDeath?: string | null;
+                                    } | null;
+                                    /** @description Component holding main file and its cover image */
+                                    submittedFiles?: {
+                                        /** @description Strapi media object */
+                                        cover: {
+                                            id: number;
+                                            documentId: string;
+                                            name: string;
+                                            alternativeText: string | null;
+                                            caption: string | null;
+                                            width: number | null;
+                                            height: number | null;
+                                            ext: string;
+                                            mime: string;
+                                            url: string;
+                                        };
+                                        /** @description Strapi media object */
+                                        file?: {
+                                            id: number;
+                                            documentId: string;
+                                            name: string;
+                                            alternativeText: string | null;
+                                            caption: string | null;
+                                            width: number | null;
+                                            height: number | null;
+                                            ext: string;
+                                            mime: string;
+                                            url: string;
+                                        } | null;
+                                    };
+                                    gc_contributions?: {
+                                        id: number;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        /**
+                                         * @description Type of connection between the two works
+                                         * @enum {string|null}
+                                         */
+                                        connectionType?: "explicit" | "implicit" | null;
+                                        referenceDetails?: {
+                                            /** @enum {string} */
+                                            explicitLevel: "author" | "work" | "passage";
+                                            /** @enum {string|null} */
+                                            implicitLevel: "work" | "passage" | null;
+                                            /** @enum {string} */
+                                            effectiveLevel: "author" | "work" | "passage";
+                                            author: {
+                                                documentId?: string;
+                                                name: string;
+                                                proposed: boolean;
+                                            };
+                                            work?: {
+                                                documentId?: string;
+                                                title: string;
+                                                proposed: boolean;
+                                            };
+                                        } | null;
+                                        submissionKey?: string | null;
+                                        /**
+                                         * @description Origin of the connection; absent for unclassified historical contributions
+                                         * @enum {string|null}
+                                         */
+                                        connectionSource?: "archive" | "scholar" | "ai" | null;
+                                        /**
+                                         * @description Nature of the connection
+                                         * @enum {string|null}
+                                         */
+                                        connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
+                                        /**
+                                         * @description Boolean value
+                                         * @example true
+                                         */
+                                        isSimilarityIdeas?: boolean | null;
+                                        /**
+                                         * @description Boolean value
+                                         * @example true
+                                         */
+                                        isBiographical?: boolean | null;
+                                        /**
+                                         * @description Boolean value
+                                         * @example true
+                                         */
+                                        isOther?: boolean | null;
+                                        /**
+                                         * @description Description of the resource
+                                         * @example This is a description
+                                         */
+                                        explainConnection?: string | null;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        bookA_id: string;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        bookB_id?: string | null;
+                                        /**
+                                         * @description Description of the resource
+                                         * @example This is a description
+                                         */
+                                        bookA_textExcerpt: string;
+                                        /**
+                                         * @description Description of the resource
+                                         * @example This is a description
+                                         */
+                                        bookB_textExcerpt?: string | null;
+                                        bookA_title: string;
+                                        bookB_title?: string | null;
+                                        books?: {
+                                            id: number;
+                                            /**
+                                             * @description ID of the resource
+                                             * @example cuida1b2c3d4e5f6g7h8i9j
+                                             */
+                                            documentId: string;
+                                            /**
+                                             * @description Name of the resource
+                                             * @example John Doe
+                                             */
+                                            BookTitle: string;
+                                            /** @description Author object */
+                                            author: {
+                                                /**
+                                                 * @description ID of the resource
+                                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                                 */
+                                                documentId: string;
+                                                firstName?: string | null;
+                                                /**
+                                                 * @description Name of the resource
+                                                 * @example John Doe
+                                                 */
+                                                lastName: string;
+                                                fullName?: string | null;
+                                                birthDeath?: string | null;
+                                            };
+                                        }[] | null;
+                                        gc_comments?: {
+                                            id: number;
+                                            /**
+                                             * @description ID of the resource
+                                             * @example cuida1b2c3d4e5f6g7h8i9j
+                                             */
+                                            documentId: string;
+                                            comment: string;
+                                            contributorEmail?: string | null;
+                                            contributorName?: string | null;
+                                            contributorInstitution?: string | null;
+                                            /** Format: date-time */
+                                            publishedAt: string;
+                                            /** Format: date-time */
+                                            updatedAt: string;
+                                            /** Format: date-time */
+                                            createdAt: string;
+                                        }[] | null;
+                                        /** Format: date-time */
+                                        createdAt: string;
+                                        /** Format: date-time */
+                                        updatedAt: string;
+                                        /** Format: date-time */
+                                        publishedAt: string;
+                                        contributorEmail?: string | null;
+                                        contributorName?: string | null;
+                                        contributorInstitution?: string | null;
+                                    }[] | null;
+                                    /** Format: date-time */
+                                    publishedAt?: string;
+                                    /** Format: date-time */
+                                    updatedAt?: string;
+                                    /** Format: date-time */
+                                    createdAt?: string;
+                                }[] | null;
+                                gc_comments?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    comment: string;
+                                    contributorEmail?: string | null;
+                                    contributorName?: string | null;
+                                    contributorInstitution?: string | null;
+                                    /** Format: date-time */
+                                    publishedAt: string;
+                                    /** Format: date-time */
+                                    updatedAt: string;
+                                    /** Format: date-time */
+                                    createdAt: string;
+                                }[] | null;
+                                /** Format: date-time */
+                                publishedAt?: string;
+                                /** Format: date-time */
+                                updatedAt?: string;
+                                /** Format: date-time */
+                                createdAt?: string;
+                            } | null;
+                            /** Format: date-time */
+                            publishedAt: string;
+                            /** Format: date-time */
+                            updatedAt: string;
+                            /** Format: date-time */
+                            createdAt: string;
+                        }[];
+                        meta: {
+                            pagination?: {
+                                page: number;
+                                pageSize: number;
+                                pageCount: number;
+                                total: number;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description Not Found Response */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 404
+                         * @constant
+                         */
+                        status: 404;
+                        code: string;
+                        requestId?: string;
+                        root: [
+                            "NOT_FOUND"
+                        ];
+                    };
+                };
+            };
+        };
+    };
+    getCommentsContributionByContributionId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                contributionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Comments retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: number;
+                            /**
+                             * @description ID of the resource
+                             * @example cuida1b2c3d4e5f6g7h8i9j
+                             */
+                            documentId: string;
+                            comment: string;
+                            contributorEmail?: string | null;
+                            contributorName?: string | null;
+                            /** @description GC Contribution object returned from Strapi */
+                            gc_contribution?: {
+                                id?: number;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                documentId?: string;
+                                /**
+                                 * @description Type of connection between the two works
+                                 * @enum {string|null}
+                                 */
+                                connectionType?: "explicit" | "implicit" | null;
+                                referenceDetails?: {
+                                    /** @enum {string} */
+                                    explicitLevel: "author" | "work" | "passage";
+                                    /** @enum {string|null} */
+                                    implicitLevel: "work" | "passage" | null;
+                                    /** @enum {string} */
+                                    effectiveLevel: "author" | "work" | "passage";
+                                    author: {
+                                        documentId?: string;
+                                        name: string;
+                                        proposed: boolean;
+                                    };
+                                    work?: {
+                                        documentId?: string;
+                                        title: string;
+                                        proposed: boolean;
+                                    };
+                                } | null;
+                                submissionKey?: string | null;
+                                /**
+                                 * @description Origin of the connection; absent for unclassified historical contributions
+                                 * @enum {string|null}
+                                 */
+                                connectionSource?: "archive" | "scholar" | "ai" | null;
+                                /**
+                                 * @description Nature of the connection
+                                 * @enum {string|null}
+                                 */
+                                connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
+                                /**
+                                 * @description Boolean value
+                                 * @example true
+                                 */
+                                isSimilarityIdeas?: boolean | null;
+                                /**
+                                 * @description Boolean value
+                                 * @example true
+                                 */
+                                isBiographical?: boolean | null;
+                                /**
+                                 * @description Boolean value
+                                 * @example true
+                                 */
+                                isOther?: boolean | null;
+                                /**
+                                 * @description Description of the resource
+                                 * @example This is a description
+                                 */
+                                explainConnection?: string | null;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                bookA_id?: string;
+                                /**
+                                 * @description ID of the resource
+                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                 */
+                                bookB_id?: string | null;
+                                /**
+                                 * @description Description of the resource
+                                 * @example This is a description
+                                 */
+                                bookA_textExcerpt?: string;
+                                /**
+                                 * @description Description of the resource
+                                 * @example This is a description
+                                 */
+                                bookB_textExcerpt?: string | null;
+                                bookA_title?: string;
+                                bookB_title?: string | null;
+                                books?: {
+                                    id?: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId?: string;
+                                    /**
+                                     * @description Name of the resource
+                                     * @example John Doe
+                                     */
+                                    BookTitle?: string;
+                                    BookSubtitle?: string | null;
+                                    OriginalPublicationDate?: string;
+                                    TranslatorName?: string | null;
+                                    TranslatingDate?: string | null;
+                                    SpecialThanks?: string | null;
+                                    /** @description Author object */
+                                    author?: {
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        firstName?: string | null;
+                                        /**
+                                         * @description Name of the resource
+                                         * @example John Doe
+                                         */
+                                        lastName: string;
+                                        fullName?: string | null;
+                                        birthDeath?: string | null;
+                                    } | null;
+                                    /** @description Component holding main file and its cover image */
+                                    submittedFiles?: {
+                                        /** @description Strapi media object */
+                                        cover: {
+                                            id: number;
+                                            documentId: string;
+                                            name: string;
+                                            alternativeText: string | null;
+                                            caption: string | null;
+                                            width: number | null;
+                                            height: number | null;
+                                            ext: string;
+                                            mime: string;
+                                            url: string;
+                                        };
+                                        /** @description Strapi media object */
+                                        file?: {
+                                            id: number;
+                                            documentId: string;
+                                            name: string;
+                                            alternativeText: string | null;
+                                            caption: string | null;
+                                            width: number | null;
+                                            height: number | null;
+                                            ext: string;
+                                            mime: string;
+                                            url: string;
+                                        } | null;
+                                    };
+                                    gc_contributions?: {
+                                        id: number;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        documentId: string;
+                                        /**
+                                         * @description Type of connection between the two works
+                                         * @enum {string|null}
+                                         */
+                                        connectionType?: "explicit" | "implicit" | null;
+                                        referenceDetails?: {
+                                            /** @enum {string} */
+                                            explicitLevel: "author" | "work" | "passage";
+                                            /** @enum {string|null} */
+                                            implicitLevel: "work" | "passage" | null;
+                                            /** @enum {string} */
+                                            effectiveLevel: "author" | "work" | "passage";
+                                            author: {
+                                                documentId?: string;
+                                                name: string;
+                                                proposed: boolean;
+                                            };
+                                            work?: {
+                                                documentId?: string;
+                                                title: string;
+                                                proposed: boolean;
+                                            };
+                                        } | null;
+                                        submissionKey?: string | null;
+                                        /**
+                                         * @description Origin of the connection; absent for unclassified historical contributions
+                                         * @enum {string|null}
+                                         */
+                                        connectionSource?: "archive" | "scholar" | "ai" | null;
+                                        /**
+                                         * @description Nature of the connection
+                                         * @enum {string|null}
+                                         */
+                                        connectionNature?: "agreement" | "neutral / unsure" | "opposition" | null;
+                                        /**
+                                         * @description Boolean value
+                                         * @example true
+                                         */
+                                        isSimilarityIdeas?: boolean | null;
+                                        /**
+                                         * @description Boolean value
+                                         * @example true
+                                         */
+                                        isBiographical?: boolean | null;
+                                        /**
+                                         * @description Boolean value
+                                         * @example true
+                                         */
+                                        isOther?: boolean | null;
+                                        /**
+                                         * @description Description of the resource
+                                         * @example This is a description
+                                         */
+                                        explainConnection?: string | null;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        bookA_id: string;
+                                        /**
+                                         * @description ID of the resource
+                                         * @example cuida1b2c3d4e5f6g7h8i9j
+                                         */
+                                        bookB_id?: string | null;
+                                        /**
+                                         * @description Description of the resource
+                                         * @example This is a description
+                                         */
+                                        bookA_textExcerpt: string;
+                                        /**
+                                         * @description Description of the resource
+                                         * @example This is a description
+                                         */
+                                        bookB_textExcerpt?: string | null;
+                                        bookA_title: string;
+                                        bookB_title?: string | null;
+                                        books?: {
+                                            id: number;
+                                            /**
+                                             * @description ID of the resource
+                                             * @example cuida1b2c3d4e5f6g7h8i9j
+                                             */
+                                            documentId: string;
+                                            /**
+                                             * @description Name of the resource
+                                             * @example John Doe
+                                             */
+                                            BookTitle: string;
+                                            /** @description Author object */
+                                            author: {
+                                                /**
+                                                 * @description ID of the resource
+                                                 * @example cuida1b2c3d4e5f6g7h8i9j
+                                                 */
+                                                documentId: string;
+                                                firstName?: string | null;
+                                                /**
+                                                 * @description Name of the resource
+                                                 * @example John Doe
+                                                 */
+                                                lastName: string;
+                                                fullName?: string | null;
+                                                birthDeath?: string | null;
+                                            };
+                                        }[] | null;
+                                        gc_comments?: {
+                                            id: number;
+                                            /**
+                                             * @description ID of the resource
+                                             * @example cuida1b2c3d4e5f6g7h8i9j
+                                             */
+                                            documentId: string;
+                                            comment: string;
+                                            contributorEmail?: string | null;
+                                            contributorName?: string | null;
+                                            contributorInstitution?: string | null;
+                                            /** Format: date-time */
+                                            publishedAt: string;
+                                            /** Format: date-time */
+                                            updatedAt: string;
+                                            /** Format: date-time */
+                                            createdAt: string;
+                                        }[] | null;
+                                        /** Format: date-time */
+                                        createdAt: string;
+                                        /** Format: date-time */
+                                        updatedAt: string;
+                                        /** Format: date-time */
+                                        publishedAt: string;
+                                        contributorEmail?: string | null;
+                                        contributorName?: string | null;
+                                        contributorInstitution?: string | null;
+                                    }[] | null;
+                                    /** Format: date-time */
+                                    publishedAt?: string;
+                                    /** Format: date-time */
+                                    updatedAt?: string;
+                                    /** Format: date-time */
+                                    createdAt?: string;
+                                }[] | null;
+                                gc_comments?: {
+                                    id: number;
+                                    /**
+                                     * @description ID of the resource
+                                     * @example cuida1b2c3d4e5f6g7h8i9j
+                                     */
+                                    documentId: string;
+                                    comment: string;
+                                    contributorEmail?: string | null;
+                                    contributorName?: string | null;
+                                    contributorInstitution?: string | null;
+                                    /** Format: date-time */
+                                    publishedAt: string;
+                                    /** Format: date-time */
+                                    updatedAt: string;
+                                    /** Format: date-time */
+                                    createdAt: string;
+                                }[] | null;
+                                /** Format: date-time */
+                                publishedAt?: string;
+                                /** Format: date-time */
+                                updatedAt?: string;
+                                /** Format: date-time */
+                                createdAt?: string;
+                            } | null;
                             /** Format: date-time */
                             publishedAt: string;
                             /** Format: date-time */
@@ -5734,16 +9087,14 @@ export interface operations {
                              * @example cuida1b2c3d4e5f6g7h8i9j
                              */
                             documentId: string;
-                            /**
-                             * @description Name of the resource
-                             * @example John Doe
-                             */
-                            bookName: string;
-                            /**
-                             * @description Name of the resource
-                             * @example John Doe
-                             */
+                            bookName?: string | null;
                             authorName: string;
+                            /** @enum {string|null} */
+                            entityType?: "author" | "work" | null;
+                            /** @enum {string|null} */
+                            reviewStatus?: "proposed" | "accepted" | "rejected" | null;
+                            contributionDocumentId?: string | null;
+                            authorDocumentId?: string | null;
                             /** Format: date-time */
                             createdAt: string;
                             /** Format: date-time */
@@ -5805,16 +9156,14 @@ export interface operations {
                          * @example cuida1b2c3d4e5f6g7h8i9j
                          */
                         documentId: string;
-                        /**
-                         * @description Name of the resource
-                         * @example John Doe
-                         */
-                        bookName: string;
-                        /**
-                         * @description Name of the resource
-                         * @example John Doe
-                         */
+                        bookName?: string | null;
                         authorName: string;
+                        /** @enum {string|null} */
+                        entityType?: "author" | "work" | null;
+                        /** @enum {string|null} */
+                        reviewStatus?: "proposed" | "accepted" | "rejected" | null;
+                        contributionDocumentId?: string | null;
+                        authorDocumentId?: string | null;
                         /** Format: date-time */
                         createdAt: string;
                         /** Format: date-time */
@@ -5824,6 +9173,117 @@ export interface operations {
             };
             /** @description Not Found Response */
             400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 404
+                         * @constant
+                         */
+                        status: 404;
+                        code: string;
+                        requestId?: string;
+                        root: [
+                            "NOT_FOUND"
+                        ];
+                    };
+                };
+            };
+        };
+    };
+    "getHome-philosophers": {
+        parameters: {
+            query?: {
+                cursor?: number;
+                limit?: number;
+                sort?: string;
+                showInHero?: boolean;
+                showOnEarth?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Home philosophers retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: number;
+                            /**
+                             * @description ID of the resource
+                             * @example cuida1b2c3d4e5f6g7h8i9j
+                             */
+                            documentId: string;
+                            name: string;
+                            slug: string;
+                            dates: string;
+                            era: string;
+                            /**
+                             * @description Boolean value
+                             * @example true
+                             */
+                            showInHero: boolean;
+                            /**
+                             * @description Boolean value
+                             * @example true
+                             */
+                            showOnEarth: boolean;
+                            heroIndex?: number | null;
+                            /**
+                             * @description Boolean value
+                             * @example true
+                             */
+                            showOnMobile?: boolean | null;
+                            heroQuote?: string | null;
+                            city?: string | null;
+                            country?: string | null;
+                            lat?: number | null;
+                            lon?: number | null;
+                            school?: string | null;
+                            earthQuote?: string | null;
+                            earthOrder?: number | null;
+                            /** @description Strapi media object */
+                            image?: {
+                                id: number;
+                                documentId: string;
+                                name: string;
+                                alternativeText: string | null;
+                                caption: string | null;
+                                width: number | null;
+                                height: number | null;
+                                ext: string;
+                                mime: string;
+                                url: string;
+                            } | null;
+                            /** Format: date-time */
+                            publishedAt: string;
+                            /** Format: date-time */
+                            updatedAt: string;
+                            /** Format: date-time */
+                            createdAt: string;
+                        }[];
+                        meta: {
+                            pagination?: {
+                                page: number;
+                                pageSize: number;
+                                pageCount: number;
+                                total: number;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description Not Found Response */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

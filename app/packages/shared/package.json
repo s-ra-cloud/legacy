@@ -8,6 +8,18 @@
   "license": "ISC",
   "keywords": [],
   "exports": {
+    "./gc-merges": {
+      "types": "./dist/gc-merges.d.ts",
+      "import": "./dist/gc-merges.js"
+    },
+    "./kt-import": {
+      "types": "./dist/kt-import.d.ts",
+      "import": "./dist/kt-import.js"
+    },
+    "./gc-verification": {
+      "types": "./dist/gc-verification.d.ts",
+      "import": "./dist/gc-verification.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
@@ -30,6 +42,7 @@
     "clean": "git clean -xdf node_modules dist .cache .turbo"
   },
   "dependencies": {
+    "@noble/hashes": "^2.4.0",
     "file-type": "^21.0.0",
     "pino": "^9.6.0",
     "zod": "catalog:",

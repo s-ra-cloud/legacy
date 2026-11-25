@@ -1,5 +1,9 @@
 packages:
   - "apps/*"
+  - "!apps/client"
+  - "!apps/api"
+  - "../artifacts/legacy/client"
+  - "../artifacts/api-server/legacy"
   - "packages/*"
   - "tooling/*"
 

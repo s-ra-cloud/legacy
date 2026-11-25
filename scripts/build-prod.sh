@@ -6,6 +6,7 @@ cd "$(dirname "$0")/.."
 ROOT="$PWD"
 
 echo "==> Installing dependencies"
+pnpm install --frozen-lockfile --prefer-offline
 cd "$ROOT/app"
 pnpm install --frozen-lockfile --prefer-offline
 

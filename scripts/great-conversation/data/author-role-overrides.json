@@ -1,0 +1,66 @@
+{
+  "Sokrates": {
+    "role": "author",
+    "basis": "Taught a philosophical doctrine through oral dialogue; personal book authorship is not required.",
+    "sourceUrl": "https://plato.stanford.edu/entries/socrates/"
+  },
+  "Epictetus": {
+    "name": "Epictetus",
+    "role": "author",
+    "basis": "Taught Stoic doctrine, recorded by his pupil Arrian; personal book authorship is not required.",
+    "sourceUrl": "https://plato.stanford.edu/entries/epictetus/"
+  },
+  "Jesus_von_Nazaret": {
+    "role": "author",
+    "basis": "Taught a religious doctrine orally. The definition does not require personal authorship of a book.",
+    "sourceUrl": "https://www.britannica.com/biography/Jesus",
+    "status": "doctrine-assessment"
+  },
+  "Paulus_von_Tarsus": {
+    "role": "author",
+    "basis": "Taught Christian doctrine and authored epistles.",
+    "sourceUrl": "https://www.britannica.com/biography/Saint-Paul-the-Apostle",
+    "status": "doctrine-assessment"
+  },
+  "Zwingli__Ulrich": {
+    "role": "author",
+    "basis": "Taught a Reformation theological doctrine and authored theological writings.",
+    "sourceUrl": "https://www.britannica.com/biography/Huldrych-Zwingli",
+    "status": "doctrine-assessment"
+  },
+  "Euklid": {
+    "role": "author",
+    "basis": "Authored the mathematical textbook Elements.",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q8747"
+  },
+  "instances": {
+    "role": "non-author",
+    "basis": "Empty archive placeholder, not an identified individual.",
+    "sourceUrl": null,
+    "status": "non-person"
+  },
+  "[Multiple_authors]": {
+    "role": "non-author",
+    "basis": "Collective placeholder, not an individual author.",
+    "sourceUrl": null,
+    "status": "non-person"
+  },
+  "Grimm__Jacob;_Grimm__Wilhelm": {
+    "role": "non-author",
+    "basis": "Combined entry for two authors, not one individual. Their separate author records are preserved.",
+    "sourceUrl": null,
+    "status": "non-person"
+  },
+  "Ogden__Charles_Kay;_Richards__Ivor_Armstrong": {
+    "role": "non-author",
+    "basis": "Combined entry for two authors, not one individual. Their separate author records are preserved.",
+    "sourceUrl": null,
+    "status": "non-person"
+  },
+  "Russell__Bertrand;_Whitehead__Alfred_North": {
+    "role": "non-author",
+    "basis": "Combined entry for two authors, not one individual. Their separate author records are preserved.",
+    "sourceUrl": null,
+    "status": "non-person"
+  }
+}

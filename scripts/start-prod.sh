@@ -96,13 +96,16 @@ echo "==> Starting Strapi on 127.0.0.1:1337 (watchdog)"
 ) &
 
 echo "==> Starting API on 127.0.0.1:3000 (watchdog)"
-( watchdog api 5 bash -c 'cd "$ROOT/app" && API_HOST=127.0.0.1 API_PORT=3000 pnpm --filter "@repo/api" start' ) &
+# Build/install belongs to build-prod.sh. Invoking pnpm under the isolated app
+# workspace can bootstrap its pinned pnpm version over the network at runtime.
+# The parent already loaded app/.env without overriding injected variables.
+( watchdog api 5 bash -c 'cd "$ROOT/app/apps/api" && API_HOST=127.0.0.1 API_PORT=3000 exec node dist/node.js' ) &
 
 echo "==> Starting Admin on 127.0.0.1:3001 (watchdog)"
-( watchdog admin 5 bash -c 'cd "$ROOT/app/apps/admin" && PORT=3001 HOST=127.0.0.1 NODE_ENV=production pnpm exec react-router-serve ./build/server/index.js' ) &
+( watchdog admin 5 bash -c 'cd "$ROOT/app/apps/admin" && PORT=3001 HOST=127.0.0.1 NODE_ENV=production exec ./node_modules/.bin/react-router-serve ./build/server/index.js' ) &
 
 echo "==> Starting Client on 127.0.0.1:5173 (watchdog)"
-( watchdog client 5 bash -c 'cd "$ROOT/app/apps/client" && PORT=5173 HOST=127.0.0.1 NODE_ENV=production pnpm exec react-router-serve ./build/server/index.js' ) &
+( watchdog client 5 bash -c 'cd "$ROOT/app/apps/client" && PORT=5173 HOST=127.0.0.1 NODE_ENV=production exec ./node_modules/.bin/react-router-serve ./build/server/index.js' ) &
 
 # Keep the script alive so all background watchdogs keep running.
 wait

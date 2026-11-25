@@ -589,6 +589,7 @@ export interface ApiGcCommentGcComment extends Struct.CollectionTypeSchema {
   attributes: {
     comment: Schema.Attribute.Text & Schema.Attribute.Required;
     contributorEmail: Schema.Attribute.String;
+    contributorInstitution: Schema.Attribute.String;
     contributorName: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -630,17 +631,35 @@ export interface ApiGcContributionGcContribution
     bookA_id: Schema.Attribute.String & Schema.Attribute.Required;
     bookA_textExcerpt: Schema.Attribute.Text & Schema.Attribute.Required;
     bookA_title: Schema.Attribute.String & Schema.Attribute.Required;
-    bookB_id: Schema.Attribute.String & Schema.Attribute.Required;
-    bookB_textExcerpt: Schema.Attribute.Text & Schema.Attribute.Required;
-    bookB_title: Schema.Attribute.String & Schema.Attribute.Required;
+    bookB_id: Schema.Attribute.String;
+    bookB_textExcerpt: Schema.Attribute.Text;
+    bookB_title: Schema.Attribute.String;
     books: Schema.Attribute.Relation<'manyToMany', 'api::book.book'>;
     connectionNature: Schema.Attribute.Enumeration<
-      ['agreement', 'neutral / unsure', 'opposition']
-    > &
-      Schema.Attribute.Required;
-    connectionType: Schema.Attribute.Enumeration<['explicit', 'implicit']> &
-      Schema.Attribute.Required;
-    contributorEmail: Schema.Attribute.String;
+      ['agreement', 'neutral / unsure', 'opposition', 'neutral', 'mixed']
+    >;
+    connectionReviewedBy: Schema.Attribute.String & Schema.Attribute.Private;
+    connectionReviewNote: Schema.Attribute.Text;
+    connectionReviewStatus: Schema.Attribute.Enumeration<
+      [
+        'catalogue_review',
+        'ready_to_continue',
+        'editorial_review',
+        'accepted',
+        'rejected',
+      ]
+    >;
+    connectionSource: Schema.Attribute.Enumeration<
+      ['archive', 'scholar', 'ai']
+    >;
+    connectionType: Schema.Attribute.Enumeration<['explicit', 'implicit']>;
+    connectionUncertain: Schema.Attribute.Boolean;
+    continuationFingerprint: Schema.Attribute.String & Schema.Attribute.Private;
+    continuationKey: Schema.Attribute.String & Schema.Attribute.Private;
+    contributorEmail: Schema.Attribute.String & Schema.Attribute.Private;
+    contributorInstitution: Schema.Attribute.String;
+    contributorName: Schema.Attribute.String;
+    contributorUserId: Schema.Attribute.String & Schema.Attribute.Private;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -660,7 +679,13 @@ export interface ApiGcContributionGcContribution
       'api::gc-contribution.gc-contribution'
     > &
       Schema.Attribute.Private;
+    originComment: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
+    referenceDetails: Schema.Attribute.JSON;
+    referenceRevisionHistory: Schema.Attribute.JSON & Schema.Attribute.Private;
+    submissionFingerprint: Schema.Attribute.String & Schema.Attribute.Private;
+    submissionKey: Schema.Attribute.String;
+    supportingReference: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -816,11 +841,17 @@ export interface ApiRequestedBookRequestedBook
     draftAndPublish: false;
   };
   attributes: {
+    authorDocumentId: Schema.Attribute.String;
     authorName: Schema.Attribute.String & Schema.Attribute.Required;
-    bookName: Schema.Attribute.String & Schema.Attribute.Required;
+    bookName: Schema.Attribute.String;
+    contributionDocumentId: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    dependsOnRequestDocumentId: Schema.Attribute.String;
+    entityType: Schema.Attribute.Enumeration<['author', 'work']> &
+      Schema.Attribute.DefaultTo<'work'>;
+    linkedEntityDocumentId: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -828,7 +859,14 @@ export interface ApiRequestedBookRequestedBook
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    requesterEmail: Schema.Attribute.String;
+    requesterEmail: Schema.Attribute.String & Schema.Attribute.Private;
+    requesterUserId: Schema.Attribute.String & Schema.Attribute.Private;
+    reviewedBy: Schema.Attribute.String & Schema.Attribute.Private;
+    reviewNote: Schema.Attribute.Text;
+    reviewStatus: Schema.Attribute.Enumeration<
+      ['proposed', 'accepted', 'rejected']
+    > &
+      Schema.Attribute.DefaultTo<'proposed'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

@@ -1,0 +1,10 @@
+[
+  {
+    "id": "Epictetus",
+    "name": "Epictetus",
+    "role": "author",
+    "roleBasis": "Taught Stoic doctrine, recorded by his pupil Arrian; personal book authorship is not required.",
+    "roleStatus": "reference-assessment",
+    "roleSourceUrl": "https://plato.stanford.edu/entries/epictetus/"
+  }
+]

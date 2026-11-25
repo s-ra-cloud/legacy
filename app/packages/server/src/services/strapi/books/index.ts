@@ -16,7 +16,9 @@ import {
 } from "./schema/output.js";
 import type { BookData } from "./schema/inpute.js";
 import { envClient, getStrapiMediaUrl } from "@repo/shared/env-client";
-import { userService } from "../../users/index.js";
+import { enrichPublicAttribution } from "../public-attribution.js";
+import { replaceText } from "./replace-text.js";
+export { replaceBookTextSchema, BookTextError } from "./replace-text.js";
 
 // Strapi response types
 interface StrapiResponse<T> {
@@ -40,35 +42,11 @@ async function transformStrapiBook(ctx: ServiceContext, data: StrapiBookData): P
   }
   if (data.submittedFiles) {
     data.submittedFiles.cover.url = getStrapiMediaUrl(data.submittedFiles.cover.url) ?? data.submittedFiles.cover.url;
-    data.submittedFiles.file.url = getStrapiMediaUrl(data.submittedFiles.file.url) ?? data.submittedFiles.file.url;
+    if (data.submittedFiles.file) data.submittedFiles.file.url = getStrapiMediaUrl(data.submittedFiles.file.url) ?? data.submittedFiles.file.url;
   }
   if (data.gc_contributions) {
     await Promise.all(
       data.gc_contributions.map(async (contribution) => {
-        if (contribution.contributorEmail) {
-          try {
-            const user = await userService.getByEmail(ctx, { email: contribution.contributorEmail }, {});
-            contribution.contributorName = user.name || user.firstName + " " + user.lastName || "";
-            contribution.contributorInstitution = user.institution || "";
-          } catch {
-            // Contributor email not found in local user table — leave name/institution as-is
-          }
-        }
-        if (contribution.gc_comments) {
-          await Promise.all(
-            contribution.gc_comments.map(async (comment) => {
-              if (comment.contributorEmail) {
-                try {
-                  const user = await userService.getByEmail(ctx, { email: comment.contributorEmail }, {});
-                  comment.contributorName = user.name || user.firstName + " " + user.lastName || "";
-                  comment.contributorInstitution = user.institution || "";
-                } catch {
-                  // Commenter email not found in local user table — leave name/institution as-is
-                }
-              }
-            })
-          );
-        }
         contribution.books?.map((book) => {
           if (book.author) {
             book.author.fullName = `${book.author.firstName} ${book.author.lastName}`;
@@ -77,7 +55,7 @@ async function transformStrapiBook(ctx: ServiceContext, data: StrapiBookData): P
       })
     );
   }
-  return bookSchema.parse(data);
+  return bookSchema.parse(await enrichPublicAttribution(ctx, data));
 }
 
 // Input types for service methods
@@ -85,6 +63,7 @@ interface BooksInput {
   cursor?: number;
   limit?: number;
   search?: string;
+  authorId?: string;
   sort?: string;
   filters?: Record<string, unknown>;
 }
@@ -102,15 +81,20 @@ async function getAll(ctx: ServiceContext, input: BooksInput = {}) {
   ctxLog(ctx, "Books/GetAll", { input });
 
   const filters: Record<string, any> = { ...input.filters };
+  if (input.authorId) filters.author = { documentId: { $eq: input.authorId } };
 
   // Handle search across multiple fields
   if (input.search) {
-    filters.$or = [
-      { BookTitle: { $containsi: input.search } },
-      { BookSubtitle: { $containsi: input.search } },
-      { TranslatorName: { $containsi: input.search } },
-      { OriginalPublicationDate: { $containsi: input.search } },
-    ];
+    filters.$and = input.search.trim().split(/\s+/).filter(Boolean).map(term => ({
+      $or: [
+        { BookTitle: { $containsi: term } },
+        { BookSubtitle: { $containsi: term } },
+        { TranslatorName: { $containsi: term } },
+        { OriginalPublicationDate: { $containsi: term } },
+        { author: { firstName: { $containsi: term } } },
+        { author: { lastName: { $containsi: term } } },
+      ],
+    }));
   }
 
   const populate = {
@@ -138,7 +122,7 @@ async function getAll(ctx: ServiceContext, input: BooksInput = {}) {
     filters,
     sort: input.sort || "publishedAt:asc",
     limit: input.limit || 20,
-    offset: input.cursor ? (input.cursor - 1) * (input.limit || 20) : 0,
+    page: input.cursor || 1,
   });
 
   if (!response) {
@@ -320,6 +304,7 @@ async function create(ctx: ServiceContext, input: BookData) {
 
 // Export the service
 export const booksService = {
+  replaceText,
   getAll,
   get,
   create,

@@ -66,9 +66,3 @@ build/
 /attached_assets/*.gz
 *.log
 *.tar.gz.enc
-
-.ssh/
-.env
-.env.*
-**/.vite/
-**/project.inlang/cache/

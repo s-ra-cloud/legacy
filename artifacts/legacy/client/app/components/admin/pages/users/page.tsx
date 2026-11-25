@@ -1,0 +1,90 @@
+import { motion } from "framer-motion";
+import { ArrowLeft, Database } from "lucide-react";
+import { Link } from "react-router";
+import { SAFE_ROUTES } from "~/safe-routes";
+import { AdminManyUsersTable } from "./table";
+
+interface AdminUsersPageProps {}
+
+export function AdminUsersPage(_: AdminUsersPageProps) {
+  return (
+    <section className="relative px-6 pt-8 pb-24 md:px-12">
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #EAE8E4 1px, transparent 1px), linear-gradient(to bottom, #EAE8E4 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
+      />
+
+      <div className="absolute top-3 left-6 h-px w-3 bg-gold/50" />
+      <div className="absolute top-3 left-6 h-3 w-px bg-gold/50" />
+      <div className="absolute top-3 right-6 h-px w-3 bg-gold/50" />
+      <div className="absolute top-3 right-6 h-3 w-px bg-gold/50" />
+
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="relative mx-auto max-w-6xl"
+      >
+        <Link
+          to={SAFE_ROUTES.HOME}
+          className="mb-10 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-ivory/30 transition-colors hover:text-gold"
+        >
+          <ArrowLeft size={12} />
+          Home
+        </Link>
+
+        <header className="mb-12 text-center">
+          <span className="marquee-label mb-3 block">Administration</span>
+          <div className="flex items-center justify-center gap-5">
+            <div
+              style={{
+                width: "80px",
+                height: "1px",
+                background:
+                  "linear-gradient(to right, transparent, rgba(197,160,89,0.6))",
+              }}
+            />
+            <h1
+              className="font-serif text-4xl tracking-tight text-ivory"
+              style={{ fontFamily: "Didot, Georgia, serif" }}
+            >
+              Users
+            </h1>
+            <div
+              style={{
+                width: "80px",
+                height: "1px",
+                background:
+                  "linear-gradient(to left, transparent, rgba(197,160,89,0.6))",
+              }}
+            />
+          </div>
+          <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-ivory/40">
+            Manage member accounts, roles, and access permissions across the
+            archive.
+          </p>
+        </header>
+
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border border-gold/20 bg-ivory/[0.02] px-5 py-4">
+          <p className="text-sm text-ivory/50">
+            Recovery transfer of the original Knowledge Tree snapshot archives.
+          </p>
+          <Link
+            to="/dashboard/knowledge-tree"
+            data-testid="link-knowledge-tree-data"
+            className="inline-flex items-center gap-2 border border-gold/40 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-gold transition-colors hover:bg-gold hover:text-charcoal"
+          >
+            <Database size={12} />
+            Knowledge Tree data
+          </Link>
+        </div>
+
+        <AdminManyUsersTable />
+      </motion.div>
+    </section>
+  );
+}

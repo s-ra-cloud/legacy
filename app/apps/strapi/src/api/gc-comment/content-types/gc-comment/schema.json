@@ -21,6 +21,9 @@
     "contributorName": {
       "type": "string"
     },
+    "contributorInstitution": {
+      "type": "string"
+    },
     "gc_contribution": {
       "type": "relation",
       "relation": "manyToOne",

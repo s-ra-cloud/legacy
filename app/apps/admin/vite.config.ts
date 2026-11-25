@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
       }),
       tailwindcss(),
       reactRouter(),
-      tsconfigPaths(),
+      tsconfigPaths({ projects: ["./tsconfig.json"] }),
     ],
     server: {
       host: "127.0.0.1",

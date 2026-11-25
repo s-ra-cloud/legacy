@@ -15,6 +15,12 @@
   all existing user data and the uploaded profile-media relation, and include
   the additive nullable `public.users.auth_image_url` column. Do not replace the
   uploaded-media relation with this URL field.
+- Include the additive `gc_verification_entities` and
+  `gc_verification_revisions` tables introduced by human verification. Without
+  these, the status endpoint fails and the graph cannot safely distinguish
+  Verified from Unverified. An empty review history is valid and must return
+  an empty successful status list, not a server error. Do not replace production
+  data with development data.
 - The build and API startup do not migrate the database. Do not reintroduce
   `prisma db push`, `--accept-data-loss`, or startup DDL as a workaround for a
   missing column. Use the managed Publish schema review.

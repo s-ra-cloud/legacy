@@ -1,0 +1,3190 @@
+{
+  "Q100782614": {
+    "books": {},
+    "occupations": {
+      "Q1231865": "pedagogue",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q1022453": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q10732476": "art collector"
+    }
+  },
+  "Q10261": {
+    "books": {},
+    "occupations": {
+      "Q82955": "politician",
+      "Q170790": "mathematician",
+      "Q4964182": "philosopher",
+      "Q14915627": "musicologist",
+      "Q16031530": "music theorist",
+      "Q36180": "writer"
+    }
+  },
+  "Q1035": {
+    "books": {
+      "Q51514273": "On the origin of species by means of natural selection, or the preservation of favoured races in the struggle for life",
+      "Q51382496": "The formation of vegetable mould, through the action of worms : with observations on their habits"
+    },
+    "occupations": {
+      "Q520549": "geologist",
+      "Q864503": "biologist",
+      "Q2374149": "botanist",
+      "Q2083925": "botanical collector",
+      "Q4964182": "philosopher",
+      "Q3579035": "travel writer",
+      "Q11900058": "explorer",
+      "Q16831721": "ethologist",
+      "Q36180": "writer",
+      "Q18805": "naturalist",
+      "Q98544732": "scientific collector"
+    }
+  },
+  "Q104701751": {
+    "books": {},
+    "occupations": {}
+  },
+  "Q1048": {
+    "books": {},
+    "occupations": {
+      "Q82955": "politician",
+      "Q201788": "historian",
+      "Q1097498": "ruler",
+      "Q1402561": "military leader",
+      "Q12859263": "orator",
+      "Q11774156": "memoirist",
+      "Q3409374": "ancient Roman priest",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q47064": "military personnel"
+    }
+  },
+  "Q104808004": {
+    "books": {},
+    "occupations": {}
+  },
+  "Q106143": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q16533": "judge",
+      "Q482980": "author",
+      "Q82955": "politician",
+      "Q3330547": "chronicler",
+      "Q329455": "justice of the peace",
+      "Q736559": "secretary of state",
+      "Q18939491": "diarist"
+    }
+  },
+  "Q107473": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q152002": "pastor",
+      "Q1234713": "theologian",
+      "Q1622272": "university teacher",
+      "Q2259532": "cleric"
+    }
+  },
+  "Q108206": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q432386": "preacher",
+      "Q338221": "tinker",
+      "Q1234713": "theologian",
+      "Q6625963": "novelist"
+    }
+  },
+  "Q109540": {
+    "books": {
+      "Q1298007": "Eginhard und Emma"
+    },
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q107212688": "exlibrist",
+      "Q644687": "illustrator",
+      "Q483501": "artist",
+      "Q1028181": "painter",
+      "Q1114448": "cartoonist",
+      "Q3658608": "caricaturist",
+      "Q4853732": "children's writer",
+      "Q11774202": "essayist",
+      "Q10373653": "watercolorist",
+      "Q18814623": "autobiographer",
+      "Q15296811": "draftsperson"
+    }
+  },
+  "Q113467593": {
+    "books": {},
+    "occupations": {
+      "Q1281618": "sculptor"
+    }
+  },
+  "Q114564357": {
+    "books": {},
+    "occupations": {
+      "Q3303297": "ironmaster"
+    }
+  },
+  "Q115169872": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q18074503": "installation artist"
+    }
+  },
+  "Q1176140": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q730242": "test pilot"
+    }
+  },
+  "Q122370": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q1028181": "painter",
+      "Q6625963": "novelist",
+      "Q8178443": "librettist",
+      "Q2325255": "chancery manager"
+    }
+  },
+  "Q125249": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q39631": "physician",
+      "Q212980": "psychologist",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q1268": {
+    "books": {},
+    "occupations": {
+      "Q639669": "musician",
+      "Q214970": "virtuoso",
+      "Q486748": "pianist",
+      "Q1231865": "pedagogue",
+      "Q17303149": "piano teacher",
+      "Q36834": "composer"
+    }
+  },
+  "Q1290": {
+    "books": {
+      "Q112971755": "Pensées, fragments et lettres de Blaise Pascal, publiés pour la première fois conformément aux manuscrits originaux en grande partie inédits",
+      "Q110942491": "Q110942491",
+      "Q113149444": "Q113149444",
+      "Q113161486": "Q113161486",
+      "Q113162858": "Q113162858",
+      "Q120157115": "Q120157115",
+      "Q110830281": "Triangulus arithmeticus",
+      "Q110942296": "Clermont Auvergne Métropole Library Em 0010 Recueil Pascal",
+      "Q116773340": "Clermont-Ferrand. Bibliothèque du Patrimoine, Em 0231",
+      "Q116980110": "Clermont Auvergne Métropole Library Em 0011 Recueil Pascal",
+      "Q117100576": "Clermont Auvergne Métropole Library Ep 0049 Recueil Pascal",
+      "Q122220410": "Blaise Pascal, Pensées, Paris, Dubuisson, 1865, printed book with an original drawing by Allen Ginsberg"
+    },
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q169470": "physicist",
+      "Q1297719": "moralist",
+      "Q1234713": "theologian",
+      "Q2732142": "statistician",
+      "Q4964182": "philosopher",
+      "Q36180": "writer"
+    }
+  },
+  "Q131732192": {
+    "books": {},
+    "occupations": {}
+  },
+  "Q132157": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q170790": "mathematician",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q132232": {
+    "books": {},
+    "occupations": {
+      "Q36834": "composer",
+      "Q486748": "pianist",
+      "Q1643514": "music arranger",
+      "Q1607826": "editor",
+      "Q16145150": "music educator",
+      "Q17303149": "piano teacher"
+    }
+  },
+  "Q1339": {
+    "books": {},
+    "occupations": {
+      "Q158852": "conductor",
+      "Q214970": "virtuoso",
+      "Q765778": "organist",
+      "Q1259917": "violinist",
+      "Q2251335": "school teacher",
+      "Q1076502": "choir director",
+      "Q5371902": "harpsichordist",
+      "Q14915627": "musicologist",
+      "Q16145150": "music educator",
+      "Q691031": "concertmaster",
+      "Q36834": "composer"
+    }
+  },
+  "Q1346410": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q134982": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q14284": "solicitor",
+      "Q482980": "author",
+      "Q82955": "politician",
+      "Q83307": "minister",
+      "Q193391": "diplomat",
+      "Q185351": "jurist",
+      "Q599151": "official",
+      "Q486839": "member of parliament",
+      "Q2285706": "head of government"
+    }
+  },
+  "Q1364813": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q1511": {
+    "books": {},
+    "occupations": {
+      "Q158852": "conductor",
+      "Q486748": "pianist",
+      "Q1350157": "music critic",
+      "Q3387717": "theatre director",
+      "Q8178443": "librettist",
+      "Q11774202": "essayist",
+      "Q18814623": "autobiographer",
+      "Q18939491": "diarist",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q36834": "composer"
+    }
+  },
+  "Q151936": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q201788": "historian",
+      "Q1234713": "theologian",
+      "Q1371378": "ethnologist",
+      "Q2468727": "classical scholar",
+      "Q4773904": "anthropologist",
+      "Q3075052": "folklorist",
+      "Q12347522": "ethnographer",
+      "Q14467526": "linguist",
+      "Q24387326": "mythographer"
+    }
+  },
+  "Q152513": {
+    "books": {
+      "Q136149130": "The Song of Hiawatha by Henry Wadsworth Longfellow",
+      "Q110364841": "Hyperion. A romance",
+      "Q110365591": "Hyperion. A romance"
+    },
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q333634": "translator",
+      "Q121594": "professor",
+      "Q6625963": "novelist"
+    }
+  },
+  "Q153545": {
+    "books": {},
+    "occupations": {
+      "Q82955": "politician",
+      "Q189290": "military officer",
+      "Q1402561": "military leader"
+    }
+  },
+  "Q15434170": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q864380": "biographer",
+      "Q974144": "educator",
+      "Q3400985": "academic"
+    }
+  },
+  "Q154356": {
+    "books": {},
+    "occupations": {
+      "Q82955": "politician",
+      "Q170790": "mathematician",
+      "Q169470": "physicist",
+      "Q1650915": "researcher",
+      "Q1622272": "university teacher",
+      "Q860918": "Esperantist",
+      "Q23833535": "French resistance fighter"
+    }
+  },
+  "Q154367": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q214917": "playwright",
+      "Q8178443": "librettist",
+      "Q14467526": "linguist",
+      "Q17167049": "literary scholar",
+      "Q656823": "in-home tutor"
+    }
+  },
+  "Q154438": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q82955": "politician",
+      "Q214917": "playwright"
+    }
+  },
+  "Q154782": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q18805": "naturalist",
+      "Q98544732": "scientific collector",
+      "Q350979": "zoologist",
+      "Q674426": "curator",
+      "Q189290": "military officer",
+      "Q2374149": "botanist",
+      "Q2083925": "botanical collector",
+      "Q11900058": "explorer",
+      "Q16334507": "bryologist",
+      "Q16334509": "pteridologist"
+    }
+  },
+  "Q156333": {
+    "books": {},
+    "occupations": {
+      "Q98544732": "scientific collector",
+      "Q864503": "biologist",
+      "Q2055046": "physiologist",
+      "Q1622272": "university teacher",
+      "Q3126128": "geneticist",
+      "Q2919046": "biochemist",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q157155": {
+    "books": {
+      "Q107176499": "Q107176499"
+    },
+    "occupations": {
+      "Q36180": "writer",
+      "Q121594": "professor",
+      "Q201788": "historian",
+      "Q1234713": "theologian",
+      "Q1731155": "orientalist",
+      "Q3621491": "archaeologist",
+      "Q4964182": "philosopher",
+      "Q4263842": "literary critic",
+      "Q13418253": "philologist",
+      "Q19829980": "religious studies scholar"
+    }
+  },
+  "Q15953": {
+    "books": {},
+    "occupations": {
+      "Q214917": "playwright",
+      "Q1607826": "editor",
+      "Q1930187": "journalist",
+      "Q4964182": "philosopher",
+      "Q4263842": "literary critic",
+      "Q6625963": "novelist",
+      "Q6430706": "critic",
+      "Q17337766": "theatre critic",
+      "Q876864": "editing staff",
+      "Q140197632": "satirical novelist",
+      "Q36180": "writer"
+    }
+  },
+  "Q1597817": {
+    "books": {},
+    "occupations": {
+      "Q1236978": "Cathedral dean"
+    }
+  },
+  "Q16571": {
+    "books": {},
+    "occupations": {
+      "Q205375": "inventor",
+      "Q593644": "chemist",
+      "Q1781198": "agronomist",
+      "Q1622272": "university teacher",
+      "Q36180": "writer"
+    }
+  },
+  "Q1685715": {
+    "books": {},
+    "occupations": {
+      "Q4964182": "philosopher",
+      "Q14565331": "logician"
+    }
+  },
+  "Q16944288": {
+    "books": {},
+    "occupations": {
+      "Q98833890": "Catholic theologian",
+      "Q723682": "dean",
+      "Q1234713": "theologian",
+      "Q1622272": "university teacher"
+    }
+  },
+  "Q16963011": {
+    "books": {},
+    "occupations": {
+      "Q182436": "librarian",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q170348": {
+    "books": {},
+    "occupations": {
+      "Q36834": "composer",
+      "Q639669": "musician",
+      "Q486748": "pianist",
+      "Q10732476": "art collector",
+      "Q16145150": "music educator"
+    }
+  },
+  "Q17156028": {
+    "books": {},
+    "occupations": {
+      "Q135936421": "Anglican theologian",
+      "Q88114145": "philosopher of religion"
+    }
+  },
+  "Q179888": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q40348": "lawyer",
+      "Q482980": "author",
+      "Q82955": "politician",
+      "Q83307": "minister",
+      "Q193391": "diplomat",
+      "Q185351": "jurist",
+      "Q1930187": "journalist",
+      "Q2285706": "head of government",
+      "Q12718544": "socialist",
+      "Q372436": "statesperson"
+    }
+  },
+  "Q182128": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q183266": {
+    "books": {
+      "Q102127915": "Prefazione a Shakespeare e altri scritti shakespeariani"
+    },
+    "occupations": {
+      "Q36180": "writer",
+      "Q37226": "teacher",
+      "Q49757": "poet",
+      "Q82955": "politician",
+      "Q333634": "translator",
+      "Q864380": "biographer",
+      "Q4263842": "literary critic",
+      "Q6430706": "critic",
+      "Q11774202": "essayist",
+      "Q14467526": "linguist",
+      "Q14972848": "lexicographer",
+      "Q12144794": "prose writer",
+      "Q13570226": "literary historian",
+      "Q998550": "book dealer"
+    }
+  },
+  "Q183372": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q170790": "mathematician",
+      "Q169470": "physicist",
+      "Q1234713": "theologian",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q14565331": "logician"
+    }
+  },
+  "Q183713": {
+    "books": {
+      "Q101125734": "The Avatar",
+      "Q101555025": "Jettatura",
+      "Q102274140": "Partie carrée / Théophile Gautier",
+      "Q15891989": "Q15891989",
+      "Q56102508": "Q56102508",
+      "Q17357492": "Q17357492",
+      "Q19238673": "Q19238673"
+    },
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q33231": "photographer",
+      "Q644687": "illustrator",
+      "Q214917": "playwright",
+      "Q1028181": "painter",
+      "Q1930187": "journalist",
+      "Q1792450": "art historian",
+      "Q4164507": "art critic",
+      "Q4263842": "literary critic",
+      "Q6625963": "novelist",
+      "Q6430706": "critic",
+      "Q8178443": "librettist",
+      "Q15296811": "draftsperson",
+      "Q20857490": "pastellist"
+    }
+  },
+  "Q185914": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q39631": "physician",
+      "Q11063": "astronomer",
+      "Q333634": "translator",
+      "Q1734662": "cartographer",
+      "Q1234713": "theologian"
+    }
+  },
+  "Q187520": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q294126": "surveyor",
+      "Q169470": "physicist",
+      "Q1622272": "university teacher",
+      "Q2732142": "statistician",
+      "Q4964182": "philosopher",
+      "Q14467526": "linguist",
+      "Q14565331": "logician"
+    }
+  },
+  "Q18759324": {
+    "books": {},
+    "occupations": {
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q190388": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q250867": "Catholic priest",
+      "Q548320": "friar",
+      "Q8178443": "librettist",
+      "Q12328016": "mystic",
+      "Q192499": "Doctor of the Church"
+    }
+  },
+  "Q191026": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q33231": "photographer",
+      "Q170790": "mathematician",
+      "Q205375": "inventor",
+      "Q212980": "psychologist",
+      "Q901402": "geographer",
+      "Q2306091": "sociologist",
+      "Q2055046": "physiologist",
+      "Q2310145": "meteorologist",
+      "Q3126128": "geneticist",
+      "Q2732142": "statistician",
+      "Q4964182": "philosopher",
+      "Q4773904": "anthropologist",
+      "Q11900058": "explorer",
+      "Q22082717": "eugenicist"
+    }
+  },
+  "Q2039": {
+    "books": {},
+    "occupations": {
+      "Q201788": "historian",
+      "Q36180": "writer",
+      "Q49757": "poet"
+    }
+  },
+  "Q207325": {
+    "books": {},
+    "occupations": {
+      "Q901": "scientist",
+      "Q170790": "mathematician",
+      "Q978044": "executive",
+      "Q1622272": "university teacher"
+    }
+  },
+  "Q207515": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q28389": "screenwriter",
+      "Q214917": "playwright",
+      "Q822146": "lyricist",
+      "Q6625963": "novelist",
+      "Q8178443": "librettist",
+      "Q12406482": "humorist",
+      "Q15949613": "short story writer"
+    }
+  },
+  "Q207534": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q4964182": "philosopher",
+      "Q14565331": "logician"
+    }
+  },
+  "Q2087497": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q47064": "military personnel",
+      "Q82955": "politician",
+      "Q201788": "historian",
+      "Q852661": "adjutant"
+    }
+  },
+  "Q213672": {
+    "books": {},
+    "occupations": {
+      "Q901": "scientist",
+      "Q212980": "psychologist",
+      "Q2055046": "physiologist",
+      "Q1622272": "university teacher",
+      "Q3455803": "director",
+      "Q3282637": "film producer",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q215022": {
+    "books": {},
+    "occupations": {
+      "Q11063": "astronomer",
+      "Q170790": "mathematician",
+      "Q169470": "physicist",
+      "Q752129": "astrophysicist",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q216814": {
+    "books": {},
+    "occupations": {
+      "Q11063": "astronomer",
+      "Q33231": "photographer",
+      "Q81096": "engineer",
+      "Q169470": "physicist",
+      "Q23011096": "daguerreotypist"
+    }
+  },
+  "Q216838": {
+    "books": {
+      "Q110291091": "The Destroyer; or, the sorcerers of the Domdaniel",
+      "Q110291104": "The Destroyer; or, the sorcerers of the Domdaniel"
+    },
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q82955": "politician",
+      "Q333634": "translator",
+      "Q201788": "historian",
+      "Q864380": "biographer",
+      "Q4263842": "literary critic"
+    }
+  },
+  "Q218322": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q29182": "bishop",
+      "Q135936421": "Anglican theologian",
+      "Q4964182": "philosopher",
+      "Q3409375": "Anglican priest"
+    }
+  },
+  "Q218960": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q152002": "pastor",
+      "Q955464": "parson",
+      "Q1234713": "theologian",
+      "Q1930187": "journalist",
+      "Q2259532": "cleric",
+      "Q6625963": "novelist",
+      "Q18814623": "autobiographer"
+    }
+  },
+  "Q220976": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q250867": "Catholic priest",
+      "Q1104153": "canon",
+      "Q2029179": "regular priest",
+      "Q98833890": "Catholic theologian",
+      "Q4964182": "philosopher",
+      "Q12328016": "mystic"
+    }
+  },
+  "Q22670": {
+    "books": {
+      "Q110357276": "The Dishonoured Irreclaimable",
+      "Q110357576": "The Dishonoured Irreclaimable"
+    },
+    "occupations": {
+      "Q333634": "translator",
+      "Q201788": "historian",
+      "Q182436": "librarian",
+      "Q755070": "narrator",
+      "Q214917": "playwright",
+      "Q1930187": "journalist",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q4002666": "military physician",
+      "Q6625963": "novelist",
+      "Q8178443": "librettist",
+      "Q21550346": "aesthetician",
+      "Q551835": "physician writer",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q39631": "physician",
+      "Q33231": "photographer"
+    }
+  },
+  "Q229264": {
+    "books": {
+      "Q51508502": "Natural history, general and particular"
+    },
+    "occupations": {
+      "Q36180": "writer",
+      "Q11063": "astronomer",
+      "Q18805": "naturalist",
+      "Q170790": "mathematician",
+      "Q333634": "translator",
+      "Q350979": "zoologist",
+      "Q169470": "physicist",
+      "Q864503": "biologist",
+      "Q1225716": "ornithologist",
+      "Q2374149": "botanist",
+      "Q3055126": "entomologist",
+      "Q4964182": "philosopher",
+      "Q7940086": "volcanologist",
+      "Q15296811": "draftsperson"
+    }
+  },
+  "Q2530566": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q1792450": "art historian",
+      "Q3621491": "archaeologist",
+      "Q2468727": "classical scholar",
+      "Q26132815": "Byzantinist",
+      "Q49757": "poet"
+    }
+  },
+  "Q254": {
+    "books": {},
+    "occupations": {
+      "Q158852": "conductor",
+      "Q639669": "musician",
+      "Q486748": "pianist",
+      "Q765778": "organist",
+      "Q1259917": "violinist",
+      "Q16145150": "music educator",
+      "Q36834": "composer"
+    }
+  },
+  "Q255": {
+    "books": {},
+    "occupations": {
+      "Q36834": "composer"
+    }
+  },
+  "Q2578676": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q264334": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q18930418": "analytic philosopher"
+    }
+  },
+  "Q2696691": {
+    "books": {},
+    "occupations": {
+      "Q2516852": "literary editor",
+      "Q4853732": "children's writer",
+      "Q62083492": "young adult author",
+      "Q36180": "writer"
+    }
+  },
+  "Q29193": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q1622272": "university teacher"
+    }
+  },
+  "Q2941054": {
+    "books": {},
+    "occupations": {
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q295386": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q2959926": {
+    "books": {},
+    "occupations": {
+      "Q47064": "military personnel"
+    }
+  },
+  "Q300182": {
+    "books": {},
+    "occupations": {
+      "Q82955": "politician",
+      "Q16532929": "administrator"
+    }
+  },
+  "Q307": {
+    "books": {
+      "Q19135078": "Opere di Galileo Galilei (Padova 1744)"
+    },
+    "occupations": {
+      "Q82955": "politician",
+      "Q170790": "mathematician",
+      "Q205375": "inventor",
+      "Q81096": "engineer",
+      "Q155647": "astrologer",
+      "Q169470": "physicist",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q901": "scientist",
+      "Q11063": "astronomer"
+    }
+  },
+  "Q3090271": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q310002": {
+    "books": {
+      "Q107274315": "Q107274315",
+      "Q107274603": "Q107274603"
+    },
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q49476": "archbishop",
+      "Q98833890": "Catholic theologian",
+      "Q250867": "Catholic priest",
+      "Q1231865": "pedagogue",
+      "Q1234713": "theologian",
+      "Q611644": "Catholic bishop",
+      "Q3064032": "fabulist",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q310300": {
+    "books": {},
+    "occupations": {
+      "Q55960555": "recording artist",
+      "Q36180": "writer",
+      "Q36834": "composer",
+      "Q177220": "singer",
+      "Q488205": "singer-songwriter",
+      "Q639669": "musician",
+      "Q753110": "songwriter",
+      "Q855091": "guitarist"
+    }
+  },
+  "Q310439": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q432386": "preacher",
+      "Q1234713": "theologian"
+    }
+  },
+  "Q313386": {
+    "books": {},
+    "occupations": {
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q315170": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q28389": "screenwriter",
+      "Q49757": "poet",
+      "Q214917": "playwright",
+      "Q822146": "lyricist"
+    }
+  },
+  "Q315387": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q188094": "economist",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q315545": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q11063": "astronomer",
+      "Q170790": "mathematician",
+      "Q169470": "physicist",
+      "Q1622272": "university teacher"
+    }
+  },
+  "Q319406": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q4964182": "philosopher",
+      "Q178540": "Pre-Socratic philosophy"
+    }
+  },
+  "Q320690": {
+    "books": {},
+    "occupations": {
+      "Q17307272": "circus performer"
+    }
+  },
+  "Q333519": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q82955": "politician",
+      "Q808967": "barrister",
+      "Q864380": "biographer",
+      "Q1607826": "editor",
+      "Q1930187": "journalist",
+      "Q13570226": "literary historian"
+    }
+  },
+  "Q336379": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q82955": "politician",
+      "Q193391": "diplomat"
+    }
+  },
+  "Q33760": {
+    "books": {
+      "Q115788476": "Q115788476",
+      "Q115788643": "Q115788643"
+    },
+    "occupations": {
+      "Q82955": "politician",
+      "Q170790": "mathematician",
+      "Q1231865": "pedagogue",
+      "Q1930187": "journalist",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q11774202": "essayist",
+      "Q14565331": "logician",
+      "Q16003550": "pacifist",
+      "Q16389557": "philosopher of science",
+      "Q16323111": "peace activist",
+      "Q18814623": "autobiographer",
+      "Q18844224": "science fiction writer",
+      "Q18930418": "analytic philosopher",
+      "Q15632482": "epistemologist",
+      "Q18930236": "philosopher of language",
+      "Q15978337": "social critic",
+      "Q16743941": "metaphysician",
+      "Q36180": "writer"
+    }
+  },
+  "Q3425068": {
+    "books": {},
+    "occupations": {
+      "Q4964182": "philosopher",
+      "Q36180": "writer"
+    }
+  },
+  "Q34628": {
+    "books": {
+      "Q121943124": "Laokoon (Lessing, Schulbuch)"
+    },
+    "occupations": {
+      "Q182436": "librarian",
+      "Q214917": "playwright",
+      "Q822146": "lyricist",
+      "Q487596": "dramaturge",
+      "Q1234713": "theologian",
+      "Q1930187": "journalist",
+      "Q1792450": "art historian",
+      "Q4964182": "philosopher",
+      "Q4263842": "literary critic",
+      "Q6430706": "critic",
+      "Q36180": "writer",
+      "Q49757": "poet"
+    }
+  },
+  "Q350183": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q352": {
+    "books": {},
+    "occupations": {
+      "Q82955": "politician",
+      "Q134499738": "Holocaust perpetrator"
+    }
+  },
+  "Q353238": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q42603": "priest",
+      "Q49757": "poet",
+      "Q201788": "historian",
+      "Q1622272": "university teacher",
+      "Q2259532": "cleric",
+      "Q4853732": "children's writer",
+      "Q6625963": "novelist"
+    }
+  },
+  "Q353426": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q1622272": "university teacher"
+    }
+  },
+  "Q35802": {
+    "books": {},
+    "occupations": {
+      "Q1234713": "theologian",
+      "Q1996635": "optician",
+      "Q1238570": "political scientist",
+      "Q4964182": "philosopher",
+      "Q15991187": "grammarian",
+      "Q24262584": "Bible translator",
+      "Q66060374": "grinder of lenses"
+    }
+  },
+  "Q35900": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q155647": "astrologer",
+      "Q639669": "musician",
+      "Q822146": "lyricist",
+      "Q169470": "physicist",
+      "Q4964182": "philosopher",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q11063": "astronomer"
+    }
+  },
+  "Q363504": {
+    "books": {},
+    "occupations": {
+      "Q644687": "illustrator",
+      "Q1028181": "painter",
+      "Q3658608": "caricaturist"
+    }
+  },
+  "Q36661": {
+    "books": {},
+    "occupations": {
+      "Q214917": "playwright",
+      "Q3455803": "director",
+      "Q8178443": "librettist",
+      "Q36180": "writer",
+      "Q49757": "poet"
+    }
+  },
+  "Q36724": {
+    "books": {},
+    "occupations": {
+      "Q1259323": "traditional leader or chief"
+    }
+  },
+  "Q37030": {
+    "books": {
+      "Q125921355": "Q125921355",
+      "Q134438453": "Bilderbuch für artige Kinder"
+    },
+    "occupations": {
+      "Q639669": "musician",
+      "Q1622272": "university teacher",
+      "Q6625963": "novelist",
+      "Q11774202": "essayist",
+      "Q18814623": "autobiographer",
+      "Q18939491": "diarist",
+      "Q15949613": "short story writer",
+      "Q15978337": "social critic",
+      "Q36180": "writer",
+      "Q28389": "screenwriter",
+      "Q49757": "poet"
+    }
+  },
+  "Q370468": {
+    "books": {},
+    "occupations": {
+      "Q188094": "economist",
+      "Q1622272": "university teacher"
+    }
+  },
+  "Q37160": {
+    "books": {},
+    "occupations": {
+      "Q188094": "economist",
+      "Q201788": "historian",
+      "Q182436": "librarian",
+      "Q4964182": "philosopher",
+      "Q11774202": "essayist",
+      "Q36180": "writer"
+    }
+  },
+  "Q37388": {
+    "books": {
+      "Q136681839": "The Works of Francis Bacon (Houghton Mifflin edition)"
+    },
+    "occupations": {
+      "Q82955": "politician",
+      "Q185351": "jurist",
+      "Q201788": "historian",
+      "Q155647": "astrologer",
+      "Q4964182": "philosopher",
+      "Q36180": "writer",
+      "Q40348": "lawyer",
+      "Q16533": "judge",
+      "Q901": "scientist"
+    }
+  },
+  "Q379816": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q18805": "naturalist",
+      "Q205375": "inventor",
+      "Q169470": "physicist"
+    }
+  },
+  "Q38082": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q161944": "deacon",
+      "Q4964182": "philosopher",
+      "Q4853732": "children's writer",
+      "Q6625963": "novelist",
+      "Q8178443": "librettist",
+      "Q14565331": "logician",
+      "Q18814623": "autobiographer",
+      "Q18939491": "diarist",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q33231": "photographer"
+    }
+  },
+  "Q38193": {
+    "books": {},
+    "occupations": {
+      "Q333634": "translator",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q14915627": "musicologist",
+      "Q36180": "writer"
+    }
+  },
+  "Q38203": {
+    "books": {},
+    "occupations": {
+      "Q322170": "suffragette",
+      "Q11499147": "political activist",
+      "Q11774202": "essayist",
+      "Q12859263": "orator",
+      "Q14467526": "linguist",
+      "Q15627169": "trade unionist",
+      "Q16323111": "peace activist",
+      "Q18814623": "autobiographer",
+      "Q36180": "writer"
+    }
+  },
+  "Q39607": {
+    "books": {},
+    "occupations": {
+      "Q185351": "jurist",
+      "Q188094": "economist",
+      "Q169470": "physicist",
+      "Q593644": "chemist",
+      "Q864503": "biologist",
+      "Q3400985": "academic",
+      "Q16532929": "administrator",
+      "Q36180": "writer",
+      "Q40348": "lawyer",
+      "Q11063": "astronomer"
+    }
+  },
+  "Q40946": {
+    "books": {},
+    "occupations": {
+      "Q1930187": "journalist",
+      "Q2516866": "publisher",
+      "Q4178004": "publicist",
+      "Q4853732": "children's writer",
+      "Q6625963": "novelist",
+      "Q9352089": "spy",
+      "Q12144794": "prose writer",
+      "Q6051619": "opinion journalist",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q43845": "businessperson"
+    }
+  },
+  "Q41155": {
+    "books": {},
+    "occupations": {
+      "Q169470": "physicist",
+      "Q4964182": "philosopher",
+      "Q36180": "writer"
+    }
+  },
+  "Q41257": {
+    "books": {},
+    "occupations": {
+      "Q205375": "inventor",
+      "Q169470": "physicist",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q41390": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q169470": "physicist",
+      "Q82594": "computer scientist",
+      "Q1622272": "university teacher"
+    }
+  },
+  "Q41476": {
+    "books": {},
+    "occupations": {
+      "Q350979": "zoologist",
+      "Q864503": "biologist",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q41513": {
+    "books": {},
+    "occupations": {
+      "Q329439": "engraver",
+      "Q175151": "printer",
+      "Q644687": "illustrator",
+      "Q483501": "artist",
+      "Q1028181": "painter",
+      "Q1281618": "sculptor",
+      "Q1234713": "theologian",
+      "Q3243461": "collector",
+      "Q4964182": "philosopher",
+      "Q8178443": "librettist",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q11569986": "printmaker",
+      "Q16947657": "lithographer",
+      "Q10373653": "watercolorist",
+      "Q15296811": "draftsperson",
+      "Q13365770": "copper engraver",
+      "Q28947943": "miniature painter",
+      "Q107212688": "exlibrist"
+    }
+  },
+  "Q41585": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q169470": "physicist",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q14565331": "logician",
+      "Q101064325": "philosopher of mathematics"
+    }
+  },
+  "Q41749": {
+    "books": {},
+    "occupations": {
+      "Q82955": "politician",
+      "Q1685363": "propagandist",
+      "Q10264925": "demagogue",
+      "Q134499738": "Holocaust perpetrator"
+    }
+  },
+  "Q4179027": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician"
+    }
+  },
+  "Q42299": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q121594": "professor",
+      "Q169470": "physicist",
+      "Q1622272": "university teacher"
+    }
+  },
+  "Q42511": {
+    "books": {
+      "Q141593980": "Q141593980",
+      "Q132673723": "A Story of the Days to Come",
+      "Q132673704": "Tales of Space and Time"
+    },
+    "occupations": {
+      "Q201788": "historian",
+      "Q1930187": "journalist",
+      "Q2306091": "sociologist",
+      "Q6625963": "novelist",
+      "Q18844224": "science fiction writer",
+      "Q27496075": "Idist",
+      "Q36180": "writer",
+      "Q28389": "screenwriter"
+    }
+  },
+  "Q43393": {
+    "books": {},
+    "occupations": {
+      "Q169470": "physicist",
+      "Q593644": "chemist",
+      "Q4964182": "philosopher",
+      "Q18805": "naturalist"
+    }
+  },
+  "Q43936": {
+    "books": {},
+    "occupations": {
+      "Q548320": "friar",
+      "Q733786": "monk",
+      "Q169470": "physicist",
+      "Q1234713": "theologian",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q14565331": "logician",
+      "Q6051619": "opinion journalist",
+      "Q36180": "writer",
+      "Q98833890": "Catholic theologian"
+    }
+  },
+  "Q44323": {
+    "books": {},
+    "occupations": {
+      "Q5322166": "designer",
+      "Q11774202": "essayist",
+      "Q10732476": "art collector",
+      "Q11455387": "furniture designer",
+      "Q6051619": "opinion journalist",
+      "Q17391638": "art theorist",
+      "Q17391654": "architecture critic",
+      "Q36180": "writer",
+      "Q42973": "architect",
+      "Q37226": "teacher",
+      "Q33231": "photographer"
+    }
+  },
+  "Q44490": {
+    "books": {},
+    "occupations": {
+      "Q250867": "Catholic priest",
+      "Q1234713": "theologian",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q3409375": "Anglican priest",
+      "Q6625963": "novelist",
+      "Q8178443": "librettist",
+      "Q13424456": "hymnwriter",
+      "Q36180": "writer",
+      "Q49757": "poet"
+    }
+  },
+  "Q44652": {
+    "books": {},
+    "occupations": {
+      "Q333634": "translator",
+      "Q214917": "playwright",
+      "Q487596": "dramaturge",
+      "Q1930187": "journalist",
+      "Q2516852": "literary editor",
+      "Q8178443": "librettist",
+      "Q12144794": "prose writer",
+      "Q47004387": "theosophist",
+      "Q876864": "editing staff",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q112118176": "anthroposophist"
+    }
+  },
+  "Q44862": {
+    "books": {},
+    "occupations": {
+      "Q214917": "playwright",
+      "Q1776724": "theatre manager",
+      "Q2865819": "opera singer",
+      "Q3455803": "director",
+      "Q2259451": "stage actor",
+      "Q8178443": "librettist",
+      "Q9334029": "satirist",
+      "Q1209498": "poet lawyer",
+      "Q33999": "actor",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q36834": "composer"
+    }
+  },
+  "Q46096": {
+    "books": {},
+    "occupations": {
+      "Q158852": "conductor",
+      "Q639669": "musician",
+      "Q1028181": "painter",
+      "Q486748": "pianist",
+      "Q765778": "organist",
+      "Q1622272": "university teacher",
+      "Q14915627": "musicologist",
+      "Q16145150": "music educator",
+      "Q36180": "writer",
+      "Q36834": "composer"
+    }
+  },
+  "Q472676": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q24265174": "philosophy historian"
+    }
+  },
+  "Q4727354": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician"
+    }
+  },
+  "Q47480": {
+    "books": {},
+    "occupations": {
+      "Q37226": "teacher",
+      "Q901": "scientist",
+      "Q170790": "mathematician",
+      "Q81096": "engineer",
+      "Q121594": "professor",
+      "Q169470": "physicist",
+      "Q974144": "educator",
+      "Q3400985": "academic",
+      "Q19350898": "theoretical physicist"
+    }
+  },
+  "Q47695": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q131717117": "teacher at a Gymnasium",
+      "Q12144794": "prose writer",
+      "Q19788990": "professor",
+      "Q36180": "writer"
+    }
+  },
+  "Q47949282": {
+    "books": {},
+    "occupations": {
+      "Q33231": "photographer"
+    }
+  },
+  "Q48226": {
+    "books": {},
+    "occupations": {
+      "Q864380": "biographer",
+      "Q955464": "parson",
+      "Q4964182": "philosopher",
+      "Q1423891": "Christian minister",
+      "Q8178443": "librettist",
+      "Q11774202": "essayist",
+      "Q12526417": "abolitionist",
+      "Q12859263": "orator",
+      "Q97486349": "Unitarian pastor",
+      "Q18939491": "diarist",
+      "Q36180": "writer",
+      "Q49757": "poet"
+    }
+  },
+  "Q48246": {
+    "books": {
+      "Q107289699": "Q107289699"
+    },
+    "occupations": {
+      "Q350979": "zoologist",
+      "Q864503": "biologist",
+      "Q1225716": "ornithologist",
+      "Q1622272": "university teacher",
+      "Q2374149": "botanist",
+      "Q2083925": "botanical collector",
+      "Q4205432": "ichthyologist",
+      "Q4964182": "philosopher",
+      "Q11900058": "explorer",
+      "Q15839134": "ecologist",
+      "Q15296811": "draftsperson",
+      "Q36180": "writer",
+      "Q39631": "physician",
+      "Q18805": "naturalist",
+      "Q33231": "photographer"
+    }
+  },
+  "Q48301": {
+    "books": {
+      "Q1516088": "Heidegger Gesamtausgabe"
+    },
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q901": "scientist",
+      "Q49757": "poet"
+    }
+  },
+  "Q483512": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q28389": "screenwriter",
+      "Q2490358": "choreographer",
+      "Q5716684": "dancer",
+      "Q18814623": "autobiographer"
+    }
+  },
+  "Q49325": {
+    "books": {},
+    "occupations": {
+      "Q482980": "author",
+      "Q219477": "missionary",
+      "Q639669": "musician",
+      "Q765778": "organist",
+      "Q1234713": "theologian",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q14915627": "musicologist",
+      "Q16003550": "pacifist",
+      "Q20198542": "music historian",
+      "Q551835": "physician writer",
+      "Q39631": "physician",
+      "Q36834": "composer"
+    }
+  },
+  "Q503276": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q1231865": "pedagogue",
+      "Q4964182": "philosopher",
+      "Q14467526": "linguist"
+    }
+  },
+  "Q505844": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q185351": "jurist",
+      "Q201788": "historian",
+      "Q2505739": "hispanist"
+    }
+  },
+  "Q517": {
+    "books": {
+      "Q56678040": "Q56678040",
+      "Q56678044": "Q56678044",
+      "Q56678058": "Q56678058"
+    },
+    "occupations": {
+      "Q82955": "politician",
+      "Q2304859": "sovereign",
+      "Q1402561": "military leader",
+      "Q10732476": "art collector",
+      "Q17010072": "militant",
+      "Q38239859": "army officer",
+      "Q39018": "emperor"
+    }
+  },
+  "Q521606": {
+    "books": {},
+    "occupations": {
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q5298560": {
+    "books": {},
+    "occupations": {
+      "Q177220": "singer"
+    }
+  },
+  "Q540427": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q1028181": "painter",
+      "Q864380": "biographer",
+      "Q4263842": "literary critic",
+      "Q17337766": "theatre critic"
+    }
+  },
+  "Q548080": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q14565331": "logician"
+    }
+  },
+  "Q5482461": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q3140857": "horticulturist"
+    }
+  },
+  "Q548462": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q201788": "historian"
+    }
+  },
+  "Q553335": {
+    "books": {},
+    "occupations": {
+      "Q40348": "lawyer",
+      "Q43845": "businessperson",
+      "Q82955": "politician",
+      "Q1622272": "university teacher",
+      "Q45916492": "co-founder"
+    }
+  },
+  "Q5592": {
+    "books": {},
+    "occupations": {
+      "Q1028181": "painter",
+      "Q1281618": "sculptor",
+      "Q289612": "general contractor",
+      "Q3391743": "visual artist",
+      "Q2079935": "architectural drafter",
+      "Q36180": "writer",
+      "Q42973": "architect",
+      "Q49757": "poet"
+    }
+  },
+  "Q5593": {
+    "books": {
+      "Q3532397": "Toros y toreros"
+    },
+    "occupations": {
+      "Q644687": "illustrator",
+      "Q483501": "artist",
+      "Q1028181": "painter",
+      "Q1281618": "sculptor",
+      "Q1925963": "graphic artist",
+      "Q739437": "poster artist",
+      "Q1323191": "costume designer",
+      "Q2490358": "choreographer",
+      "Q1020606": "stage painter",
+      "Q2519376": "jewelry designer",
+      "Q3374326": "muralist",
+      "Q2707485": "scenographer",
+      "Q3391743": "visual artist",
+      "Q7541856": "ceramicist",
+      "Q10862983": "etcher",
+      "Q11569986": "printmaker",
+      "Q10800557": "film actor",
+      "Q16947657": "lithographer",
+      "Q10373653": "watercolorist",
+      "Q15296811": "draftsperson",
+      "Q2079935": "architectural drafter",
+      "Q22343478": "collagist",
+      "Q11613590": "theatre designer",
+      "Q20857490": "pastellist",
+      "Q137322460": "drypoint engraver",
+      "Q36180": "writer",
+      "Q28389": "screenwriter",
+      "Q49757": "poet",
+      "Q33231": "photographer",
+      "Q109380474": "lino cutter",
+      "Q69319917": "assemblage artist"
+    }
+  },
+  "Q55972159": {
+    "books": {},
+    "occupations": {
+      "Q1281618": "sculptor"
+    }
+  },
+  "Q5598": {
+    "books": {},
+    "occupations": {
+      "Q329439": "engraver",
+      "Q483501": "artist",
+      "Q1028181": "painter",
+      "Q3243461": "collector",
+      "Q3391743": "visual artist",
+      "Q173950": "art dealer",
+      "Q10862983": "etcher",
+      "Q11569986": "printmaker",
+      "Q10732476": "art collector",
+      "Q15296811": "draftsperson",
+      "Q435989": "old master"
+    }
+  },
+  "Q5660516": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician"
+    }
+  },
+  "Q5682": {
+    "books": {},
+    "occupations": {
+      "Q326653": "accountant",
+      "Q214917": "playwright",
+      "Q822146": "lyricist",
+      "Q707995": "seaman",
+      "Q1139055": "tax collector",
+      "Q4991371": "soldier",
+      "Q6625963": "novelist",
+      "Q10543172": "Kammerdiener",
+      "Q36180": "writer",
+      "Q49757": "poet"
+    }
+  },
+  "Q5686": {
+    "books": {
+      "Q125471490": "The Works of Charles Dickens"
+    },
+    "occupations": {
+      "Q482980": "author",
+      "Q214917": "playwright",
+      "Q36180": "writer",
+      "Q1607826": "editor",
+      "Q1930187": "journalist",
+      "Q2374149": "botanist",
+      "Q4853732": "children's writer",
+      "Q6625963": "novelist",
+      "Q12144794": "prose writer",
+      "Q135268101": "parliamentary stenographer",
+      "Q15949613": "short story writer",
+      "Q5178440": "court reporter",
+      "Q15978337": "social critic"
+    }
+  },
+  "Q57112": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q201788": "historian",
+      "Q2306091": "sociologist",
+      "Q4964182": "philosopher",
+      "Q88105593": "philosopher of history",
+      "Q88193571": "philosopher of culture",
+      "Q131717117": "teacher at a Gymnasium",
+      "Q13418253": "philologist",
+      "Q6051619": "opinion journalist",
+      "Q36180": "writer"
+    }
+  },
+  "Q57187": {
+    "books": {},
+    "occupations": {
+      "Q333634": "translator",
+      "Q1607826": "editor",
+      "Q2516866": "publisher",
+      "Q8178443": "librettist",
+      "Q14467526": "linguist",
+      "Q135214963": "English–German translator",
+      "Q28933278": "book designer",
+      "Q141690271": "Italian–German translator",
+      "Q36180": "writer",
+      "Q49757": "poet"
+    }
+  },
+  "Q57193": {
+    "books": {},
+    "occupations": {
+      "Q169470": "physicist",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q16389557": "philosopher of science"
+    }
+  },
+  "Q57554": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q169470": "physicist",
+      "Q1297719": "moralist",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q36180": "writer",
+      "Q11063": "astronomer"
+    }
+  },
+  "Q58586": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q28045801": "phenomenologist"
+    }
+  },
+  "Q5879": {
+    "books": {
+      "Q101979563": "Le esperienze di Wilhelm Meister"
+    },
+    "occupations": {
+      "Q82955": "politician",
+      "Q193391": "diplomat",
+      "Q270141": "polymath",
+      "Q185351": "jurist",
+      "Q350979": "zoologist",
+      "Q182436": "librarian",
+      "Q214917": "playwright",
+      "Q1028181": "painter",
+      "Q169470": "physicist",
+      "Q1234713": "theologian",
+      "Q1776724": "theatre manager",
+      "Q2374149": "botanist",
+      "Q1350157": "music critic",
+      "Q1792450": "art historian",
+      "Q3391743": "visual artist",
+      "Q4964182": "philosopher",
+      "Q3579035": "travel writer",
+      "Q4164507": "art critic",
+      "Q6625963": "novelist",
+      "Q8178443": "librettist",
+      "Q6673651": "literary scholar",
+      "Q11569986": "printmaker",
+      "Q10732476": "art collector",
+      "Q13416354": "mineralogist",
+      "Q6051619": "opinion journalist",
+      "Q10373653": "watercolorist",
+      "Q17391638": "art theorist",
+      "Q18814623": "autobiographer",
+      "Q18939491": "diarist",
+      "Q15296811": "draftsperson",
+      "Q3606216": "aphorist",
+      "Q372436": "statesperson",
+      "Q36180": "writer",
+      "Q40348": "lawyer",
+      "Q49757": "poet",
+      "Q36834": "composer",
+      "Q18805": "naturalist",
+      "Q39020112": "Theaterintendant",
+      "Q58481158": "print collector",
+      "Q107212688": "exlibrist"
+    }
+  },
+  "Q59100249": {
+    "books": {},
+    "occupations": {
+      "Q14565331": "logician"
+    }
+  },
+  "Q59527591": {
+    "books": {},
+    "occupations": {}
+  },
+  "Q60024": {
+    "books": {},
+    "occupations": {
+      "Q212980": "psychologist",
+      "Q169470": "physicist",
+      "Q2055046": "physiologist",
+      "Q1622272": "university teacher",
+      "Q3368718": "pathologist",
+      "Q4964182": "philosopher",
+      "Q4002666": "military physician",
+      "Q10872101": "anatomist",
+      "Q12013238": "ophthalmologist",
+      "Q14906342": "biophysicist",
+      "Q14915627": "musicologist",
+      "Q16031530": "music theorist",
+      "Q901": "scientist",
+      "Q18805": "naturalist"
+    }
+  },
+  "Q60028": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q14565331": "logician",
+      "Q19788990": "professor",
+      "Q18930418": "analytic philosopher",
+      "Q18930236": "philosopher of language"
+    }
+  },
+  "Q601275": {
+    "books": {},
+    "occupations": {
+      "Q212980": "psychologist",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q60469": {
+    "books": {},
+    "occupations": {
+      "Q250867": "Catholic priest",
+      "Q1234713": "theologian",
+      "Q551835": "physician writer",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q39631": "physician"
+    }
+  },
+  "Q619": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q193391": "diplomat",
+      "Q333634": "translator",
+      "Q185351": "jurist",
+      "Q188094": "economist",
+      "Q1028181": "painter",
+      "Q169470": "physicist",
+      "Q1104153": "canon",
+      "Q1237385": "canon",
+      "Q1734662": "cartographer",
+      "Q4964182": "philosopher",
+      "Q7621877": "strategist",
+      "Q16532929": "administrator",
+      "Q16012028": "legal scholar",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q39631": "physician",
+      "Q11063": "astronomer"
+    }
+  },
+  "Q62512": {
+    "books": {
+      "Q1795877": "Francisca and other stories from the German of Johan Peter Hebel",
+      "Q19125887": "Allemannische Gedichte",
+      "Q119998973": "Kalendergeschichten"
+    },
+    "occupations": {
+      "Q82955": "politician",
+      "Q725440": "prelate",
+      "Q1231865": "pedagogue",
+      "Q1234713": "theologian",
+      "Q1622272": "university teacher",
+      "Q8178443": "librettist",
+      "Q98833883": "Protestant theologian",
+      "Q13418253": "philologist",
+      "Q36180": "writer",
+      "Q49757": "poet"
+    }
+  },
+  "Q651": {
+    "books": {},
+    "occupations": {
+      "Q82955": "politician",
+      "Q214917": "playwright",
+      "Q486839": "member of parliament",
+      "Q1234713": "theologian",
+      "Q1622272": "university teacher",
+      "Q1792450": "art historian",
+      "Q4964182": "philosopher",
+      "Q4164507": "art critic",
+      "Q6625963": "novelist",
+      "Q15962340": "literary theorist",
+      "Q36180": "writer",
+      "Q49757": "poet"
+    }
+  },
+  "Q6512": {
+    "books": {
+      "Q104413357": "Q104413357"
+    },
+    "occupations": {
+      "Q1234713": "theologian",
+      "Q4964182": "philosopher",
+      "Q4263842": "literary critic",
+      "Q6625963": "novelist",
+      "Q49757": "poet"
+    }
+  },
+  "Q6527": {
+    "books": {
+      "Q24026478": "Q24026478"
+    },
+    "occupations": {
+      "Q214917": "playwright",
+      "Q1231865": "pedagogue",
+      "Q1238570": "political scientist",
+      "Q2374149": "botanist",
+      "Q1350157": "music critic",
+      "Q3589290": "correspondent",
+      "Q4964182": "philosopher",
+      "Q6625963": "novelist",
+      "Q11774202": "essayist",
+      "Q14915627": "musicologist",
+      "Q18814623": "autobiographer",
+      "Q21680663": "classical composer",
+      "Q744738": "encyclopédistes",
+      "Q36180": "writer",
+      "Q36834": "composer",
+      "Q18805": "naturalist"
+    }
+  },
+  "Q669703": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q214917": "playwright",
+      "Q1930187": "journalist"
+    }
+  },
+  "Q6701": {
+    "books": {},
+    "occupations": {
+      "Q82955": "politician",
+      "Q333634": "translator",
+      "Q185351": "jurist",
+      "Q201788": "historian",
+      "Q182436": "librarian",
+      "Q1622272": "university teacher",
+      "Q2599593": "Germanist",
+      "Q4773904": "anthropologist",
+      "Q4853732": "children's writer",
+      "Q2135485": "law librarian",
+      "Q2135538": "legal historian",
+      "Q13418253": "philologist",
+      "Q14467526": "linguist",
+      "Q14972848": "lexicographer",
+      "Q1209498": "poet lawyer",
+      "Q16724455": "mythologist",
+      "Q17167049": "literary scholar",
+      "Q1476208": "secretary of legation",
+      "Q24387326": "mythographer",
+      "Q20551564": "collector of fairy tales",
+      "Q36180": "writer"
+    }
+  },
+  "Q6714": {
+    "books": {},
+    "occupations": {
+      "Q185351": "jurist",
+      "Q182436": "librarian",
+      "Q1607826": "editor",
+      "Q1231865": "pedagogue",
+      "Q1622272": "university teacher",
+      "Q2599593": "Germanist",
+      "Q4773904": "anthropologist",
+      "Q4853732": "children's writer",
+      "Q2135485": "law librarian",
+      "Q13418253": "philologist",
+      "Q14467526": "linguist",
+      "Q14972848": "lexicographer",
+      "Q17167049": "literary scholar",
+      "Q19788990": "professor",
+      "Q24387326": "mythographer",
+      "Q20551564": "collector of fairy tales",
+      "Q36180": "writer"
+    }
+  },
+  "Q6722": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q294126": "surveyor",
+      "Q169470": "physicist",
+      "Q1622272": "university teacher",
+      "Q2732142": "statistician",
+      "Q3745071": "science writer",
+      "Q12094958": "geophysicist",
+      "Q11063": "astronomer",
+      "Q116994205": "geodesist"
+    }
+  },
+  "Q6760303": {
+    "books": {},
+    "occupations": {
+      "Q185351": "jurist",
+      "Q182436": "librarian",
+      "Q7245047": "principal",
+      "Q329455": "justice of the peace",
+      "Q16611574": "social reformer"
+    }
+  },
+  "Q6793387": {
+    "books": {},
+    "occupations": {
+      "Q211346": "psychiatrist",
+      "Q4964182": "philosopher",
+      "Q39631": "physician"
+    }
+  },
+  "Q684863": {
+    "books": {},
+    "occupations": {
+      "Q212980": "psychologist",
+      "Q1622272": "university teacher"
+    }
+  },
+  "Q687": {
+    "books": {
+      "Q137660779": "Q137660779"
+    },
+    "occupations": {
+      "Q214917": "playwright",
+      "Q487596": "dramaturge",
+      "Q1776724": "theatre manager",
+      "Q2259451": "stage actor",
+      "Q3387717": "theatre director",
+      "Q9334029": "satirist",
+      "Q33999": "actor",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q39020112": "Theaterintendant"
+    }
+  },
+  "Q6882": {
+    "books": {},
+    "occupations": {
+      "Q482980": "author",
+      "Q1930187": "journalist",
+      "Q4263842": "literary critic",
+      "Q6625963": "novelist",
+      "Q8178443": "librettist",
+      "Q12144794": "prose writer",
+      "Q36180": "writer",
+      "Q37226": "teacher",
+      "Q49757": "poet"
+    }
+  },
+  "Q68880": {
+    "books": {},
+    "occupations": {
+      "Q1402561": "military leader",
+      "Q1259323": "traditional leader or chief"
+    }
+  },
+  "Q692": {
+    "books": {
+      "Q141637834": "Twelfth night; or, What you will. With engravings by Eric Ravilious.",
+      "Q56164083": "The Tragedy of Hamlet, Prince of Denmark",
+      "Q55964720": "Tales from Shakespeare"
+    },
+    "occupations": {
+      "Q214917": "playwright",
+      "Q487596": "dramaturge",
+      "Q2259451": "stage actor",
+      "Q33999": "actor",
+      "Q36180": "writer",
+      "Q49757": "poet"
+    }
+  },
+  "Q707155": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q82594": "computer scientist",
+      "Q1622272": "university teacher",
+      "Q15442776": "cryptographer"
+    }
+  },
+  "Q71029": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q169470": "physicist",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q718585": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q4964182": "philosopher",
+      "Q5197818": "cyberneticist",
+      "Q4263842": "literary critic",
+      "Q14467526": "linguist",
+      "Q17167049": "literary scholar"
+    }
+  },
+  "Q7200": {
+    "books": {
+      "Q48948786": "Pushkin's complete collected works"
+    },
+    "occupations": {
+      "Q333634": "translator",
+      "Q201788": "historian",
+      "Q214917": "playwright",
+      "Q487596": "dramaturge",
+      "Q4853732": "children's writer",
+      "Q4263842": "literary critic",
+      "Q6625963": "novelist",
+      "Q8178443": "librettist",
+      "Q11774202": "essayist",
+      "Q6051619": "opinion journalist",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q28776412": "book collector",
+      "Q27044075": "bretteur",
+      "Q136842174": "translator of Adam Mickiewicz",
+      "Q138411995": "translator of William Wordsworth",
+      "Q69423232": "film screenwriter"
+    }
+  },
+  "Q7243": {
+    "books": {},
+    "occupations": {
+      "Q214917": "playwright",
+      "Q1231865": "pedagogue",
+      "Q4964182": "philosopher",
+      "Q4853732": "children's writer",
+      "Q6625963": "novelist",
+      "Q860918": "Esperantist",
+      "Q11774202": "essayist",
+      "Q12144794": "prose writer",
+      "Q16003550": "pacifist",
+      "Q6051619": "opinion journalist",
+      "Q18939491": "diarist",
+      "Q15949613": "short story writer",
+      "Q36180": "writer",
+      "Q49757": "poet"
+    }
+  },
+  "Q724969": {
+    "books": {},
+    "occupations": {
+      "Q36834": "composer",
+      "Q486748": "pianist",
+      "Q1350157": "music critic",
+      "Q14915627": "musicologist",
+      "Q16031530": "music theorist",
+      "Q20669622": "music journalist"
+    }
+  },
+  "Q7251": {
+    "books": {},
+    "occupations": {
+      "Q82594": "computer scientist",
+      "Q15442776": "cryptographer"
+    }
+  },
+  "Q725797": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q24265174": "philosophy historian"
+    }
+  },
+  "Q7294": {
+    "books": {},
+    "occupations": {
+      "Q158852": "conductor",
+      "Q486748": "pianist",
+      "Q36834": "composer"
+    }
+  },
+  "Q7304": {
+    "books": {},
+    "occupations": {
+      "Q158852": "conductor",
+      "Q806349": "bandleader",
+      "Q1776724": "theatre manager",
+      "Q3029406": "opera director",
+      "Q215793": "chapelmaster",
+      "Q21680663": "classical composer",
+      "Q36834": "composer"
+    }
+  },
+  "Q7312": {
+    "books": {},
+    "occupations": {
+      "Q486748": "pianist",
+      "Q37226": "teacher",
+      "Q36834": "composer"
+    }
+  },
+  "Q7349": {
+    "books": {},
+    "occupations": {
+      "Q158852": "conductor",
+      "Q486748": "pianist",
+      "Q14915627": "musicologist",
+      "Q36834": "composer",
+      "Q115793211": "independent publisher"
+    }
+  },
+  "Q7351": {
+    "books": {},
+    "occupations": {
+      "Q158852": "conductor",
+      "Q486748": "pianist",
+      "Q1350157": "music critic",
+      "Q1792450": "art historian",
+      "Q4164507": "art critic",
+      "Q14915627": "musicologist",
+      "Q16145150": "music educator",
+      "Q61996872": "musicographer",
+      "Q36180": "writer",
+      "Q36834": "composer"
+    }
+  },
+  "Q75655": {
+    "books": {
+      "Q19221585": "Q19221585"
+    },
+    "occupations": {
+      "Q40348": "lawyer",
+      "Q16533": "judge",
+      "Q170790": "mathematician",
+      "Q185351": "jurist",
+      "Q323081": "polyglot"
+    }
+  },
+  "Q7604": {
+    "books": {
+      "Q5358925": "Elements of Algebra",
+      "Q110363098": "Opera Omnia Leonhard Euler"
+    },
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q205375": "inventor",
+      "Q169470": "physicist",
+      "Q978044": "executive",
+      "Q901402": "geographer",
+      "Q1622272": "university teacher",
+      "Q16031530": "music theorist",
+      "Q36180": "writer",
+      "Q901": "scientist",
+      "Q11063": "astronomer"
+    }
+  },
+  "Q76420": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician"
+    }
+  },
+  "Q764578": {
+    "books": {},
+    "occupations": {
+      "Q1409420": "feudatory"
+    }
+  },
+  "Q76483": {
+    "books": {
+      "Q124733739": "Worpswede",
+      "Q19143513": "Advent"
+    },
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q333634": "translator",
+      "Q214917": "playwright",
+      "Q6625963": "novelist"
+    }
+  },
+  "Q76499": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q1234713": "theologian",
+      "Q1792450": "art historian",
+      "Q4964182": "philosopher",
+      "Q21166956": "lutenist"
+    }
+  },
+  "Q76518": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q76519": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q860918": "Esperantist",
+      "Q14565331": "logician",
+      "Q16389557": "philosopher of science",
+      "Q18930418": "analytic philosopher",
+      "Q18930236": "philosopher of language"
+    }
+  },
+  "Q76556": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q76881": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q39631": "physician",
+      "Q333634": "translator",
+      "Q212980": "psychologist",
+      "Q169470": "physicist",
+      "Q1622272": "university teacher",
+      "Q2732142": "statistician",
+      "Q112222344": "psychophysiologist",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q76889": {
+    "books": {},
+    "occupations": {
+      "Q39631": "physician",
+      "Q11063": "astronomer",
+      "Q212980": "psychologist",
+      "Q169470": "physicist",
+      "Q2055046": "physiologist",
+      "Q2732142": "statistician",
+      "Q10872101": "anatomist"
+    }
+  },
+  "Q76894": {
+    "books": {},
+    "occupations": {
+      "Q110042402": "ancient Near Eastern scholar",
+      "Q201788": "historian",
+      "Q182436": "librarian",
+      "Q1350189": "Egyptologist",
+      "Q1622272": "university teacher",
+      "Q1743122": "church historian",
+      "Q16267607": "classical philologist",
+      "Q19361459": "assyriologist",
+      "Q20873384": "historian of classical antiquity"
+    }
+  },
+  "Q76997": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q901": "scientist",
+      "Q333634": "translator",
+      "Q4964182": "philosopher",
+      "Q17167049": "literary scholar",
+      "Q24262584": "Bible translator"
+    }
+  },
+  "Q77301": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q1622272": "university teacher"
+    }
+  },
+  "Q77302": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q2516866": "publisher",
+      "Q12356615": "traveler",
+      "Q998550": "book dealer"
+    }
+  },
+  "Q77338": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q115793211": "independent publisher",
+      "Q333634": "translator",
+      "Q822146": "lyricist",
+      "Q1930187": "journalist",
+      "Q1209498": "poet lawyer",
+      "Q876864": "editing staff"
+    }
+  },
+  "Q7742": {
+    "books": {},
+    "occupations": {
+      "Q82955": "politician",
+      "Q10732476": "art collector",
+      "Q372436": "statesperson",
+      "Q33999": "actor",
+      "Q116": "monarch"
+    }
+  },
+  "Q77562": {
+    "books": {},
+    "occupations": {
+      "Q37226": "teacher",
+      "Q115793180": "pietist",
+      "Q115783625": "Lutheran theologian",
+      "Q756215": "provost",
+      "Q98833883": "Protestant theologian"
+    }
+  },
+  "Q78476": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q105186": "pharmacist"
+    }
+  },
+  "Q78848": {
+    "books": {},
+    "occupations": {
+      "Q36834": "composer",
+      "Q639669": "musician",
+      "Q486748": "pianist",
+      "Q765778": "organist",
+      "Q16145150": "music educator"
+    }
+  },
+  "Q788572": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q1930187": "journalist",
+      "Q4263842": "literary critic",
+      "Q11774202": "essayist",
+      "Q6051619": "opinion journalist",
+      "Q16323111": "peace activist",
+      "Q27532437": "suffragist"
+    }
+  },
+  "Q78979": {
+    "books": {},
+    "occupations": {
+      "Q42973": "architect",
+      "Q37226": "teacher",
+      "Q121594": "professor"
+    }
+  },
+  "Q79759": {
+    "books": {
+      "Q102122577": "Minor poems : Comus, Lycidas, Il penseroso, L'allegro, Sonnets"
+    },
+    "occupations": {
+      "Q49757": "poet"
+    }
+  },
+  "Q8016": {
+    "books": {},
+    "occupations": {
+      "Q82955": "politician",
+      "Q201788": "historian"
+    }
+  },
+  "Q8018": {
+    "books": {
+      "Q78514516": "Q78514516"
+    },
+    "occupations": {
+      "Q201788": "historian",
+      "Q432386": "preacher",
+      "Q250867": "Catholic priest",
+      "Q1234713": "theologian",
+      "Q611644": "Catholic bishop",
+      "Q2259532": "cleric",
+      "Q4964182": "philosopher",
+      "Q948657": "titular bishop",
+      "Q16031530": "music theorist",
+      "Q18814623": "autobiographer",
+      "Q182603": "Church Fathers",
+      "Q192499": "Doctor of the Church",
+      "Q36180": "writer",
+      "Q29182": "bishop",
+      "Q49757": "poet"
+    }
+  },
+  "Q81752": {
+    "books": {},
+    "occupations": {
+      "Q37226": "teacher",
+      "Q36834": "composer",
+      "Q158852": "conductor",
+      "Q765778": "organist",
+      "Q1622272": "university teacher",
+      "Q14915627": "musicologist",
+      "Q16031530": "music theorist",
+      "Q16145150": "music educator"
+    }
+  },
+  "Q82049": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q29182": "bishop",
+      "Q1234713": "theologian",
+      "Q4964182": "philosopher",
+      "Q1423891": "Christian minister",
+      "Q3409375": "Anglican priest",
+      "Q16389557": "philosopher of science",
+      "Q15632482": "epistemologist",
+      "Q16743941": "metaphysician"
+    }
+  },
+  "Q83309": {
+    "books": {
+      "Q117238484": "Neue Johann Strauss Gesamtausgabe"
+    },
+    "occupations": {
+      "Q36834": "composer",
+      "Q158852": "conductor"
+    }
+  },
+  "Q84280": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q8178443": "librettist",
+      "Q1209498": "poet lawyer"
+    }
+  },
+  "Q84296": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q169470": "physicist",
+      "Q593644": "chemist",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q19350898": "theoretical physicist",
+      "Q7783170": "thermodynamicist"
+    }
+  },
+  "Q8442": {
+    "books": {},
+    "occupations": {
+      "Q82955": "politician",
+      "Q193391": "diplomat",
+      "Q185351": "jurist",
+      "Q373085": "chancellor",
+      "Q189290": "military officer",
+      "Q1815782": "lord of the manor",
+      "Q873492": "volunteer serving one year",
+      "Q36180": "writer"
+    }
+  },
+  "Q84430": {
+    "books": {},
+    "occupations": {
+      "Q39631": "physician",
+      "Q2055046": "physiologist",
+      "Q1622272": "university teacher",
+      "Q3410028": "psychoanalyst",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q85557": {
+    "books": {},
+    "occupations": {
+      "Q42973": "architect"
+    }
+  },
+  "Q85885": {
+    "books": {},
+    "occupations": {
+      "Q4964182": "philosopher",
+      "Q10732476": "art collector",
+      "Q3068305": "salonnière"
+    }
+  },
+  "Q868": {
+    "books": {
+      "Q55412010": "Ethica Nicomachea",
+      "Q61877018": "Ethica ad Nicomachum"
+    },
+    "occupations": {
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q8747": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q36180": "writer"
+    }
+  },
+  "Q8750": {
+    "books": {},
+    "occupations": {
+      "Q205375": "inventor",
+      "Q169470": "physicist",
+      "Q593644": "chemist",
+      "Q1622272": "university teacher",
+      "Q36180": "writer"
+    }
+  },
+  "Q89625": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q2516866": "publisher"
+    }
+  },
+  "Q9047": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q193391": "diplomat",
+      "Q81096": "engineer",
+      "Q270141": "polymath",
+      "Q333634": "translator",
+      "Q185351": "jurist",
+      "Q201788": "historian",
+      "Q350979": "zoologist",
+      "Q182436": "librarian",
+      "Q635734": "archivist",
+      "Q520549": "geologist",
+      "Q169470": "physicist",
+      "Q1234713": "theologian",
+      "Q4964182": "philosopher",
+      "Q14565331": "logician",
+      "Q14915627": "musicologist",
+      "Q16031530": "music theorist",
+      "Q16185210": "policy advisor",
+      "Q23760244": "philosopher of law",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q47520669": "diplomatician"
+    }
+  },
+  "Q9068": {
+    "books": {
+      "Q107169055": "Q107169055",
+      "Q24451648": "Des singularités de la nature",
+      "Q122220410": "Blaise Pascal, Pensées, Paris, Dubuisson, 1865, printed book with an original drawing by Allen Ginsberg"
+    },
+    "occupations": {
+      "Q201788": "historian",
+      "Q214917": "playwright",
+      "Q1238570": "political scientist",
+      "Q3589290": "correspondent",
+      "Q4964182": "philosopher",
+      "Q11774202": "essayist",
+      "Q1209498": "poet lawyer",
+      "Q18814623": "autobiographer",
+      "Q18939491": "diarist",
+      "Q18844224": "science fiction writer",
+      "Q744738": "encyclopédistes",
+      "Q36180": "writer",
+      "Q49757": "poet"
+    }
+  },
+  "Q9095": {
+    "books": {
+      "Q42428306": "Theory of Heat"
+    },
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q205375": "inventor",
+      "Q169470": "physicist",
+      "Q1622272": "university teacher",
+      "Q19350898": "theoretical physicist",
+      "Q7783170": "thermodynamicist",
+      "Q37226": "teacher",
+      "Q901": "scientist",
+      "Q33231": "photographer"
+    }
+  },
+  "Q9191": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q270141": "polymath",
+      "Q169470": "physicist",
+      "Q3589290": "correspondent",
+      "Q4964182": "philosopher",
+      "Q14915627": "musicologist",
+      "Q16031530": "music theorist",
+      "Q30134437": "mechanical automaton engineer",
+      "Q36180": "writer",
+      "Q11063": "astronomer",
+      "Q47064": "military personnel",
+      "Q18805": "naturalist"
+    }
+  },
+  "Q9200": {
+    "books": {},
+    "occupations": {
+      "Q219477": "missionary",
+      "Q1294787": "artisan",
+      "Q1234713": "theologian",
+      "Q36180": "writer",
+      "Q43412": "apostle"
+    }
+  },
+  "Q9215": {
+    "books": {},
+    "occupations": {
+      "Q783906": "neurologist",
+      "Q3410028": "psychoanalyst",
+      "Q11774202": "essayist"
+    }
+  },
+  "Q9235": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q14565331": "logician",
+      "Q24265174": "philosophy historian",
+      "Q23760244": "philosopher of law",
+      "Q36180": "writer"
+    }
+  },
+  "Q9312": {
+    "books": {},
+    "occupations": {
+      "Q482980": "author",
+      "Q170790": "mathematician",
+      "Q182436": "librarian",
+      "Q169470": "physicist",
+      "Q1231865": "pedagogue",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q4773904": "anthropologist",
+      "Q23760244": "philosopher of law",
+      "Q656823": "in-home tutor",
+      "Q36180": "writer",
+      "Q18805": "naturalist"
+    }
+  },
+  "Q931427": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q1234713": "theologian",
+      "Q3409375": "Anglican priest"
+    }
+  },
+  "Q9317": {
+    "books": {},
+    "occupations": {
+      "Q482980": "author",
+      "Q82955": "politician",
+      "Q170790": "mathematician",
+      "Q193391": "diplomat",
+      "Q121594": "professor",
+      "Q188094": "economist",
+      "Q4964182": "philosopher",
+      "Q6051619": "opinion journalist",
+      "Q15980158": "non-fiction writer",
+      "Q43845": "businessperson"
+    }
+  },
+  "Q93248112": {
+    "books": {},
+    "occupations": {
+      "Q4964182": "philosopher",
+      "Q36180": "writer"
+    }
+  },
+  "Q935": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q93525": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q214917": "playwright",
+      "Q6625963": "novelist",
+      "Q12144794": "prose writer",
+      "Q15949613": "short story writer"
+    }
+  },
+  "Q9353": {
+    "books": {
+      "Q114515225": "Carnet de voyage à Montpellier et dans le sud de la France (1676-1679)"
+    },
+    "occupations": {
+      "Q82955": "politician",
+      "Q4964182": "philosopher",
+      "Q23760244": "philosopher of law",
+      "Q36180": "writer",
+      "Q901": "scientist",
+      "Q39631": "physician"
+    }
+  },
+  "Q9358": {
+    "books": {},
+    "occupations": {
+      "Q214917": "playwright",
+      "Q1231865": "pedagogue",
+      "Q1350157": "music critic",
+      "Q4964182": "philosopher",
+      "Q16267607": "classical philologist",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q36834": "composer"
+    }
+  },
+  "Q93678": {
+    "books": {},
+    "occupations": {
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q937": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q205375": "inventor",
+      "Q121594": "professor",
+      "Q169470": "physicist",
+      "Q1231865": "pedagogue",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q3745071": "science writer",
+      "Q16003550": "pacifist",
+      "Q16389557": "philosopher of science",
+      "Q19350898": "theoretical physicist",
+      "Q2896489": "patent examiner",
+      "Q36180": "writer",
+      "Q901": "scientist"
+    }
+  },
+  "Q93718": {
+    "books": {},
+    "occupations": {
+      "Q33999": "actor",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q214917": "playwright",
+      "Q6625963": "novelist"
+    }
+  },
+  "Q93826": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q169470": "physicist",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q9387": {
+    "books": {
+      "Q392937": "The Protestant Ethic and the Spirit of Capitalism"
+    },
+    "occupations": {
+      "Q82955": "politician",
+      "Q185351": "jurist",
+      "Q188094": "economist",
+      "Q201788": "historian",
+      "Q2306091": "sociologist",
+      "Q1622272": "university teacher",
+      "Q1227195": "Volkswirt",
+      "Q4964182": "philosopher",
+      "Q4773904": "anthropologist",
+      "Q14915627": "musicologist",
+      "Q17488363": "economic historian",
+      "Q40348": "lawyer"
+    }
+  },
+  "Q9391": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q1231865": "pedagogue",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q14565331": "logician",
+      "Q3606216": "aphorist",
+      "Q15632482": "epistemologist",
+      "Q18930236": "philosopher of language",
+      "Q17391659": "architectural theoretician",
+      "Q42973": "architect",
+      "Q37226": "teacher"
+    }
+  },
+  "Q93996": {
+    "books": {},
+    "occupations": {
+      "Q33231": "photographer",
+      "Q104626036": "fluid dynamicist",
+      "Q82955": "politician",
+      "Q121594": "professor",
+      "Q169470": "physicist",
+      "Q1231865": "pedagogue",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q941966": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q28389": "screenwriter",
+      "Q214917": "playwright",
+      "Q6625963": "novelist",
+      "Q18844224": "science fiction writer"
+    }
+  },
+  "Q94742552": {
+    "books": {},
+    "occupations": {
+      "Q486748": "pianist"
+    }
+  },
+  "Q94941168": {
+    "books": {},
+    "occupations": {
+      "Q169470": "physicist",
+      "Q1326886": "electrical engineer"
+    }
+  },
+  "Q951409": {
+    "books": {},
+    "occupations": {
+      "Q170790": "mathematician",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher"
+    }
+  },
+  "Q9554": {
+    "books": {
+      "Q10504658": "Eyn geystlich Gesangk Buchleyn",
+      "Q1350208": "Erfurt Enchiridion",
+      "Q2555712": "Weimar edition of Martin Luther's works",
+      "Q341003": "First Lutheran hymnal",
+      "Q140451705": "Luther's missal in Estonian (1525)",
+      "Q66383005": "Geistliche Lieder auffs new gebessert zu Wittemberg",
+      "Q113665583": "Croatian Catechismus",
+      "Q113666282": "Postila To Est",
+      "Q118315833": "Des Theuren Mannes Gottes, D. Martin Luthers Sämtliche Theils von Ihm selbst Deutsch verfertigte, theils aus dessen Lateinischen ins Deutsche übersetzte Schrifften und Wercke"
+    },
+    "occupations": {
+      "Q333634": "translator",
+      "Q152002": "pastor",
+      "Q432386": "preacher",
+      "Q250867": "Catholic priest",
+      "Q548320": "friar",
+      "Q916292": "scribe",
+      "Q1234713": "theologian",
+      "Q1622272": "university teacher",
+      "Q4964182": "philosopher",
+      "Q13424456": "hymnwriter",
+      "Q763779": "Protestant reformer",
+      "Q36180": "writer",
+      "Q40348": "lawyer",
+      "Q36834": "composer",
+      "Q24262584": "Bible translator",
+      "Q124985058": "reformer"
+    }
+  },
+  "Q96090154": {
+    "books": {},
+    "occupations": {
+      "Q1028181": "painter",
+      "Q7019111": "social worker",
+      "Q67102720": "annalist"
+    }
+  },
+  "Q96090161": {
+    "books": {},
+    "occupations": {}
+  },
+  "Q966870": {
+    "books": {},
+    "occupations": {
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q4263842": "literary critic",
+      "Q16308156": "scholar of English"
+    }
+  },
+  "Q991": {
+    "books": {},
+    "occupations": {
+      "Q333634": "translator",
+      "Q864380": "biographer",
+      "Q4964182": "philosopher",
+      "Q6625963": "novelist",
+      "Q11774202": "essayist",
+      "Q12144794": "prose writer",
+      "Q6051619": "opinion journalist",
+      "Q15949613": "short story writer",
+      "Q36180": "writer",
+      "Q49757": "poet",
+      "Q69423232": "film screenwriter"
+    }
+  }
+}
